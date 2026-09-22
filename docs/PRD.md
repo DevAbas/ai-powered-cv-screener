@@ -2,7 +2,7 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.0          |
+| Version | 1.1          |
 | Date    | 2026-09-22   |
 | Status  | Approved     |
 | Owner   | Product      |
@@ -56,6 +56,21 @@ faster and better-supported.
 - Runs locally on the recruiter's machine.
 - Goal of the pilot: validate that question-driven screening with visible
   evidence is faster and more trusted than manual reading.
+
+## 4.1 Pilot data
+
+The pilot pool consists of synthetic CVs. No real personal data is used,
+for privacy reasons.
+
+Synthetic CVs are produced by a repeatable generation pipeline, not by
+hand, so the pool can be regenerated or extended for future pilots.
+The pipeline uses AI to generate both the CV text and the candidate
+photo. Each CV must look realistic: PDF format, a photo, contact
+details, work experience, skills, education and languages, spanning the
+roles in §4. Every CV must be unique.
+
+The pool is generated once and prepared before the recruiter opens the
+tool. Generating CVs from the interface is out of scope (§12).
 
 ## 5. Use cases
 
@@ -211,3 +226,4 @@ Stated explicitly so nothing is inferred from omission.
 | Version | Date       | Change |
 |---------|------------|--------|
 | 1.0     | 2026-09-22 | Initial version. |
+| 1.1     | 2026-09-22 | Add §4.1 Pilot data: synthetic CVs from a generation pipeline. |
