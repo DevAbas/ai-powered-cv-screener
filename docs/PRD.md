@@ -2,7 +2,7 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.1          |
+| Version | 1.2          |
 | Date    | 2026-09-22   |
 | Status  | Approved     |
 | Owner   | Product      |
@@ -144,7 +144,7 @@ Every interface decision is checked against these five.
    relevant part, without losing the conversation.
 6. **Continue.** Asks a follow-up that builds on the previous answer
    ("of those, who speaks German?") or starts a new search.
-7. **Exit.** Can copy an answer or note candidates for follow-up.
+7. **Exit.** Can copy an answer.
 
 ## 9. Information architecture
 
@@ -163,6 +163,8 @@ back to the conversation.
 
 ### 10.1 Answers
 - Answers are based only on the content of the CVs in the pool.
+- The screener reads only the CV documents; any structured data it uses
+  is derived from them.
 - Every answer carries its sources (one or more CVs).
 - Each use case in §5 renders in its own shape.
 - Empty result and out-of-scope are distinct, explicit states.
@@ -216,10 +218,12 @@ Stated explicitly so nothing is inferred from omission.
 
 ## 13. Open questions
 
-- Should "note candidates for follow-up" (§8 step 7) be a v1 feature or
-  deferred? Default: deferred unless trivial.
-- Should the CV preview render the PDF itself or a structured view of its
-  content? Default: PDF, since the recruiter trusts the original document.
+None open. Resolved in v1.2:
+
+- "Note candidates for follow-up" is deferred; v1 ships "copy an answer"
+  only (§8 step 7).
+- The CV preview renders the original PDF, opened at the relevant page
+  (§10.2).
 
 ## 14. Changelog
 
@@ -227,3 +231,4 @@ Stated explicitly so nothing is inferred from omission.
 |---------|------------|--------|
 | 1.0     | 2026-09-22 | Initial version. |
 | 1.1     | 2026-09-22 | Add §4.1 Pilot data: synthetic CVs from a generation pipeline. |
+| 1.2     | 2026-09-22 | §10.1: screener reads only the CV documents. §8/§13: both open questions resolved (notes deferred; PDF preview at page level). |
