@@ -58,7 +58,7 @@ docs/COMPONENTS.md                   product component inventory with states
 docs/plans/<feature>.md              plans for anything beyond v1
 src/styles/tokens.css                :root / .dark Material 3 role variables
 src/app/globals.css                  Tailwind theme mapping + shadcn variable adapter
-src/lib/schema/                      candidate.ts, answer.ts, ask.ts (zod)
+src/contracts/                       candidate.ts, answer.ts, ask.ts (zod)
 src/lib/ai/                          registry.ts, providers.ts, retry.ts
 src/lib/pool/                        load.ts, normalize.ts, search.ts, embeddings.ts
 src/lib/ask/                         tools.ts, retrieve.ts, compose.ts, validate.ts, stream.ts
@@ -83,7 +83,7 @@ Rule: the app imports from `data/index` and `data/embeddings.json` only.
 
 ## 4. Data model
 
-### 4.1 CandidateProfile (`src/lib/schema/candidate.ts`)
+### 4.1 CandidateProfile (`src/contracts/candidate.ts`)
 
 Captures PRD §6. Produced by the generator (as part of a seed) and by the
 extractor (from PDF text) with the same schema.
@@ -116,7 +116,7 @@ Derived at index time: `jobStability` (median tenure from `employment`).
 page. The API refuses to run if the query-time embedding model differs
 from `model`.
 
-### 4.5 Answer (`src/lib/schema/answer.ts`)
+### 4.5 Answer (`src/contracts/answer.ts`)
 
 A flat envelope (Gemini structured output does not accept `z.union`),
 validated per kind with `superRefine`:
@@ -204,7 +204,7 @@ and one embedding lookup:
 Flow:
 
 1. Validate body `{ question, model, history[] }` (`model` is a registry
-   id; schema in `src/lib/schema/ask.ts`).
+   id; schema in `src/contracts/ask.ts`).
 2. Retrieve: `generateText` with the two tools (at most four steps). Each
    tool call is streamed as a progress stage ("Filtering 30 profiles… 7
    match", "Reading Lena Novak…"), then "Finding evidence pages…".
