@@ -2,8 +2,8 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.2          |
-| Date    | 2026-09-22   |
+| Version | 1.3          |
+| Date    | 2026-09-23   |
 | Status  | Approved     |
 | Owner   | Product      |
 
@@ -154,7 +154,7 @@ Every interface decision is checked against these five.
 - Right: the pool. Shows the CV list by default; shows the selected CV
   when a source is clicked. Answer and evidence are visible at the same
   time.
-- Header: product name, pool size, answer-mode selector (see §10.5).
+- Header: product name, pool size.
 
 **Mobile (secondary):** panels stack; the CV opens full-screen with a way
 back to the conversation.
@@ -182,10 +182,11 @@ back to the conversation.
 - The recruiter can see the full list of CVs in the pool and open any of
   them without asking a question.
 
-### 10.5 Answer mode
-- The recruiter can choose between answer modes described in their own
-  terms (e.g. "fast" vs "thorough", "free" vs "paid"), never in technical
-  terms. One mode is marked as recommended and is the default.
+### 10.5 Model selection
+- The recruiter selects a model by name, shown with its provider icon.
+- The recommended model is preselected.
+- The selector is part of the composer (the question input), not the
+  header.
 
 ### 10.6 States
 - Empty state with pool size and example questions.
@@ -232,3 +233,4 @@ None open. Resolved in v1.2:
 | 1.0     | 2026-09-22 | Initial version. |
 | 1.1     | 2026-09-22 | Add §4.1 Pilot data: synthetic CVs from a generation pipeline. |
 | 1.2     | 2026-09-22 | §10.1: screener reads only the CV documents. §8/§13: both open questions resolved (notes deferred; PDF preview at page level). |
+| 1.3     | 2026-09-23 | §10.5: model selected by name with provider icon, recommended preselected, selector in the composer. §9: selector removed from the header. |

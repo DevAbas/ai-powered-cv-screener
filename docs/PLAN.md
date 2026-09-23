@@ -1,17 +1,22 @@
 # PLAN: AI-Powered CV Screener
 
-| Field   | Value        |
-|---------|--------------|
-| Version | 1.0          |
-| Date    | 2026-09-22   |
-| Status  | Approved     |
-| Owner   | Engineering  |
+| Field   | Value                                    |
+|---------|------------------------------------------|
+| Version | 1.1                                      |
+| Date    | 2026-09-23                               |
+| Status  | Active                                   |
+| Owner   | Engineering                              |
+| Goal    | Deliver the v1 pilot defined in PRD 1.3  |
 
 This document records the technical decisions behind `docs/PRD.md`
-(v1.2): stack, architecture, data schemas, model routing, pipelines and
-evaluation. Product requirements live in the PRD; engineering conventions
-live in `CLAUDE.md`. If the code and this document disagree, change this
-document first, then the code.
+(v1.3): stack, architecture, data schemas, model routing, design system,
+pipelines, build order and evaluation. Product requirements live in the
+PRD; engineering conventions live in `CLAUDE.md`. If the code and this
+document disagree, change this document first, then the code.
+
+This plan is not extended with new features. A new feature gets its own
+plan in `docs/plans/<feature>.md`. This document changes only to correct
+or refine the v1 build it describes.
 
 ---
 
@@ -25,6 +30,10 @@ document first, then the code.
   extractor, the API and the UI.
 - Vercel AI SDK 7 (`ai`) with `@openrouter/ai-sdk-provider` and
   `@ai-sdk/google`.
+- UI: shadcn/ui components and `lucide-react` icons on top of Tailwind 4
+  and the Material 3 role tokens in §9. Google Sans self-hosted through
+  `next/font/local`. Provider logos are static SVGs in
+  `public/icons/providers/`, referenced from the model registry.
 - PDF: `@react-pdf/renderer` (generate), `unpdf` (extract text per page),
   `react-pdf` (render in the browser).
 - Scripts run with `tsx` and load `.env.local` through `@next/env`.
@@ -43,14 +52,23 @@ document first, then the code.
 ## 3. Repository layout
 
 ```
+DESIGN.md                            design system source of truth (provided by the owner)
 docs/PRD.md, docs/PLAN.md            product and technical documents
-src/lib/schema/                      candidate.ts, answer.ts (zod)
+docs/COMPONENTS.md                   product component inventory with states
+docs/plans/<feature>.md              plans for anything beyond v1
+src/styles/tokens.css                :root / .dark Material 3 role variables
+src/app/globals.css                  Tailwind theme mapping + shadcn variable adapter
+src/lib/schema/                      candidate.ts, answer.ts, ask.ts (zod)
 src/lib/ai/                          registry.ts, providers.ts, retry.ts
 src/lib/pool/                        load.ts, normalize.ts, search.ts, embeddings.ts
 src/lib/ask/                         tools.ts, retrieve.ts, compose.ts, validate.ts, stream.ts
+src/mocks/                           fixtures: every answer kind, one malformed, one empty, progress, error
 src/app/api/ask/route.ts             POST /api/ask (NDJSON stream)
 src/app/page.tsx                     two-panel screen
-src/components/                      Screener, conversation/*, pool/*, ModeSelector
+src/app/dev/components/page.tsx      component preview: every component in every state against mocks
+src/components/                      Screener, conversation/*, pool/*, ModelSelector, ui/* (shadcn)
+public/icons/providers/<provider>.svg provider logos
+public/fonts/                        Google Sans files
 scripts/                             check-models.ts, generate-cvs.ts, index-cvs.ts, eval.ts
 public/cvs/<id>.pdf                  the pool (committed)
 data/seeds/<id>.json                 generator ground truth (eval only; never read by the app)
@@ -118,20 +136,25 @@ and carry no candidates.
 
 ## 5. Model registry (`src/lib/ai/registry.ts`)
 
-The backend talks to models only through the registry. The user-facing
-answer modes (PRD §10.5) are registry entries, not providers.
+The backend talks to models only through the registry. The models the
+recruiter can choose (PRD §10.5) are registry entries, not providers.
 
 | id | Role | Provider | Tier | Notes |
 |----|------|----------|------|-------|
-| `fast` | Answer mode, recommended default | OpenRouter (`:free` model with tools + JSON); fallback Google `gemini-2.5-flash` | free | UI label "Fast (recommended)" |
-| `thorough` | Answer mode | Google `gemini-2.5-pro` free tier | free (low rate limit) | UI label "Thorough (slower)" |
-| `extract` | Profile extraction in the indexer | same as `fast` | free | |
-| `embed` | Page embeddings | Google `gemini-embedding-001`, 256 dims; fallback OpenRouter embedding model | free | |
-| `image` | Candidate photos | Google `gemini-2.5-flash-image`; fallback OpenRouter image-capable model | free | |
+| `fast` | Answer model, recommended and preselected | OpenRouter (`:free` model with tools + JSON); fallback Google `gemini-2.5-flash` | free | `displayName` = the model's public name |
+| `thorough` | Answer model | Google `gemini-2.5-pro` free tier | free (low rate limit) | `displayName` = the model's public name |
+| `extract` | Profile extraction in the indexer | same as `fast` | free | not shown in the UI |
+| `embed` | Page embeddings | Google `gemini-embedding-001`, 256 dims; fallback OpenRouter embedding model | free | not shown in the UI |
+| `image` | Candidate photos | Google `gemini-2.5-flash-image`; fallback OpenRouter image-capable model | free | not shown in the UI |
 
-Each entry: `{ id, label, description, provider, model, capabilities:
-{ tools, structuredOutput, streaming, image, embedding }, tier,
-recommended?, fallback? }`. Exact model ids are pinned after
+Each entry: `{ id, displayName, description, provider, model,
+capabilities: { tools, structuredOutput, streaming, image, embedding },
+tier, recommended?, fallback? }`.
+
+The UI reads `displayName` and `provider` from the registry: the model
+selector lists every answer-capable entry by `displayName` with the
+provider's logo from `public/icons/providers/<provider>.svg`; the entry
+with `recommended: true` is preselected. Exact model ids are pinned after
 `scripts/check-models.ts` passes; free model ids change often and are not
 taken from memory.
 
@@ -180,7 +203,8 @@ and one embedding lookup:
 
 Flow:
 
-1. Validate body `{ question, mode, history[] }`.
+1. Validate body `{ question, model, history[] }` (`model` is a registry
+   id; schema in `src/lib/schema/ask.ts`).
 2. Retrieve: `generateText` with the two tools (at most four steps). Each
    tool call is streamed as a progress stage ("Filtering 30 profiles… 7
    match", "Reading Lena Novak…"), then "Finding evidence pages…".
@@ -202,28 +226,65 @@ Flow:
 Response is NDJSON: `progress` lines, then exactly one `answer` or
 `error`. The client reads it with `fetch` and a `ReadableStream`. Two
 model calls and one embedding per question; the ~10 s target (PRD §11)
-depends on the `fast` model's latency only.
+depends on the recommended model's latency only.
 
-## 9. User interface
+## 9. Design system
 
-Two panels on desktop, stacked on small screens (PRD §9).
+The UI is built on a design system that exists before any product
+component is written. Deliverables:
 
-- Header: product name, pool size, `ModeSelector` (labels and the
-  recommended flag from the registry).
+- `DESIGN.md` at the repository root: the source of truth, provided by
+  the owner. A lint checks the codebase against it.
+- `src/styles/tokens.css`: Material 3 role variables (`--md-sys-color-*`
+  and the type/shape roles used) on `:root`, with the dark scheme on
+  `.dark`.
+- `src/app/globals.css`: `@custom-variant dark` for the `.dark` class;
+  `@theme inline` mapping the tokens to `--color-*` — `--color-*: initial`
+  first so Tailwind's default palette is gone, keeping only `white`,
+  `black` and `transparent`; plus an adapter that defines the shadcn/ui
+  CSS variables (`--background`, `--foreground`, `--primary`, …) from the
+  same tokens so shadcn components pick up the theme unchanged.
+- Google Sans self-hosted via `next/font/local` from `public/fonts/`,
+  exposed as the sans font family through the theme.
+- `docs/COMPONENTS.md`: the product component inventory (header, pool
+  list, CV viewer, composer with model selector, progress stages, every
+  answer card kind, source chip, empty / error / insufficient / out-of-scope
+  states) with every state each component has.
+- `src/mocks/`: fixtures for every answer kind, plus one malformed answer
+  and one empty answer, progress sequences and errors. The UI phase runs
+  entirely against these.
+- `/dev/components` (`src/app/dev/components/page.tsx`): renders every
+  component in every state from the mocks, in light and dark.
+
+Done when the `DESIGN.md` lint passes and every component renders in
+every state against the mocks.
+
+## 10. User interface
+
+Two panels on desktop, stacked on small screens (PRD §9). Components come
+from shadcn/ui, icons from `lucide-react`.
+
+- Header: product name, pool size.
 - Left, conversation: empty state with pool size and six suggested
   questions (one per core use case); message list; `AnswerCard` renders
   one layout per `kind`; progress stages while waiting; error state with
-  retry; input; copy-as-text on each answer.
+  retry; copy-as-text on each answer; the composer.
+- Composer: the question input and the `ModelSelector` — a list of
+  answer-capable registry entries by `displayName` with the provider
+  logo; the recommended entry is preselected (PRD §10.5).
 - Source chip: candidate name only; click opens the CV at the cited page
   and marks the candidate as viewed.
 - Right, pool: CV list (name, headline, viewed marker) by default; the
   selected CV rendered with `react-pdf` (`ssr: false`, worker configured
   in the same module) and scrolled to the cited page; a back control on
   small screens.
-- State: one reducer in `Screener` — messages, mode, selected CV and
-  page, viewed ids. Session-only, no persistence (PRD §12).
+- State: one reducer in `Screener` — messages, selected model, selected
+  CV and page, viewed ids. Session-only, no persistence (PRD §12).
+- Data source: the screen talks to one `ask` client module. During the
+  UI phase it is backed by `src/mocks`; the API phase swaps it for
+  `POST /api/ask` without touching components.
 
-## 10. Evaluation (`scripts/eval.ts`, built last)
+## 11. Evaluation (`scripts/eval.ts`, built last)
 
 `eval/golden.json` holds 15–20 questions covering every PRD §5 use case.
 Expectations are rules evaluated against `data/seeds` at run time (for
@@ -234,7 +295,35 @@ scores: correctness (set or order match; count equals truth), sourcing
 ids; no candidates for `empty` or `out_of_scope`). It prints a table and
 exits non-zero on any failure.
 
-## 11. Runbook
+## 12. Build order
+
+Prerequisites: Node 22 (`nvm use`), dependencies installed,
+`.env.example` in place; keys only from the phase that first needs them.
+
+1. **Contracts** — zod schemas (`candidate.ts`, `answer.ts`, `ask.ts`),
+   the model registry with `displayName`, `provider` and `recommended`,
+   providers, retry, `normalize.ts`, `scripts/check-models.ts`. Done when
+   types compile, `normalize` unit tests pass and `check-models` passes
+   for every entry (needs keys).
+2. **Design system** — §9. Done when the `DESIGN.md` lint passes and
+   every component renders in every state against mocks on
+   `/dev/components`.
+3. **UI against mocks** — §10, driven only by `src/mocks`, including the
+   malformed and empty fixtures, progress and error sequences. Done when
+   every PRD §8 step works with mock data, on desktop and stacked layouts.
+4. **Generation** — §6. Done when 30 unique seeds, photos and PDFs are
+   committed and a re-run is a no-op.
+5. **Indexer** — §7. Done when `data/index` and `data/embeddings.json`
+   are committed and three profiles are spot-checked against their PDFs.
+6. **API (swap mocks)** — §8; the `ask` client module switches from mocks
+   to `POST /api/ask`. Done when every PRD §5 use case returns the right
+   `kind` end to end and progress stages mirror the tool calls.
+7. **Eval** — §11. Done when all golden questions pass.
+
+Each phase ends with `lint`, `tsc`, `build` and `test` clean, and a
+commit.
+
+## 13. Runbook
 
 ```
 nvm use                     # Node 22 from .nvmrc
@@ -243,15 +332,31 @@ cp .env.example .env.local  # add keys
 npm run check-models        # verify every registry entry
 npm run generate            # seeds → photos → PDFs (resumable)
 npm run index               # profiles + embeddings
-npm run dev                 # http://localhost:3000
+npm run dev                 # http://localhost:3000  (/dev/components for the preview)
 npm run eval                # golden questions
 ```
 
 The committed pool, index and embeddings mean `npm run dev` works from a
 fresh clone without keys for browsing CVs; asking questions needs keys.
 
-## 12. Changelog
+## 14. Plan complete when
+
+- All seven phases in §12 are done and each phase's "done when" holds.
+- PRD §11 is verified: a filter question returns a correct, sourced list
+  in under ~10 s on the recommended model; every answer is traceable to a
+  CV in one click; empty-result and out-of-scope questions never produce
+  an invented candidate or fact; a first-time recruiter asks a useful
+  question within 30 s, guided by the empty state.
+- `npm run lint`, `npx tsc --noEmit`, `npm run build`, `npm test` and
+  `npm run eval` are clean on a fresh clone under Node 22.
+- Pool, index and embeddings are committed; `.env.example` documents
+  every key; the runbook in §13 works as written.
+- Anything left over is not added here; it becomes its own plan in
+  `docs/plans/<feature>.md`.
+
+## 15. Changelog
 
 | Version | Date       | Change |
 |---------|------------|--------|
 | 1.0     | 2026-09-22 | Initial version. |
+| 1.1     | 2026-09-23 | Header: goal, status Active, no-new-features rule. Stack: shadcn/ui + lucide-react, Google Sans, provider logos. Registry exposes displayName/provider; recommended preselected. New §9 Design system, §12 Build order (contracts → design system → UI against mocks → generation → indexer → API → eval), §14 Plan complete when. |
