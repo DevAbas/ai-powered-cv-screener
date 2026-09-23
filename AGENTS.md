@@ -50,8 +50,11 @@ before.
 - Zod schemas in `src/contracts` are the single source of truth. Every
   LLM output is validated against them before use.
 - App components use only M3 token utilities (`bg-surface`,
-  `text-on-surface-variant`, …). shadcn variable names appear only inside
-  `components/ui/`.
+  `text-on-surface-variant`, …).
+- Values described only in `DESIGN.md` prose, and dark values, live in
+  `src/styles/theme.css`; change them in the same commit as `DESIGN.md`.
+- Interactive primitives only from `@headlessui/react`; state styling via
+  its `data-*` attributes.
 - No hardcoded colors or sizes.
 - Icons: `lucide-react` only.
 
@@ -79,5 +82,6 @@ before.
 
 **Never**
 - Commit `.env` files or API keys.
+- Edit `src/styles/tokens.generated.css`; change `DESIGN.md` and re-export.
 - Read `data/seeds` from app code.
 - Use default Tailwind palette classes.

@@ -2,7 +2,7 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.1                                      |
+| Version | 1.2                                      |
 | Date    | 2026-09-23                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
@@ -30,9 +30,10 @@ or refine the v1 build it describes.
   extractor, the API and the UI.
 - Vercel AI SDK 7 (`ai`) with `@openrouter/ai-sdk-provider` and
   `@ai-sdk/google`.
-- UI: shadcn/ui components and `lucide-react` icons on top of Tailwind 4
-  and the Material 3 role tokens in §9. Google Sans self-hosted through
-  `next/font/local`. Provider logos are static SVGs in
+- UI: Tailwind CSS 4 with tokens exported from `DESIGN.md` (§9);
+  interactive primitives from Headless UI (`@headlessui/react`), styled
+  through its `data-*` state attributes; `lucide-react` icons. Google Sans
+  self-hosted through `next/font/local`. Provider logos are static SVGs in
   `public/icons/providers/`, referenced from the model registry.
 - PDF: `@react-pdf/renderer` (generate), `unpdf` (extract text per page),
   `react-pdf` (render in the browser).
@@ -52,12 +53,13 @@ or refine the v1 build it describes.
 ## 3. Repository layout
 
 ```
-DESIGN.md                            design system source of truth (provided by the owner)
+DESIGN.md                            design system: source of truth for tokens (committed)
 docs/PRD.md, docs/PLAN.md            product and technical documents
 docs/COMPONENTS.md                   product component inventory with states
 docs/plans/<feature>.md              plans for anything beyond v1
-src/styles/tokens.css                :root / .dark Material 3 role variables
-src/app/globals.css                  Tailwind theme mapping + shadcn variable adapter
+src/styles/tokens.generated.css      exported from DESIGN.md (design:export); never hand-edited
+src/styles/theme.css                 hand-written: .dark colour roles, spacing, breakpoints, shadows, easings
+src/app/globals.css                  layer order, Tailwind entry points, token imports, dark variant
 src/contracts/                       candidate.ts, answer.ts, ask.ts (zod)
 src/lib/ai/                          registry.ts, providers.ts, retry.ts
 src/lib/pool/                        load.ts, normalize.ts, search.ts, embeddings.ts
@@ -66,10 +68,10 @@ src/mocks/                           fixtures: every answer kind, one malformed,
 src/app/api/ask/route.ts             POST /api/ask (NDJSON stream)
 src/app/page.tsx                     two-panel screen
 src/app/dev/components/page.tsx      component preview: every component in every state against mocks
-src/components/                      Screener, conversation/*, pool/*, ModelSelector, ui/* (shadcn)
+src/components/                      Screener, conversation/*, pool/*, ModelSelector
 public/icons/providers/<provider>.svg provider logos
 public/fonts/                        Google Sans files
-scripts/                             check-models.ts, generate-cvs.ts, index-cvs.ts, eval.ts
+scripts/                             check-theme.ts, check-models.ts, generate-cvs.ts, index-cvs.ts, eval.ts
 public/cvs/<id>.pdf                  the pool (committed)
 data/seeds/<id>.json                 generator ground truth (eval only; never read by the app)
 data/photos/<id>.png                 generated headshots (committed)
@@ -231,38 +233,61 @@ depends on the recommended model's latency only.
 ## 9. Design system
 
 The UI is built on a design system that exists before any product
-component is written. Deliverables:
+component is written. `DESIGN.md` at the repository root (committed) is
+the source of truth for tokens; generated files derive from it and are
+never edited by hand.
 
-- `DESIGN.md` at the repository root: the source of truth, provided by
-  the owner. A lint checks the codebase against it.
-- `src/styles/tokens.css`: Material 3 role variables (`--md-sys-color-*`
-  and the type/shape roles used) on `:root`, with the dark scheme on
-  `.dark`.
-- `src/app/globals.css`: `@custom-variant dark` for the `.dark` class;
-  `@theme inline` mapping the tokens to `--color-*` — `--color-*: initial`
-  first so Tailwind's default palette is gone, keeping only `white`,
-  `black` and `transparent`; plus an adapter that defines the shadcn/ui
-  CSS variables (`--background`, `--foreground`, `--primary`, …) from the
-  same tokens so shadcn components pick up the theme unchanged.
-- Google Sans self-hosted via `next/font/local` from `public/fonts/`,
-  exposed as the sans font family through the theme.
-- `docs/COMPONENTS.md`: the product component inventory (header, pool
-  list, CV viewer, composer with model selector, progress stages, every
-  answer card kind, source chip, empty / error / insufficient / out-of-scope
-  states) with every state each component has.
-- `src/mocks/`: fixtures for every answer kind, plus one malformed answer
-  and one empty answer, progress sequences and errors. The UI phase runs
-  entirely against these.
-- `/dev/components` (`src/app/dev/components/page.tsx`): renders every
-  component in every state from the mocks, in light and dark.
+Deliverables:
 
-Done when the `DESIGN.md` lint passes and every component renders in
-every state against the mocks.
+- `DESIGN.md` — tokens and rules in the design.md format. Lint script
+  `design:lint` = `npx -y @google/design.md lint DESIGN.md && tsx
+  scripts/check-theme.ts`.
+- `src/styles/tokens.generated.css` — produced by `design:export` =
+  `npx -y @google/design.md export --format css-tailwind DESIGN.md >
+  src/styles/tokens.generated.css`. Committed, never hand-edited: change
+  `DESIGN.md` and re-export.
+- `src/styles/theme.css` — hand-written: `.dark` overrides for the colour
+  roles (values provided at implementation), `--spacing` from
+  `spacing.base`, and the breakpoints, shadows and easings that
+  `DESIGN.md` describes only in prose. Changes in the same commit as
+  `DESIGN.md`.
+- `scripts/check-theme.ts` — run by `design:lint`. (1) The set of colour
+  roles under `colors` in `DESIGN.md` must equal the set of `--color-*`
+  overrides in the `.dark` block of `theme.css`. (2) It lints a copy of
+  `DESIGN.md` with the colour values replaced by the dark values, through
+  the `@google/design.md` linter API, so component contrast is checked in
+  both themes. Fails on any mismatch or any warning.
+- `src/app/globals.css` — no `@import "tailwindcss"`. Declares
+  `@layer theme, base, components, utilities;`, then imports
+  `tailwindcss/preflight.css` into `base`, `tailwindcss/utilities.css`
+  into `utilities`, `tokens.generated.css` into `theme`, then `theme.css`;
+  `@custom-variant dark (&:where(.dark, .dark *))`; `color-scheme` set per
+  theme.
+- Interactive primitives from `@headlessui/react`, styled through its
+  `data-*` state attributes. Icons from `lucide-react`.
+- Google Sans self-hosted via `next/font/local` from `public/fonts/`.
+- `docs/COMPONENTS.md` — product component inventory with every state.
+- `src/mocks/` — fixtures for every answer kind, one malformed answer, one
+  empty answer, progress sequences and errors. The UI phase runs entirely
+  against these.
+- `/dev/components` (`src/app/dev/components/page.tsx`) — every component
+  in every state from the mocks, in both themes.
+
+Done when `design:lint` reports 0 errors and 0 warnings, re-running
+`design:export` produces no diff, and all components render in all states
+in both themes.
+
+Before implementing: verify the Tailwind 4 entry points
+(`tailwindcss/preflight.css`, `tailwindcss/utilities.css`, `@layer`
+order, `@custom-variant`) against the installed version's documentation,
+and record here whether the typography export includes line-height; if it
+does not, line-heights are defined in `theme.css`.
 
 ## 10. User interface
 
-Two panels on desktop, stacked on small screens (PRD §9). Components come
-from shadcn/ui, icons from `lucide-react`.
+Two panels on desktop, stacked on small screens (PRD §9). Interactive
+primitives come from Headless UI, styled through its `data-*` state
+attributes; icons from `lucide-react`.
 
 - Header: product name, pool size.
 - Left, conversation: empty state with pool size and six suggested
@@ -305,9 +330,9 @@ Prerequisites: Node 22 (`nvm use`), dependencies installed,
    providers, retry, `normalize.ts`, `scripts/check-models.ts`. Done when
    types compile, `normalize` unit tests pass and `check-models` passes
    for every entry (needs keys).
-2. **Design system** — §9. Done when the `DESIGN.md` lint passes and
-   every component renders in every state against mocks on
-   `/dev/components`.
+2. **Design system** — §9. Done when `design:lint` reports 0 errors and
+   0 warnings, re-running `design:export` produces no diff, and all
+   components render in all states in both themes on `/dev/components`.
 3. **UI against mocks** — §10, driven only by `src/mocks`, including the
    malformed and empty fixtures, progress and error sequences. Done when
    every PRD §8 step works with mock data, on desktop and stacked layouts.
@@ -329,6 +354,8 @@ commit.
 nvm use                     # Node 22 from .nvmrc
 npm install
 cp .env.example .env.local  # add keys
+npm run design:lint         # DESIGN.md: 0 errors, 0 warnings
+npm run design:export       # regenerate tokens.generated.css (no diff expected)
 npm run check-models        # verify every registry entry
 npm run generate            # seeds → photos → PDFs (resumable)
 npm run index               # profiles + embeddings
@@ -360,3 +387,4 @@ fresh clone without keys for browsing CVs; asking questions needs keys.
 |---------|------------|--------|
 | 1.0     | 2026-09-22 | Initial version. |
 | 1.1     | 2026-09-23 | Header: goal, status Active, no-new-features rule. Stack: shadcn/ui + lucide-react, Google Sans, provider logos. Registry exposes displayName/provider; recommended preselected. New §9 Design system, §12 Build order (contracts → design system → UI against mocks → generation → indexer → API → eval), §14 Plan complete when. |
+| 1.2     | 2026-09-23 | §9 Design system rebuilt on design.md: DESIGN.md as token source, `design:lint` (design.md lint + `scripts/check-theme.ts`: role-set parity and dark-theme contrast) / `design:export`, `tokens.generated.css` + `theme.css`, Tailwind layer order in `globals.css`, Headless UI instead of shadcn/ui. Stack, layout, UI, build order and runbook updated to match. |
