@@ -3,20 +3,19 @@ version: alpha
 name: CV Screener
 description: A quiet monochrome recruiting tool with a single orange accent. Tokens follow Material 3 role names.
 colors:
-  surface: "#F7F7F7"
+  surface: "#FCFCFC"
   surface-container-lowest: "#FFFFFF"
+  surface-container-low: "#F3F3F3"
   surface-container: "#EFEFEF"
   surface-container-high: "#E6E6E6"
-  outline: "#DDDDDD"
+  outline: "#E6E6E6"
   outline-variant: "#AFAFAF"
   on-surface-variant: "#595959"
   on-surface: "#202020"
   primary: "#B5591C"
   primary-hover: "#A64B04"
   on-primary: "#FFFFFF"
-  primary-container: "#FFE1CD"
   primary-outline: "#FFB68E"
-  on-primary-container: "#503323"
   warning: "#B08A2E"
   error: "#D23B3B"
 typography:
@@ -110,16 +109,16 @@ components:
     typography: "{typography.body-md}"
     rounded: "{rounded.sm}"
   menu-item-hover:
-    backgroundColor: "{colors.surface-container}"
+    backgroundColor: "{colors.surface-container-low}"
   menu-item-selected:
-    backgroundColor: "{colors.primary-container}"
-    textColor: "{colors.on-primary-container}"
+    backgroundColor: "{colors.surface-container-high}"
+    textColor: "{colors.on-surface}"
   list-item:
     backgroundColor: "{colors.surface-container-lowest}"
     textColor: "{colors.on-surface}"
     typography: "{typography.body-md}"
   list-item-hover:
-    backgroundColor: "{colors.surface-container}"
+    backgroundColor: "{colors.surface-container-low}"
   list-item-selected:
     backgroundColor: "{colors.surface-container-high}"
   link:
@@ -157,22 +156,21 @@ The palette is three colours: white, black and orange. Every other value is
 a tone between them. Roles use Material 3 names.
 
 Values were generated with the Radix Colors custom palette tool from three
-seeds: accent `#B5591C`, gray `#8B8B8B`, background `#F7F7F7`. Radix step
+seeds: accent `#B5591C`, gray `#8B8B8B`, background `#FCFCFC`. Radix step
 anatomy maps to roles: steps 1–2 surfaces, 3–4 containers, 6 and 8 outlines,
-9–10 the solid accent, 12 text on the accent container, 11–12 neutral text.
+9–10 the solid accent, 11–12 neutral text.
 
 - **Primary (#B5591C):** Burnt orange. The only chromatic colour in the UI.
-  Used for the primary action, the selected menu item, focus rings and
-  link hover. Never for text blocks, content backgrounds or decoration.
-- **Primary container (#FFE1CD):** Soft orange for the selected state.
-  Text on it is `on-primary-container`.
-- **Surface (#F7F7F7):** Soft grey page background, never pure white.
+  Used for the primary action, the check mark on selected items and link
+  hover. Never for text blocks, content backgrounds or decoration.
+- **Surface (#FCFCFC):** Near-white page background, never pure white.
 - **Surface container lowest (#FFFFFF):** Panels, inputs, menus, the composer.
-- **Surface container (#EFEFEF):** Hover rows, secondary buttons.
-- **Surface container high (#E6E6E6):** Selected rows.
+- **Surface container low (#F3F3F3):** Hover on rows and menu items.
+- **Surface container (#EFEFEF):** Secondary buttons, the model chip.
+- **Surface container high (#E6E6E6):** Selected rows and menu items.
 - **On surface (#202020):** Body text. Not pure black.
 - **On surface variant (#595959):** Secondary text, metadata and disabled text.
-- **Outline (#DDDDDD):** Every border and divider. There is one border colour.
+- **Outline (#E6E6E6):** Every border and divider. There is one border colour.
 - **Outline variant (#AFAFAF):** Icons at rest.
 - **Warning (#B08A2E) and Error (#D23B3B):** Icons only. Never used as a
   background or for running text.
@@ -236,10 +234,11 @@ only; states are styled through its `data-*` attributes (`data-hover`,
 - **Inputs:** no border at rest when placed on `surface`; the background
   step separates them. Focus: 2px `primary-outline` ring.
 - **Menus:** white panel with the overlay shadow; rows use `rounded.sm`;
-  the selected row is `primary-container` with a check icon.
+  hover is `surface-container-low`; the selected row is
+  `surface-container-high` with a `primary` check icon.
 - **Links:** `on-surface` with underline; hover `primary`.
-- **Lists:** rows separated by `outline`; hover and selected use surface
-  steps, never a coloured background.
+- **Lists:** rows separated by `outline`; hover is `surface-container-low`,
+  selected is `surface-container-high`; never a coloured background.
 - **Tables:** header in `label-sm` `on-surface-variant`; cells `body-md`;
   horizontal rules only, no vertical rules, no zebra striping.
 - **States:** empty, insufficient information, out of scope and error are a
