@@ -248,7 +248,6 @@ Token and theme rules live in `DESIGN.md` and `AGENTS.md`. Deliverables:
   preflight and utilities imported separately (no `@import
   "tailwindcss"`), then the token and theme files, and a class-based dark
   variant.
-- `docs/COMPONENTS.md`: product components and their states.
 - `src/mocks/`: fixtures for every answer kind, one malformed answer, one
   empty answer, progress sequences and errors, a slow path (~6 s: the
   answer arrives after a schema repair) and a very slow path (~30 s: the
@@ -268,8 +267,7 @@ in both themes.
 ## User interface
 
 Layout and behaviour live in the PRD (Information architecture, Core
-flow), visual rules in `DESIGN.md`, components and their states in
-`docs/COMPONENTS.md`. Architecture:
+flow), visual rules in `DESIGN.md`. Architecture:
 
 - State: one reducer in `Screener`, session-only, no persistence (PRD,
   Non-goals).

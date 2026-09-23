@@ -15,11 +15,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `docs/PRD.md` — what we build and why.
 - `docs/PLAN.md` — how, and in which phases.
 - `DESIGN.md` — design system: visual tokens and rules.
-- `docs/COMPONENTS.md` — product components and their states.
 
 Each fact lives in exactly one document; others reference it by file and
 heading, never repeat it. PRD owns what and why, PLAN owns how and when,
-DESIGN.md owns visual rules, docs/COMPONENTS.md owns product components,
+DESIGN.md owns visual rules,
 code owns exact values. Before adding content to a document, check
 whether another one already owns it.
 
