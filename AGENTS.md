@@ -17,6 +17,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `DESIGN.md` — design system: visual tokens and rules.
 - `docs/COMPONENTS.md` — product components and their states.
 
+Each fact lives in exactly one document; others reference it by file and
+heading, never repeat it. PRD owns what and why, PLAN owns how and when,
+DESIGN.md owns visual rules, docs/COMPONENTS.md owns product components,
+code owns exact values. Before adding content to a document, check
+whether another one already owns it.
+
 If a request conflicts with the PRD, update the PRD first, then the code.
 Work only on the phases in `docs/PLAN.md`; do not add features outside it.
 
@@ -40,6 +46,9 @@ report before coding.
 | `npm run build` | Production build |
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript, no emit |
+| `npm test` | Unit tests (Vitest) |
+| `npm run check-models` | Check every model registry entry against its capabilities (makes API calls) |
 
 Add each new script here when its phase is implemented and verified, not
 before.
@@ -79,6 +88,9 @@ before.
 - Changing `docs/PRD.md`, `docs/PLAN.md` or `DESIGN.md`.
 - Implementing an API that the docs for the installed version do not
   confirm.
+- Before any run that makes more than ~10 rate-limited API calls, state
+  the estimated number of calls and the remaining quota, and wait for
+  approval.
 
 **Never**
 - Commit `.env` files or API keys.
