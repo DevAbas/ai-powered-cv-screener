@@ -90,7 +90,9 @@ components:
     backgroundColor: "{colors.surface-container}"
     textColor: "{colors.on-surface-variant}"
     rounded: "{rounded.full}"
-  icon-muted:
+  icon:
+    textColor: "{colors.on-surface-variant}"
+  icon-disabled:
     textColor: "{colors.outline-variant}"
   input:
     backgroundColor: "{colors.surface-container-lowest}"
@@ -169,9 +171,9 @@ anatomy maps to roles: steps 1–2 surfaces, 3–4 containers, 6 and 8 outlines,
 - **Surface container (#EFEFEF):** Secondary buttons, the model chip.
 - **Surface container high (#E6E6E6):** Selected rows and menu items.
 - **On surface (#202020):** Body text. Not pure black.
-- **On surface variant (#595959):** Secondary text, metadata and disabled text.
+- **On surface variant (#595959):** Secondary text, metadata, disabled text and icons at rest.
 - **Outline (#E6E6E6):** Every border and divider. There is one border colour.
-- **Outline variant (#AFAFAF):** Icons at rest.
+- **Outline variant (#AFAFAF):** Disabled icons only.
 - **Warning (#B08A2E) and Error (#D23B3B):** Icons only. Never used as a
   background or for running text.
 
@@ -215,7 +217,7 @@ only: floating input containers use raised
 ## Shapes
 
 Soft, with pill-shaped actions. Buttons use `rounded.full`. The largest
-floating container uses `rounded.xl`; menus `rounded.lg`; inputs and cards
+floating container uses `rounded.xl`; menus `rounded.lg`; inputs and containers
 `rounded.md`; menu rows and small controls `rounded.sm`. Links are plain text
 with an underline, never chips.
 
@@ -230,7 +232,7 @@ only; states are styled through its `data-*` attributes (`data-hover`,
   neutral on `surface-container`. Disabled: `surface-container` background
   with `on-surface-variant` text; the state is carried by the neutral fill,
   the absence of hover and a not-allowed cursor.
-- **Icons:** `outline-variant` at rest, `on-surface` on hover.
+- **Icons:** `on-surface-variant` at rest, `on-surface` on hover, `outline-variant` when disabled.
 - **Inputs:** no border at rest when placed on `surface`; the background
   step separates them. Focus: 2px `primary-outline` ring.
 - **Menus:** white panel with the overlay shadow; rows use `rounded.sm`;
