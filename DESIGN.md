@@ -8,12 +8,14 @@ colors:
   surface-container-low: "#F3F3F3"
   surface-container: "#EFEFEF"
   surface-container-high: "#E6E6E6"
+  surface-container-highest: "#E0E0E0"
   outline: "#E6E6E6"
   outline-variant: "#AFAFAF"
   on-surface-variant: "#595959"
   on-surface: "#202020"
   primary: "#B5591C"
   primary-hover: "#A64B04"
+  primary-pressed: "#924204"
   on-primary: "#FFFFFF"
   primary-outline: "#FFB68E"
   warning: "#B08A2E"
@@ -23,43 +25,43 @@ typography:
     fontFamily: Google Sans
     fontSize: 1.375rem
     fontWeight: 500
-    lineHeight: 1.3
+    lineHeight: "1.3"
     letterSpacing: -0.01em
   headline-md:
     fontFamily: Google Sans
     fontSize: 1.0625rem
     fontWeight: 500
-    lineHeight: 1.35
+    lineHeight: "1.35"
   body-lg:
     fontFamily: Google Sans
     fontSize: 1rem
     fontWeight: 400
-    lineHeight: 1.55
+    lineHeight: "1.55"
   body-md:
     fontFamily: Google Sans
     fontSize: 0.875rem
     fontWeight: 400
-    lineHeight: 1.5
+    lineHeight: "1.5"
   body-sm:
     fontFamily: Google Sans
     fontSize: 0.8125rem
     fontWeight: 400
-    lineHeight: 1.45
+    lineHeight: "1.45"
   label-lg:
     fontFamily: Google Sans
     fontSize: 0.875rem
     fontWeight: 500
-    lineHeight: 1.2
+    lineHeight: "1.2"
   label-md:
     fontFamily: Google Sans
     fontSize: 0.8125rem
     fontWeight: 500
-    lineHeight: 1.2
+    lineHeight: "1.2"
   label-sm:
     fontFamily: Google Sans
     fontSize: 0.75rem
     fontWeight: 500
-    lineHeight: 1.2
+    lineHeight: "1.2"
     letterSpacing: 0.01em
 rounded:
   none: 0px
@@ -72,6 +74,24 @@ spacing:
   base: 0.25rem
   gutter: 1.25rem
 components:
+  page:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.on-surface}"
+    typography: "{typography.body-md}"
+  composer:
+    backgroundColor: "{colors.surface-container-lowest}"
+    textColor: "{colors.on-surface}"
+    typography: "{typography.body-lg}"
+    rounded: "{rounded.xl}"
+  model-chip:
+    backgroundColor: "{colors.surface-container}"
+    textColor: "{colors.on-surface}"
+    typography: "{typography.label-md}"
+    rounded: "{rounded.full}"
+  model-chip-hover:
+    backgroundColor: "{colors.surface-container-high}"
+  model-chip-pressed:
+    backgroundColor: "{colors.surface-container-highest}"
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.on-primary}"
@@ -79,6 +99,8 @@ components:
     rounded: "{rounded.full}"
   button-primary-hover:
     backgroundColor: "{colors.primary-hover}"
+  button-primary-pressed:
+    backgroundColor: "{colors.primary-pressed}"
   button-secondary:
     backgroundColor: "{colors.surface-container}"
     textColor: "{colors.on-surface}"
@@ -86,12 +108,19 @@ components:
     rounded: "{rounded.full}"
   button-secondary-hover:
     backgroundColor: "{colors.surface-container-high}"
+  button-secondary-pressed:
+    backgroundColor: "{colors.surface-container-highest}"
   button-disabled:
     backgroundColor: "{colors.surface-container}"
     textColor: "{colors.on-surface-variant}"
     rounded: "{rounded.full}"
   icon:
     textColor: "{colors.on-surface-variant}"
+  icon-hover:
+    textColor: "{colors.on-surface}"
+  icon-pressed:
+    backgroundColor: "{colors.surface-container}"
+    textColor: "{colors.on-surface}"
   icon-disabled:
     textColor: "{colors.outline-variant}"
   input:
@@ -165,11 +194,15 @@ anatomy maps to roles: steps 1–2 surfaces, 3–4 containers, 6 and 8 outlines,
 - **Primary (#B5591C):** Burnt orange. The only chromatic colour in the UI.
   Used for the primary action, the check mark on selected items and link
   hover. Never for text blocks, content backgrounds or decoration.
+- **Primary pressed (#924204):** The primary button while pressed:
+  `primary-hover` darkened 12%, as Radix has no step past hover for a
+  solid accent.
 - **Surface (#FCFCFC):** Near-white page background, never pure white.
 - **Surface container lowest (#FFFFFF):** Panels, inputs, menus, the composer.
 - **Surface container low (#F3F3F3):** Hover on rows and menu items.
 - **Surface container (#EFEFEF):** Secondary buttons, the model chip.
-- **Surface container high (#E6E6E6):** Selected rows and menu items.
+- **Surface container high (#E6E6E6):** Selected rows and menu items; hover on secondary buttons and the model chip.
+- **Surface container highest (#E0E0E0):** Pressed secondary buttons and the model chip. Radix step 5.
 - **On surface (#202020):** Body text. Not pure black.
 - **On surface variant (#595959):** Secondary text, metadata, disabled text and icons at rest.
 - **Outline (#E6E6E6):** Every border and divider. There is one border colour.
@@ -224,17 +257,29 @@ with an underline, never chips.
 ## Components
 
 Interactive primitives come from Headless UI and are styled with these tokens
-only; states are styled through its `data-*` attributes (`data-hover`,
-`data-focus`, `data-selected`, `data-disabled`, `data-open`). Icons are
+only; how states are selected is in `AGENTS.md`, Conventions. Icons are
 `lucide-react`, 1rem in text and 1.25rem in buttons.
 
 - **Buttons:** primary is orange for the single main action; secondary is
   neutral on `surface-container`. Disabled: `surface-container` background
   with `on-surface-variant` text; the state is carried by the neutral fill,
-  the absence of hover and a not-allowed cursor.
+  the absence of hover and a not-allowed cursor. Pressed goes one tonal step
+  past hover: `primary-pressed` for primary, `surface-container-highest` for
+  secondary and the model chip; a ghost icon button shows a
+  `surface-container` circle while pressed.
 - **Icons:** `on-surface-variant` at rest, `on-surface` on hover, `outline-variant` when disabled.
 - **Inputs:** no border at rest when placed on `surface`; the background
   step separates them. Focus: 2px `primary-outline` ring.
+- **Composer:** the largest floating container: `surface-container-lowest`,
+  `rounded.xl`, raised shadow. One text input above a bottom row. Left:
+  paperclip, model chip, globe, ellipsis; right: audio-lines and a circular
+  primary send button that becomes Stop while a request runs. Paperclip,
+  globe, ellipsis and audio-lines are disabled. Centred in the empty state;
+  after the first question it sits at the bottom of the conversation panel,
+  as wide as the message column.
+- **Model menu:** the model chip (`surface-container`, `rounded.full`) shows
+  the vendor logo, the model name and a chevron. Its menu lists the answer
+  models, each with vendor logo and name, and follows the menu rules.
 - **Menus:** white panel with the overlay shadow; rows use `rounded.sm`;
   hover is `surface-container-low`; the selected row is
   `surface-container-high` with a `primary` check icon.

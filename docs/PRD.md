@@ -2,14 +2,14 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.4          |
+| Version | 1.5          |
 | Date    | 2026-09-23   |
 | Status  | Approved     |
 | Owner   | Product      |
 
 This document describes what we are building and why. Technical decisions
-(stack, architecture, data schemas) live in `docs/PLAN.md`. Engineering
-conventions live in `CLAUDE.md`. If a requirement conflicts with this
+and phases live in `docs/PLAN.md`, data schemas in `src/contracts`, and
+engineering conventions in `AGENTS.md`. If a requirement conflicts with this
 document, update this document first, then the code.
 
 ---
@@ -184,7 +184,8 @@ back to the conversation.
   them without asking a question.
 
 ### 10.5 Model selection
-- The recruiter selects a model by name, shown with its provider icon.
+- The recruiter selects a model by name, shown with the logo of the company
+  that made it.
 - The recommended model is preselected.
 - The selector is part of the composer (the question input), not the
   header.
@@ -236,3 +237,4 @@ None open. Resolved in v1.2:
 | 1.2     | 2026-09-22 | §10.1: screener reads only the CV documents. §8/§13: both open questions resolved (notes deferred; PDF preview at page level). |
 | 1.3     | 2026-09-23 | §10.5: model selected by name with provider icon, recommended preselected, selector in the composer. §9: selector removed from the header. |
 | 1.4     | 2026-09-23 | Light/dark toggle in the header. |
+| 1.5     | 2026-09-23 | Header: conventions in `AGENTS.md`, schemas in `src/contracts`; no stack in PLAN. §10.5: model shown with its maker's logo, not the routing provider's. |

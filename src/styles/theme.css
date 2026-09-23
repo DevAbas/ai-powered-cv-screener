@@ -1,0 +1,70 @@
+/*
+ * Hand-written theme: dark colour roles and the values DESIGN.md states only
+ * in prose. Light tokens come from tokens.generated.css (`npm run design:export`).
+ * Change this file in the same commit as DESIGN.md.
+ */
+
+/* Dark follows the system unless <html data-theme> overrides it for the session. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+}
+
+:root {
+  color-scheme: light;
+
+  @variant dark {
+    color-scheme: dark;
+    --color-surface: #111111;
+    --color-surface-container-lowest: #191919;
+    --color-surface-container-low: #222222;
+    --color-surface-container: #222222;
+    --color-surface-container-high: #2a2a2a;
+    --color-surface-container-highest: #313131;
+    --color-outline: #313131;
+    --color-outline-variant: #606060;
+    --color-on-surface-variant: #b4b4b4;
+    --color-on-surface: #eeeeee;
+    --color-primary: #b5591c;
+    --color-primary-hover: #a64b04;
+    --color-primary-pressed: #924204;
+    --color-on-primary: #ffffff;
+    --color-primary-outline: #6e2f00;
+    --color-warning: #d9ac45;
+    --color-error: #e5605c;
+  }
+}
+
+@theme {
+  /* DESIGN.md, Elevation & Depth */
+  --shadow-raised: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.06);
+  --shadow-overlay: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+
+  /* DESIGN.md, Layout: motion */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: var(--ease-standard);
+
+  /* DESIGN.md, Layout: breakpoints */
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* DESIGN.md, Layout: reading width of the message column and the fixed pool panel */
+  --container-reading: 46rem;
+  --container-pool: 28rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-google-sans);
+  --spacing: var(--spacing-base);
+}

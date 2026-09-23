@@ -1,0 +1,4 @@
+/* Removes Tailwind's default palette; only DESIGN.md colour roles exist. */
+@theme {
+  --color-*: initial;
+}
