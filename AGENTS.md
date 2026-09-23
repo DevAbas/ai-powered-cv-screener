@@ -1,98 +1,195 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# PLAN: AI-Powered CV Screener
 
-# This is NOT the Next.js you know
+| Field   | Value                                    |
+|---------|------------------------------------------|
+| Version | 1.7                                      |
+| Date    | 2026-09-23                               |
+| Status  | Active                                   |
+| Owner   | Engineering                              |
+| Goal    | Deliver the v1 pilot defined in PRD 1.3  |
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+If the code and this document disagree, change this document first, then
+the code. This plan is not extended with new features; a new feature gets
+its own plan in `docs/plans/<feature>.md`.
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+---
 
-<!-- END:nextjs-agent-rules -->
+## Environment
 
-# AI-Powered CV Screener — project rules
+- Cost ceiling is zero: every model used by default is on a free tier.
+  A paid model may be used only when labelled paid and never by default.
+- Every script is resumable (skip what already exists) and can be forced
+  to regenerate.
 
-## Source of truth
+## Data access
 
-- `docs/PRD.md` — what we build and why.
-- `docs/PLAN.md` — how, and in which phases.
-- `DESIGN.md` — design system: visual tokens and rules.
+The app reads only the index and the embeddings.
 
-Each fact lives in exactly one document; others reference it by file and
-heading, never repeat it. PRD owns what and why, PLAN owns how and when,
-DESIGN.md owns visual rules,
-code owns exact values. Before adding content to a document, check
-whether another one already owns it.
+## Model registry
 
-If a request conflicts with the PRD, update the PRD first, then the code.
-Work only on the phases in `docs/PLAN.md`; do not add features outside it.
+The backend talks to models only through the registry. Model ids are
+pinned only after `check-models` passes and are never taken from memory.
 
-## Before implementing with any library
+### Answer models
 
-Read the official documentation for the exact installed version (check
-`package.json` and `node_modules`) and confirm the API you need exists in
-that version. Do not rely on memory of older versions.
+- The recruiter chooses between registry entries (PRD, Model selection).
+  Entries are named slots, `primary` and `alternative`; no name or
+  description claims one answers better than the other.
+- `recommended` stays on `primary` until the eval sets it (Evaluation).
 
-- Next.js: `node_modules/next/dist/docs/`.
-- Everything else: fetch the official docs for the installed version.
+### Acceptance criteria
 
-If the documented API differs from what `docs/PLAN.md` assumes, stop and
-report before coding.
+An answer model enters the registry only if it meets all four:
 
-## Commands
+1. **Capabilities.** `check-models` passes for tools, structured output
+   and streaming.
+2. **Correctness.** It meets every threshold in Evaluation.
+3. **Latency.** P95 end-to-end latency per question is at most ~10 s
+   (PRD, Success criteria).
+4. **Free-tier budget.** A working day of use fits the provider's
+   free-tier daily limit.
 
-| Command | Purpose |
-|---|---|
-| `npm run dev` | Start the dev server |
-| `npm run build` | Production build |
-| `npm start` | Serve the production build |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | TypeScript, no emit |
-| `npm test` | Unit tests (Vitest) |
-| `npm run check-models` | Check every model registry entry against its capabilities (makes API calls) |
+Until the eval exists, only criterion 1 applies.
 
-Add each new script here when its phase is implemented and verified, not
-before.
+### Reliability
 
-## Conventions
+- Every model call has a first-output limit and a total budget, set from
+  the measured P95 time to first token.
+- A timeout goes straight to the fallback model, never a retry on the
+  same model.
+- A response that fails its schema gets one repair attempt, then the
+  fallback.
+- A per-entry circuit breaker skips a failing primary for a cooldown.
 
-- TypeScript strict; no `any`.
-- Zod schemas in `src/contracts` are the single source of truth. Every
-  LLM output is validated against them before use.
-- App components use only M3 token utilities (`bg-surface`,
-  `text-on-surface-variant`, …).
-- Values described only in `DESIGN.md` prose, and dark values, live in
-  `src/styles/theme.css`; change them in the same commit as `DESIGN.md`.
-- Interactive primitives only from `@headlessui/react`; state styling via
-  its `data-*` attributes.
-- No hardcoded colors or sizes.
-- Icons: `lucide-react` only.
+### Embeddings
 
-## Git
+A question is embedded only with the model that built the index. There
+is no fallback at query time; a different model may be used only to
+rebuild the whole index.
 
-- Commit at the end of each phase, message format `type: subject`.
-- Before every commit, show the proposed message and wait for approval.
-  Push only when told to.
-- Never add attribution of any kind: no `Co-Authored-By`, no
-  "Generated with", no mention of Claude, AI or agents in messages or
-  trailers.
+## Generation pipeline
 
-## Boundaries
+~30 candidates: frontend 6, backend 6, data 4, DevOps 4, QA 4, product 3,
+fullstack 1, mobile 1, security 1. Three steps:
 
-**Always**
-- Run lint and typecheck before committing.
-- Read `DESIGN.md` before touching UI.
+1. Seeds: one structured profile per candidate; names are unique.
+2. Photos: one AI-generated photo per candidate; a failed photo is
+   reported, never fatal.
+3. PDFs: three layout templates so formats differ (PRD, Problem), photo
+   embedded.
 
-**Ask first**
-- Adding a dependency.
-- Changing a contract.
-- Changing `docs/PRD.md`, `docs/PLAN.md` or `DESIGN.md`.
-- Implementing an API that the docs for the installed version do not
-  confirm.
-- Before any run that makes more than ~10 rate-limited API calls, state
-  the estimated number of calls and the remaining quota, and wait for
-  approval.
+## Indexer
 
-**Never**
-- Commit `.env` files or API keys.
-- Edit `src/styles/tokens.generated.css`; change `DESIGN.md` and re-export.
-- Read `data/seeds` from app code.
-- Use default Tailwind palette classes.
+For each PDF: text per page, one structured profile extracted by the
+`extract` entry, skills, languages and roles normalised, and one
+embedding per page.
+
+## Retrieval and answering
+
+Retrieval is required; the whole pool is never placed in a prompt.
+
+- `search_cvs` filters the profiles deterministically and returns the
+  exact count; it can scope a follow-up to the previous answer.
+- `get_cv` returns one profile with its pages, for compare, fact and
+  profile questions.
+- Evidence pages are found by embedding similarity, scoped to the matched
+  candidates.
+
+Flow: validate the request → retrieve (each tool call is a progress
+stage) → compose one structured answer from the retrieval result only →
+validate the answer against the retrieval result → stream progress, then
+exactly one answer or error.
+
+Validation against the retrieval result: unknown candidate ids are
+dropped (an emptied filter or rank becomes `empty`), the count comes from
+`search_cvs`, every cited page must be a retrieved page, and an unknown id
+in compare, fact or profile becomes `insufficient`.
+
+## Design system
+
+- `design:lint` checks `DESIGN.md`, including dark-theme coverage and
+  contrast in both themes.
+- Mocks cover every answer kind, one malformed and one empty answer,
+  progress, errors, a slow path (answer after a schema repair) and a very
+  slow path (answer from the fallback).
+- Component previews show every component in every state in both themes.
+
+Done when `design:lint` reports 0 errors and 0 warnings, re-running the
+export produces no diff, and every component previews in every state in
+both themes.
+
+## User interface
+
+- The screen talks to one `ask` client module: mocks during the UI
+  phase, `POST /api/ask` from the API phase, without touching components.
+- Stop aborts the request; the call ends without fallback.
+- Progress stages mirror the tool calls; after ~10 s a neutral "Taking
+  longer than usual…" line appears. Schema repair and fallback are never
+  shown.
+
+## Evaluation (built last)
+
+15–20 golden questions cover every PRD use case. Expectations are rules
+evaluated against `data/seeds`, so they survive regeneration. The eval
+runs per answer model, scores retrieval and composition separately,
+measures end-to-end latency, and sets `recommended`: the entry that
+passes all criteria with the best correctness, lower P95 breaking a tie.
+
+| Metric | Threshold |
+|--------|-----------|
+| Invented candidates | 0 (hard fail) |
+| Sourcing | 100% |
+| Correctness | ≥ 90% |
+
+A model that fails any threshold leaves the registry.
+
+## Build order
+
+1. **Contracts** — closed with Open questions 2–5 pending quota.
+2. **Design system** — done as defined in Design system.
+3. **UI against mocks** — done when every step of the PRD core flow works
+   with mock data on desktop and stacked layouts.
+4. **Generation** — done when 30 unique seeds, photos and PDFs are
+   committed and a re-run is a no-op.
+5. **Indexer** — done when the index and embeddings are committed and
+   three profiles are spot-checked against their PDFs.
+6. **API** — done when every PRD use case returns the right `kind` end to
+   end and progress stages mirror the tool calls.
+7. **Eval** — done when all golden questions pass.
+
+Every phase also ends with build and tests clean.
+
+## Plan complete when
+
+- Every phase is done.
+- PRD, Success criteria is verified.
+- Lint, typecheck, build, tests and eval are clean on a fresh clone.
+- Pool, index and embeddings are committed; the commands in `AGENTS.md`
+  work as written.
+- Anything left over becomes its own plan in `docs/plans/<feature>.md`.
+
+## Open questions
+
+| # | Question | Blocks |
+|---|----------|--------|
+| 1 | No free image model exists. Use a paid model for the 30 photos (~$1)? | Generation |
+| 2 | Answer acceptance run (`--repeat 20`, 0 final failures after repair) is pending quota; 7/7 clean so far. If it fails, answer payload fields become required-nullable. | API |
+| 3 | `alternative` fails the latency criterion; choose a replacement. | API |
+| 4 | Set the first-output and total limits from measured P95. | API |
+| 5 | Evaluate `lfm-2.5-2.6b` as a fast middle tier before the Gemini fallback. | Eval |
+| 6 | Add a database in `lib/db` following the vercel/chatbot structure; candidate PGlite + pgvector + Drizzle. | Indexer |
+| 7 | Restructure `lib/` in the vercel/chatbot style. | Indexer |
+| 8 | Circuit breaker counts one strike per call, not per attempt. | Indexer |
+
+## Changelog
+
+| Version | Date       | Change |
+|---------|------------|--------|
+| 1.0     | 2026-09-22 | Initial version. |
+| 1.1     | 2026-09-23 | Goal, status, no-new-features rule; design system phase; build order. |
+| 1.2     | 2026-09-23 | Design system on design.md; Headless UI instead of shadcn/ui. |
+| 1.3     | 2026-09-23 | Registry `vendor`; embedding rule; image model moved to open questions. |
+| 1.4     | 2026-09-23 | Answer slots `primary`/`alternative`; acceptance criteria; per-model eval and thresholds. |
+| 1.5     | 2026-09-23 | Slimmed; reliability rules; runbook removed. |
+| 1.6     | 2026-09-23 | Open questions 6–8 (database, lib restructure, breaker); full role mix. |
+| 1.7     | 2026-09-23 | Keeps decisions only: implementation details live in code, conventions in `AGENTS.md`, non-goals in the PRD; component previews replace `/dev/components`. |
