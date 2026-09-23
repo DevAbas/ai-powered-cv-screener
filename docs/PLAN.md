@@ -2,7 +2,7 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.5                                      |
+| Version | 1.6                                      |
 | Date    | 2026-09-23                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
@@ -31,9 +31,9 @@ or refine the v1 build it describes.
 - `@headlessui/react`, `lucide-react`; UI details live in `DESIGN.md`.
 - `@react-pdf/renderer`, `unpdf`, `react-pdf`.
 - `tsx`, `@next/env`, Vitest.
-- No database, no vector store, no auth (PRD, Non-goals). All state is
-  files in the repository; conversation state lives in the browser for
-  the session.
+- No database yet; see Open questions. No auth (PRD, Non-goals). All
+  state is files in the repository; conversation state lives in the
+  browser for the session.
 
 ## Environment
 
@@ -139,7 +139,8 @@ Answer and extract calls go through `runStructured`
   within 5 minutes (a 5xx and its failed retry count as two) the primary
   is skipped for a 3-minute cooldown; after the cooldown it is tried
   again, and one more failure reopens the breaker. A daily quota error
-  opens it at once.
+  opens it at once. Whether to count one strike per call instead is an
+  open question (Open questions).
 - The timer values in code are placeholders until set from the measured
   P95 time to first token (Open questions). `check-models` records time
   to first token per call.
@@ -163,8 +164,8 @@ rebuild-only fallback, used only to rebuild the whole index.
 ## Generation pipeline (`scripts/generate-cvs.ts`)
 
 ~30 candidates: frontend 6, backend 6, data 4, DevOps 4, QA 4, product 3,
-3 mixed. Three resumable steps, `--only seeds|photos|pdfs`, `--limit N`,
-`--force`.
+fullstack 1, mobile 1, security 1. Three resumable steps,
+`--only seeds|photos|pdfs`, `--limit N`, `--force`.
 
 1. Seeds: one structured-output call per candidate producing a
    `CandidateSeed`; the prompt receives the names and companies already
@@ -325,10 +326,11 @@ Prerequisites: Node 22 (`nvm use`), dependencies installed,
 `.env.example` in place; keys only from the phase that first needs them.
 
 1. **Contracts** — zod schemas (`candidate.ts`, `answer.ts`, `ask.ts`),
-   the model registry with `displayName`, `provider` and `recommended`,
-   providers, retry, `normalize.ts`, `scripts/check-models.ts`. Done when
-   types compile, `normalize` unit tests pass and `check-models` passes
-   for every entry (needs keys).
+   the model registry with `displayName`, `provider`, `vendor` and
+   `recommended`, providers, retry, `normalize.ts`,
+   `scripts/check-models.ts`. Done when types compile, `normalize` unit
+   tests pass and `check-models` passes for every entry (needs keys).
+   Closed with Open questions 2–5 pending quota.
 2. **Design system** — Design system. Done when `design:lint` reports 0
    errors and 0 warnings, re-running `design:export` produces no diff, and
    all components render in all states in both themes on
@@ -376,6 +378,9 @@ commit.
 | 3 | `alternative` (`gemini-3.6-flash`) fails the latency criterion (5–44 s per call, one 90 s timeout). Decide its replacement before the API phase. | API |
 | 4 | Set the first-output and total limits from the measured P95 time to first token (`check-models`); the values in code are placeholders. | API |
 | 5 | Evaluate `liquid/lfm-2.5-2.6b:free` as a fast middle tier between the primary and Gemini (tools 1.6 s, streaming 0.6 s; one schema failure before the kind rules and repair existed). | Eval |
+| 6 | Add a database: `lib/db` following the vercel/chatbot structure (schema, queries, migrate). Candidate: PGlite + pgvector + Drizzle, to be verified in that phase. | Indexer |
+| 7 | Restructure `lib/` in the vercel/chatbot style: `lib/<domain>`, main file named by its role, no barrel files. | Indexer |
+| 8 | Circuit breaker counts one strike per call, not per attempt (today a 5xx and its failed retry count as two; Model registry, Reliability). | Indexer |
 
 ## Changelog
 
@@ -387,3 +392,4 @@ commit.
 | 1.3     | 2026-09-23 | §5: registry entries gain `vendor` (model maker; UI logos keyed by it, `provider` is routing only); `embed` has a rebuild-only fallback, no fallback at query time. §1: Vitest for unit tests. §4.1: CandidateProfile gains `role` and `seniority` enums; `remote` is a list; `availability` is days (0 = immediate); `degree` is an enum. §4.3: `medianTenureMonths`. `image` fallback moved to the new §15 Open questions, blocking phase 4; Changelog is now §16. |
 | 1.4     | 2026-09-23 | §5: answer ids renamed `fast`/`thorough` → `primary`/`alternative` (slots, no quality claim). `primary` = `nvidia/nemotron-3-super-120b-a12b:free` with fallback `gemini-3.6-flash`; `alternative` = `gemini-3.6-flash` (`gemini-3.8-flash` swaps in once it passes); Gemini 2.5 is closed to new keys. `embed` → `gemini-embedding-2` (256 dims); rebuild-only fallback `nvidia/nemotron-3-embed-1b:free` at 2048 dims. New answer model acceptance criteria and free-tier limits; `recommended` provisional until the eval. §11: eval per model with a side-by-side table (correctness, invented facts, P95 latency), retrieval and composition scored separately; the result sets `recommended`; thresholds: invented candidates = 0 (hard fail), sourcing = 100%, correctness ≥ 90%, and a model that fails any leaves the registry. §8: per-kind payload rules in the compose prompt and schema descriptions; one schema repair call, then the fallback model. §10: neutral "Taking longer than usual…" after ~10 s; repair and fallback are never separate stages. §3/§9: mocks gain a slow (~6 s, repair) and a very slow (~30 s, fallback) path. §15: no free image model; paid candidate and cost recorded. |
 | 1.5     | 2026-09-23 | Slimmed to decisions, phases, done criteria and open questions; other facts are referenced by document and heading instead of repeated, and headings are no longer numbered. Stack lists packages only. Repository layout replaced by the Data access rule. Data model keeps the reasons; field lists live in `src/contracts/`. Model registry keeps decisions, acceptance criteria, embedding rule and limits; model ids and entry shape live in `src/lib/ai/registry.ts`. New Reliability rules: answer and extract calls streamed internally with our own first-output timer, cleared by text, object, reasoning or tool input (the SDK's `firstChunkMs` misses a stall before response headers); one total budget for primary, repair and fallback; caller abort without fallback; failure rules: timeout → fallback without retry, 5xx → one retry after ≤ 1 s jitter then fallback, 429 daily quota → fallback without retry and the breaker opens at once; one schema repair; per-entry circuit breaker (2 timeouts or 5xx in 5 min → 3 min cooldown). Design system shortened to deliverables and done criteria. User interface keeps architecture only, adds the Stop button through the abort signal. Runbook removed (commands live in `AGENTS.md`). Retrieval and answering: compose goes through `runStructured`. Open questions 2–5: answer acceptance run pending quota, `alternative` latency, timer values from measured P95, `lfm-2.5-2.6b` as a middle tier. |
+| 1.6     | 2026-09-23 | Open questions 6–8, blocking the Indexer phase: a database in `lib/db` (vercel/chatbot structure; candidate PGlite + pgvector + Drizzle), `lib/` restructured in the vercel/chatbot style, one breaker strike per call. Stack: no database yet, see Open questions. Reliability: the strike rule references open question 8. Generation pipeline: "3 mixed" → fullstack 1, mobile 1, security 1. Build order, phase 1: registry lists `vendor`; closed with Open questions 2–5 pending quota. |
