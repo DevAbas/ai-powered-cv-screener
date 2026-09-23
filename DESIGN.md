@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: CV Screener
-description: A quiet monochrome recruiting tool with a single orange accent. Tokens follow Material 3 role names.
+description: A quiet monochrome recruiting tool with a single mint accent. Tokens follow Material 3 role names.
 colors:
   surface: "#FCFCFC"
   surface-container-lowest: "#FFFFFF"
@@ -9,15 +9,20 @@ colors:
   surface-container: "#EFEFEF"
   surface-container-high: "#E6E6E6"
   surface-container-highest: "#E0E0E0"
-  outline: "#E6E6E6"
+  outline: "#F3F3F3"
   outline-variant: "#AFAFAF"
   on-surface-variant: "#595959"
   on-surface: "#202020"
-  primary: "#B5591C"
-  primary-hover: "#A64B04"
-  primary-pressed: "#924204"
-  on-primary: "#FFFFFF"
-  primary-outline: "#FFB68E"
+  primary: "#00F8C0"
+  primary-hover: "#16DDAC"
+  primary-pressed: "#08C498"
+  on-primary: "#0A281E"
+  primary-outline: "#2DDCAC"
+  primary-text: "#007C5A"
+  primary-container: "#B1FCDF"
+  on-primary-container: "#004932"
+  inverse-surface: "#202020"
+  inverse-on-surface: "#FCFCFC"
   warning: "#B08A2E"
   error: "#D23B3B"
 typography:
@@ -39,12 +44,12 @@ typography:
     lineHeight: "1.55"
   body-md:
     fontFamily: Google Sans
-    fontSize: 0.875rem
+    fontSize: 1rem
     fontWeight: 400
     lineHeight: "1.5"
   body-sm:
     fontFamily: Google Sans
-    fontSize: 0.8125rem
+    fontSize: 0.875rem
     fontWeight: 400
     lineHeight: "1.45"
   label-lg:
@@ -78,6 +83,11 @@ components:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.on-surface}"
     typography: "{typography.body-md}"
+  question:
+    backgroundColor: "{colors.primary-container}"
+    textColor: "{colors.on-primary-container}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.xl}"
   composer:
     backgroundColor: "{colors.surface-container-lowest}"
     textColor: "{colors.on-surface}"
@@ -117,9 +127,10 @@ components:
   icon:
     textColor: "{colors.on-surface-variant}"
   icon-hover:
+    backgroundColor: "{colors.surface-container-low}"
     textColor: "{colors.on-surface}"
   icon-pressed:
-    backgroundColor: "{colors.surface-container}"
+    backgroundColor: "{colors.surface-container-high}"
     textColor: "{colors.on-surface}"
   icon-disabled:
     textColor: "{colors.outline-variant}"
@@ -137,33 +148,29 @@ components:
     rounded: "{rounded.lg}"
   menu-item:
     textColor: "{colors.on-surface}"
-    typography: "{typography.body-md}"
+    typography: "{typography.body-sm}"
     rounded: "{rounded.sm}"
   menu-item-hover:
     backgroundColor: "{colors.surface-container-low}"
-  menu-item-selected:
-    backgroundColor: "{colors.surface-container-high}"
-    textColor: "{colors.on-surface}"
-  list-item:
-    backgroundColor: "{colors.surface-container-lowest}"
-    textColor: "{colors.on-surface}"
-    typography: "{typography.body-md}"
-  list-item-hover:
-    backgroundColor: "{colors.surface-container-low}"
-  list-item-selected:
-    backgroundColor: "{colors.surface-container-high}"
   link:
     textColor: "{colors.on-surface}"
     typography: "{typography.body-md}"
   link-hover:
-    textColor: "{colors.primary}"
+    textColor: "{colors.primary-text}"
   table-header:
     textColor: "{colors.on-surface-variant}"
     typography: "{typography.label-sm}"
   table-cell:
     textColor: "{colors.on-surface}"
     typography: "{typography.body-md}"
+  tooltip:
+    backgroundColor: "{colors.inverse-surface}"
+    textColor: "{colors.inverse-on-surface}"
+    typography: "{typography.label-md}"
+    rounded: "{rounded.md}"
   divider:
+    backgroundColor: "{colors.outline}"
+  scrollbar:
     backgroundColor: "{colors.outline}"
   state-icon-warning:
     textColor: "{colors.warning}"
@@ -176,36 +183,49 @@ components:
 ## Overview
 
 A screening tool a recruiter keeps open for hours. It should feel like a
-quiet, well-made utility, not a chat app: white, black and one orange.
+quiet, well-made utility: white, black and one mint.
 Soft grey page, white containers, almost no borders, no decoration.
 Density is moderate: answers are lists and tables that must be scannable,
 so type is compact but never cramped. Nothing animates for its own sake.
 
 ## Colors
 
-The palette is three colours: white, black and orange. Every other value is
+The palette is three colours: white, black and mint. Every other value is
 a tone between them. Roles use Material 3 names.
 
 Values were generated with the Radix Colors custom palette tool from three
-seeds: accent `#B5591C`, gray `#8B8B8B`, background `#FCFCFC`. Radix step
-anatomy maps to roles: steps 1–2 surfaces, 3–4 containers, 6 and 8 outlines,
-9–10 the solid accent, 11–12 neutral text.
+seeds: accent `#00F8C0` (`#00FFC6` in dark), gray `#8B8B8B`, background
+`#FCFCFC`. Radix step anatomy maps to roles: steps 1–2 surfaces, 3–4
+containers, 6 and 8 outlines, 11–12 neutral text; for the accent, 4 the
+question tint, 7 the focus ring, 9 the solid fill, 11 accent text, 12 text on
+the tint. Hover and pressed are derived from step 9 (below).
 
-- **Primary (#B5591C):** Burnt orange. The only chromatic colour in the UI.
-  Used for the primary action, the check mark on selected items and link
-  hover. Never for text blocks, content backgrounds or decoration.
-- **Primary pressed (#924204):** The primary button while pressed:
-  `primary-hover` darkened 12%, as Radix has no step past hover for a
-  solid accent.
+- **Primary (#00F8C0):** Mint. The only chromatic colour in the UI, used for
+  the primary action. Never for text blocks, content backgrounds or
+  decoration.
+- **On primary (#0A281E):** Text and icons on `primary`: Radix's contrast
+  colour, since mint is too light for white text.
+- **Primary hover (#16DDAC) and pressed (#08C498):** `primary` with its OKLCH
+  lightness 7 and 14 points lower, same hue and chroma. Radix step 10 is too
+  close to step 9 for this bright accent to read as a hover.
+- **Primary text (#007C5A):** The accent as text or an icon on a surface: the
+  check mark on selected items and link hover. Radix step 11; mint itself is
+  too light to read on the page.
+- **Inverse surface (#202020) and inverse on surface (#FCFCFC):** Tooltips:
+  very dark in light mode, light in dark mode.
+- **Primary container (#B1FCDF):** A light mint tint (Radix step 4): the
+  background of the recruiter's question.
+- **On primary container (#004932):** The question's text on that tint
+  (Radix step 12, the accent's high-contrast text).
 - **Surface (#FCFCFC):** Near-white page background, never pure white.
-- **Surface container lowest (#FFFFFF):** Panels, inputs, menus, the composer.
-- **Surface container low (#F3F3F3):** Hover on rows and menu items.
+- **Surface container lowest (#FFFFFF):** Inputs, menus, the composer.
+- **Surface container low (#F3F3F3):** Hover on menu items and ghost icon buttons.
 - **Surface container (#EFEFEF):** Secondary buttons, the model chip.
-- **Surface container high (#E6E6E6):** Selected rows and menu items; hover on secondary buttons and the model chip.
+- **Surface container high (#E6E6E6):** Hover on secondary buttons and the model chip; ghost icon buttons while pressed.
 - **Surface container highest (#E0E0E0):** Pressed secondary buttons and the model chip. Radix step 5.
 - **On surface (#202020):** Body text. Not pure black.
 - **On surface variant (#595959):** Secondary text, metadata, disabled text and icons at rest.
-- **Outline (#E6E6E6):** Every border and divider. There is one border colour.
+- **Outline (#F3F3F3):** Every border and divider, and scrollbar thumbs. There is one border colour, kept faint.
 - **Outline variant (#AFAFAF):** Disabled icons only.
 - **Warning (#B08A2E) and Error (#D23B3B):** Icons only. Never used as a
   background or for running text.
@@ -218,22 +238,22 @@ One family, Google Sans (SIL OFL), self-hosted. Two working weights, 400 and
 - **headline-lg / headline-md:** page and section titles, one-line summaries.
 - **body-lg:** primary input text.
 - **body-md:** running text, list items, table cells.
-- **body-sm:** secondary lines and metadata.
-- **label-lg / label-md / label-sm:** buttons, menu items, section headers
+- **body-sm:** secondary lines, metadata and menu rows.
+- **label-lg / label-md / label-sm:** buttons, tooltips, section headers
   (label-sm uppercase, letter-spaced).
 
 Lines are never justified. Prefer lists and tables over paragraphs.
 
 ## Layout
 
-Two-panel desktop layout: a fluid conversation panel and a fixed-width pool
-panel, both padded with `spacing.gutter`. Content columns are capped at a
-comfortable reading width and share one left edge. All spacing is a multiple
-of `spacing.base` (0.25rem). Rows inside a list sit close together; blocks
+Single-column layout: the conversation, padded with `spacing.gutter`, with
+the message column capped at a comfortable reading width and the composer
+centred on it, 1rem wider on each side. All spacing is a multiple of half
+`spacing.base` (0.125rem); whole steps are the default, half steps fine-tune
+small controls. Rows inside a list sit close together; blocks
 are separated generously, so density and clarity coexist.
 
-Breakpoints: sm 40rem, md 48rem, lg 64rem, xl 80rem. Below md the panels
-stack and a selected CV takes the full viewport with a back control.
+Breakpoints: sm 40rem, md 48rem, lg 64rem, xl 80rem.
 
 Motion is functional only, 150–200ms. Easings: standard
 `cubic-bezier(0.2, 0, 0, 1)`, decelerate `cubic-bezier(0, 0, 0, 1)` for
@@ -242,65 +262,82 @@ entering elements, accelerate `cubic-bezier(0.3, 0, 1, 1)` for leaving ones.
 ## Elevation & Depth
 
 Depth is tonal first: `surface` → `surface-container-lowest` →
-`surface-container` → `surface-container-high`. Shadows exist in two places
+`surface-container` → `surface-container-high`. Shadows exist in three places
 only: floating input containers use raised
-(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.06)`), menus use overlay
-(`0 0.5rem 2rem rgba(0, 0, 0, 0.10)`).
+(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.06)`), the sticky header uses raised while
+the conversation scrolls beneath it, as a cue that there is more above, and
+menus use overlay (`0 0.5rem 2rem rgba(0, 0, 0, 0.10)`). In dark the same
+shadows use opacity 0.5 (raised) and 0.6 (overlay), since the light values
+are invisible on dark surfaces.
 
 ## Shapes
 
 Soft, with pill-shaped actions. Buttons use `rounded.full`. The largest
-floating container uses `rounded.xl`; menus `rounded.lg`; inputs and containers
-`rounded.md`; menu rows and small controls `rounded.sm`. Links are plain text
+floating container and the question use `rounded.xl`; menus `rounded.lg`;
+inputs, containers and tooltips `rounded.md`; menu rows and small controls
+`rounded.sm`. Links are plain text
 with an underline, never chips.
 
 ## Components
 
-Interactive primitives come from Headless UI and are styled with these tokens
-only; how states are selected is in `AGENTS.md`, Conventions. Icons are
-`lucide-react`, 1rem in text and 1.25rem in buttons.
+Components are styled with these tokens only; which libraries they use and
+how states are selected is in `AGENTS.md`, Conventions. Icons are 1rem in
+text and in `xs` buttons, 1.25rem in other buttons.
 
-- **Buttons:** primary is orange for the single main action; secondary is
+- **Buttons:** primary is mint for the single main action; secondary is
   neutral on `surface-container`. Disabled: `surface-container` background
   with `on-surface-variant` text; the state is carried by the neutral fill,
   the absence of hover and a not-allowed cursor. Pressed goes one tonal step
   past hover: `primary-pressed` for primary, `surface-container-highest` for
-  secondary and the model chip; a ghost icon button shows a
-  `surface-container` circle while pressed.
+  secondary and the model chip. A ghost icon button shows a
+  `surface-container-low` circle on hover and `surface-container-high` while
+  pressed. Sizes: `xs` 1.875rem, `sm` 2rem, `md` 2.25rem tall.
 - **Icons:** `on-surface-variant` at rest, `on-surface` on hover, `outline-variant` when disabled.
 - **Inputs:** no border at rest when placed on `surface`; the background
   step separates them. Focus: 2px `primary-outline` ring.
 - **Composer:** the largest floating container: `surface-container-lowest`,
-  `rounded.xl`, raised shadow. One text input above a bottom row. Left:
-  paperclip, model chip, globe, ellipsis; right: audio-lines and a circular
-  primary send button that becomes Stop while a request runs. Paperclip,
-  globe, ellipsis and audio-lines are disabled. Centred in the empty state;
-  after the first question it sits at the bottom of the conversation panel,
-  as wide as the message column.
+  `rounded.xl`, raised shadow. One text input with a 0.625rem bottom margin,
+  then a 0.625rem gap to a bottom row. Left: model chip, globe, ellipsis;
+  right: audio-lines and a circular primary send button that becomes Stop
+  while a request runs. Globe, ellipsis and audio-lines are disabled. The
+  input grows with the question up to a maximum height, then scrolls.
+  Centred in the empty state; after the first question it sits at the bottom
+  of the conversation, 1rem wider on each side than the message column.
+- **Question:** the recruiter's question sits right-aligned on
+  `primary-container`, `rounded.xl` (half the one-line height, so a single
+  line has fully round ends and a single character is a circle), at least
+  as wide as it is tall and at most 33.75rem (540px) wide.
+  Answers stay unboxed.
 - **Model menu:** the model chip (`surface-container`, `rounded.full`) shows
   the vendor logo, the model name and a chevron. Its menu lists the answer
   models, each with vendor logo and name, and follows the menu rules.
-- **Menus:** white panel with the overlay shadow; rows use `rounded.sm`;
-  hover is `surface-container-low`; the selected row is
-  `surface-container-high` with a `primary` check icon.
-- **Links:** `on-surface` with underline; hover `primary`.
-- **Lists:** rows separated by `outline`; hover is `surface-container-low`,
-  selected is `surface-container-high`; never a coloured background.
+- **Menus:** white panel with the overlay shadow and a little more inner
+  padding than a row's own; rows in `body-sm`, `rounded.sm`; hover is
+  `surface-container-low`; the selected row keeps no background and is
+  marked only by a `primary-text` check icon.
+- **Links:** `on-surface` with underline; hover `primary-text`.
+- **Lists:** rows separated by `outline`; never a coloured background.
+- **Scrollbars:** thin, with a transparent track and an `outline` thumb:
+  visible on a careful look, never competing with content.
 - **Tables:** header in `label-sm` `on-surface-variant`; cells `body-md`;
   horizontal rules only, no vertical rules, no zebra striping.
+- **Tooltips:** a short label on `inverse-surface` with `inverse-on-surface`
+  text, `label-md`, `rounded.md`. Fades in on hover after 150ms and at once on
+  keyboard focus; Escape closes it.
 - **States:** empty, insufficient information, out of scope and error are a
   single line of text with a small leading icon. Colour appears only on the
   warning and error icons.
 
 ## Do's and Don'ts
 
-- Do keep orange for interaction only; if more than one orange element
-  competes for attention on a screen, something is wrong.
+- Do keep solid mint (`primary`) for interaction only; if more than one
+  solid mint element competes for attention, something is wrong. The mint
+  tint (`primary-container`) marks the recruiter's question only.
 - Do use a tonal step before a border, and a border before a shadow.
 - Don't render states as filled or bordered boxes.
-- Don't use chat bubbles, gradients, emoji or decorative illustration.
+- Don't box answers; only the question sits on a tint. No gradients, emoji
+  or decorative illustration.
 - Don't wrap content in cards; whitespace is the container.
-- Don't hardcode colours or sizes in components; every value traces to a
-  token in this file.
+- Every colour, size and radius on screen traces to a token in this file.
 - Don't add a second accent for any purpose.
 - Don't use weights above 500 for running text.

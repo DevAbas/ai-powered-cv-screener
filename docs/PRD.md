@@ -2,7 +2,7 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.5          |
+| Version | 1.7          |
 | Date    | 2026-09-23   |
 | Status  | Approved     |
 | Owner   | Product      |
@@ -118,12 +118,12 @@ answer questions about all of them, so candidate data must capture them.
 Every interface decision is checked against these five.
 
 1. **Evidence, not answers.** Every answer shows which CVs it came from.
-   One click opens the CV at the relevant section.
+   One click opens the CV at the relevant page.
 2. **Built for comparison, not conversation.** Answers favour lists,
    tables and side-by-side layouts over paragraphs. The recruiter is
    filtering, not chatting.
-3. **Context is not lost.** The interface preserves working state: which
-   CVs have been looked at, which are selected, what was asked. Not just a
+3. **Context is not lost.** The conversation keeps every question and
+   answer for the session, and follow-ups build on them. Not just a
    scrollback.
 4. **Uncertainty is visible.** "No match", "not enough information" and
    "outside the pool" are explicit, distinct states. Never a confident
@@ -136,29 +136,24 @@ Every interface decision is checked against these five.
 1. **Entry.** Recruiter opens the tool and sees the pool size and
    suggested questions. Never a blank screen.
 2. **Ask.** Types a question in natural language.
-3. **Wait.** Sees that the pool is being searched, and the answer
-   appearing as it is produced.
+3. **Wait.** Sees that the pool is being searched, step by step, until the
+   answer arrives.
 4. **Answer.** Sees the answer in the shape that fits the question type,
    with sources.
-5. **Verify.** Clicks a source; the CV opens beside the answer, at the
-   relevant part, without losing the conversation.
+5. **Verify.** Clicks a source; the original CV opens in a new tab at the
+   cited page, and the conversation stays as it was.
 6. **Continue.** Asks a follow-up that builds on the previous answer
    ("of those, who speaks German?") or starts a new search.
 7. **Exit.** Can copy an answer.
 
 ## 9. Information architecture
 
-**Desktop (primary): two panels.**
-- Left: the conversation. Messages, sources, empty state, loading state,
-  input.
-- Right: the pool. Shows the CV list by default; shows the selected CV
-  when a source is clicked. Answer and evidence are visible at the same
-  time.
+**One column: the conversation.**
+- Messages with their sources, empty state, loading state and input.
 - Header: product name, pool size, and a light/dark toggle; the default
   follows the system setting and the toggle overrides it.
 
-**Mobile (secondary):** panels stack; the CV opens full-screen with a way
-back to the conversation.
+**Mobile (secondary):** the same column at full width.
 
 ## 10. Functional requirements
 
@@ -171,17 +166,16 @@ back to the conversation.
 - Empty result and out-of-scope are distinct, explicit states.
 
 ### 10.2 Sources
-- A source is shown as a compact, clickable reference to a CV.
-- Clicking opens the CV in the right panel, scrolled to the relevant
-  section when known.
+- A source is shown in the answer as the CV's name and cited page.
+- It links to the original PDF at that page, opened by the browser in a
+  new tab.
 
 ### 10.3 Conversation
 - Follow-up questions use the context of previous answers.
 - The conversation persists for the session.
 
 ### 10.4 Pool
-- The recruiter can see the full list of CVs in the pool and open any of
-  them without asking a question.
+Removed in 1.6: the pool is reached through answers and their sources.
 
 ### 10.5 Model selection
 - The recruiter selects a model by name, shown with the logo of the company
@@ -225,8 +219,7 @@ None open. Resolved in v1.2:
 
 - "Note candidates for follow-up" is deferred; v1 ships "copy an answer"
   only (§8 step 7).
-- The CV preview renders the original PDF, opened at the relevant page
-  (§10.2).
+- Sources open the original PDF at the cited page (§10.2).
 
 ## 14. Changelog
 
@@ -238,3 +231,5 @@ None open. Resolved in v1.2:
 | 1.3     | 2026-09-23 | §10.5: model selected by name with provider icon, recommended preselected, selector in the composer. §9: selector removed from the header. |
 | 1.4     | 2026-09-23 | Light/dark toggle in the header. |
 | 1.5     | 2026-09-23 | Header: conventions in `AGENTS.md`, schemas in `src/contracts`; no stack in PLAN. §10.5: model shown with its maker's logo, not the routing provider's. |
+| 1.6     | 2026-09-23 | Chat only: the pool panel and CV list are removed. §7, §8 step 5, §9, §10.2: sources link to the original PDF at the cited page, opened in a new tab. §10.4 removed. |
+| 1.7     | 2026-09-23 | §8 step 3: progress is shown while searching, then the answer (not streamed text). |

@@ -18,6 +18,8 @@
 
 :root {
   color-scheme: light;
+  --shadow-opacity-raised: 0.06;
+  --shadow-opacity-overlay: 0.1;
 
   @variant dark {
     color-scheme: dark;
@@ -27,24 +29,32 @@
     --color-surface-container: #222222;
     --color-surface-container-high: #2a2a2a;
     --color-surface-container-highest: #313131;
-    --color-outline: #313131;
+    --color-outline: #222222;
     --color-outline-variant: #606060;
     --color-on-surface-variant: #b4b4b4;
     --color-on-surface: #eeeeee;
-    --color-primary: #b5591c;
-    --color-primary-hover: #a64b04;
-    --color-primary-pressed: #924204;
-    --color-on-primary: #ffffff;
-    --color-primary-outline: #6e2f00;
+    --color-primary: #00ffc6;
+    --color-primary-hover: #19e4b2;
+    --color-primary-pressed: #0dcb9d;
+    --color-on-primary: #0a281e;
+    --color-primary-outline: #006f4f;
+    --color-primary-text: #00dfa8;
+    --color-primary-container: #003e29;
+    --color-on-primary-container: #eeeeee;
+    --color-inverse-surface: #eeeeee;
+    --color-inverse-on-surface: #111111;
     --color-warning: #d9ac45;
     --color-error: #e5605c;
+    /* Black at the light opacities is invisible on dark surfaces. */
+    --shadow-opacity-raised: 0.5;
+    --shadow-opacity-overlay: 0.6;
   }
 }
 
 @theme {
-  /* DESIGN.md, Elevation & Depth */
-  --shadow-raised: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.06);
-  --shadow-overlay: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+  /* DESIGN.md, Elevation & Depth; the opacity differs per theme (above). */
+  --shadow-raised: 0 0.25rem 1.5rem rgb(0 0 0 / var(--shadow-opacity-raised));
+  --shadow-overlay: 0 0.5rem 2rem rgb(0 0 0 / var(--shadow-opacity-overlay));
 
   /* DESIGN.md, Layout: motion */
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
@@ -59,9 +69,12 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
 
-  /* DESIGN.md, Layout: reading width of the message column and the fixed pool panel */
-  --container-reading: 46rem;
-  --container-pool: 28rem;
+  /* DESIGN.md, Layout: reading width of the message column and the composer */
+  --container-reading: 50rem;
+  /* DESIGN.md, Layout: the composer, 1rem wider on each side than the column */
+  --container-composer: 52rem;
+  /* DESIGN.md, Components: Question, the widest the question box grows */
+  --container-question: 33.75rem;
 }
 
 @theme inline {

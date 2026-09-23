@@ -2,11 +2,11 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.7                                      |
+| Version | 1.10                                     |
 | Date    | 2026-09-23                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
-| Goal    | Deliver the v1 pilot defined in PRD 1.3  |
+| Goal    | Deliver the v1 pilot defined in PRD 1.6  |
 
 If the code and this document disagree, change this document first, then
 the code. This plan is not extended with new features; a new feature gets
@@ -126,6 +126,9 @@ both themes.
 - Progress stages mirror the tool calls; after ~10 s a neutral "Taking
   longer than usual…" line appears. Schema repair and fallback are never
   shown.
+- Sources link to the CV's PDF at the cited page
+  (`/cvs/<id>.pdf#page=N`), opened by the browser; until the Generation
+  phase they are plain text. No in-app PDF viewer.
 
 ## Evaluation (built last)
 
@@ -148,7 +151,7 @@ A model that fails any threshold leaves the registry.
 1. **Contracts** — closed with Open questions 2–5 pending quota.
 2. **Design system** — done as defined in Design system.
 3. **UI against mocks** — done when every step of the PRD core flow works
-   with mock data on desktop and stacked layouts.
+   with mock data at desktop and mobile widths.
 4. **Generation** — done when 30 unique seeds, photos and PDFs are
    committed and a re-run is a no-op.
 5. **Indexer** — done when the index and embeddings are committed and
@@ -193,3 +196,6 @@ Every phase also ends with build and tests clean.
 | 1.5     | 2026-09-23 | Slimmed; reliability rules; runbook removed. |
 | 1.6     | 2026-09-23 | Open questions 6–8 (database, lib restructure, breaker); full role mix. |
 | 1.7     | 2026-09-23 | Keeps decisions only: implementation details live in code, conventions in `AGENTS.md`, non-goals in the PRD; component previews replace `/dev/components`. |
+| 1.8     | 2026-09-23 | Goal references PRD 1.5. User interface: CV preview is a placeholder until the Generation phase. |
+| 1.9     | 2026-09-23 | Goal references PRD 1.6. User interface: sources link to the PDF at the cited page; no in-app viewer, no pool panel. |
+| 1.10    | 2026-09-23 | Build order, phase 3: desktop and mobile widths (no stacked panels since 1.9). |

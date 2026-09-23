@@ -22,7 +22,7 @@ const preview: Preview = {
     controls: { disable: true },
     actions: { disable: true },
     options: {
-      storySort: { method: "alphabetical", order: ["Components", "Chat", "Pool"] },
+      storySort: { method: "alphabetical", order: ["UI", "Chat", "App"] },
     },
   },
 };

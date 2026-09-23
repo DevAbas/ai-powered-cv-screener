@@ -43,3 +43,6 @@ next-env.d.ts
 
 *storybook.log
 storybook-static
+
+# design:export writes here first, then renames atomically
+/src/styles/tokens.generated.css.tmp

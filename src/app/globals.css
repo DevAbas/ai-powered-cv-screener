@@ -3,7 +3,41 @@
 @import "../styles/tokens.generated.css";
 @import "../styles/theme.css";
 
-/* DESIGN.md `page`. The family is Google Sans via next/font (src/app/fonts.ts). */
+/* DESIGN.md `scrollbar`: thin, transparent track, `outline` thumb, on every scroll area. */
+@layer base {
+  html {
+    /* Reserve the scrollbar's space so the centred column never shifts when the page starts to scroll. */
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-outline) transparent;
+  }
+}
+
+/* Browsers without `scrollbar-color` (older Safari) style the same thumb this way. */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: calc(var(--spacing) * 2);
+    height: calc(var(--spacing) * 2);
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: var(--radius-full);
+    background-color: var(--color-outline);
+  }
+}
+
+/*
+ * DESIGN.md `page`: `colors.surface`, `colors.on-surface`, `typography.body-md`.
+ * Plain CSS reads the exported token variables directly; utility classes are
+ * for markup. The family is Google Sans via next/font (src/app/fonts.ts).
+ */
 body {
-  @apply bg-surface font-sans text-body-md leading-body-md text-on-surface antialiased;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-md);
+  line-height: var(--leading-body-md);
+  font-weight: var(--font-weight-body-md);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

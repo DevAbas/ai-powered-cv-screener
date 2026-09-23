@@ -12,7 +12,7 @@
     "check-models": "tsx scripts/check-models.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "design:export": "design.md export --format css-tailwind DESIGN.md > src/styles/tokens.generated.css",
+    "design:export": "design.md export --format css-tailwind DESIGN.md > src/styles/tokens.generated.css.tmp && mv src/styles/tokens.generated.css.tmp src/styles/tokens.generated.css",
     "design:lint": "tsx scripts/design-lint.mts"
   },
   "dependencies": {
