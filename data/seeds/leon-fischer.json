@@ -1,0 +1,132 @@
+{
+  "name": "Leon Fischer",
+  "headline": "Senior Full-Stack Engineer",
+  "role": "fullstack",
+  "seniority": "senior",
+  "location": "Luxembourg, Luxembourg",
+  "remote": [
+    "remote",
+    "hybrid"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "JavaScript",
+      "years": 7
+    },
+    {
+      "name": "TypeScript",
+      "years": 5
+    },
+    {
+      "name": "React",
+      "years": 6
+    },
+    {
+      "name": "Node.js",
+      "years": 5
+    },
+    {
+      "name": "PostgreSQL",
+      "years": 4
+    },
+    {
+      "name": "Docker",
+      "years": 3
+    }
+  ],
+  "languages": [
+    {
+      "language": "German",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C2"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Luxembourg",
+      "year": 2018
+    }
+  ],
+  "employment": [
+    {
+      "company": "Vesper Cloud Solutions",
+      "title": "Senior Full-Stack Engineer",
+      "industry": "Cloud Computing",
+      "from": "2022-03",
+      "to": null,
+      "description": "Vesper Cloud Solutions builds scalable enterprise cloud infrastructure and web applications.",
+      "stack": [
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Docker"
+      ],
+      "highlights": [
+        "Executed senior fullstack responsibilities in cloud computing using TypeScript, React, Node.js, and Docker.",
+        "Demonstrated leadership in technical tasks without direct staff management."
+      ]
+    },
+    {
+      "company": "Valence Tech",
+      "title": "Full-Stack Engineer",
+      "industry": "Financial Technology",
+      "from": "2019-03",
+      "to": "2022-02",
+      "description": "Valence Tech develops secure financial transaction platforms and payment gateways.",
+      "stack": [
+        "JavaScript",
+        "React",
+        "PostgreSQL"
+      ],
+      "highlights": [
+        "Applied fullstack skills in financial technology using JavaScript, React, and PostgreSQL.",
+        "Contributed to core product features as a fullstack engineer."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "AWS Certified Developer"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages",
+      "skills": [
+        "JavaScript",
+        "TypeScript"
+      ]
+    },
+    {
+      "label": "Frameworks",
+      "skills": [
+        "React",
+        "Node.js"
+      ]
+    },
+    {
+      "label": "Databases and Tools",
+      "skills": [
+        "PostgreSQL",
+        "Docker"
+      ]
+    }
+  ],
+  "summary": "Leon Fischer is a senior full-stack engineer based in Luxembourg with 7 years of total experience. Their expertise covers JavaScript, TypeScript, React, Node.js, PostgreSQL, and Docker. They hold a bachelor degree in Computer Science and bring strong technical experience in cloud computing and financial technology.",
+  "contact": {
+    "email": "leon.fischer@example.com",
+    "phone": "+1-555-028-2828"
+  },
+  "photoPrompt": "A professional headshot of a 30-year-old man with short brown hair, a neutral pleasant expression, wearing a navy blue blazer over a crisp white shirt.",
+  "template": 0
+}

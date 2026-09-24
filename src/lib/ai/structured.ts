@@ -5,15 +5,16 @@ import type { CircuitBreaker } from "./breaker";
 import { modelBreaker } from "./breaker";
 import { languageModel } from "./providers";
 import type { ModelEntry, ModelTarget } from "./registry";
-import { errorStatus, isDailyQuotaError, ModelTimeoutError, shouldFallBack } from "./retry";
+import { isServerError, ModelTimeoutError, shouldFallBack } from "./retry";
+import { runRoute } from "./route";
 
-// Structured output for answer and extract calls (PLAN, Model registry: Reliability):
-// streamed internally so a hung model is detected by our own first-output
-// timer; one schema repair per model; one quick retry after a 5xx; the
-// entry's fallback on timeout, daily quota, other failures or a failed
-// repair; one total budget for primary and fallback; the caller's signal
-// (the UI Stop button) ends everything. The caller receives the complete
-// object once.
+// Structured output for the query rewrite and extraction (PLAN, Model
+// registry: Reliability): streamed internally so a hung model is detected by
+// our own first-output timer; one schema repair per model; one quick retry
+// after a 5xx; the next model on the route (route.ts) on timeout, daily
+// quota, other failures or a failed repair; one total budget for all models;
+// the caller's signal (the UI Stop button) ends everything. The caller
+// receives the complete object once.
 
 export interface CallBudget {
   /** No content-bearing chunk within this time counts as a hung model. */
@@ -66,6 +67,8 @@ export interface StructuredRequest<T> {
   name?: string;
   instructions?: string;
   prompt: string;
+  /** The model's default when unset. */
+  temperature?: number;
   /** Called when the first response fails the schema, before the repair call. */
   onRepair?: (issues: string, rawText: string | undefined) => void;
 }
@@ -79,10 +82,8 @@ export interface StructuredResult<T> {
 export interface AttemptOptions {
   /** Aborts the attempt: the caller's Stop and the total budget. */
   signal?: AbortSignal;
-  /** First-output limit per model call; none when omitted (measurement only). */
+  /** First-output limit per model call; none when omitted. */
   firstOutputMs?: number;
-  /** Time from the start of a model call to its first content-bearing chunk. */
-  onFirstOutput?: (ms: number) => void;
 }
 
 /** One streamed model call. Throws the signal's reason when aborted, a `ModelTimeoutError` when no output arrives in time. */
@@ -92,7 +93,7 @@ async function streamOnce<T>(
   messages: ModelMessage[],
   options: AttemptOptions,
 ): Promise<T> {
-  const { signal, firstOutputMs, onFirstOutput } = options;
+  const { signal, firstOutputMs } = options;
   const firstOutput = new AbortController();
   let timer =
     firstOutputMs === undefined
@@ -102,7 +103,6 @@ async function streamOnce<T>(
     clearTimeout(timer);
     timer = undefined;
   };
-  const started = performance.now();
   let outputSeen = false;
   let streamError: unknown;
 
@@ -112,13 +112,13 @@ async function streamOnce<T>(
       instructions: request.instructions,
       messages,
       output: Output.object({ schema: request.schema, name: request.name }),
+      temperature: request.temperature,
       maxRetries: 0,
       abortSignal: signal ? AbortSignal.any([signal, firstOutput.signal]) : firstOutput.signal,
       onChunk: ({ chunk }) => {
         if (outputSeen || !isFirstOutputChunk(chunk)) return;
         outputSeen = true;
         stopTimer();
-        onFirstOutput?.(performance.now() - started);
       },
       onError: ({ error }) => {
         streamError ??= error;
@@ -171,20 +171,8 @@ export async function generateWithRepair<T>(
   }
 }
 
-/** A server error that arrived before the first-output limit, as opposed to a timeout. */
-function isServerError(error: unknown): boolean {
-  if (error instanceof ModelTimeoutError) return false;
-  const status = errorStatus(error);
-  return status !== undefined && status >= 500;
-}
-
-/** Failures the circuit breaker counts: timeouts and 5xx. */
-function isBreakerFailure(error: unknown): boolean {
-  return error instanceof ModelTimeoutError || isServerError(error);
-}
-
 /** Waits `ms`, or rejects with the signal's reason when it aborts first. */
-function delay(ms: number, signal: AbortSignal): Promise<void> {
+export function delay(ms: number, signal: AbortSignal): Promise<void> {
   return new Promise((resolve, reject) => {
     if (signal.aborted) return reject(signal.reason);
     const onAbort = () => {
@@ -208,7 +196,8 @@ export interface RunOptions {
   modelFor?: (target: ModelTarget) => LanguageModel;
   /** Upper bound of the random wait before the one retry after a 5xx. */
   retryJitterMs?: number;
-  onFallback?: (error: unknown, fallback: ModelTarget) => void;
+  /** A model failed and `next`, the next on the route, takes over. */
+  onFallback?: (error: unknown, next: ModelTarget) => void;
 }
 
 export interface RunResult<T> extends StructuredResult<T> {
@@ -217,15 +206,15 @@ export interface RunResult<T> extends StructuredResult<T> {
 }
 
 /**
- * An answer or extract call for a registry entry, within one total budget:
- * - timeout: no retry, straight to the fallback;
+ * A rewrite or extract call for a registry entry, on its route (route.ts),
+ * within one total budget:
+ * - timeout: no retry, straight to the next model;
  * - 5xx: one retry on the same model after at most `retryJitterMs`, then
- *   the fallback;
- * - daily quota (429 free-models-per-day): no retry, the fallback, and the
- *   entry's breaker opens at once;
+ *   the next model;
+ * - daily quota (429 free-models-per-day): no retry, the next model, and
+ *   the model's breaker opens at once;
  * - other transient failures, an unavailable model or a failed repair: the
- *   fallback.
- * While the entry's breaker is open the primary is skipped.
+ *   next model.
  */
 export async function runStructured<T>(
   entry: ModelEntry,
@@ -244,43 +233,29 @@ export async function runStructured<T>(
   const combined = signal ? AbortSignal.any([signal, total.signal]) : total.signal;
   const attempt: AttemptOptions = { signal: combined, firstOutputMs: budget.firstOutputMs };
 
-  /**
-   * One model, with the single quick retry after a 5xx. Breaker bookkeeping
-   * only for the primary, and once per call: a 5xx and its failed retry are
-   * one strike.
-   */
-  const tryModel = async (target: ModelTarget, isPrimary: boolean): Promise<StructuredResult<T>> => {
+  /** One model, with the single quick retry after a 5xx: the two are one strike for the breaker. */
+  const run = async (target: ModelTarget): Promise<StructuredResult<T>> => {
     for (let retried = false; ; retried = true) {
       try {
         return await generateWithRepair(modelFor(target), request, attempt);
       } catch (error) {
-        if (combined.aborted) throw error;
-        if (!retried && isServerError(error)) {
-          await delay(Math.random() * retryJitterMs, combined);
-          continue;
-        }
-        if (isPrimary && isDailyQuotaError(error)) breaker.trip(entry.id);
-        else if (isPrimary && isBreakerFailure(error)) breaker.recordFailure(entry.id);
-        throw error;
+        if (retried || combined.aborted || !isServerError(error)) throw error;
+        await delay(Math.random() * retryJitterMs, combined);
       }
     }
   };
 
   try {
-    const fallback = entry.fallback;
-    if (!fallback || !breaker.isOpen(entry.id)) {
-      try {
-        const result = await tryModel(entry, true);
-        breaker.recordSuccess(entry.id);
-        return { ...result, target: entry, fellBack: false };
-      } catch (error) {
-        if (signal?.aborted) throw error;
-        if (!fallback || total.signal.aborted || !shouldFallBack(error)) throw error;
-        options.onFallback?.(error, fallback);
-      }
-    }
-    const result = await tryModel(fallback, false);
-    return { ...result, target: fallback, fellBack: true };
+    const { value, target, fellBack } = await runRoute(entry, {
+      breaker,
+      signal: combined,
+      run,
+      canSwitch: shouldFallBack,
+      onFailure: (error, _target, next) => {
+        if (next) options.onFallback?.(error, next);
+      },
+    });
+    return { ...value, target, fellBack };
   } finally {
     clearTimeout(totalTimer);
   }

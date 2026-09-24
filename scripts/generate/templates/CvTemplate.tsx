@@ -5,8 +5,9 @@ import type { TemplateProps } from "./shared";
 
 // One layout, after the sample CV the pilot was given: photo and name at
 // the top, the headline in the accent, a contact line, then sections with
-// uppercase letter-spaced headings over a hairline. Skills carry their years
-// and every job its industry, so the index can read both from the PDF. The accent is the design
+// uppercase letter-spaced headings over a hairline. Skills carry their years,
+// every job its industry and a leader a Leadership section, so the index can
+// read all three from the PDF. The accent is the design
 // system's `primary-text` (DESIGN.md, Colors): the accent as text on a light
 // surface. Variants differ in font and date style only, so the pool's CVs
 // are not byte-for-byte alike (PLAN, Generation pipeline).
@@ -49,6 +50,8 @@ function stylesFor(v: CvVariant) {
       borderBottomColor: RULE,
     },
     inline: { fontSize: 10 },
+    // One box per skill in a wrapping row: a skill and its years move to the next line together.
+    skills: { flexDirection: "row", flexWrap: "wrap", fontSize: 10 },
     job: { marginBottom: 10 },
     jobHead: { flexDirection: "row", justifyContent: "space-between", alignItems: "baseline", marginBottom: 3 },
     jobTitle: { fontSize: 10.5 },
@@ -89,7 +92,14 @@ export function CvTemplate({ seed, photo, variant }: TemplateProps & { variant: 
 
         <View style={s.section}>
           <Text style={s.h2}>Skills</Text>
-          <Text style={s.inline}>{seed.skills.map(formatSkill).join(SEP)}</Text>
+          <View style={s.skills}>
+            {seed.skills.map((skill, i) => (
+              <Text key={skill.name}>
+                {formatSkill(skill)}
+                {i < seed.skills.length - 1 ? SEP : ""}
+              </Text>
+            ))}
+          </View>
         </View>
 
         <View style={s.section}>
@@ -130,6 +140,13 @@ export function CvTemplate({ seed, photo, variant }: TemplateProps & { variant: 
           <Text style={s.h2}>Languages</Text>
           <Text style={s.inline}>{seed.languages.map((l) => `${l.language} (${l.level})`).join(SEP)}</Text>
         </View>
+
+        {seed.leadership.has && seed.leadership.note && (
+          <View style={s.section}>
+            <Text style={s.h2}>Leadership</Text>
+            <Text>{seed.leadership.note}</Text>
+          </View>
+        )}
 
         {seed.certifications.length > 0 && (
           <View style={s.section}>

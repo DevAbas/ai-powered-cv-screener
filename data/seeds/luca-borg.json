@@ -1,0 +1,129 @@
+{
+  "name": "Luca Borg",
+  "headline": "Product Owner",
+  "role": "product",
+  "seniority": "mid",
+  "location": "Valletta, Malta",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 4,
+  "skills": [
+    {
+      "name": "Jira",
+      "years": 4
+    },
+    {
+      "name": "Agile",
+      "years": 4
+    },
+    {
+      "name": "Scrum",
+      "years": 4
+    },
+    {
+      "name": "Figma",
+      "years": 3
+    },
+    {
+      "name": "SQL",
+      "years": 3
+    },
+    {
+      "name": "Product Strategy",
+      "years": 4
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "level": "native"
+    },
+    {
+      "language": "Italian",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Business Administration",
+      "institution": "University of Malta",
+      "year": 2021
+    }
+  ],
+  "employment": [
+    {
+      "company": "Melita Software Solutions",
+      "title": "Product Owner",
+      "industry": "Software",
+      "from": "2023-01",
+      "to": null,
+      "description": "Melita Software Solutions builds enterprise cloud applications for international clients.",
+      "stack": [
+        "Jira",
+        "Agile",
+        "Scrum",
+        "Figma",
+        "Product Strategy"
+      ],
+      "highlights": [
+        "Worked as Product Owner in Software utilizing Jira and Agile.",
+        "Applied Scrum and Figma for Product Strategy initiatives."
+      ]
+    },
+    {
+      "company": "Mediterra Tech",
+      "title": "Junior Product Owner",
+      "industry": "Technology",
+      "from": "2021-07",
+      "to": "2022-12",
+      "description": "Mediterra Tech provides digital platform services across the region.",
+      "stack": [
+        "Jira",
+        "Agile",
+        "SQL",
+        "Product Strategy"
+      ],
+      "highlights": [
+        "Served as Junior Product Owner in Technology using Jira and Agile.",
+        "Utilized SQL and Product Strategy within the Technology sector."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Led Scrum ceremonies and guided cross-functional teams in mid seniority product roles."
+  },
+  "certifications": [
+    "Certified Scrum Product Owner"
+  ],
+  "skillGroups": [
+    {
+      "label": "Methodologies and Management",
+      "skills": [
+        "Jira",
+        "Agile",
+        "Scrum",
+        "Product Strategy"
+      ]
+    },
+    {
+      "label": "Design and Data",
+      "skills": [
+        "Figma",
+        "SQL"
+      ]
+    }
+  ],
+  "summary": "Luca Borg is a mid Product Owner based in Valletta, Malta, with 4 years of total experience. Expertise spans Jira, Agile, Scrum, Figma, SQL, and Product Strategy within the Software and Technology industries. Holds a bachelor degree in Business Administration from University of Malta.",
+  "contact": {
+    "email": "luca.borg@example.com",
+    "phone": "+1-555-026-2626"
+  },
+  "photoPrompt": "A professional headshot of a mid-twenties adult with dark hair, a confident smile, wearing a navy blue collared shirt.",
+  "template": 1
+}

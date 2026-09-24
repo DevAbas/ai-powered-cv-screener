@@ -1,11 +1,14 @@
-// Builds the CV index (PLAN, Indexer): for every PDF in `public/cvs`, text
-// per page, one profile from the `extract` entry, normalised, and the median
-// job tenure. Resumable: an indexed CV is kept unless forced; the index is
-// written after every CV.
+// Builds the CV index (PLAN, Indexer) in two steps:
+//   profiles: for every PDF in `public/cvs`, text per page, one profile from
+//             the `extract` entry, normalised, and the median job tenure,
+//             written to data/index.json after every CV;
+//   vectors:  one vector per indexed CV from the `embed` entry, in Pinecone.
+// Both are resumable: what exists is kept unless forced.
 //
-//   npm run index                               every CV not yet indexed
+//   npm run index                               both steps, for every CV not yet done
 //   npm run index -- --only lena-novak,jane-doe a few CVs
-//   npm run index -- --force                    re-index, e.g. after the PDFs changed
+//   npm run index -- --step vectors             only the vectors, e.g. after changing the embedding model
+//   npm run index -- --force                    redo, e.g. after the PDFs changed
 //   npm run index -- --dry-run                  the work list, no files, no calls
 
 // ESM (see package.json here, which pdf.js needs): a CJS package has no named exports.
@@ -16,25 +19,38 @@ import { missingApiKeys } from "@/lib/ai/providers";
 import { getEntry } from "@/lib/ai/registry";
 import { INDEX_FILE, IndexSchema } from "@/lib/pool/index-file";
 import { cvFileName, cvIdFromFileName } from "@/lib/pool/source-href";
+import { createEmbedder } from "@/lib/ai/embedder";
+import { pineconeStoreFromEnv } from "@/lib/vector/pinecone";
 import { exists, PDFS_DIR, pdfPath, readJson, writeJsonAtomic } from "../generate/fs";
 import { shortError, sleep } from "../generate/options";
 import { extractProfile } from "./extract";
 import { pdfPageTexts } from "./pdf-text";
 import { medianTenureMonths, yearMonthOf } from "./tenure";
+import { syncVectors } from "./vectors";
 
 nextEnv.loadEnvConfig(process.cwd());
 
 /** Pause between calls: OpenRouter's free tier allows 20 requests a minute. */
 const PAUSE_MS = 3_500;
 
+const STEPS = ["profiles", "vectors"] as const;
+type Step = (typeof STEPS)[number];
+
 function parseArgs(argv: string[]) {
-  const known = new Set(["--only", "--force", "--dry-run"]);
+  const known = new Set(["--only", "--step", "--force", "--dry-run"]);
   for (const arg of argv) {
     if (arg.startsWith("--") && !known.has(arg)) throw new Error(`Unknown flag ${arg}`);
   }
-  const i = argv.indexOf("--only");
+  const value = (flag: string) => {
+    const i = argv.indexOf(flag);
+    return i >= 0 ? (argv[i + 1] ?? "").split(",").filter(Boolean) : undefined;
+  };
+  const steps = value("--step") ?? [...STEPS];
+  const unknown = steps.filter((s) => !(STEPS as readonly string[]).includes(s));
+  if (unknown.length) throw new Error(`Unknown step: ${unknown.join(", ")}. Expected one of: ${STEPS.join(", ")}`);
   return {
-    only: i >= 0 ? (argv[i + 1] ?? "").split(",").filter(Boolean) : undefined,
+    only: value("--only"),
+    steps: new Set(steps as Step[]),
     force: argv.includes("--force"),
     dryRun: argv.includes("--dry-run"),
   };
@@ -51,22 +67,29 @@ async function writeIndex(index: Map<string, IndexEntry>): Promise<void> {
   await writeJsonAtomic(INDEX_FILE, [...index.values()].sort((a, b) => a.id.localeCompare(b.id)));
 }
 
-async function main() {
-  const args = parseArgs(process.argv.slice(2));
-  const ids = (await readdir(PDFS_DIR)).flatMap((file) => cvIdFromFileName(file) ?? []).sort();
-  const unknown = args.only?.filter((id) => !ids.includes(id)) ?? [];
-  if (unknown.length) throw new Error(`No CV for: ${unknown.join(", ")}`);
+type Args = ReturnType<typeof parseArgs>;
 
+interface Report {
+  done: string[];
+  skipped: string[];
+  failed: string[];
+}
+
+function summary(step: Step, report: Report, dryRun: boolean): string {
+  const verb = dryRun ? "would do" : "done";
+  const failed = report.failed.length ? ` (${report.failed.join(", ")})` : "";
+  return `${step}: ${verb} ${report.done.length}, skipped ${report.skipped.length}, failed ${report.failed.length}${failed}`;
+}
+
+/** Text per page and one extracted profile per CV, into data/index.json. */
+async function runProfiles(args: Args, ids: readonly string[], index: Map<string, IndexEntry>): Promise<Report> {
   if (!args.dryRun) {
     const entry = getEntry("extract");
     const missing = missingApiKeys([entry.provider, ...(entry.fallback ? [entry.fallback.provider] : [])]);
     if (missing.length) throw new Error(`Set ${missing.join(" and ")} in .env.local (see .env.example).`);
   }
-
-  const index = await readIndex();
-  const report = { done: [] as string[], skipped: [] as string[], failed: [] as string[] };
+  const report: Report = { done: [], skipped: [], failed: [] };
   let calls = 0;
-
   for (const id of ids) {
     if (args.only && !args.only.includes(id)) continue;
     if (!args.force && index.has(id)) {
@@ -74,7 +97,7 @@ async function main() {
       continue;
     }
     if (args.dryRun) {
-      log(id, "would index");
+      log(id, "would extract the profile");
       report.done.push(id);
       continue;
     }
@@ -99,10 +122,57 @@ async function main() {
       log(id, `FAILED: ${shortError(error)}`);
     }
   }
+  return report;
+}
 
-  const verb = args.dryRun ? "would index" : "indexed";
-  console.log(`\nindex: ${verb} ${report.done.length}, skipped ${report.skipped.length}, failed ${report.failed.length}${report.failed.length ? ` (${report.failed.join(", ")})` : ""}`);
-  if (report.failed.length) process.exitCode = 1;
+/** One vector per indexed CV in Pinecone; the index is created on first use. */
+async function runVectors(args: Args, index: Map<string, IndexEntry>): Promise<Report> {
+  const entries = [...index.values()];
+  const wanted = entries.filter((entry) => !args.only || args.only.includes(entry.id));
+  if (args.dryRun) {
+    console.log(`vectors: would embed and store ${wanted.length} CV(s) not yet in Pinecone${args.force ? " (all, forced)" : ""}`);
+    return { done: wanted.map((entry) => entry.id), skipped: [], failed: [] };
+  }
+  const embedEntry = getEntry("embed");
+  const missing = missingApiKeys([embedEntry.provider]);
+  if (missing.length) throw new Error(`Set ${missing.join(" and ")} in .env.local (see .env.example).`);
+  const embedder = createEmbedder(embedEntry);
+  const store = pineconeStoreFromEnv(embedder.dimensions);
+  await store.ensureIndex();
+  const { done, skipped } = await syncVectors(entries, { embedder, store }, { only: args.only, force: args.force });
+  for (const id of done) log(id, `vector stored (${embedEntry.model}, ${embedder.dimensions} dimensions)`);
+  return { done, skipped, failed: [] };
+}
+
+async function main() {
+  const args = parseArgs(process.argv.slice(2));
+  const ids = (await readdir(PDFS_DIR)).flatMap((file) => cvIdFromFileName(file) ?? []).sort();
+  const unknown = args.only?.filter((id) => !ids.includes(id)) ?? [];
+  if (unknown.length) throw new Error(`No CV for: ${unknown.join(", ")}`);
+
+  const index = await readIndex();
+  const summaries: string[] = [];
+  let failed = false;
+
+  if (args.steps.has("profiles")) {
+    console.log(`\n== profiles${args.dryRun ? " (dry run)" : ""} ==`);
+    const report = await runProfiles(args, ids, index);
+    summaries.push(summary("profiles", report, args.dryRun));
+    failed ||= report.failed.length > 0;
+  }
+  if (args.steps.has("vectors")) {
+    console.log(`\n== vectors${args.dryRun ? " (dry run)" : ""} ==`);
+    try {
+      summaries.push(summary("vectors", await runVectors(args, index), args.dryRun));
+    } catch (error) {
+      // Profiles already written are kept; the vectors step can be rerun on its own.
+      summaries.push(`vectors: FAILED: ${shortError(error)}`);
+      failed = true;
+    }
+  }
+
+  console.log(`\n${summaries.join("\n")}`);
+  if (failed) process.exitCode = 1;
 }
 
 main().catch((error: unknown) => {

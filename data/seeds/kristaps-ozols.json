@@ -1,0 +1,135 @@
+{
+  "name": "Kristaps Ozols",
+  "headline": "Backend Engineer",
+  "role": "backend",
+  "seniority": "mid",
+  "location": "Riga, Latvia",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 14,
+  "yearsTotal": 4,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 4
+    },
+    {
+      "name": "Django",
+      "years": 3
+    },
+    {
+      "name": "PostgreSQL",
+      "years": 4
+    },
+    {
+      "name": "Docker",
+      "years": 3
+    },
+    {
+      "name": "Redis",
+      "years": 2
+    },
+    {
+      "name": "Git",
+      "years": 4
+    }
+  ],
+  "languages": [
+    {
+      "language": "Latvian",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Riga Technical University",
+      "year": 2021
+    }
+  ],
+  "employment": [
+    {
+      "company": "Baltic Data Dynamics",
+      "title": "Backend Engineer",
+      "industry": "Software Development",
+      "from": "2023-01",
+      "to": null,
+      "description": "Baltic Data Dynamics builds scalable backend architecture and cloud services for enterprise clients.",
+      "stack": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "Redis",
+        "Docker",
+        "Git"
+      ],
+      "highlights": [
+        "Worked as a mid Backend Engineer in the Software Development industry using Python, Django, PostgreSQL, Redis, Docker, and Git.",
+        "Applied Python, Django, and PostgreSQL to deliver backend solutions with leadership.",
+        "Utilized Docker, Redis, and Git for version control and containerization in Software Development."
+      ]
+    },
+    {
+      "company": "Riga Systems Lab",
+      "title": "Junior Backend Developer",
+      "industry": "Information Technology",
+      "from": "2022-01",
+      "to": "2022-12",
+      "description": "Riga Systems Lab develops internal database tools and web services.",
+      "stack": [
+        "Python",
+        "PostgreSQL",
+        "Git"
+      ],
+      "highlights": [
+        "Worked as a Junior Backend Developer in the Information Technology industry using Python, PostgreSQL, and Git.",
+        "Built database modules with Python and PostgreSQL while practicing Git."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Guided junior developers on backend best practices."
+  },
+  "certifications": [
+    "Certified Python Developer"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and Frameworks",
+      "skills": [
+        "Python",
+        "Django"
+      ]
+    },
+    {
+      "label": "Databases and Caching",
+      "skills": [
+        "PostgreSQL",
+        "Redis"
+      ]
+    },
+    {
+      "label": "DevOps and Tools",
+      "skills": [
+        "Docker",
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Kristaps Ozols is a mid Backend Engineer based in Riga, Latvia with 4 years of total experience. Expertise covers Python, Django, PostgreSQL, Docker, Redis, and Git across the Software Development and Information Technology industries. Demonstrates leadership experience by guiding team members.",
+  "contact": {
+    "email": "kristaps.ozols@example.com",
+    "phone": "+1-555-011-1111"
+  },
+  "photoPrompt": "A professional headshot of a 27-year-old adult with short dark hair, a calm and confident expression, wearing a dark blue button-down shirt.",
+  "template": 1
+}

@@ -21,6 +21,9 @@
   --shadow-opacity-raised: 0.06;
   --shadow-opacity-overlay: 0.1;
   --shadow-opacity-soft: 0.04;
+  /* DESIGN.md, Layout: the empty-state grid's hairlines; thinner in dark,
+     where mint on near-black reads stronger. */
+  --cursor-grid-line-width: 1px;
 
   @variant dark {
     color-scheme: dark;
@@ -50,6 +53,7 @@
     --shadow-opacity-raised: 0.5;
     --shadow-opacity-overlay: 0.6;
     --shadow-opacity-soft: 0.35;
+    --cursor-grid-line-width: 0.5px;
   }
 }
 
@@ -85,6 +89,34 @@
     }
   }
 
+  /* DESIGN.md, Layout: the empty state's entrance. The headline's words fade
+     up one word-stagger apart, "Candidates" last with its highlight growing;
+     then the CV count and the composer, one stagger apart. Each animates from
+     a start state to the element's own style, so hover can still change it
+     afterwards. */
+  --empty-state-stagger: 120ms;
+  --empty-state-word-stagger: 100ms;
+  /* When "Candidates", the fourth word, starts. */
+  --empty-state-word-delay: calc(var(--empty-state-word-stagger) * 3);
+  --empty-state-highlight-hover: 300ms;
+  /* Gentler than decelerate and standard, which spend almost all their
+     movement in the first ~100ms: seen once, the entrance should be seen. */
+  --ease-entrance: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-entrance-highlight: cubic-bezier(0.65, 0, 0.35, 1);
+  --animate-rise: rise 600ms var(--ease-entrance) backwards;
+  --animate-highlight-grow: highlight-grow 700ms var(--ease-entrance-highlight) backwards;
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+  @keyframes highlight-grow {
+    from {
+      transform: scaleY(0.08);
+    }
+  }
+
   /* DESIGN.md, Layout: breakpoints */
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
@@ -97,8 +129,6 @@
   --container-composer: 52rem;
   /* DESIGN.md, Components: Question, the widest the question box grows */
   --container-question: 33.75rem;
-  /* DESIGN.md, Components: File card, its width */
-  --container-file-card: 15.625rem;
   /* DESIGN.md, Components: CV preview, where it opens and its narrowest */
   --container-preview: 30rem;
   --container-preview-min: 20rem;

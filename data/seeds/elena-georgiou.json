@@ -1,0 +1,129 @@
+{
+  "name": "Elena Georgiou",
+  "headline": "Backend Engineer",
+  "role": "backend",
+  "seniority": "mid",
+  "location": "Athens, Greece",
+  "remote": [
+    "remote",
+    "hybrid"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 4,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 4
+    },
+    {
+      "name": "Django",
+      "years": 3
+    },
+    {
+      "name": "PostgreSQL",
+      "years": 4
+    },
+    {
+      "name": "Docker",
+      "years": 3
+    },
+    {
+      "name": "AWS",
+      "years": 3
+    },
+    {
+      "name": "Git",
+      "years": 4
+    }
+  ],
+  "languages": [
+    {
+      "language": "Greek",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "National and Kapodistrian University of Athens",
+      "year": 2021
+    }
+  ],
+  "employment": [
+    {
+      "company": "Aegean Cloud Systems",
+      "title": "Backend Engineer",
+      "industry": "Cloud Computing",
+      "from": "2023-01",
+      "to": null,
+      "description": "Aegean Cloud Systems builds scalable cloud infrastructure and backend services for enterprise clients.",
+      "stack": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "AWS",
+        "Git"
+      ],
+      "highlights": [
+        "Develop backend applications using Python, Django, and PostgreSQL.",
+        "Deploy cloud infrastructure via AWS and manage source code with Git."
+      ]
+    },
+    {
+      "company": "Hellas Digital",
+      "title": "Junior Backend Engineer",
+      "industry": "Software Development",
+      "from": "2021-09",
+      "to": "2022-12",
+      "description": "Hellas Digital develops custom web software and digital products.",
+      "stack": [
+        "Python",
+        "PostgreSQL",
+        "Docker",
+        "Git"
+      ],
+      "highlights": [
+        "Write Python and PostgreSQL queries for web software.",
+        "Containerize services using Docker and track changes with Git."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "AWS Certified Developer"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and Frameworks",
+      "skills": [
+        "Python",
+        "Django"
+      ]
+    },
+    {
+      "label": "Databases and Tools",
+      "skills": [
+        "PostgreSQL",
+        "Docker",
+        "AWS",
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Elena Georgiou is a mid Backend Engineer based in Athens, Greece, with 4 years of total experience. She specializes in Python, Django, PostgreSQL, Docker, AWS, and Git. She holds a bachelor in Computer Science and has worked in the Cloud Computing and Software Development industries.",
+  "contact": {
+    "email": "elena.georgiou@example.com",
+    "phone": "+1-555-008-0808"
+  },
+  "photoPrompt": "A professional headshot of a woman in her late twenties with dark hair, warm smile, wearing a navy blue blazer against a neutral gray background.",
+  "template": 1
+}

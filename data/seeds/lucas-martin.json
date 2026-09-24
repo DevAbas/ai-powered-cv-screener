@@ -1,0 +1,135 @@
+{
+  "name": "Lucas Martin",
+  "headline": "Senior Data Engineer",
+  "role": "data",
+  "seniority": "senior",
+  "location": "Paris, France",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "European Union Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 7
+    },
+    {
+      "name": "SQL",
+      "years": 7
+    },
+    {
+      "name": "Apache Spark",
+      "years": 5
+    },
+    {
+      "name": "Airflow",
+      "years": 4
+    },
+    {
+      "name": "AWS",
+      "years": 5
+    },
+    {
+      "name": "Docker",
+      "years": 3
+    }
+  ],
+  "languages": [
+    {
+      "language": "French",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "master",
+      "field": "Computer Science",
+      "institution": "Sorbonne University",
+      "year": 2017
+    }
+  ],
+  "employment": [
+    {
+      "company": "Seine Data Labs",
+      "title": "Senior Data Engineer",
+      "industry": "Data Analytics",
+      "from": "2021-03",
+      "to": null,
+      "description": "Seine Data Labs builds analytics software and data infrastructure for enterprise clients in Europe.",
+      "stack": [
+        "Python",
+        "SQL",
+        "Apache Spark",
+        "Airflow",
+        "AWS",
+        "Docker"
+      ],
+      "highlights": [
+        "Worked as a Senior Data Engineer using Python, SQL, Spark, Airflow, AWS, and Docker.",
+        "Demonstrated leadership with technical mentoring and system design oversight."
+      ]
+    },
+    {
+      "company": "Lutetia Tech",
+      "title": "Data Engineer",
+      "industry": "Software Development",
+      "from": "2019-01",
+      "to": "2021-02",
+      "description": "Lutetia Tech provides cloud hosting and data processing pipelines for web applications.",
+      "stack": [
+        "Python",
+        "SQL",
+        "AWS",
+        "Docker"
+      ],
+      "highlights": [
+        "Worked as a Data Engineer utilizing Python, SQL, AWS, and Docker.",
+        "Delivered data ingestion pipelines and cloud storage solutions."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Mentored junior data engineers and led cloud migration initiatives."
+  },
+  "certifications": [
+    "AWS Certified Solutions Architect"
+  ],
+  "skillGroups": [
+    {
+      "label": "Programming and Querying",
+      "skills": [
+        "Python",
+        "SQL"
+      ]
+    },
+    {
+      "label": "Big Data and Orchestration",
+      "skills": [
+        "Apache Spark",
+        "Airflow"
+      ]
+    },
+    {
+      "label": "Cloud and Containers",
+      "skills": [
+        "AWS",
+        "Docker"
+      ]
+    }
+  ],
+  "summary": "Lucas Martin is a Senior Data Engineer based in Paris, France, with 7 years of total experience. Expertise spans Python, SQL, Spark, Airflow, AWS, and Docker across Data Analytics and Software Development industries. Proven leadership background including mentoring and guiding technical projects. Holds a Master degree in Computer Science from Sorbonne University.",
+  "contact": {
+    "email": "lucas.martin@example.com",
+    "phone": "+1-555-013-1313"
+  },
+  "photoPrompt": "A professional headshot of a 30-year-old male engineer with short brown hair, a neutral pleasant expression, wearing a navy blue blazer over a light grey shirt.",
+  "template": 0
+}

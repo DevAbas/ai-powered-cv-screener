@@ -1,0 +1,129 @@
+{
+  "name": "Sara Lindqvist",
+  "headline": "Senior Product Manager",
+  "role": "product",
+  "seniority": "senior",
+  "location": "Stockholm, Sweden",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 30,
+  "yearsTotal": 8,
+  "skills": [
+    {
+      "name": "Product Strategy",
+      "years": 8
+    },
+    {
+      "name": "Roadmapping",
+      "years": 8
+    },
+    {
+      "name": "Agile Methodologies",
+      "years": 8
+    },
+    {
+      "name": "Market Research",
+      "years": 7
+    },
+    {
+      "name": "Data Analytics",
+      "years": 7
+    },
+    {
+      "name": "User Testing",
+      "years": 6
+    }
+  ],
+  "languages": [
+    {
+      "language": "Swedish",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C2"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Business Administration",
+      "institution": "Stockholm University",
+      "year": 2018
+    }
+  ],
+  "employment": [
+    {
+      "company": "Fjall Cloud Systems",
+      "title": "Senior Product Manager",
+      "industry": "Cloud Computing",
+      "from": "2021-06",
+      "to": null,
+      "description": "Fjall Cloud Systems builds enterprise cloud infrastructure tools for modern businesses.",
+      "stack": [
+        "Product Strategy",
+        "Roadmapping",
+        "Agile Methodologies",
+        "Data Analytics"
+      ],
+      "highlights": [
+        "Executed Product Strategy and Roadmapping for cloud infrastructure tools.",
+        "Applied Agile Methodologies and Data Analytics in the Cloud Computing industry."
+      ]
+    },
+    {
+      "company": "Barken Media",
+      "title": "Product Manager",
+      "industry": "Digital Media",
+      "from": "2018-09",
+      "to": "2021-05",
+      "description": "Barken Media develops content delivery and audience engagement platforms.",
+      "stack": [
+        "Product Strategy",
+        "Market Research",
+        "User Testing",
+        "Agile Methodologies"
+      ],
+      "highlights": [
+        "Conducted Market Research and User Testing within Digital Media.",
+        "Leveraged Product Strategy and Agile Methodologies to deliver products."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Guided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing industry."
+  },
+  "certifications": [
+    "Certified Scrum Product Owner",
+    "Professional Scrum Master I"
+  ],
+  "skillGroups": [
+    {
+      "label": "Product Management",
+      "skills": [
+        "Product Strategy",
+        "Roadmapping",
+        "Agile Methodologies"
+      ]
+    },
+    {
+      "label": "Research and Analysis",
+      "skills": [
+        "Market Research",
+        "Data Analytics",
+        "User Testing"
+      ]
+    }
+  ],
+  "summary": "Sara Lindqvist is a Senior Product Manager with 8.0 years of experience in product strategy, roadmapping, and data analytics. Based in Stockholm, Sweden, Sara has applied agile methodologies and user testing across cloud computing and digital media industries. Educational background includes a bachelor degree in business administration from Stockholm University.",
+  "contact": {
+    "email": "sara.lindqvist@example.com",
+    "phone": "+1-555-025-2525"
+  },
+  "photoPrompt": "A professional headshot of a 31-year-old woman with shoulder-length blonde hair, a confident and friendly expression, wearing a dark navy blazer over a simple white blouse.",
+  "template": 0
+}

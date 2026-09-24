@@ -1,0 +1,135 @@
+{
+  "name": "Jonas Weber",
+  "headline": "Lead Data Engineer",
+  "role": "data",
+  "seniority": "lead",
+  "location": "Munich, Germany",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 10,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 10
+    },
+    {
+      "name": "SQL",
+      "years": 10
+    },
+    {
+      "name": "Apache Spark",
+      "years": 7
+    },
+    {
+      "name": "AWS",
+      "years": 6
+    },
+    {
+      "name": "Docker",
+      "years": 5
+    },
+    {
+      "name": "Airflow",
+      "years": 5
+    }
+  ],
+  "languages": [
+    {
+      "language": "German",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Technical University of Munich",
+      "year": 2014
+    }
+  ],
+  "employment": [
+    {
+      "company": "Bavaria Data Solutions",
+      "title": "Lead Data Engineer",
+      "industry": "Enterprise Software",
+      "from": "2021-01",
+      "to": null,
+      "description": "Bavaria Data Solutions develops large-scale analytics pipelines for enterprise clients.",
+      "stack": [
+        "Python",
+        "SQL",
+        "Apache Spark",
+        "AWS",
+        "Docker",
+        "Airflow"
+      ],
+      "highlights": [
+        "Led data engineering initiatives as Lead Data Engineer using Python, SQL, Apache Spark, AWS, Docker, and Airflow.",
+        "Managed enterprise software data workflows."
+      ]
+    },
+    {
+      "company": "Alpine Analytics Corp",
+      "title": "Senior Data Engineer",
+      "industry": "Financial Technology",
+      "from": "2016-03",
+      "to": "2020-12",
+      "description": "Alpine Analytics Corp builds financial data processing tools.",
+      "stack": [
+        "Python",
+        "SQL",
+        "Apache Spark",
+        "AWS"
+      ],
+      "highlights": [
+        "Worked as Senior Data Engineer utilizing Python, SQL, Apache Spark, and AWS.",
+        "Delivered financial technology data pipelines."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Led engineering teams as a Lead Data Engineer across enterprise software projects."
+  },
+  "certifications": [
+    "AWS Certified Data Analytics"
+  ],
+  "skillGroups": [
+    {
+      "label": "Programming and Query Languages",
+      "skills": [
+        "Python",
+        "SQL"
+      ]
+    },
+    {
+      "label": "Big Data and Orchestration",
+      "skills": [
+        "Apache Spark",
+        "Airflow"
+      ]
+    },
+    {
+      "label": "Cloud and Infrastructure",
+      "skills": [
+        "AWS",
+        "Docker"
+      ]
+    }
+  ],
+  "summary": "Jonas Weber is a Lead Data Engineer based in Munich, Germany, with 10 years of experience in enterprise software and financial technology. They specialize in Python, SQL, Apache Spark, AWS, Docker, and Airflow. They have formal leadership experience managing technical teams and hold a degree in Computer Science.",
+  "contact": {
+    "email": "jonas.weber@example.com",
+    "phone": "+1-555-015-1515"
+  },
+  "photoPrompt": "A professional headshot of a 33-year-old man with short brown hair, a confident neutral expression, wearing a navy blue blazer over a crisp white shirt.",
+  "template": 2
+}

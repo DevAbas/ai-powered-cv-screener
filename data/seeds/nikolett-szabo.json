@@ -1,0 +1,133 @@
+{
+  "name": "Nikolett Szabó",
+  "headline": "Data Scientist",
+  "role": "data",
+  "seniority": "mid",
+  "location": "Budapest, Hungary",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 30,
+  "yearsTotal": 4,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 4
+    },
+    {
+      "name": "SQL",
+      "years": 4
+    },
+    {
+      "name": "Pandas",
+      "years": 3
+    },
+    {
+      "name": "scikit-learn",
+      "years": 3
+    },
+    {
+      "name": "Tableau",
+      "years": 3
+    },
+    {
+      "name": "Git",
+      "years": 4
+    }
+  ],
+  "languages": [
+    {
+      "language": "Hungarian",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Data Science",
+      "institution": "Corvinus University of Budapest",
+      "year": 2021
+    }
+  ],
+  "employment": [
+    {
+      "company": "Pannonia Analytics",
+      "title": "Data Scientist",
+      "industry": "Analytics",
+      "from": "2023-01",
+      "to": null,
+      "description": "Pannonia Analytics builds predictive data solutions for retail and finance clients.",
+      "stack": [
+        "Python",
+        "SQL",
+        "scikit-learn",
+        "Git"
+      ],
+      "highlights": [
+        "Apply Python and Scikit-Learn as a mid Data Scientist in the Analytics industry.",
+        "Utilize SQL and Git during daily development tasks."
+      ]
+    },
+    {
+      "company": "Budapest Data Corp",
+      "title": "Junior Data Analyst",
+      "industry": "Technology",
+      "from": "2022-01",
+      "to": "2022-12",
+      "description": "Budapest Data Corp provides data processing and reporting tools for local enterprises.",
+      "stack": [
+        "Python",
+        "SQL",
+        "Pandas",
+        "Tableau"
+      ],
+      "highlights": [
+        "Developed reports in Tableau and Pandas for the Technology industry.",
+        "Wrote queries in SQL and scripts in Python."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "Certified Data Scientist"
+  ],
+  "skillGroups": [
+    {
+      "label": "Programming and Query",
+      "skills": [
+        "Python",
+        "SQL"
+      ]
+    },
+    {
+      "label": "Data Libraries",
+      "skills": [
+        "Pandas",
+        "scikit-learn"
+      ]
+    },
+    {
+      "label": "Visualization and Tools",
+      "skills": [
+        "Tableau",
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Nikolett Szabó is a mid Data Scientist based in Budapest, Hungary with 4 years of total experience. Expertise spans Python, SQL, Pandas, Scikit-Learn, Tableau, and Git within the Analytics and Technology industries. Education includes a bachelor degree in Data Science from Corvinus University of Budapest.",
+  "contact": {
+    "email": "nikolett.szabo@example.com",
+    "phone": "+1-555-014-1414"
+  },
+  "photoPrompt": "Professional headshot of a 27-year-old woman with shoulder-length dark brown hair, a neutral friendly expression, wearing a smart casual blue blazer.",
+  "template": 1
+}

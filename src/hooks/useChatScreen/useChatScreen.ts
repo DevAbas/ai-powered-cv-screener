@@ -23,9 +23,16 @@ export function useChatScreen() {
       { question, model: state.model, history: historyFrom(previous) },
       {
         onEvent(event) {
-          if (event.type === "progress") dispatch({ type: "progress", exchangeId, stage: event.stage, message: event.message });
-          else if (event.type === "answer") dispatch({ type: "answered", exchangeId, answer: event.answer });
-          else dispatch({ type: "failed", exchangeId, message: event.message, retryable: event.retryable });
+          switch (event.type) {
+            case "progress":
+              return dispatch({ type: "progress", exchangeId, stage: event.stage, message: event.message });
+            case "delta":
+              return dispatch({ type: "delta", exchangeId, text: event.text });
+            case "answer":
+              return dispatch({ type: "answered", exchangeId, text: event.text, view: event.view, sources: event.sources, checked: event.checked });
+            case "error":
+              return dispatch({ type: "failed", exchangeId, message: event.message, retryable: event.retryable });
+          }
         },
         onSlow: () => dispatch({ type: "slowNotice", exchangeId }),
         onStopped: () => dispatch({ type: "stopped", exchangeId }),

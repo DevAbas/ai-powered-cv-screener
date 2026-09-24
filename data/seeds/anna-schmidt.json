@@ -1,0 +1,128 @@
+{
+  "name": "Anna Schmidt",
+  "headline": "Platform Engineer",
+  "role": "devops",
+  "seniority": "mid",
+  "location": "Vienna, Austria",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 30,
+  "yearsTotal": 4,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 4
+    },
+    {
+      "name": "Docker",
+      "years": 4
+    },
+    {
+      "name": "Kubernetes",
+      "years": 3
+    },
+    {
+      "name": "Terraform",
+      "years": 3
+    },
+    {
+      "name": "AWS",
+      "years": 4
+    },
+    {
+      "name": "Linux",
+      "years": 4
+    }
+  ],
+  "languages": [
+    {
+      "language": "German",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Technical University of Vienna",
+      "year": 2021
+    }
+  ],
+  "employment": [
+    {
+      "company": "Semmering Cloud Tech",
+      "title": "Platform Engineer",
+      "industry": "Cloud Infrastructure",
+      "from": "2023-01",
+      "to": null,
+      "description": "Semmering Cloud Tech builds resilient infrastructure platforms for European enterprises.",
+      "stack": [
+        "Python",
+        "Kubernetes",
+        "Terraform",
+        "AWS",
+        "Linux"
+      ],
+      "highlights": [
+        "Performed Platform Engineer duties at Semmering Cloud Tech in the Cloud Infrastructure industry.",
+        "Utilized Python, Kubernetes, Terraform, AWS, and Linux to manage infrastructure platforms."
+      ]
+    },
+    {
+      "company": "Alps Cyber Systems",
+      "title": "Junior DevOps Engineer",
+      "industry": "Cyber Security",
+      "from": "2022-01",
+      "to": "2022-12",
+      "description": "Alps Cyber Systems develops secure networking and containerization solutions.",
+      "stack": [
+        "Docker",
+        "Linux",
+        "Python"
+      ],
+      "highlights": [
+        "Served as Junior DevOps Engineer in the Cyber Security industry at Alps Cyber Systems.",
+        "Applied Docker, Linux, and Python to support secure system operations."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "AWS Certified Solutions Architect"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and OS",
+      "skills": [
+        "Python",
+        "Linux"
+      ]
+    },
+    {
+      "label": "Infrastructure and Cloud",
+      "skills": [
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "AWS"
+      ]
+    }
+  ],
+  "summary": "Anna Schmidt is a mid-level Platform Engineer based in Vienna, Austria, with 4 years of total experience. She specializes in Python, Docker, Kubernetes, Terraform, AWS, and Linux. Her background spans the Cloud Infrastructure and Cyber Security industries with a focus on DevOps practices.",
+  "contact": {
+    "email": "anna.schmidt@example.com",
+    "phone": "+1-555-020-2020"
+  },
+  "photoPrompt": "A professional headshot of a woman in her late 20s with shoulder-length brown hair, a neutral expression, and wearing a dark blazer.",
+  "template": 1
+}

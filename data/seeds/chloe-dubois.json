@@ -1,0 +1,128 @@
+{
+  "name": "Chloé Dubois",
+  "headline": "QA Automation Engineer",
+  "role": "qa",
+  "seniority": "mid",
+  "location": "Lyon, France",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "European Union Citizen",
+  "availability": 30,
+  "yearsTotal": 3.5,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 3.5
+    },
+    {
+      "name": "Selenium",
+      "years": 3
+    },
+    {
+      "name": "PyTest",
+      "years": 3
+    },
+    {
+      "name": "Postman",
+      "years": 2.5
+    },
+    {
+      "name": "Docker",
+      "years": 2
+    },
+    {
+      "name": "Git",
+      "years": 3.5
+    }
+  ],
+  "languages": [
+    {
+      "language": "French",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Lyon",
+      "year": 2021
+    }
+  ],
+  "employment": [
+    {
+      "company": "Rhone Quality Systems",
+      "title": "QA Automation Engineer",
+      "industry": "Software Testing",
+      "from": "2023-03",
+      "to": null,
+      "description": "Rhone Quality Systems builds automated test frameworks and quality assurance pipelines for enterprise web applications.",
+      "stack": [
+        "Python",
+        "Selenium",
+        "PyTest",
+        "Docker",
+        "Git"
+      ],
+      "highlights": [
+        "Engineered automated test cases using Python and Selenium.",
+        "Executed regression suites with PyTest inside Docker containers."
+      ]
+    },
+    {
+      "company": "Saone Tech Labs",
+      "title": "Junior QA Engineer",
+      "industry": "Software Testing",
+      "from": "2021-09",
+      "to": "2023-02",
+      "description": "Saone Tech Labs provides manual and automated testing services for digital commerce platforms.",
+      "stack": [
+        "Python",
+        "Postman",
+        "Git"
+      ],
+      "highlights": [
+        "Tested REST APIs using Postman.",
+        "Tracked source code versions and test scripts using Git."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "Certified Tester Foundation Level"
+  ],
+  "skillGroups": [
+    {
+      "label": "Programming and Testing",
+      "skills": [
+        "Python",
+        "Selenium",
+        "PyTest"
+      ]
+    },
+    {
+      "label": "Tools and DevOps",
+      "skills": [
+        "Postman",
+        "Docker",
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Chloé Dubois is a mid-level QA Automation Engineer based in Lyon, France with 3.5 years of experience. Expertise includes Python, Selenium, PyTest, Postman, Docker, and Git in the software testing industry. Education includes a bachelor degree in Computer Science from University of Lyon.",
+  "contact": {
+    "email": "chloe.dubois@example.com",
+    "phone": "+1-555-022-2222"
+  },
+  "photoPrompt": "A professional headshot of a 27-year-old woman with dark hair tied back, smiling faintly, wearing a dark blue blazer against a neutral grey background.",
+  "template": 0
+}

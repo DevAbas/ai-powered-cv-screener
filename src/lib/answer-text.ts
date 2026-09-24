@@ -1,43 +1,108 @@
-import type { Answer, AnswerCandidate } from "@/contracts/answer";
+import type { CandidateProfile, Degree, LanguageLevel, WorkMode } from "@/contracts/candidate";
+import type { AnswerStatus, AnswerView, SkillYears } from "@/contracts/view";
 
-// Plain-text form of an answer for "copy an answer" (PRD, Core flow: Exit).
+// An answer and its view in words (DESIGN.md, Answer views): the list
+// caption, the facts each view shows, and the whole answer as plain text, the
+// context a follow-up question is asked in. The components and the plain
+// text share these, so they always agree.
 
-const source = (name: string, page: number) => `(${name}, CV p. ${page})`;
+type ListView = Extract<AnswerView, { kind: "list" }>;
 
-function candidateLines(candidates: readonly AnswerCandidate[], ordered: boolean): string[] {
-  return candidates.map((c, i) => `${ordered ? `${i + 1}.` : "-"} ${c.name}: ${c.reason} ${source(c.name, c.page)}`);
+const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+
+/** "Python 10 yrs", "Go 1 yr", or "Rust —" when the CV gives no years. */
+export function skillLabel({ skill, years }: SkillYears): string {
+  return years === null ? `${skill} —` : `${skill} ${years} ${years === 1 ? "yr" : "yrs"}`;
 }
 
-/** `nameOf` resolves a candidate id to a display name (compare, fact and profile carry ids only). */
-export function answerToText(answer: Answer, nameOf: (id: string) => string): string {
-  const lines = [answer.summary];
-  switch (answer.kind) {
-    case "filter":
-    case "rank":
-    case "count":
-      if (answer.candidates?.length) lines.push("", ...candidateLines(answer.candidates, answer.kind === "rank"));
-      break;
-    case "compare": {
-      const comparison = answer.comparison;
-      if (!comparison) break;
-      const [a, b] = comparison.candidateIds.map(nameOf);
-      lines.push("", ...comparison.rows.map((r) => `${r.criterion}: ${a}: ${r.a}; ${b}: ${r.b}`));
-      break;
-    }
-    case "fact":
-      if (answer.fact) lines.push("", `${answer.fact.text} ${source(nameOf(answer.fact.candidateId), answer.fact.page)}`);
-      break;
-    case "profile":
-      if (!answer.profile) break;
-      lines.push("", answer.profile.headline);
-      for (const section of answer.profile.sections) {
-        lines.push("", `${section.title}:`, ...section.items.map((item) => `- ${item}`));
-      }
-      break;
-    case "empty":
+/** "16 candidates · most Python experience first"; none for a single row, which needs no caption. */
+export function listCaption(view: ListView): string | undefined {
+  if (view.rows.length < 2) return undefined;
+  const count = plural(view.rows.length, "candidate");
+  if (view.ranked) return `${count} · best fit first`;
+  const first = view.skills[0];
+  return first ? `${count} · most ${first} experience first` : count;
+}
+
+/** What a state says when the model wrote nothing. */
+export function statusText(status: AnswerStatus): string {
+  switch (status) {
+    case "no-match":
+      return "No candidate matches this.";
     case "insufficient":
-    case "out_of_scope":
-      break;
+      return "The CVs don't say enough to answer this.";
+    case "out-of-scope":
+      return "That isn't about the candidates. Ask about their skills, experience, languages or education.";
   }
-  return lines.join("\n");
+}
+
+const DEGREES: Record<Degree, string> = {
+  associate: "Associate degree",
+  bachelor: "Bachelor's",
+  master: "Master's",
+  doctorate: "Doctorate",
+  other: "Degree",
+};
+
+const WORK_MODES: Record<WorkMode, string> = { onsite: "on-site", hybrid: "hybrid", remote: "remote", relocation: "open to relocation" };
+
+const levelLabel = (level: LanguageLevel) => (level === "native" ? "native" : level);
+const capitalise = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+const year = (month: string | null) => (month ? month.slice(0, 4) : "now");
+
+/** The facts of a profile, one line each, as the profile and the comparison show them. */
+export const profileFacts = {
+  summary: (p: CandidateProfile) => `${p.headline} · ${p.location} · ${plural(p.yearsTotal, "year")} of experience`,
+  seniority: (p: CandidateProfile) => `${capitalise(p.seniority)} · ${plural(p.yearsTotal, "year")}`,
+  skills: (p: CandidateProfile, max = 8) =>
+    [...p.skills]
+      .sort((a, b) => (b.years ?? -1) - (a.years ?? -1))
+      .slice(0, max)
+      .map((s) => skillLabel({ skill: s.name, years: s.years ?? null }))
+      .join(" · "),
+  languages: (p: CandidateProfile) => p.languages.map((l) => `${l.language} (${levelLabel(l.level)})`).join(" · "),
+  education: (p: CandidateProfile) => p.education.map((e) => `${DEGREES[e.degree]} in ${e.field}, ${e.institution}, ${e.year}`).join(" · "),
+  experience: (p: CandidateProfile, max = 2) =>
+    p.employment
+      .slice(0, max)
+      .map((e) => `${e.title}, ${e.company}, ${year(e.from)}–${year(e.to)}`)
+      .join(" · "),
+  notice: (p: CandidateProfile) => (p.availability === 0 ? "Immediately" : plural(p.availability, "day")),
+  work: (p: CandidateProfile) => capitalise(p.remote.map((mode) => WORK_MODES[mode]).join(", ")),
+};
+
+/** A view as plain lines, each CV with the page its file card opens. */
+export function viewLines(view: AnswerView): string[] {
+  switch (view.kind) {
+    case "list": {
+      const caption = listCaption(view);
+      const rows = view.rows.map((row, i) => {
+        const parts = [row.name, row.headline, ...row.skills.map(skillLabel), row.note].filter(Boolean);
+        return `${view.ranked ? `${i + 1}.` : "-"} ${parts.join(" — ")} (CV p. ${row.page})`;
+      });
+      return caption ? [caption, ...rows] : rows;
+    }
+    case "comparison":
+      return view.candidates.map(({ profile, skills, page }) => `- ${[profile.name, profile.headline, profile.location, ...skills.map(skillLabel)].join(" — ")} (CV p. ${page})`);
+    case "profile": {
+      const { profile, page } = view.candidate;
+      return [
+        `${profile.name} — ${profileFacts.summary(profile)} (CV p. ${page})`,
+        `Skills: ${profileFacts.skills(profile)}`,
+        `Languages: ${profileFacts.languages(profile)}`,
+        `Education: ${profileFacts.education(profile)}`,
+        `Experience: ${profileFacts.experience(profile)}`,
+        `Notice: ${profileFacts.notice(profile)} · ${profileFacts.work(profile)}`,
+      ];
+    }
+    case "status":
+      return [];
+  }
+}
+
+/** The whole answer as plain text: what the model wrote, then its view. */
+export function answerAsText(text: string, view?: AnswerView): string {
+  const written = text.trim() || (view?.kind === "status" ? statusText(view.status) : "");
+  const lines = view ? viewLines(view) : [];
+  return [written, lines.join("\n")].filter(Boolean).join("\n\n");
 }

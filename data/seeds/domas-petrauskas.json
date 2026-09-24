@@ -1,0 +1,133 @@
+{
+  "name": "Domas Petrauskas",
+  "headline": "Junior Backend Developer",
+  "role": "backend",
+  "seniority": "junior",
+  "location": "Vilnius, Lithuania",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 14,
+  "yearsTotal": 1.5,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 1.5
+    },
+    {
+      "name": "FastAPI",
+      "years": 1
+    },
+    {
+      "name": "PostgreSQL",
+      "years": 1.5
+    },
+    {
+      "name": "Docker",
+      "years": 1
+    },
+    {
+      "name": "Git",
+      "years": 1.5
+    },
+    {
+      "name": "Linux",
+      "years": 1
+    }
+  ],
+  "languages": [
+    {
+      "language": "Lithuanian",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Software Engineering",
+      "institution": "Vilnius University",
+      "year": 2024
+    }
+  ],
+  "employment": [
+    {
+      "company": "Vilnius Cloud Systems",
+      "title": "Junior Backend Developer",
+      "industry": "Cloud Computing",
+      "from": "2025-01",
+      "to": null,
+      "description": "Vilnius Cloud Systems builds scalable cloud infrastructure tools and backend services for enterprise clients.",
+      "stack": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "highlights": [
+        "Develop backend microservices using Python and FastAPI in the cloud computing industry.",
+        "Manage PostgreSQL databases and containerize applications with Docker as a Junior Backend Developer."
+      ]
+    },
+    {
+      "company": "Baltic Tech Labs",
+      "title": "Junior Software Developer",
+      "industry": "Information Technology",
+      "from": "2024-03",
+      "to": "2024-12",
+      "description": "Baltic Tech Labs provides software development and IT consulting services for regional businesses.",
+      "stack": [
+        "Python",
+        "Git",
+        "Linux",
+        "PostgreSQL"
+      ],
+      "highlights": [
+        "Write Python scripts and manage version control with Git in the information technology industry.",
+        "Maintain Linux servers and query PostgreSQL data as a Junior Software Developer."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "Python Institute Certified Associate"
+  ],
+  "skillGroups": [
+    {
+      "label": "Programming Languages and Frameworks",
+      "skills": [
+        "Python",
+        "FastAPI"
+      ]
+    },
+    {
+      "label": "Databases and DevOps",
+      "skills": [
+        "PostgreSQL",
+        "Docker",
+        "Linux"
+      ]
+    },
+    {
+      "label": "Tools",
+      "skills": [
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Domas Petrauskas is a junior backend developer based in Vilnius, Lithuania with 1.5 years of total experience. They hold a bachelor degree in Software Engineering from Vilnius University and specialize in Python, FastAPI, and PostgreSQL. They are available in 14 days and accept hybrid and remote work.",
+  "contact": {
+    "email": "domas.petrauskas@example.com",
+    "phone": "+1-555-012-1212"
+  },
+  "photoPrompt": "A young adult in their mid-20s with short brown hair, wearing a casual dark blue button-down shirt, smiling slightly against a neutral indoor background.",
+  "template": 2
+}

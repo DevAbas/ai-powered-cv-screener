@@ -1,0 +1,129 @@
+{
+  "name": "Zuzana Holubová",
+  "headline": "Mobile Engineer",
+  "role": "mobile",
+  "seniority": "mid",
+  "location": "Bratislava, Slovakia",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 30,
+  "yearsTotal": 3.5,
+  "skills": [
+    {
+      "name": "Swift",
+      "years": 3.5
+    },
+    {
+      "name": "Kotlin",
+      "years": 3
+    },
+    {
+      "name": "Flutter",
+      "years": 2
+    },
+    {
+      "name": "Git",
+      "years": 3.5
+    },
+    {
+      "name": "CI/CD",
+      "years": 2.5
+    },
+    {
+      "name": "REST",
+      "years": 3.5
+    }
+  ],
+  "languages": [
+    {
+      "language": "Slovak",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Comenius University",
+      "year": 2022
+    }
+  ],
+  "employment": [
+    {
+      "company": "Tatras Tech",
+      "title": "Mobile Engineer",
+      "industry": "Software Development",
+      "from": "2024-03",
+      "to": null,
+      "description": "Tatras Tech builds mobile applications for the software development industry.",
+      "stack": [
+        "Swift",
+        "Kotlin",
+        "Git",
+        "CI/CD",
+        "REST"
+      ],
+      "highlights": [
+        "Worked as Mobile Engineer at Tatras Tech in the Software Development industry using Swift and Kotlin.",
+        "Built mobile features using REST API and managed code via Git and CI/CD."
+      ]
+    },
+    {
+      "company": "Danubia Systems",
+      "title": "Junior Mobile Developer",
+      "industry": "Information Technology",
+      "from": "2023-01",
+      "to": "2024-02",
+      "description": "Danubia Systems provides information technology consulting and mobile software solutions.",
+      "stack": [
+        "Swift",
+        "Flutter",
+        "Git",
+        "REST"
+      ],
+      "highlights": [
+        "Worked as Junior Mobile Developer at Danubia Systems in the Information Technology industry.",
+        "Developed cross-platform mobile apps using Flutter and Swift integrated with REST API and Git."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "Certified Mobile Application Developer"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and Frameworks",
+      "skills": [
+        "Swift",
+        "Kotlin",
+        "Flutter"
+      ]
+    },
+    {
+      "label": "Tools and Services",
+      "skills": [
+        "Git",
+        "CI/CD",
+        "REST"
+      ]
+    }
+  ],
+  "summary": "Zuzana Holubova is a mid-level Mobile Engineer based in Bratislava, Slovakia, with 3.5 years of total professional experience. Expertise includes Swift, Kotlin, Flutter, Git, CI/CD, and REST API across the Software Development and Information Technology industries. Education includes a bachelor degree in Computer Science from Comenius University.",
+  "contact": {
+    "email": "zuzana.holubova@example.com",
+    "phone": "+1-555-029-2929"
+  },
+  "photoPrompt": "A professional headshot of a mid-twenties woman with shoulder-length brown hair, a neutral pleasant expression, and wearing a dark blazer.",
+  "template": 1
+}

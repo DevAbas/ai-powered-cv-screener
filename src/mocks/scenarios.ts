@@ -1,5 +1,5 @@
-import type { Answer } from "@/contracts/answer";
-import type { ProgressStage } from "@/contracts/ask";
+import { readingMessage, STAGE_MESSAGES } from "@/lib/ask/stages";
+import type { MockAnswer } from "./answers";
 import { ANSWERS, malformedAnswer } from "./answers";
 
 // Timed event sequences the mock `ask` replays (PLAN, Design system: mocks).
@@ -14,68 +14,62 @@ export interface MockStep {
 
 export type Scenario = readonly MockStep[];
 
-/** Progress messages per stage; the tool calls in PLAN, Retrieval and answering. */
-export const STAGE_MESSAGES: Record<ProgressStage, string> = {
-  filter: "Filtering the pool",
-  read: "Reading CVs",
-  evidence: "Finding evidence pages",
-  compose: "Writing the answer",
-};
-
-const progress = (stage: ProgressStage, after: number): MockStep => ({
-  after,
-  event: { type: "progress", stage, message: STAGE_MESSAGES[stage] },
-});
-
-/** Stages run for each answer kind, mirroring which tools it needs. */
-const STAGES: Record<Answer["kind"], readonly ProgressStage[]> = {
-  filter: ["filter", "evidence", "compose"],
-  rank: ["filter", "read", "evidence", "compose"],
-  compare: ["read", "evidence", "compose"],
-  fact: ["read", "evidence", "compose"],
-  profile: ["read", "compose"],
-  count: ["filter", "compose"],
-  empty: ["filter", "compose"],
-  insufficient: ["read", "compose"],
-  out_of_scope: ["compose"],
-};
+/** The answer text as a model streams it: a few words per delta. */
+function deltas(text: string, everyMs = 60): MockStep[] {
+  const words = text.match(/\S+\s*/g) ?? [];
+  const pieces: string[] = [];
+  for (let i = 0; i < words.length; i += 3) pieces.push(words.slice(i, i + 3).join(""));
+  return pieces.map((piece) => ({ after: everyMs, event: { type: "delta", text: piece } }));
+}
 
 /**
- * Progress through the kind's stages, then one answer. `composeMs` is the
- * time spent after the last stage: a schema repair (slow) or a fallback model
- * (very slow) only makes it longer; neither is shown as a stage.
+ * Search, read and write, the text as it streams, then the answer with its
+ * view. `writeMs` delays the first word (a slow or fallback model), or the
+ * answer itself when the model wrote only a view.
  */
-function answered(answer: unknown, kind: Answer["kind"], composeMs = 800): Scenario {
-  const stages = STAGES[kind].map((stage, i) => progress(stage, i === 0 ? 150 : 400));
-  return [...stages, { after: composeMs, event: { type: "answer", answer } }];
+function answered(answer: MockAnswer, writeMs = 600): Scenario {
+  const [first, ...rest] = deltas(answer.text);
+  return [
+    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
+    ...(answer.checked > 0 ? [{ after: 350, event: { type: "progress", stage: "read", message: readingMessage(answer.checked) } }] : []),
+    { after: 200, event: { type: "progress", stage: "write", message: STAGE_MESSAGES.write } },
+    ...(first ? [{ ...first, after: writeMs }, ...rest] : []),
+    { after: first ? 50 : writeMs, event: { type: "answer", ...answer } },
+  ];
 }
 
 export const SCENARIOS = {
-  filter: answered(ANSWERS.filter, "filter"),
-  followUp: answered(ANSWERS.followUp, "filter"),
-  rank: answered(ANSWERS.rank, "rank"),
-  compare: answered(ANSWERS.compare, "compare"),
-  fact: answered(ANSWERS.fact, "fact"),
-  profile: answered(ANSWERS.profile, "profile"),
-  count: answered(ANSWERS.count, "count"),
-  countOnly: answered(ANSWERS.countOnly, "count"),
-  empty: answered(ANSWERS.empty, "empty"),
-  insufficient: answered(ANSWERS.insufficient, "insufficient"),
-  outOfScope: answered(ANSWERS.outOfScope, "out_of_scope"),
-  /** ~6 s: the answer arrives after a schema repair. */
-  slow: answered(ANSWERS.filter, "filter", 5_000),
-  /** ~30 s: the answer arrives from the fallback model. */
-  verySlow: answered(ANSWERS.filter, "filter", 29_000),
-  malformed: answered(malformedAnswer, "filter"),
+  filter: answered(ANSWERS.filter),
+  followUp: answered(ANSWERS.followUp),
+  rank: answered(ANSWERS.rank),
+  compare: answered(ANSWERS.compare),
+  fact: answered(ANSWERS.fact),
+  profile: answered(ANSWERS.profile),
+  count: answered(ANSWERS.count),
+  empty: answered(ANSWERS.empty),
+  insufficient: answered(ANSWERS.insufficient),
+  help: answered(ANSWERS.help),
+  outOfScope: answered(ANSWERS.outOfScope),
+  /** ~6 s before the first word. */
+  slow: answered(ANSWERS.filter, 5_000),
+  /** ~30 s before the first word: the fallback model answered. */
+  verySlow: answered(ANSWERS.filter, 29_000),
+  malformed: [
+    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
+    { after: 600, event: { type: "answer", ...malformedAnswer } },
+  ],
   /** The stream ends with neither an answer nor an error. */
-  noAnswer: [progress("filter", 150), progress("compose", 400)],
+  noAnswer: [
+    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
+    { after: 400, event: { type: "progress", stage: "write", message: STAGE_MESSAGES.write } },
+  ],
   error: [
-    progress("filter", 150),
-    { after: 1_200, event: { type: "error", message: "The model did not respond in time. Try again.", retryable: true } },
+    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
+    { after: 1_200, event: { type: "error", message: "That took too long. Try again.", retryable: true } },
   ],
   fatalError: [
-    progress("filter", 150),
-    { after: 400, event: { type: "error", message: "The question could not be processed.", retryable: false } },
+    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
+    { after: 400, event: { type: "error", message: "The question could not be sent.", retryable: false } },
   ],
 } as const satisfies Record<string, Scenario>;
 

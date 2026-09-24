@@ -68,6 +68,12 @@ typography:
     fontWeight: 500
     lineHeight: "1.2"
     letterSpacing: 0.01em
+  display:
+    fontFamily: Google Sans
+    fontSize: 2.75rem
+    fontWeight: 600
+    lineHeight: "1.1"
+    letterSpacing: -0.025em
   wordmark:
     fontFamily: Google Sans
     fontSize: 1rem
@@ -219,7 +225,10 @@ A screening tool a recruiter keeps open for hours. It should feel like a
 quiet, well-made utility: white, black and one mint.
 Soft grey page, white containers, almost no borders, no decoration.
 Density is moderate: answers are lists and tables that must be scannable,
-so type is compact but never cramped. Nothing animates for its own sake.
+so type is compact but never cramped. Nothing animates for its own sake,
+with one exception: the empty state (Layout), whose entrance and pointer
+grid greet the recruiter before the first question and are gone once it is
+asked.
 
 ## Colors
 
@@ -234,8 +243,10 @@ question tint, 7 the focus ring, 9 the solid fill, 11 accent text, 12 text on
 the tint. Hover and pressed are derived from step 9 (below).
 
 - **Primary (#00F8C0):** Mint. The only chromatic colour in the UI, used for
-  the primary action, the logo mark and the band of the PDF icon. Never for
-  text blocks, content backgrounds or decoration.
+  the primary action, the logo mark, the band of the PDF icon, the
+  strokes of the empty-state grid and the highlight under the empty-state
+  headline (in dark, `primary-outline`, which light text reads on). Never
+  for text blocks, content backgrounds or other decoration.
 - **On primary (#0A281E):** Text and icons on `primary`: Radix's contrast
   colour, since mint is too light for white text.
 - **Primary hover (#16DDAC) and pressed (#08C498):** `primary` with its OKLCH
@@ -266,8 +277,11 @@ the tint. Hover and pressed are derived from step 9 (below).
 ## Typography
 
 One family, Google Sans (SIL OFL), self-hosted. Two working weights, 400 and
-500; 600 only when a single element must dominate: the logo. No italics.
+500; 600 only when a single element must dominate: the logo and the
+empty-state headline. No italics.
 
+- **display:** the empty-state headline only; the one large, 600-weight line
+  a recruiter sees before the first question.
 - **headline-lg / headline-md:** page and section titles, one-line summaries.
 - **body-lg:** primary input text.
 - **body-md:** running text, list items, table cells.
@@ -297,6 +311,24 @@ Loading motion is the one exception: the progress line breathes (a 1.6s
 opacity cycle on its glyph) and one band of ink sweeps its label every
 1.8s, both off under reduced motion; the values live in
 `src/styles/theme.css`. Following a response scrolls smoothly, never under
+reduced motion.
+
+The empty state is the one place motion is decorative. It enters once per
+page load, each part fading up 24px (600ms): the headline word by word,
+100ms apart, "Candidates" last, its highlight growing up from just below
+the word to the middle of its letters as it appears (700ms); then the CV
+count and the composer, 120ms apart. Hovering the word fills the highlight to the
+whole word (300ms). Slower than functional motion on purpose, with its own
+gentler easings (an ease-out for the rise, an ease-in-out for the
+highlight): it is seen once and sets the tone. The composer takes input from the first frame. Under
+reduced motion everything appears at once, the highlight already drawn.
+
+Behind the empty state,
+an invisible lattice of rounded cells lights up in `primary` hairlines
+(1px in light, 0.5px in dark) around the pointer and fades out after it leaves; a click sends a ring of
+lit cells outward. Nothing is drawn until the pointer moves; no lit cell
+is drawn over the headline block or the composer (with a small margin
+around them), it never blocks the content above it, and it is off under
 reduced motion.
 
 ## Elevation & Depth
@@ -365,17 +397,17 @@ text and in `xs` buttons, 1.25rem in other buttons.
   `surface-container-low`; the selected row keeps no background and is
   marked only by a `primary-text` check icon.
 - **Links:** `on-surface` with underline; hover `primary-text`.
-- **File card:** the one card in the interface, for a CV that opens: the
-  1.5rem PDF icon, its document in `on-surface` and its download badge in
-  solid `primary` with an `on-primary` arrow (like the logo mark, a thing,
-  not a text block), the file name in `label-lg` and a `body-sm`
-  line beneath saying "PDF", which reads "Open file" on hover;
-  `surface-container-lowest` with an `outline` border, the soft shadow,
-  `rounded.md`, 15.625rem (250px) wide (narrower only when the column is),
-  a longer file
-  name cut with an ellipsis. Hover is `surface-container-low`, and the line
-  reads "Open file"; pressed goes one tone further, `surface-container`,
-  without the shadow; both transition.
+- **File card:** the one card in the interface, for a CV that opens: one
+  line with the 1.25rem PDF icon (its document in `on-surface`, its download
+  badge in solid `primary` with an `on-primary` arrow, like the logo mark, a
+  thing, not a text block), the candidate's name in `label-lg` and "CV" in
+  `body-sm` `on-surface-variant`; `surface-container-lowest` with an
+  `outline` border, the soft shadow, `rounded.md`, as wide as its label (a
+  long name cut with an ellipsis). A tooltip reads "Preview CV". Hover is
+  `surface-container-low`; pressed goes one tone further,
+  `surface-container`, without the shadow; both transition. Inside an
+  answer view, where the name is already shown beside it, the card is
+  compact: the icon and "CV" only.
 - **CV preview:** a file card opens the CV in a panel docked to the right
   edge, full height, `surface-container-lowest` with an `outline` left edge
   and no shadow: the CV's pages drawn one under another on
@@ -389,10 +421,34 @@ text and in `xs` buttons, 1.25rem in other buttons.
   `outline-variant` on hover and while dragging; it opens at 35% of the
 viewport, never under 30rem. Below `lg` it fills the
   screen instead, with the same header and no handle. Escape closes it.
+- **Answer text:** the answer as the model writes it, appearing as it
+  streams: paragraphs and bullet or numbered lists in `body-md`
+  `on-surface`, list markers in `on-surface-variant`, candidate names in
+  bold at the label weight; no headings, tables or links. When the answer
+  is about candidates, an answer view follows it once complete, and the
+  CVs appear as file cards inside the view, never in a separate row.
+- **Answer views:** the data under an answer, drawn from the CVs rather
+  than written by the model; unboxed like the text, one per answer.
+  - **Candidate list:** a caption in `body-sm` `on-surface-variant` with
+    the count and the order ("16 candidates · most Python experience
+    first"), then one row per candidate: the name in `label-lg` and the
+    title in `body-sm` `on-surface-variant`, the years of the skills
+    asked about in `body-sm` with tabular figures, and the compact file
+    card at the end of the line; the model's note under it in `body-sm`
+    `on-surface-variant`. A ranked list leads each row with its number in
+    `label-md` `on-surface-variant`. On narrow screens the years and the
+    card wrap under the name.
+  - **Comparison:** a table with one column per candidate, the name in
+    `label-lg` over its compact file card as the column header, and the
+    criteria in the first column in `label-sm` uppercase
+    `on-surface-variant`.
+  - **Profile:** the candidate's name in `headline-md` behind a person
+    icon, with the compact file card; the title, location and total years
+    in `body-md` `on-surface-variant`; then labelled sections, a
+    `label-sm` uppercase `on-surface-variant` label over its facts in
+    `body-md`, spaced like list rows.
 - **Lists:** rows separated by whitespace (`spacing.base` × 5), never by a
-  rule or a coloured background. A candidate row is the name in
-  `headline-md` behind a person icon, why they match in `body-md`
-  `on-surface-variant`, and the file card.
+  rule or a coloured background.
 - **Scrollbars:** thin, with a transparent track and an `outline` thumb:
   visible on a careful look, never competing with content.
 - **Tables:** header in `label-sm` `on-surface-variant`; cells `body-md`;
@@ -400,14 +456,24 @@ viewport, never under 30rem. Below `lg` it fills the
 - **Tooltips:** a short label on `inverse-surface` with `inverse-on-surface`
   text, `label-md`, `rounded.md`. Fades in on hover after 150ms and at once on
   keyboard focus; Escape closes it.
-- **States:** empty, insufficient information, out of scope and error are a
-  single line of text with a small leading icon. Colour appears only on the
-  warning and error icons.
-- **Progress line:** one `label-lg` line with a sparkle glyph and a
-  tabular clock: the glyph breathes and a band of ink sweeps the label
-  while the current step runs (Layout: loading motion); once answered it
-  settles into "Searched for 4.2s" in `on-surface-variant` and the Copy
-  action sits beside it.
+- **Empty state:** the headline "Find The Right Candidates" in `display`,
+  title case, "Candidates" on the highlight (Layout: motion); below it one `body-lg`
+  line in `on-surface-variant` with the CV count, "You currently have 30 CVs
+  to review." (1 CV in the singular); then the composer, its placeholder an
+  example question. No suggested-question buttons.
+- **States:** an error is a single line of text with a small leading icon
+  in `error` and a Retry action. No match, not enough information and
+  outside the pool are the answer's own words behind a small leading icon
+  (`on-surface-variant`; `warning` for not enough information), each named
+  for screen readers ("No match", "Not enough information", "Outside the
+  pool"); never a filled or bordered box.
+- **Progress line:** one `label-lg` line with a sparkle glyph, between the
+  question and the answer: the glyph breathes and a band of ink sweeps the
+  label while the current step runs (Layout: loading motion); once answered
+  it settles into "Checked 8 CVs" (the CVs the answer was written from; "Answered"
+  when it needed none) in `on-surface-variant`, in plain words for a
+  non-technical reader; after Stop into "Stopped searching", after an error
+  into "The search didn't finish". No clock.
 
 ## Do's and Don'ts
 

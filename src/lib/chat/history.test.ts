@@ -1,59 +1,58 @@
 import { describe, expect, it } from "vitest";
-import { AskRequestSchema } from "@/contracts/ask";
+import { AskRequestSchema, HISTORY_ANSWER_MAX } from "@/contracts/ask";
+import { answerAsText } from "@/lib/answer-text";
 import { ANSWERS } from "@/mocks/answers";
-import { candidateIdsOf, HISTORY_LIMIT, historyFrom } from "./history";
+import { HISTORY_LIMIT, historyFrom } from "./history";
 import type { ExchangeState } from "./state";
 
-const exchange = (id: string, patch: Partial<ExchangeState>): ExchangeState => ({
+const exchange = (id: string, overrides: Partial<ExchangeState> = {}): ExchangeState => ({
   id,
   question: `Question ${id}`,
   status: "answered",
   steps: [],
   slow: false,
-  ...patch,
-});
-
-describe("candidateIdsOf", () => {
-  it("collects ids from every payload", () => {
-    expect(candidateIdsOf(ANSWERS.rank)).toEqual(["jane-doe", "daan-de-vries", "lena-novak"]);
-    expect(candidateIdsOf(ANSWERS.compare)).toEqual(["andrei-popescu", "elena-georgiou"]);
-    expect(candidateIdsOf(ANSWERS.fact)).toEqual(["lena-novak"]);
-    expect(candidateIdsOf(ANSWERS.profile)).toEqual(["jane-doe"]);
-    expect(candidateIdsOf(ANSWERS.empty)).toEqual([]);
-  });
+  text: ANSWERS.filter.text,
+  view: ANSWERS.filter.view,
+  sources: ANSWERS.filter.sources,
+  checked: ANSWERS.filter.checked,
+  ...overrides,
 });
 
 describe("historyFrom", () => {
-  it("keeps answered exchanges only", () => {
+  it("keeps answered exchanges, with their text, their view in words and the candidates it showed", () => {
     const history = historyFrom([
-      exchange("a", { answer: ANSWERS.filter }),
-      exchange("b", { status: "error", error: { message: "x", retryable: true } }),
+      exchange("a"),
+      exchange("b", { status: "error", text: "", view: undefined }),
       exchange("c", { status: "stopped" }),
-      exchange("d", { status: "running" }),
+      exchange("d", { text: ANSWERS.empty.text, view: ANSWERS.empty.view, sources: [] }),
     ]);
     expect(history).toEqual([
       {
         question: "Question a",
-        kind: "filter",
-        summary: ANSWERS.filter.summary,
-        candidateIds: ["lena-novak", "jane-doe", "sofia-almeida", "leon-fischer"],
+        answer: answerAsText(ANSWERS.filter.text, ANSWERS.filter.view),
+        candidateIds: ["jane-doe", "lena-novak", "sofia-almeida", "leon-fischer"],
       },
+      { question: "Question d", answer: ANSWERS.empty.text, candidateIds: [] },
     ]);
+    expect(history[0]?.answer).toContain("- Jane Doe — Frontend Lead — React 8 yrs — TypeScript 8 yrs — Frontend Lead at Emerald Paytech (CV p. 1)");
   });
 
-  it("keeps the most recent exchanges within the limit", () => {
-    const exchanges = Array.from({ length: HISTORY_LIMIT + 3 }, (_, i) => exchange(String(i), { answer: ANSWERS.empty }));
-    const history = historyFrom(exchanges);
+  it("keeps an answer that is only a view, as its lines", () => {
+    const [turn] = historyFrom([exchange("a", { text: "", view: ANSWERS.count.view, sources: ANSWERS.count.sources })]);
+    expect(turn?.answer.startsWith("6 candidates · most Python experience first\n- Jonas Weber")).toBe(true);
+  });
+
+  it("shortens a long answer to what the request allows", () => {
+    const [turn] = historyFrom([exchange("a", { text: "x".repeat(HISTORY_ANSWER_MAX + 50) })]);
+    expect(turn.answer).toHaveLength(HISTORY_ANSWER_MAX);
+    expect(turn.answer.endsWith("…")).toBe(true);
+  });
+
+  it("keeps the last exchanges within the request's limit", () => {
+    const many = Array.from({ length: HISTORY_LIMIT + 3 }, (_, i) => exchange(String(i)));
+    const history = historyFrom(many);
     expect(history).toHaveLength(HISTORY_LIMIT);
     expect(history[0].question).toBe("Question 3");
-  });
-});
-
-describe("HISTORY_LIMIT", () => {
-  it("matches the request contract", () => {
-    const history = historyFrom(Array.from({ length: HISTORY_LIMIT }, (_, i) => exchange(String(i), { answer: ANSWERS.empty })));
-    const request = (h: typeof history) => ({ question: "Next?", model: "primary", history: h });
-    expect(AskRequestSchema.safeParse(request(history)).success).toBe(true);
-    expect(AskRequestSchema.safeParse(request([...history, history[0]])).success).toBe(false);
+    expect(AskRequestSchema.safeParse({ question: "q", model: "primary", history }).success).toBe(true);
   });
 });

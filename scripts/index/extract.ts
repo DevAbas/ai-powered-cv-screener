@@ -4,7 +4,7 @@ import { getEntry } from "@/lib/ai/registry";
 import type { ModelTarget } from "@/lib/ai/registry";
 import { withRetry } from "@/lib/ai/retry";
 import type { RetryOptions } from "@/lib/ai/retry";
-import type { CallBudget } from "@/lib/ai/structured";
+import type { CallBudget, StructuredRequest } from "@/lib/ai/structured";
 import { runStructured } from "@/lib/ai/structured";
 import { normalizeProfile, normalizeRole } from "@/lib/pool/normalize";
 
@@ -29,13 +29,23 @@ export const EXTRACT_INSTRUCTIONS = [
   "- languages: every language with its CEFR level (A1-C2) or native.",
   "- education: degree (BSc is bachelor, MSc is master, PhD is doctorate), field, institution, graduation year.",
   "- employment: most recent first; dates as YYYY-MM (\"Mar 2022\" is 2022-03); to is null for \"Present\"; industry from the job's \"Industry:\" line.",
-  "- leadership: has is true when the CV describes leading or mentoring people; note says how, in a few words.",
+  "- leadership: has is true only when the CV has a Leadership section; note is that section's text. Without the section, has is false and note is empty.",
   "- certifications: every certification, as written.",
 ].join("\n");
 
 /** The CV text with page markers, as the model reads it. */
 export function extractPrompt(pages: readonly string[]): string {
   return pages.map((text, i) => `--- Page ${i + 1} ---\n${text}`).join("\n\n");
+}
+
+/** The extraction call for one CV, as `npm run index` sends it. */
+export function extractRequest(pages: readonly string[]): StructuredRequest<CandidateProfile> {
+  return { schema: CandidateProfileSchema, name: "candidate_profile", instructions: EXTRACT_INSTRUCTIONS, prompt: extractPrompt(pages) };
+}
+
+/** The model's profile made safe to index: unstated years dropped, strings checked against the CV text, names normalised. */
+export function finishProfile(output: CandidateProfile, pages: readonly string[]): CandidateProfile {
+  return normalizeProfile(checkAgainstText(dropUnstatedYears(output), pages.join("\n")));
 }
 
 export interface Extracted {
@@ -52,13 +62,7 @@ export async function extractProfile(
     () =>
       runStructured(
         getEntry("extract"),
-        {
-          schema: CandidateProfileSchema,
-          name: "candidate_profile",
-          instructions: EXTRACT_INSTRUCTIONS,
-          prompt: extractPrompt(pages),
-          onRepair: (issues) => log(`schema failure, repairing:\n${issues}`),
-        },
+        { ...extractRequest(pages), onRepair: (issues) => log(`schema failure, repairing:\n${issues}`) },
         { budget: EXTRACT_BUDGET, onFallback: (_error, fallback) => log(`falling back to ${fallback.model}`) },
       ),
     {
@@ -67,20 +71,23 @@ export async function extractProfile(
         log(`retry ${attempt} in ${Math.round(delayMs / 1000)} s (${error instanceof Error ? error.message.split("\n")[0] : String(error)})`),
     },
   );
-  return { profile: normalizeProfile(checkAgainstText(dropUnstatedYears(output), pages.join("\n"))), target, repaired };
+  return { profile: finishProfile(output, pages), target, repaired };
 }
 
 /**
- * The value as the CV writes it: the first case-insensitive match in the
- * text that has a capital letter (prose may repeat a title in lower case),
- * across line breaks; else the value unchanged.
+ * The value as the CV writes it: the case-insensitive match in the text
+ * with the most capital letters (prose may repeat a title in lower case,
+ * "senior Machine Learning Engineer"), the first on a tie, across line
+ * breaks; else the value unchanged.
  */
 export function restoreCase(value: string, text: string): string {
   const words = value.trim().split(/\s+/).filter(Boolean);
   if (words.length === 0) return value;
   const pattern = words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("\\s+");
-  const match = [...text.matchAll(new RegExp(pattern, "gi"))].map((m) => m[0]).find((m) => /\p{Lu}/u.test(m));
-  return match ? match.replace(/\s+/g, " ") : value;
+  const capitals = (m: string) => m.match(/\p{Lu}/gu)?.length ?? 0;
+  const matches = [...text.matchAll(new RegExp(pattern, "gi"))].map((m) => m[0]);
+  const best = matches.reduce<string | undefined>((a, m) => (a === undefined || capitals(m) > capitals(a) ? m : a), undefined);
+  return best && capitals(best) > 0 ? best.replace(/\s+/g, " ") : value;
 }
 
 /**

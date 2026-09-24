@@ -12,7 +12,7 @@ import { exists, readJson, SEEDS_DIR, seedPath, writeJsonAtomic } from "./fs";
 import type { StepOptions, StepReport } from "./options";
 import { log, shortError, sleep } from "./options";
 import { ROSTER } from "./roster";
-import { assembleSeed, findDuplicateEmployment, generatedSeedSchemaFor, seedPrompt } from "./seed";
+import { assembleSeed, findDuplicateEmployment, seedRequest } from "./seed";
 
 // Step 1: one seed per roster entry, written by the `generate` model
 // (PLAN, Generation pipeline). Resumable: an existing seed is kept unless
@@ -110,12 +110,8 @@ export async function runSeeds(options: StepOptions): Promise<StepReport> {
     if (calls > 0) await sleep(PAUSE_MS);
     calls += 1;
     try {
-      const { instructions, prompt } = seedPrompt(roster, [...usedCompanies]);
       const { output, repaired, target } = await generateSeed(entry, exhausted, roster.id, {
-        schema: generatedSeedSchemaFor(roster.seniority),
-        name: "candidate_seed",
-        instructions,
-        prompt,
+        ...seedRequest(roster, [...usedCompanies]),
         onRepair: (issues) => log("seeds", roster.id, `schema failure, repairing:\n${issues}`),
       });
       const seed = assembleSeed(roster, index, output);

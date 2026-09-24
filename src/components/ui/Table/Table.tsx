@@ -56,9 +56,9 @@ export function TableColumnHeader({ className, scope = "col", ...rest }: TableCo
 
 export type TableRowHeaderProps = ComponentProps<"th">;
 
-/** The first cell of a row when it names the row; styled as a cell. */
+/** The first cell of a row when it names the row; styled as a header. */
 export function TableRowHeader({ className, scope = "row", ...rest }: TableRowHeaderProps) {
-  return <th scope={scope} {...rest} className={styles.cell({ className })} />;
+  return <th scope={scope} {...rest} className={styles.rowHeader({ className })} />;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

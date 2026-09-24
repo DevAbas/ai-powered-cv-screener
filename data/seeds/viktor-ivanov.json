@@ -1,0 +1,128 @@
+{
+  "name": "Viktor Ivanov",
+  "headline": "Application Security Engineer",
+  "role": "security",
+  "seniority": "senior",
+  "location": "Sofia, Bulgaria",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 7
+    },
+    {
+      "name": "Docker",
+      "years": 5
+    },
+    {
+      "name": "Kubernetes",
+      "years": 4
+    },
+    {
+      "name": "AWS",
+      "years": 6
+    },
+    {
+      "name": "Terraform",
+      "years": 4
+    },
+    {
+      "name": "Linux",
+      "years": 7
+    }
+  ],
+  "languages": [
+    {
+      "language": "Bulgarian",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Sofia University",
+      "year": 2018
+    }
+  ],
+  "employment": [
+    {
+      "company": "Balkan Cyber Systems",
+      "title": "Application Security Engineer",
+      "industry": "Information Security",
+      "from": "2021-03",
+      "to": null,
+      "description": "Balkan Cyber Systems builds secure cloud infrastructure and threat detection tooling for enterprise clients.",
+      "stack": [
+        "Python",
+        "Kubernetes",
+        "AWS",
+        "Linux"
+      ],
+      "highlights": [
+        "Applied Python and Linux to secure Kubernetes clusters in AWS.",
+        "Demonstrated leadership in information security across seven years of total experience."
+      ]
+    },
+    {
+      "company": "Rhodope Tech Labs",
+      "title": "Security Analyst",
+      "industry": "Information Security",
+      "from": "2019-01",
+      "to": "2021-02",
+      "description": "Rhodope Tech Labs develops automated vulnerability scanning pipelines and compliance monitors.",
+      "stack": [
+        "Python",
+        "Docker",
+        "Terraform",
+        "Linux"
+      ],
+      "highlights": [
+        "Built compliance monitors using Python, Docker, and Terraform on Linux.",
+        "Exercised senior technical leadership within the information security industry."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Led security reviews and mentored junior engineers across multiple teams."
+  },
+  "certifications": [
+    "Certified Information Systems Security Professional"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and OS",
+      "skills": [
+        "Python",
+        "Linux"
+      ]
+    },
+    {
+      "label": "Cloud and Infrastructure",
+      "skills": [
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "Terraform"
+      ]
+    }
+  ],
+  "summary": "Viktor Ivanov is a senior application security engineer based in Sofia, Bulgaria, with 7 years of total experience in the information security industry. They specialize in Python, Docker, Kubernetes, AWS, Terraform, and Linux, and hold leadership experience in security reviews. They possess a bachelor degree in Computer Science and are proficient in Bulgarian and English.",
+  "contact": {
+    "email": "viktor.ivanov@example.com",
+    "phone": "+1-555-030-3030"
+  },
+  "photoPrompt": "A professional headshot of a thirty-year-old man with short dark hair, wearing a dark blue button-down shirt, with a neutral and confident expression against a softly lit grey background.",
+  "template": 2
+}

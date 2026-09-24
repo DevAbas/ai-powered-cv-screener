@@ -1,0 +1,165 @@
+{
+  "name": "Daan de Vries",
+  "headline": "Principal UI Engineer",
+  "role": "frontend",
+  "seniority": "principal",
+  "location": "Amsterdam, Netherlands",
+  "remote": [
+    "remote",
+    "hybrid"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 12,
+  "skills": [
+    {
+      "name": "JavaScript",
+      "years": 12
+    },
+    {
+      "name": "TypeScript",
+      "years": 8
+    },
+    {
+      "name": "React",
+      "years": 10
+    },
+    {
+      "name": "Vue.js",
+      "years": 4
+    },
+    {
+      "name": "HTML",
+      "years": 12
+    },
+    {
+      "name": "CSS",
+      "years": 12
+    },
+    {
+      "name": "Jest",
+      "years": 7
+    },
+    {
+      "name": "Docker",
+      "years": 5
+    }
+  ],
+  "languages": [
+    {
+      "language": "Dutch",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C2"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Amsterdam",
+      "year": 2012
+    }
+  ],
+  "employment": [
+    {
+      "company": "Amstel Tech Solutions",
+      "title": "Principal UI Engineer",
+      "industry": "Software Development",
+      "from": "2020-03",
+      "to": null,
+      "description": "Amstel Tech Solutions builds scalable web applications for enterprise clients.",
+      "stack": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "CSS",
+        "Docker"
+      ],
+      "highlights": [
+        "Led engineering teams as Principal UI Engineer using JavaScript, TypeScript, React, CSS, and Docker.",
+        "Delivered frontend architecture improvements in the software development industry."
+      ]
+    },
+    {
+      "company": "Zaan Web Works",
+      "title": "Senior Frontend Developer",
+      "industry": "Digital Media",
+      "from": "2016-01",
+      "to": "2020-02",
+      "description": "Zaan Web Works produces interactive media publishing tools.",
+      "stack": [
+        "JavaScript",
+        "React",
+        "Vue.js",
+        "HTML",
+        "CSS",
+        "Jest"
+      ],
+      "highlights": [
+        "Developed web applications as a Senior Frontend Developer utilizing JavaScript, React, Vue, HTML, CSS, and Jest.",
+        "Contributed to digital media projects across multiple teams."
+      ]
+    },
+    {
+      "company": "IJssel Media",
+      "title": "Frontend Developer",
+      "industry": "Web Development",
+      "from": "2014-06",
+      "to": "2015-12",
+      "description": "IJssel Media creates marketing and e-commerce websites.",
+      "stack": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "Jest"
+      ],
+      "highlights": [
+        "Implemented user interfaces as a Frontend Developer with JavaScript, HTML, CSS, and Jest.",
+        "Built responsive web pages in the web development industry."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Led multiple engineering teams and frontend architects as Principal UI Engineer."
+  },
+  "certifications": [
+    "Certified JavaScript Professional",
+    "Advanced React Patterns"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and Core",
+      "skills": [
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "label": "Frameworks and Libraries",
+      "skills": [
+        "React",
+        "Vue.js"
+      ]
+    },
+    {
+      "label": "Testing and Tools",
+      "skills": [
+        "Jest",
+        "Docker"
+      ]
+    }
+  ],
+  "summary": "Daan de Vries is a Principal UI Engineer with 12 years of experience specializing in frontend development. Based in Amsterdam, Netherlands, Daan has leadership experience guiding engineering teams and utilizing JavaScript, TypeScript, React, Vue, HTML, CSS, Jest, and Docker. Education includes a bachelor degree in Computer Science from University of Amsterdam.",
+  "contact": {
+    "email": "daan.vries@example.com",
+    "phone": "+1-555-006-0606"
+  },
+  "photoPrompt": "Professional headshot of a 35-year-old man with short brown hair, a neutral confident expression, wearing a dark blue blazer over a light grey shirt.",
+  "template": 2
+}

@@ -1,0 +1,135 @@
+{
+  "name": "Hana Novotná",
+  "headline": "Junior QA Engineer",
+  "role": "qa",
+  "seniority": "junior",
+  "location": "Prague, Czechia",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 14,
+  "yearsTotal": 1.5,
+  "skills": [
+    {
+      "name": "Selenium",
+      "years": 1.5
+    },
+    {
+      "name": "Postman",
+      "years": 1.5
+    },
+    {
+      "name": "Python",
+      "years": 1
+    },
+    {
+      "name": "Jira",
+      "years": 1.5
+    },
+    {
+      "name": "SQL",
+      "years": 1
+    },
+    {
+      "name": "Git",
+      "years": 1.5
+    }
+  ],
+  "languages": [
+    {
+      "language": "Czech",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Informatics",
+      "institution": "Czech Technical University in Prague",
+      "year": 2024
+    }
+  ],
+  "employment": [
+    {
+      "company": "Vltava QA Labs",
+      "title": "Junior QA Engineer",
+      "industry": "Software Testing",
+      "from": "2024-07",
+      "to": null,
+      "description": "Vltava QA Labs provides automated quality assurance services for financial applications.",
+      "stack": [
+        "Selenium",
+        "Postman",
+        "Python",
+        "Jira",
+        "SQL",
+        "Git"
+      ],
+      "highlights": [
+        "Tested financial applications using Selenium, Python, and Postman.",
+        "Tracked software issues using Jira and managed code versions with Git.",
+        "Queried databases using SQL for test verification."
+      ]
+    },
+    {
+      "company": "Morava Systems",
+      "title": "QA Intern",
+      "industry": "Information Technology",
+      "from": "2024-01",
+      "to": "2024-06",
+      "description": "Morava Systems builds custom web applications for retail clients.",
+      "stack": [
+        "Selenium",
+        "Jira",
+        "Git"
+      ],
+      "highlights": [
+        "Executed test scripts using Selenium for retail web applications.",
+        "Logged bugs and tasks in Jira and collaborated via Git."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "ISTQB Certified Tester Foundation Level"
+  ],
+  "skillGroups": [
+    {
+      "label": "Testing Tools",
+      "skills": [
+        "Selenium",
+        "Postman"
+      ]
+    },
+    {
+      "label": "Languages and Databases",
+      "skills": [
+        "Python",
+        "SQL"
+      ]
+    },
+    {
+      "label": "Tools and Version Control",
+      "skills": [
+        "Jira",
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Hana Novotná is a Junior QA Engineer with 1.5 years of total experience based in Prague, Czechia. She specializes in Selenium, Postman, Python, Jira, SQL, and Git within the software testing and IT industries. She holds a bachelor degree in Informatics and is available in 14 days for hybrid or remote roles.",
+  "contact": {
+    "email": "hana.novotna@example.com",
+    "phone": "+1-555-024-2424"
+  },
+  "photoPrompt": "A professional headshot of a young adult woman with shoulder-length brown hair, wearing a neutral-colored blazer with a calm and confident expression.",
+  "template": 2
+}

@@ -1,15 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { profileAnswer } from "@/mocks/answers";
-import { mockNameOf } from "@/mocks/story";
+import type { AnswerView } from "@/contracts/view";
+import { cvSourceHref } from "@/lib/pool/source-href";
+import { ANDREI } from "@/lib/retrieval/fixtures";
+import { ANSWERS } from "@/mocks/answers";
 import { AnswerProfile } from "./AnswerProfile";
+
+type ProfileView = Extract<AnswerView, { kind: "profile" }>;
 
 const meta = {
   title: "Chat / Answer / AnswerProfile",
   component: AnswerProfile,
-  args: { profile: profileAnswer.profile!, nameOf: mockNameOf },
+  args: { view: ANSWERS.profile.view as ProfileView, sourceHref: cvSourceHref },
 } satisfies Meta<typeof AnswerProfile>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+/** With leadership and a certification, each in its own section. */
+export const Basic: Story = {};
+/** Without them, those sections are left out. */
+export const Short: Story = {
+  args: { view: { kind: "profile", candidate: { candidateId: ANDREI.id, profile: ANDREI.profile, skills: [], page: 1 } } },
+};

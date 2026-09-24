@@ -53,6 +53,11 @@ describe("restoreCase", () => {
     expect(restoreCase("next.js", text)).toBe("Next.js");
   });
 
+  it("prefers the most capitalised match: a title line over prose", () => {
+    const cv = "Summary: senior Machine Learning Engineer in Madrid.\nSenior Machine Learning Engineer — Catalunya Neural";
+    expect(restoreCase("senior machine learning engineer", cv)).toBe("Senior Machine Learning Engineer");
+  });
+
   it("prefers a capitalised match over prose and matches across line breaks", () => {
     const cv = "mentoring junior frontend developers\nJunior Frontend Developer — Atlantico\nFinancial\nTechnology";
     expect(restoreCase("junior frontend developer", cv)).toBe("Junior Frontend Developer");

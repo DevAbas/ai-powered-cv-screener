@@ -1,0 +1,129 @@
+{
+  "name": "Bram Peeters",
+  "headline": "QA Lead",
+  "role": "qa",
+  "seniority": "lead",
+  "location": "Antwerp, Belgium",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizenship Belgium",
+  "availability": 30,
+  "yearsTotal": 10,
+  "skills": [
+    {
+      "name": "Selenium",
+      "years": 10
+    },
+    {
+      "name": "Cypress",
+      "years": 5
+    },
+    {
+      "name": "Java",
+      "years": 10
+    },
+    {
+      "name": "Python",
+      "years": 6
+    },
+    {
+      "name": "SQL",
+      "years": 8
+    },
+    {
+      "name": "Jira",
+      "years": 10
+    }
+  ],
+  "languages": [
+    {
+      "language": "Dutch",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Antwerp",
+      "year": 2014
+    }
+  ],
+  "employment": [
+    {
+      "company": "Schelde Software Labs",
+      "title": "QA Lead",
+      "industry": "Software",
+      "from": "2021-03",
+      "to": null,
+      "description": "Schelde Software Labs develops enterprise software platforms for logistics clients.",
+      "stack": [
+        "Selenium",
+        "Cypress",
+        "Java",
+        "Python",
+        "Jira"
+      ],
+      "highlights": [
+        "Worked as QA Lead in Software industry using Selenium, Cypress, Java, Python, and Jira.",
+        "Demonstrated leadership capabilities as QA Lead."
+      ]
+    },
+    {
+      "company": "Brabo Tech Solutions",
+      "title": "Senior QA Engineer",
+      "industry": "FinTech",
+      "from": "2016-03",
+      "to": "2021-02",
+      "description": "Brabo Tech Solutions builds secure payment gateway systems for financial institutions.",
+      "stack": [
+        "Selenium",
+        "Java",
+        "SQL",
+        "Jira"
+      ],
+      "highlights": [
+        "Worked as Senior QA Engineer in FinTech industry using Selenium, Java, SQL, and Jira.",
+        "Delivered testing projects for payment systems."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Managed QA teams and testing strategies across multiple projects."
+  },
+  "certifications": [
+    "ISTQB Advanced Level Test Manager"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages",
+      "skills": [
+        "Java",
+        "Python",
+        "SQL"
+      ]
+    },
+    {
+      "label": "Frameworks and Tools",
+      "skills": [
+        "Selenium",
+        "Cypress",
+        "Jira"
+      ]
+    }
+  ],
+  "summary": "Bram Peeters is a QA Lead with 10 years of experience based in Antwerp, Belgium. Expertise includes Selenium, Cypress, Java, Python, SQL, and Jira. Has leadership experience managing testing teams in Software and FinTech industries. Fluent in Dutch and English.",
+  "contact": {
+    "email": "bram.peeters@example.com",
+    "phone": "+1-555-023-2323"
+  },
+  "photoPrompt": "A professional headshot of a 33-year-old adult with short brown hair, a warm smile, wearing a navy blue blazer over a crisp white shirt.",
+  "template": 1
+}

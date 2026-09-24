@@ -1,39 +1,59 @@
 import { describe, expect, it } from "vitest";
-import { ANSWERS } from "@/mocks/answers";
-import { findCandidate } from "@/mocks/pool";
-import { answerToText } from "./answer-text";
+import type { AnswerView } from "@/contracts/view";
+import { ANDREI, ELENA } from "@/lib/retrieval/fixtures";
+import { answerAsText, listCaption, profileFacts, skillLabel, statusText, viewLines } from "./answer-text";
 
-const nameOf = (id: string) => findCandidate(id)?.profile.name ?? id;
+const list = (ranked: boolean, skills: string[], rows: number): Extract<AnswerView, { kind: "list" }> => ({
+  kind: "list",
+  ranked,
+  skills,
+  rows: Array.from({ length: rows }, (_, i) => ({
+    candidateId: `c-${i}`,
+    name: `Candidate ${i}`,
+    headline: "Data Engineer",
+    skills: skills.map((skill) => ({ skill, years: 10 - i })),
+    note: i === 0 ? "Leads the data platform" : "",
+    page: 1,
+  })),
+});
 
-describe("answerToText", () => {
-  it("numbers ranked candidates and cites pages", () => {
-    expect(answerToText(ANSWERS.rank, nameOf).split("\n")).toEqual([
-      "Top 3 for a Frontend Lead role, best first.",
-      "",
-      "1. Jane Doe: Leads a team of 6 frontend engineers and has 9 years of React. (Jane Doe, CV p. 1)",
-      "2. Daan de Vries: Principal UI engineer who owns the design system and mentors 4 engineers. (Daan de Vries, CV p. 1)",
-      "3. Lena Novak: Senior with 8 years of experience who led the migration to Next.js. (Lena Novak, CV p. 1)",
-    ]);
+describe("skillLabel", () => {
+  it("says the years, one in the singular, and a dash when the CV gives none", () => {
+    expect(skillLabel({ skill: "Python", years: 10 })).toBe("Python 10 yrs");
+    expect(skillLabel({ skill: "Go", years: 1 })).toBe("Go 1 yr");
+    expect(skillLabel({ skill: "Rust", years: null })).toBe("Rust —");
   });
+});
 
-  it("names both sides of a comparison", () => {
-    expect(answerToText(ANSWERS.compare, nameOf)).toContain(
-      "Backend experience: Andrei Popescu: 6 years; Elena Georgiou: 4 years",
+describe("listCaption", () => {
+  it("counts the rows and says their order", () => {
+    expect(listCaption(list(false, ["Python"], 16))).toBe("16 candidates · most Python experience first");
+    expect(listCaption(list(true, [], 3))).toBe("3 candidates · best fit first");
+    expect(listCaption(list(false, [], 2))).toBe("2 candidates");
+    expect(listCaption(list(false, ["Python"], 1))).toBeUndefined();
+  });
+});
+
+describe("profileFacts", () => {
+  it("puts a profile's facts in words", () => {
+    expect(profileFacts.notice(ELENA.profile)).toBe("Immediately");
+    expect(profileFacts.notice(ANDREI.profile)).toBe("60 days");
+    expect(profileFacts.work(ANDREI.profile)).toBe("On-site, hybrid");
+    expect(profileFacts.languages(ELENA.profile)).toBe("Greek (native) · English (B2)");
+    expect(profileFacts.skills(ANDREI.profile)).toBe("Python 8 yrs · PostgreSQL 6 yrs · Go 4 yrs");
+  });
+});
+
+describe("answerAsText", () => {
+  it("copies the text, then the view as lines with each CV's page", () => {
+    expect(answerAsText("Two stand out.", list(false, ["Python"], 2))).toBe(
+      "Two stand out.\n\n2 candidates · most Python experience first\n- Candidate 0 — Data Engineer — Python 10 yrs — Leads the data platform (CV p. 1)\n- Candidate 1 — Data Engineer — Python 9 yrs (CV p. 1)",
     );
   });
 
-  it("cites the source of a fact", () => {
-    expect(answerToText(ANSWERS.fact, nameOf)).toContain("(Lena Novak, CV p. 1)");
-  });
-
-  it("lists profile sections", () => {
-    const text = answerToText(ANSWERS.profile, nameOf);
-    expect(text).toContain("Skills:\n- React (9 years)");
-  });
-
-  it("keeps only the summary for count without a list and for states", () => {
-    expect(answerToText(ANSWERS.countOnly, nameOf)).toBe(ANSWERS.countOnly.summary);
-    expect(answerToText(ANSWERS.empty, nameOf)).toBe(ANSWERS.empty.summary);
-    expect(answerToText(ANSWERS.outOfScope, nameOf)).toBe(ANSWERS.outOfScope.summary);
+  it("numbers a ranking, and copies a view-only answer or a state without text", () => {
+    expect(viewLines(list(true, [], 2))).toEqual(["2 candidates · best fit first", "1. Candidate 0 — Data Engineer — Leads the data platform (CV p. 1)", "2. Candidate 1 — Data Engineer (CV p. 1)"]);
+    expect(answerAsText("", { kind: "status", status: "no-match" })).toBe(statusText("no-match"));
+    expect(answerAsText("Hello!")).toBe("Hello!");
   });
 });

@@ -3,8 +3,8 @@ import type { ModelEntry, ModelTarget } from "./registry";
 
 // Failure classification, backoff and fallback around model calls. Calls
 // wrapped here pass `maxRetries: 0` to the AI SDK so retries do not
-// compound. The interactive answer path (structured.ts) never retries the
-// same model; backoff is for scripts.
+// compound. The interactive calls (stream-text.ts, structured.ts) try a
+// model at most twice; backoff is for scripts.
 
 /** A model produced no output in time (`first-output`), or the whole call ran out of budget (`total`). */
 export class ModelTimeoutError extends Error {
@@ -56,9 +56,14 @@ export function errorStatus(error: unknown): number | undefined {
   return api.statusCode;
 }
 
+/** A server error (5xx) that came back as a response, as opposed to a timeout. */
+export function isServerError(error: unknown): boolean {
+  return (errorStatus(error) ?? 0) >= 500;
+}
+
 /**
  * OpenRouter's daily cap on free-model requests. Retrying cannot succeed
- * until the next day, so the entry's breaker opens at once.
+ * until the next day, so the model's breaker opens at once.
  */
 export function isDailyQuotaError(error: unknown): boolean {
   if (errorStatus(error) !== 429) return false;

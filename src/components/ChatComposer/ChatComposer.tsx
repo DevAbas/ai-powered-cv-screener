@@ -16,13 +16,28 @@ export interface ChatComposerProps {
   model: AnswerModelId;
   onModelChange: (id: AnswerModelId) => void;
   autoFocus?: boolean;
+  /**
+   * The field's placeholder; the empty state passes an example question.
+   * @default "Ask about the candidate pool"
+   */
+  placeholder?: string;
 }
 
 /**
  * DESIGN.md, ChatComposer (`composer` token): one text field above a row of
  * actions. The field grows with the question up to `max-h-48`, then scrolls.
  */
-export function ChatComposer({ value, onChange, onSubmit, running, onStop, model, onModelChange, autoFocus }: ChatComposerProps) {
+export function ChatComposer({
+  value,
+  onChange,
+  onSubmit,
+  running,
+  onStop,
+  model,
+  onModelChange,
+  autoFocus,
+  placeholder = "Ask about the candidate pool",
+}: ChatComposerProps) {
   const question = value.trim();
 
   function submit(event: FormEvent) {
@@ -52,7 +67,7 @@ export function ChatComposer({ value, onChange, onSubmit, running, onStop, model
         className="mb-2.5 max-h-48"
         onKeyDown={handleKeyDown}
         aria-label="Question"
-        placeholder="Ask about the candidate pool"
+        placeholder={placeholder}
         autoComplete="off"
         autoFocus={autoFocus}
         value={value}

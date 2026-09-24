@@ -1,0 +1,134 @@
+{
+  "name": "Inés García",
+  "headline": "Machine Learning Engineer",
+  "role": "data",
+  "seniority": "senior",
+  "location": "Barcelona, Spain",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 7
+    },
+    {
+      "name": "PyTorch",
+      "years": 5
+    },
+    {
+      "name": "TensorFlow",
+      "years": 4
+    },
+    {
+      "name": "Docker",
+      "years": 6
+    },
+    {
+      "name": "Kubernetes",
+      "years": 3
+    },
+    {
+      "name": "AWS",
+      "years": 5
+    },
+    {
+      "name": "SQL",
+      "years": 7
+    }
+  ],
+  "languages": [
+    {
+      "language": "Spanish",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "master",
+      "field": "Artificial Intelligence",
+      "institution": "Universitat Politècnica de Catalunya",
+      "year": 2018
+    }
+  ],
+  "employment": [
+    {
+      "company": "Catalunya Neural Corp",
+      "title": "Senior Machine Learning Engineer",
+      "industry": "Artificial Intelligence",
+      "from": "2021-06",
+      "to": null,
+      "description": "Catalunya Neural Corp builds predictive modeling software for enterprise clients.",
+      "stack": [
+        "Python",
+        "PyTorch",
+        "AWS",
+        "Docker",
+        "Kubernetes"
+      ],
+      "highlights": [
+        "Architected AI models as a Senior Machine Learning Engineer using Python and PyTorch.",
+        "Deployed services on AWS with Docker and Kubernetes in the Artificial Intelligence industry."
+      ]
+    },
+    {
+      "company": "Iberia Data Systems",
+      "title": "Machine Learning Engineer",
+      "industry": "Data Analytics",
+      "from": "2019-01",
+      "to": "2021-05",
+      "description": "Iberia Data Systems provides data analytics pipelines for retail companies.",
+      "stack": [
+        "Python",
+        "TensorFlow",
+        "SQL",
+        "AWS"
+      ],
+      "highlights": [
+        "Engineered data pipelines using Python, SQL, and TensorFlow.",
+        "Maintained cloud infrastructure on AWS for the Data Analytics industry."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Led junior engineers and mentored interns in machine learning practices."
+  },
+  "certifications": [
+    "AWS Certified Machine Learning"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and Frameworks",
+      "skills": [
+        "Python",
+        "PyTorch",
+        "TensorFlow",
+        "SQL"
+      ]
+    },
+    {
+      "label": "Infrastructure and Cloud",
+      "skills": [
+        "Docker",
+        "Kubernetes",
+        "AWS"
+      ]
+    }
+  ],
+  "summary": "Inés García is a senior Machine Learning Engineer based in Barcelona, Spain with 7 years of professional experience. Her core stack includes Python, PyTorch, TensorFlow, Docker, Kubernetes, AWS, and SQL. She has demonstrated leadership by guiding junior team members in AI and data analytics projects. She holds a master degree in Artificial Intelligence and is available on a 30 day notice.",
+  "contact": {
+    "email": "ines.garcia@example.com",
+    "phone": "+1-555-016-1616"
+  },
+  "photoPrompt": "A professional headshot of a woman in her early thirties with dark shoulder-length hair, a warm confident smile, wearing a navy blue blazer against a neutral gray background.",
+  "template": 0
+}

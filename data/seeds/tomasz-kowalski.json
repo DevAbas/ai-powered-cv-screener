@@ -1,0 +1,136 @@
+{
+  "name": "Tomasz Kowalski",
+  "headline": "Junior Frontend Developer",
+  "role": "frontend",
+  "seniority": "junior",
+  "location": "Warsaw, Poland",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 14,
+  "yearsTotal": 1.5,
+  "skills": [
+    {
+      "name": "JavaScript",
+      "years": 1.5
+    },
+    {
+      "name": "TypeScript",
+      "years": 1
+    },
+    {
+      "name": "React",
+      "years": 1.5
+    },
+    {
+      "name": "HTML",
+      "years": 1.5
+    },
+    {
+      "name": "CSS",
+      "years": 1.5
+    },
+    {
+      "name": "Git",
+      "years": 1.5
+    }
+  ],
+  "languages": [
+    {
+      "language": "Polish",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "B2"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Warsaw University of Technology",
+      "year": 2024
+    }
+  ],
+  "employment": [
+    {
+      "company": "Vistula Byte Labs",
+      "title": "Junior Frontend Developer",
+      "industry": "Software Development",
+      "from": "2025-03",
+      "to": null,
+      "description": "Vistula Byte Labs develops modern web applications for e-commerce and retail partners.",
+      "stack": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "HTML",
+        "CSS",
+        "Git"
+      ],
+      "highlights": [
+        "Developed frontend features as a Junior Frontend Developer using JavaScript, TypeScript, React, HTML, CSS, and Git in the Software Development industry.",
+        "Contributed to software development tasks utilizing JavaScript, TypeScript, React, HTML, CSS, and Git."
+      ]
+    },
+    {
+      "company": "Mazovia Digital",
+      "title": "Frontend Intern",
+      "industry": "Information Technology",
+      "from": "2024-07",
+      "to": "2025-02",
+      "description": "Mazovia Digital builds digital solutions and marketing sites for local businesses.",
+      "stack": [
+        "JavaScript",
+        "React",
+        "HTML",
+        "CSS",
+        "Git"
+      ],
+      "highlights": [
+        "Assisted in frontend tasks as a Frontend Intern using JavaScript, React, HTML, CSS, and Git in the Information Technology industry.",
+        "Maintained codebase repositories with JavaScript, React, HTML, CSS, and Git."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "Frontend Web Developer Certificate"
+  ],
+  "skillGroups": [
+    {
+      "label": "Programming Languages",
+      "skills": [
+        "JavaScript",
+        "TypeScript"
+      ]
+    },
+    {
+      "label": "Frontend Frameworks",
+      "skills": [
+        "React",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "label": "Tools",
+      "skills": [
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Tomasz Kowalski is a Junior Frontend Developer based in Warsaw, Poland with 1.5 years of total experience in the frontend role. Skills include JavaScript, TypeScript, React, HTML, CSS, and Git applied across the Software Development and Information Technology industries. Education includes a bachelor degree in Computer Science from Warsaw University of Technology.",
+  "contact": {
+    "email": "tomasz.kowalski@example.com",
+    "phone": "+1-555-005-0505"
+  },
+  "photoPrompt": "A professional headshot of a 24-year-old adult with short brown hair, a warm neutral expression, wearing a dark casual blazer over a white t-shirt.",
+  "template": 1
+}

@@ -2,7 +2,7 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.11         |
+| Version | 1.14         |
 | Date    | 2026-09-24   |
 | Status  | Approved     |
 | Owner   | Product      |
@@ -133,11 +133,11 @@ Every interface decision is checked against these five.
 
 ## 8. Core flow
 
-1. **Entry.** Recruiter opens the tool and sees the pool size and
-   suggested questions. Never a blank screen.
+1. **Entry.** Recruiter opens the tool and sees how many CVs there are to
+   review and an example question in the input. Never a blank screen.
 2. **Ask.** Types a question in natural language.
 3. **Wait.** Sees which step of the search is running until the answer
-   arrives, and afterwards how long it took.
+   arrives, and afterwards how many CVs it checked, in plain words.
 4. **Answer.** Sees the answer in the shape that fits the question type,
    with sources.
 5. **Verify.** Clicks a source; the original CV opens in a preview beside
@@ -145,7 +145,6 @@ Every interface decision is checked against these five.
    was. The preview can be resized, downloaded and closed.
 6. **Continue.** Asks a follow-up that builds on the previous answer
    ("of those, who speaks German?") or starts a new search.
-7. **Exit.** Can copy an answer.
 
 ## 9. Information architecture
 
@@ -189,7 +188,7 @@ Removed in 1.6: the pool is reached through answers and their sources.
   header.
 
 ### 10.6 States
-- Empty state with pool size and example questions.
+- Empty state with the number of CVs and an example question.
 - Loading state that shows progress.
 - Error state with a plain-language message and a way to retry.
 
@@ -221,8 +220,8 @@ Stated explicitly so nothing is inferred from omission.
 
 None open. Resolved in v1.2:
 
-- "Note candidates for follow-up" is deferred; v1 ships "copy an answer"
-  only (§8 step 7).
+- "Note candidates for follow-up" is deferred. Copying an answer is
+  dropped: it doesn't help the recruiter screen (§8).
 - Sources open the original PDF at the cited page (§10.2).
 
 ## 14. Changelog
@@ -241,3 +240,6 @@ None open. Resolved in v1.2:
 | 1.9     | 2026-09-24 | §10.2: a source shows the name and "CV" with a link mark; the page is where the link lands, not text. |
 | 1.10    | 2026-09-24 | §7, §8 step 5, §10.2: a source opens the CV in a resizable preview beside the conversation, with download and close, instead of a new tab. |
 | 1.11    | 2026-09-24 | §5: examples name candidates in the pilot pool. §8 step 3: one progress line shows the current step, then the time the search took. |
+| 1.12    | 2026-09-24 | §8 step 3: once answered, the progress line says how many CVs were checked instead of the time it took. |
+| 1.13    | 2026-09-24 | §8 step 1, §10.6: the empty state shows the number of CVs and one example question in the input, instead of suggested-question buttons. |
+| 1.14    | 2026-09-24 | §8, §13: copying an answer is dropped; the core flow ends with a follow-up or a new search. |

@@ -1,12 +1,11 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
-import { useState } from "react";
-import type { Answer as AnswerData } from "@/contracts/answer";
-import { IconButton } from "@/components/ui/Button";
-import { Tooltip } from "@/components/ui/Tooltip";
-import { Answer } from "@/components/Answer";
+import type { AnswerStatus, AnswerView as View } from "@/contracts/view";
+import { StatusMessage } from "@/components/ui/StatusMessage";
+import type { StatusMessageProps } from "@/components/ui/StatusMessage";
+import { AnswerText, AnswerView } from "@/components/Answer";
 import type { SourceHref } from "@/components/Answer";
+import { statusText } from "@/lib/answer-text";
 import { AnswerError } from "./AnswerError";
 import { AnswerProgress } from "./AnswerProgress";
 import { QuestionBubble } from "./QuestionBubble";
@@ -19,66 +18,55 @@ export interface ChatExchangeProps {
   status: ExchangeStatus;
   steps: readonly AnswerProgressStep[];
   slow?: boolean;
-  answer?: AnswerData;
+  /** The answer so far while it streams; the whole answer once answered. */
+  text: string;
+  /** The data under the answer, drawn from the CVs; shown once it is complete. */
+  view?: View | undefined;
+  /** How many CVs the answer was written from. */
+  checked?: number;
   error?: { message: string; retryable: boolean };
-  nameOf: (id: string) => string;
   sourceHref?: SourceHref | undefined;
   onRetry: () => void;
-  /** Copies the answer as plain text (PRD, Core flow: Exit). */
-  onCopy: () => Promise<void>;
 }
 
-/** How long the Copy button shows its result before resetting. */
-const COPY_FEEDBACK_MS = 2_000;
+/** DESIGN.md, States: the state line for each answer state. */
+const STATE_LINE: Record<AnswerStatus, NonNullable<StatusMessageProps["status"]>> = {
+  "no-match": "empty",
+  insufficient: "insufficient",
+  "out-of-scope": "out-of-scope",
+};
 
-const COPY_LABELS = { idle: "Copy answer", copied: "Copied", failed: "Could not copy; try again" } as const;
-
-/** One question and what came back for it: progress, then an answer or an error. */
-export function ChatExchange({ question, status, steps, slow, answer, error, nameOf, sourceHref, onRetry, onCopy }: ChatExchangeProps) {
-  const [copyState, setCopyState] = useState<keyof typeof COPY_LABELS>("idle");
-
-  async function copy() {
-    try {
-      await onCopy();
-      setCopyState("copied");
-    } catch {
-      // The clipboard can refuse (permission, unfocused window); say so instead of failing silently.
-      setCopyState("failed");
-    }
-    setTimeout(() => setCopyState("idle"), COPY_FEEDBACK_MS);
-  }
+/** One question and what came back for it: progress, the answer as it is written, its view, or an error. */
+export function ChatExchange({ question, status, steps, slow, text, view, checked, error, sourceHref, onRetry }: ChatExchangeProps) {
+  const answered = status === "answered";
+  const state = answered && view?.kind === "status" ? view.status : undefined;
 
   return (
     <article className="flex min-w-0 flex-col gap-5 wrap-anywhere">
       <QuestionBubble>{question}</QuestionBubble>
-      {status === "stopped" && <p className="text-body-sm leading-body-sm text-on-surface-variant">Stopped.</p>}
-      {status === "error" && error && <AnswerError message={error.message} retryable={error.retryable} onRetry={onRetry} />}
-      {status === "answered" && answer && <Answer answer={answer} nameOf={nameOf} sourceHref={sourceHref} />}
       {/*
-        The footer row: the progress line, one instance from start to finish so
-        its clock carries over (alone under the question while running), and
-        beside it, once answered, the Copy action.
+        The progress line sits between the question and the answer: one
+        instance from start to finish, the current step while running, then
+        the CVs checked.
       */}
       {(status === "running" || steps.length > 0) && (
-        <div className="-mt-3 flex items-center gap-2">
-          <AnswerProgress steps={steps} working={status === "running"} slow={slow} />
-          {status === "answered" && answer && (
-            <>
-              {/* The label repeats the button's name, so the trigger props are not spread. */}
-              <Tooltip content={COPY_LABELS[copyState]} side="bottom">
-                {() => (
-                  <IconButton aria-label={COPY_LABELS[copyState]} variant="ghost" size="xs" onClick={copy}>
-                    {copyState === "copied" ? <Check aria-hidden /> : <Copy aria-hidden />}
-                  </IconButton>
-                )}
-              </Tooltip>
-              <span aria-live="polite" className="sr-only">
-                {copyState === "idle" ? "" : COPY_LABELS[copyState]}
-              </span>
-            </>
-          )}
-        </div>
+        <AnswerProgress
+          steps={steps}
+          checked={checked}
+          working={status === "running"}
+          slow={slow}
+          outcome={status === "error" ? "failed" : status === "stopped" ? "stopped" : "answered"}
+        />
       )}
+      {/*
+        The text appears as it is written, and stays if the request is stopped
+        or fails part-way. A state, once the answer is complete, is its words
+        behind the state's icon.
+      */}
+      {state ? <StatusMessage status={STATE_LINE[state]}>{text.trim() || statusText(state)}</StatusMessage> : text && <AnswerText text={text} />}
+      {answered && view && <AnswerView view={view} sourceHref={sourceHref} />}
+      {status === "stopped" && <p className="text-body-sm leading-body-sm text-on-surface-variant">Stopped.</p>}
+      {status === "error" && error && <AnswerError message={error.message} retryable={error.retryable} onRetry={onRetry} />}
     </article>
   );
 }

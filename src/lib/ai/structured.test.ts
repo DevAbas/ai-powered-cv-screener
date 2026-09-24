@@ -3,13 +3,21 @@ import { APICallError, NoObjectGeneratedError, simulateReadableStream } from "ai
 import type { LanguageModel } from "ai";
 import { MockLanguageModelV4 } from "ai/test";
 import { describe, expect, it, vi } from "vitest";
-import { AnswerSchema } from "@/contracts/answer";
+import { z } from "zod";
 import { CircuitBreaker } from "./breaker";
 import type { ModelEntry, ModelTarget } from "./registry";
 import { getEntry } from "./registry";
 import { ModelTimeoutError } from "./retry";
+import { modelKey } from "./route";
 import type { CallBudget, RunOptions } from "./structured";
 import { generateWithRepair, isFirstOutputChunk, runStructured, schemaIssues } from "./structured";
+
+/** A structured answer with a required list, standing in for any schema a call fills. */
+const TestAnswerSchema = z.object({
+  kind: z.literal("filter"),
+  summary: z.string().min(1),
+  candidates: z.array(z.object({ candidateId: z.string(), name: z.string(), reason: z.string(), page: z.number() })).min(1),
+});
 
 const VALID = JSON.stringify({
   kind: "filter",
@@ -109,7 +117,7 @@ function stalledOpenRouter(mode: "after-headers" | "before-headers") {
 
 const fallbackTarget: ModelTarget = { provider: "google", vendor: "google", model: "fallback-model" };
 const entry: ModelEntry = { ...getEntry("primary"), fallback: fallbackTarget };
-const request = { schema: AnswerSchema, name: "answer", prompt: "Who has React?" };
+const request = { schema: TestAnswerSchema, name: "answer", prompt: "Who has React?" };
 const BUDGET: CallBudget = { firstOutputMs: 150, totalMs: 2_000 };
 
 function run(primary: LanguageModel, fallback: LanguageModel, options: RunOptions = {}) {
@@ -132,11 +140,11 @@ async function timed<T>(promise: Promise<T>) {
 
 describe("schemaIssues", () => {
   it("lists zod issues by path", () => {
-    expect(schemaIssues(AnswerSchema, MISSING_CANDIDATES)).toBe('- candidates: Required for kind "filter"');
+    expect(schemaIssues(TestAnswerSchema, MISSING_CANDIDATES)).toMatch(/^- candidates: /);
   });
 
   it("reports text that is not JSON", () => {
-    expect(schemaIssues(AnswerSchema, "Lena Novak")).toMatch(/^The response is not valid JSON/);
+    expect(schemaIssues(TestAnswerSchema, "Lena Novak")).toMatch(/^The response is not valid JSON/);
   });
 });
 
@@ -163,9 +171,9 @@ describe("generateWithRepair", () => {
     const onRepair = vi.fn();
     const result = await generateWithRepair(model, { ...request, onRepair });
     expect(result.repaired).toBe(true);
-    expect(onRepair).toHaveBeenCalledWith('- candidates: Required for kind "filter"', MISSING_CANDIDATES);
+    expect(onRepair).toHaveBeenCalledWith(expect.stringMatching(/^- candidates: /), MISSING_CANDIDATES);
     const repairPrompt = JSON.stringify(model.doStreamCalls[1]?.prompt);
-    expect(repairPrompt).toContain("candidates: Required for kind");
+    expect(repairPrompt).toContain("- candidates: ");
   });
 
   it("throws the SDK error when the repair also fails", async () => {
@@ -182,14 +190,6 @@ describe("generateWithRepair", () => {
     });
     await expect(generateWithRepair(model, request)).rejects.toThrow("HTTP 400");
     expect(model.doStreamCalls).toHaveLength(1);
-  });
-
-  it("reports the time to the first content-bearing chunk", async () => {
-    const model = new MockLanguageModelV4({ doStream: streamReply(VALID, 60) });
-    const onFirstOutput = vi.fn();
-    await generateWithRepair(model, request, { onFirstOutput });
-    expect(onFirstOutput).toHaveBeenCalledOnce();
-    expect(onFirstOutput.mock.calls[0]?.[0]).toBeGreaterThanOrEqual(50);
   });
 });
 
@@ -284,7 +284,7 @@ describe("runStructured: failure rules", () => {
     const result = await run(primary, mockModel(VALID), { breaker });
     expect(result.fellBack).toBe(true);
     expect(primary.doStreamCalls).toHaveLength(1);
-    expect(breaker.isOpen(entry.id)).toBe(true);
+    expect(breaker.isOpen(modelKey(entry))).toBe(true);
   });
 
   it("does not retry other 429s and leaves the breaker closed", async () => {
@@ -293,7 +293,7 @@ describe("runStructured: failure rules", () => {
     const result = await run(primary, mockModel(VALID), { breaker });
     expect(result.fellBack).toBe(true);
     expect(primary.doStreamCalls).toHaveLength(1);
-    expect(breaker.isOpen(entry.id)).toBe(false);
+    expect(breaker.isOpen(modelKey(entry))).toBe(false);
   });
 });
 
@@ -320,21 +320,21 @@ describe("runStructured: circuit breaker", () => {
     now += 3 * 60_000;
     const recovered = await run(mockModel(VALID), mockModel(VALID), options);
     expect(recovered.fellBack).toBe(false);
-    expect(breaker.isOpen(entry.id)).toBe(false);
+    expect(breaker.isOpen(modelKey(entry))).toBe(false);
   });
 
   it("counts one strike per call: a 5xx and its failed retry do not open the breaker alone", async () => {
     const breaker = new CircuitBreaker();
     await run(failingThen(apiError(503), apiError(503)), mockModel(VALID), { breaker, retryJitterMs: 10 });
-    expect(breaker.isOpen(entry.id)).toBe(false);
+    expect(breaker.isOpen(modelKey(entry))).toBe(false);
     await run(failingThen(apiError(503), apiError(503)), mockModel(VALID), { breaker, retryJitterMs: 10 });
-    expect(breaker.isOpen(entry.id)).toBe(true);
+    expect(breaker.isOpen(modelKey(entry))).toBe(true);
   });
 
   it("a 5xx recovered by the retry leaves the breaker closed", async () => {
     const breaker = new CircuitBreaker();
     await run(failingThen(apiError(503)), mockModel(VALID), { breaker, retryJitterMs: 10 });
-    expect(breaker.isOpen(entry.id)).toBe(false);
+    expect(breaker.isOpen(modelKey(entry))).toBe(false);
   });
 
   it("does not count schema failures", async () => {
@@ -342,7 +342,7 @@ describe("runStructured: circuit breaker", () => {
     for (let i = 0; i < 3; i++) {
       await run(mockModel(MISSING_CANDIDATES, MISSING_CANDIDATES), mockModel(VALID), { breaker });
     }
-    expect(breaker.isOpen(entry.id)).toBe(false);
+    expect(breaker.isOpen(modelKey(entry))).toBe(false);
   });
 });
 

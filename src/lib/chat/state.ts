@@ -1,5 +1,5 @@
-import type { Answer } from "@/contracts/answer";
-import type { AnswerModelId, ProgressStage } from "@/contracts/ask";
+import type { AnswerModelId, AnswerSource, ProgressStage } from "@/contracts/ask";
+import type { AnswerView } from "@/contracts/view";
 import type { ExchangeStatus } from "@/components/ChatExchange";
 
 // Session state of the screen (PRD, UX principles: context is not lost).
@@ -12,7 +12,14 @@ export interface ExchangeState {
   steps: { stage: ProgressStage; message: string }[];
   /** The request passed the "Taking longer than usual…" threshold. */
   slow: boolean;
-  answer?: Answer;
+  /** The answer so far while it streams; the whole answer once answered. */
+  text: string;
+  /** The data under the answer, drawn from the CVs; set when answered with one. */
+  view?: AnswerView;
+  /** The CVs the view shows; set when answered. */
+  sources: AnswerSource[];
+  /** How many CVs the answer was written from; set when answered. */
+  checked?: number;
   error?: { message: string; retryable: boolean };
 }
 
@@ -25,7 +32,8 @@ export type ChatAction =
   | { type: "asked"; exchangeId: string; question: string }
   | { type: "retried"; exchangeId: string }
   | { type: "progress"; exchangeId: string; stage: ProgressStage; message: string }
-  | { type: "answered"; exchangeId: string; answer: Answer }
+  | { type: "delta"; exchangeId: string; text: string }
+  | { type: "answered"; exchangeId: string; text: string; view?: AnswerView; sources: AnswerSource[]; checked: number }
   | { type: "failed"; exchangeId: string; message: string; retryable: boolean }
   | { type: "stopped"; exchangeId: string }
   | { type: "slowNotice"; exchangeId: string }
@@ -39,7 +47,7 @@ export function isRunning(state: ChatState): boolean {
   return state.exchanges.some((exchange) => exchange.status === "running");
 }
 
-const RUNNING = { status: "running", steps: [], slow: false, answer: undefined, error: undefined } as const;
+const RUNNING = { status: "running", slow: false, text: "", view: undefined, checked: undefined, error: undefined } as const;
 
 /** Applies `update` to the running exchange with `exchangeId`; events for a finished exchange are ignored. */
 function updateRunning(state: ChatState, exchangeId: string, update: (exchange: ExchangeState) => ExchangeState): ChatState {
@@ -52,11 +60,16 @@ function updateRunning(state: ChatState, exchangeId: string, update: (exchange: 
 export function chatReducer(state: ChatState, action: ChatAction): ChatState {
   switch (action.type) {
     case "asked":
-      return { ...state, exchanges: [...state.exchanges, { id: action.exchangeId, question: action.question, ...RUNNING, steps: [] }] };
+      return {
+        ...state,
+        exchanges: [...state.exchanges, { id: action.exchangeId, question: action.question, ...RUNNING, steps: [], sources: [] }],
+      };
     case "retried":
       return {
         ...state,
-        exchanges: state.exchanges.map((exchange) => (exchange.id === action.exchangeId ? { ...exchange, ...RUNNING, steps: [] } : exchange)),
+        exchanges: state.exchanges.map((exchange) =>
+          exchange.id === action.exchangeId ? { ...exchange, ...RUNNING, steps: [], sources: [] } : exchange,
+        ),
       };
     case "progress":
       return updateRunning(state, action.exchangeId, (exchange) => {
@@ -67,8 +80,17 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
           steps: known ? exchange.steps.map((s) => (s.stage === action.stage ? step : s)) : [...exchange.steps, step],
         };
       });
+    case "delta":
+      return updateRunning(state, action.exchangeId, (exchange) => ({ ...exchange, text: exchange.text + action.text }));
     case "answered":
-      return updateRunning(state, action.exchangeId, (exchange) => ({ ...exchange, status: "answered", answer: action.answer }));
+      return updateRunning(state, action.exchangeId, (exchange) => ({
+        ...exchange,
+        status: "answered",
+        text: action.text,
+        view: action.view,
+        sources: action.sources,
+        checked: action.checked,
+      }));
     case "failed":
       return updateRunning(state, action.exchangeId, (exchange) => ({
         ...exchange,

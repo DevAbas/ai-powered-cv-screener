@@ -1,8 +1,8 @@
-// In-memory circuit breaker per model entry (PLAN, Model registry: Reliability). After
-// `threshold` failures (timeouts or 5xx) within `windowMs`, the entry's
-// primary is skipped for `cooldownMs`; after the cooldown the primary is
-// tried again, and one more failure reopens the breaker at once. `trip`
-// opens it immediately.
+// In-memory circuit breaker per model (PLAN, Model registry: Reliability;
+// keys and routing in route.ts). After `threshold` failures (timeouts or
+// 5xx) within `windowMs`, the model is passed over for `cooldownMs`; after
+// the cooldown it is tried again, and one more failure reopens the breaker
+// at once. `trip` opens it immediately.
 
 export interface BreakerOptions {
   threshold?: number;
@@ -14,7 +14,7 @@ export interface BreakerOptions {
 interface BreakerState {
   failures: number[];
   openUntil?: number;
-  /** The cooldown has passed and the primary is on probation. */
+  /** The cooldown has passed and the model is on probation. */
   halfOpen: boolean;
 }
 
@@ -41,7 +41,7 @@ export class CircuitBreaker {
     return state;
   }
 
-  /** True while the primary should be skipped. */
+  /** True while the model should be passed over. */
   isOpen(key: string): boolean {
     const state = this.state(key);
     if (state.openUntil === undefined) return false;
@@ -80,5 +80,5 @@ export class CircuitBreaker {
   }
 }
 
-/** The process-wide breaker for answer and extract calls. */
+/** The process-wide breaker for every model call. */
 export const modelBreaker = new CircuitBreaker();

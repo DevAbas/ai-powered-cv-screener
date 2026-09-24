@@ -1,0 +1,131 @@
+{
+  "name": "Marco Bianchi",
+  "headline": "Frontend Engineer",
+  "role": "frontend",
+  "seniority": "mid",
+  "location": "Milan, Italy",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 5,
+  "skills": [
+    {
+      "name": "JavaScript",
+      "years": 5
+    },
+    {
+      "name": "TypeScript",
+      "years": 4.5
+    },
+    {
+      "name": "React",
+      "years": 4.5
+    },
+    {
+      "name": "HTML",
+      "years": 5
+    },
+    {
+      "name": "CSS",
+      "years": 5
+    },
+    {
+      "name": "Git",
+      "years": 5
+    }
+  ],
+  "languages": [
+    {
+      "language": "Italian",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Milan",
+      "year": 2021
+    }
+  ],
+  "employment": [
+    {
+      "company": "Vetra Tech",
+      "title": "Frontend Engineer",
+      "industry": "Software Development",
+      "from": "2023-01",
+      "to": null,
+      "description": "Vetra Tech builds modern web applications for retail clients.",
+      "stack": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "HTML",
+        "CSS",
+        "Git"
+      ],
+      "highlights": [
+        "Developed frontend features as a mid Frontend Engineer using JavaScript, TypeScript, React, HTML, CSS, and Git.",
+        "Contributed to software development projects in the retail industry."
+      ]
+    },
+    {
+      "company": "Navigli Web",
+      "title": "Frontend Engineer",
+      "industry": "Digital Agency",
+      "from": "2021-06",
+      "to": "2022-12",
+      "description": "Navigli Web creates digital marketing platforms and custom websites.",
+      "stack": [
+        "JavaScript",
+        "React",
+        "HTML",
+        "CSS",
+        "Git"
+      ],
+      "highlights": [
+        "Built responsive web interfaces as a mid Frontend Engineer using JavaScript, React, HTML, CSS, and Git.",
+        "Delivered digital agency projects within the software development domain."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "JavaScript Developer Certificate"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages",
+      "skills": [
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "label": "Frameworks and Tools",
+      "skills": [
+        "React",
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Marco Bianchi is a mid Frontend Engineer based in Milan, Italy with 5.0 years of total experience. Their core expertise includes JavaScript, TypeScript, React, HTML, CSS, and Git. They have worked in the software development and digital agency industries. They hold a bachelor degree in Computer Science from University of Milan.",
+  "contact": {
+    "email": "marco.bianchi@example.com",
+    "phone": "+1-555-003-0303"
+  },
+  "photoPrompt": "A professional headshot of a 28-year-old man with short dark hair, wearing a navy blue button-down shirt, with a neutral expression against a soft gray background.",
+  "template": 2
+}

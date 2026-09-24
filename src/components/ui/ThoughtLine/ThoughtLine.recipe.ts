@@ -9,11 +9,13 @@ export const thoughtLineSlotRecipe = defineSlotRecipe({
     head: ["group relative inline-flex items-center gap-1.5 rounded-sm whitespace-nowrap", focusVisibleRing],
     glyph: "inline-flex size-4 shrink-0 transition-colors",
     label: "inline-grid overflow-hidden transition-[width]",
-    text: "col-start-1 row-start-1 w-max opacity-0 transition-opacity",
+    // Both labels share one cell: the one out of view is hidden once it has faded, and the status repeats
+    // the visible one for screen readers only, so a copy of the line picks up the visible label once.
+    text: "col-start-1 row-start-1 w-max transition-[opacity,visibility]",
     breath: "inline-block",
     timer: "text-on-surface-variant tabular-nums",
     chevron: "inline-flex size-4 text-on-surface-variant transition-transform group-aria-expanded:rotate-180",
-    status: "sr-only",
+    status: "sr-only select-none",
     // The fold takes the longest motion DESIGN.md allows, decelerating in and accelerating out.
     trace: "grid w-0 min-w-full grid-rows-[1fr] transition-[grid-template-rows] duration-200 ease-decelerate aria-hidden:grid-rows-[0fr] aria-hidden:ease-accelerate",
     fold: "min-h-0 overflow-y-clip",
@@ -38,7 +40,7 @@ export const thoughtLineSlotRecipe = defineSlotRecipe({
     },
     active: {
       true: { text: "opacity-100" },
-      false: {},
+      false: { text: "invisible opacity-0" },
     },
     done: {
       true: { text: "text-on-surface-variant", step: "text-on-surface-variant" },

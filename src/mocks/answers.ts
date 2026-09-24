@@ -1,129 +1,103 @@
-import type { Answer } from "@/contracts/answer";
+import type { AnswerSource } from "@/contracts/ask";
+import type { AnswerView, CandidateRow } from "@/contracts/view";
+import { viewSources } from "@/lib/answering/views";
+import { ANDREI, ELENA, LENA } from "@/lib/retrieval/fixtures";
+import { findCandidate } from "./pool";
 
-// One answer per kind (PLAN, Design system: mocks), about candidates in
-// MOCK_POOL. `malformed` fails AnswerSchema on purpose.
+// Answers for the mocks and stories (PLAN, Design system: mocks), about
+// candidates in MOCK_POOL, written the way the answer model is asked to: a
+// short text beside the view that shows the candidates (DESIGN.md, Answer
+// views). The CVs are the view's, as the server makes them.
 
-export const filterAnswer: Answer = {
-  kind: "filter",
-  summary: "4 candidates list both React and TypeScript.",
-  candidates: [
-    { candidateId: "lena-novak", name: "Lena Novak", reason: "Experience with React for 6 years and with TypeScript for 5 years.", page: 1 },
-    { candidateId: "jane-doe", name: "Jane Doe", reason: "Worked with React and TypeScript in her last two roles.", page: 1 },
-    { candidateId: "sofia-almeida", name: "Sofia Almeida", reason: "Experience with React for 4 years and with TypeScript for 3 years.", page: 1 },
-    { candidateId: "leon-fischer", name: "Leon Fischer", reason: "Builds the frontend of a Node stack with React and TypeScript.", page: 1 },
-  ],
-};
+export interface MockAnswer {
+  text: string;
+  view?: AnswerView;
+  sources: AnswerSource[];
+  checked: number;
+}
 
-export const followUpAnswer: Answer = {
-  kind: "filter",
-  summary: "2 of those 4 speak German.",
-  candidates: [
-    { candidateId: "lena-novak", name: "Lena Novak", reason: "Native German speaker.", page: 1 },
-    { candidateId: "leon-fischer", name: "Leon Fischer", reason: "Speaks German at C2 level.", page: 2 },
-  ],
-};
+/** A list row for a pool candidate, with the years of each skill asked about. */
+function row(candidateId: string, skills: [string, number | null][] = [], note = "", page = 1): CandidateRow {
+  const candidate = findCandidate(candidateId);
+  if (!candidate) throw new Error(`${candidateId} is not in the mock pool`);
+  const { name, headline } = candidate.profile;
+  return { candidateId, name, headline, skills: skills.map(([skill, years]) => ({ skill, years })), note, page };
+}
 
-export const rankAnswer: Answer = {
-  kind: "rank",
-  summary: "Top 3 for a Frontend Lead role, best first.",
-  candidates: [
-    { candidateId: "jane-doe", name: "Jane Doe", reason: "Leads a team of 6 frontend engineers and has 9 years of React.", page: 1 },
-    { candidateId: "daan-de-vries", name: "Daan de Vries", reason: "Principal UI engineer who owns the design system and mentors 4 engineers.", page: 1 },
-    { candidateId: "lena-novak", name: "Lena Novak", reason: "Senior with 8 years of experience who led the migration to Next.js.", page: 1 },
-  ],
-};
-
-export const compareAnswer: Answer = {
-  kind: "compare",
-  summary: "Andrei has more backend experience; Elena has more event-streaming work.",
-  comparison: {
-    candidateIds: ["andrei-popescu", "elena-georgiou"],
-    rows: [
-      { criterion: "Backend experience", a: "6 years", b: "4 years" },
-      { criterion: "Languages", a: "Go, Python", b: "Java, Kotlin" },
-      { criterion: "Data stores", a: "PostgreSQL, Redis", b: "PostgreSQL, Cassandra" },
-      { criterion: "Messaging", a: "Kafka (2 years)", b: "Kafka (4 years), RabbitMQ" },
-      { criterion: "Leadership", a: "Led a team of 3", b: "None stated" },
-    ],
-  },
-};
-
-export const factAnswer: Answer = {
-  kind: "fact",
-  summary: "Lena's last employer is Zalando.",
-  fact: {
-    text: "Senior Frontend Engineer at Zalando, Berlin, since 2022-03.",
-    candidateId: "lena-novak",
-    page: 1,
-  },
-};
-
-export const profileAnswer: Answer = {
-  kind: "profile",
-  summary: "Jane Doe: frontend lead with 9 years of React, based in Dublin.",
-  profile: {
-    candidateId: "jane-doe",
-    headline: "Frontend Lead · 11 years total · Dublin, open to hybrid",
-    sections: [
-      { title: "Experience", items: ["Frontend Lead, Fable Payments (2021–present)", "Senior Frontend Engineer, Greenline Logistics (2017–2021)"] },
-      { title: "Skills", items: ["React (9 years)", "TypeScript (7 years)", "Next.js", "Accessibility"] },
-      { title: "Languages", items: ["English, native", "French, B2"] },
-      { title: "Education", items: ["BSc Computer Science, Trinity College Dublin, 2013"] },
-      { title: "Availability", items: ["Notice period: 30 days"] },
-    ],
-  },
-};
-
-export const countAnswer: Answer = {
-  kind: "count",
-  summary: "5 candidates know Python.",
-  count: 5,
-  candidates: [
-    { candidateId: "andrei-popescu", name: "Andrei Popescu", reason: "Experience with Python for 3 years.", page: 1 },
-    { candidateId: "lucas-martin", name: "Lucas Martin", reason: "Experience with Python for 7 years.", page: 1 },
-    { candidateId: "nikolett-szabo", name: "Nikolett Szabó", reason: "Experience with Python for 5 years.", page: 1 },
-    { candidateId: "jonas-weber", name: "Jonas Weber", reason: "Experience with Python for 8 years.", page: 1 },
-    { candidateId: "ines-garcia", name: "Inés García", reason: "Experience with Python for 6 years.", page: 1 },
-  ],
-};
-
-export const countOnlyAnswer: Answer = {
-  kind: "count",
-  summary: "2 candidates are based in Germany.",
-  count: 2,
-};
-
-export const emptyAnswer: Answer = {
-  kind: "empty",
-  summary: "No candidate in the pool lists Rust.",
-};
-
-export const insufficientAnswer: Answer = {
-  kind: "insufficient",
-  summary: "The CVs do not state salary expectations, so I can't answer that.",
-};
-
-export const outOfScopeAnswer: Answer = {
-  kind: "out_of_scope",
-  summary: "I can only answer questions about the CVs in the pool. Try asking who matches a skill or a role.",
-};
-
-/** Fails AnswerSchema: a filter answer must list candidates. */
-export const malformedAnswer: unknown = {
-  kind: "filter",
-  summary: "Candidates who match.",
-};
+function answer(text: string, checked: number, view?: AnswerView): MockAnswer {
+  return { text, view, sources: viewSources(view), checked };
+}
 
 export const ANSWERS = {
-  filter: filterAnswer,
-  followUp: followUpAnswer,
-  rank: rankAnswer,
-  compare: compareAnswer,
-  fact: factAnswer,
-  profile: profileAnswer,
-  count: countAnswer,
-  countOnly: countOnlyAnswer,
-  empty: emptyAnswer,
-  insufficient: insufficientAnswer,
-  outOfScope: outOfScopeAnswer,
-} as const satisfies Record<string, Answer>;
+  filter: answer("**Jane Doe** also leads a frontend team.", 6, {
+    kind: "list",
+    ranked: false,
+    skills: ["React", "TypeScript"],
+    rows: [
+      row("jane-doe", [["React", 8], ["TypeScript", 8]], "Frontend Lead at Emerald Paytech"),
+      row("lena-novak", [["React", 7], ["TypeScript", 6]]),
+      row("sofia-almeida", [["React", 7], ["TypeScript", 6]]),
+      row("leon-fischer", [["React", 5], ["TypeScript", 5]], "React on a full-stack Node.js team"),
+    ],
+  }),
+  followUp: answer("Two of them speak German.", 4, {
+    kind: "list",
+    ranked: false,
+    skills: [],
+    rows: [row("lena-novak", [], "German (native)", 2), row("leon-fischer", [], "German (C2)")],
+  }),
+  rank: answer("For a Frontend Lead role, leadership decides the order.", 6, {
+    kind: "list",
+    ranked: true,
+    skills: [],
+    rows: [
+      row("jane-doe", [], "Already a Frontend Lead; mentors junior developers"),
+      row("daan-de-vries", [], "Principal UI Engineer with the most frontend years"),
+      row("lena-novak", [], "Senior; leads technical initiatives"),
+    ],
+  }),
+  compare: answer("**Andrei Popescu** has more backend depth; **Elena Georgiou** works mostly in Java.", 2, {
+    kind: "comparison",
+    skills: ["Python"],
+    candidates: [
+      { candidateId: ANDREI.id, profile: ANDREI.profile, skills: [{ skill: "Python", years: 8 }], page: 1 },
+      { candidateId: ELENA.id, profile: ELENA.profile, skills: [{ skill: "Python", years: 3 }], page: 1 },
+    ],
+  }),
+  fact: answer("Since March 2022.", 1, {
+    kind: "list",
+    ranked: false,
+    skills: [],
+    rows: [row("lena-novak", [], "Senior Frontend Engineer at Kinetix Digital", 2)],
+  }),
+  profile: answer("**Lena Novak** is a senior frontend engineer who mentors junior developers.", 1, {
+    kind: "profile",
+    candidate: { candidateId: LENA.id, profile: LENA.profile, skills: [], page: 1 },
+  }),
+  count: answer("", 19, {
+    kind: "list",
+    ranked: false,
+    skills: ["Python"],
+    rows: [
+      row("jonas-weber", [["Python", 10]]),
+      row("petra-horvat", [["Python", 10]]),
+      row("andrei-popescu", [["Python", 8]]),
+      row("lucas-martin", [["Python", 7]]),
+      row("ines-garcia", [["Python", 7]], "Machine learning pipelines in Python"),
+      row("elena-georgiou", [["Python", 3]]),
+    ],
+  }),
+  empty: answer("No candidate lists Rust.", 30, { kind: "status", status: "no-match" }),
+  insufficient: answer("The CVs don't say what salary anyone expects.", 1, { kind: "status", status: "insufficient" }),
+  help: answer(
+    "I can search your 30 candidates' CVs for you: find people with a skill, rank them for a role, compare two, or pull a fact from one CV. Try **\"Who has React and TypeScript?\"**",
+    0,
+  ),
+  outOfScope: answer("I can only help with your candidates' CVs. Try asking about skills, experience, languages or location.", 0, {
+    kind: "status",
+    status: "out-of-scope",
+  }),
+} as const satisfies Record<string, MockAnswer>;
+
+/** An answer event that breaks the contract (neither text nor a view), for the client's validation. */
+export const malformedAnswer = { text: "", sources: [], checked: 1 };

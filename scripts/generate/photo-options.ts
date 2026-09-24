@@ -1,7 +1,6 @@
 import type { GoogleGenerativeAIProviderOptions } from "@ai-sdk/google";
 
-// How a candidate photo is asked for. The `image` probe in check-models sends
-// the same options, so a passing probe means the photo step works.
+// How a candidate photo is asked for.
 
 export const PHOTO_STYLE_SUFFIX =
   "Neutral studio headshot, plain light grey background, soft even lighting, business casual, looking at the camera, no text, no logos, no watermark, photorealistic.";

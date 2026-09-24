@@ -2,11 +2,11 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.14                                     |
+| Version | 1.20                                     |
 | Date    | 2026-09-24                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
-| Goal    | Deliver the v1 pilot defined in PRD 1.11 |
+| Goal    | Deliver the v1 pilot defined in PRD 1.13 |
 
 If the code and this document disagree, change this document first, then
 the code. This plan is not extended with new features; a new feature gets
@@ -23,26 +23,31 @@ its own plan in `docs/plans/<feature>.md`.
 
 ## Data access
 
-The app reads only the index and the CV PDFs.
+The app reads only the index, the CV PDFs and the CV vectors in Pinecone.
 
 ## Model registry
 
-The backend talks to models only through the registry. Model ids are
-pinned only after `check-models` passes and are never taken from memory.
+The backend talks to models only through the registry. Model ids come
+from the provider's model list, never from memory.
 
 ### Answer models
 
 - The recruiter chooses between registry entries (PRD, Model selection).
-  Entries are named slots, `primary` and `alternative`; no name or
-  description claims one answers better than the other.
+  Entries are named slots: `primary` and `alternative` on the Gemini API
+  free tier, and `openrouter-free`, which OpenRouter sends to any of its
+  free models that is up, so the recruiter can switch when one is busy or
+  out of requests. No name or description claims one answers better than
+  another.
+- `openrouter-free` is also the primary's fallback. OpenRouter's free
+  models share one daily allowance per account.
 - `recommended` stays on `primary` until the eval sets it (Evaluation).
 
 ### Acceptance criteria
 
 An answer model enters the registry only if it meets all four:
 
-1. **Capabilities.** `check-models` passes for tools, structured output
-   and streaming.
+1. **Capabilities.** It does the jobs the registry gives it: streamed
+   answers, and for `primary` the query rewrite.
 2. **Correctness.** It meets every threshold in Evaluation.
 3. **Latency.** P95 end-to-end latency per question is at most ~10 s
    (PRD, Success criteria).
@@ -56,7 +61,9 @@ Until the eval exists, only criterion 1 applies.
 - Every model call has a first-output limit and a total budget, set from
   the measured P95 time to first token.
 - A timeout goes straight to the fallback model, never a retry on the
-  same model.
+  same model. A streamed answer can fall back only before its first word;
+  after that a failure ends it with an error, since two models' text would
+  mix.
 - A response that fails its schema gets one repair attempt, then the
   fallback.
 - A per-entry circuit breaker skips a failing primary for a cooldown.
@@ -85,35 +92,47 @@ the mock pool mirrors it and a test keeps them equal. Three steps:
 ## Indexer
 
 For each PDF: text per page, one structured profile extracted by the
-`extract` entry, and skills, languages and roles normalised. No
-embeddings: at ~30 CVs, structured filters and keyword search over the
-page text retrieve everything the questions need.
+`extract` entry, and skills, languages and roles normalised; then one
+vector per CV from the `embed` entry, stored in Pinecone under the
+candidate id.
 
-The index is one committed JSON file, `data/index.json`; no database in
-v1. Extracted strings are checked against the page text: they keep the
-CV's capitalisation, and the role follows the headline when it names one.
+The text and profiles are one committed JSON file, `data/index.json`; the
+vectors live only in Pinecone and are rebuilt from the index
+(`npm run index -- --step vectors`). Extracted strings are checked against
+the page text: they keep the CV's capitalisation, and the role follows the
+headline when it names one.
 
 ## Retrieval and answering
 
-Retrieval is required; the whole pool is never placed in a prompt.
+Retrieval picks the CVs; the model answers from those CVs only, in its own
+words. Every step is its own module behind an interface
+(`src/lib/answering`, `src/lib/vector`, `src/lib/ai`), composed in one
+place, so each is tested alone and Pinecone or a model can be replaced in
+one adapter.
 
-- `search_cvs` filters the profiles deterministically and returns the
-  exact count; it can scope a follow-up to the previous answer.
-- `get_cv` returns one profile with its pages, for compare, fact and
-  profile questions.
-- Evidence pages are found by keyword match over the page text (the page
-  with the most of the question's terms; the first page otherwise), scoped
-  to the matched candidates.
+1. **Plan, by rules.** A question that refers back ("of those", "is he…")
+   reads the previous answer's candidates; one that names a candidate
+   reads that CV; anything else is a similarity search. A fragment
+   follow-up ("under 2 years?") is first rewritten into a standalone query
+   by the `primary` entry, using the earlier questions.
+2. **Retrieve.** The query is embedded and Pinecone returns the closest
+   CVs; matches below a score floor are dropped, and when even the best is
+   weak nothing is retrieved (a greeting or "how can you help").
+3. **Answer.** The chosen answer model streams Markdown, given its mission
+   (a CV screening assistant for a recruiter: what it can and cannot do,
+   how it writes), the pool at a glance, the retrieved CVs' full text and
+   the conversation so far.
+4. **Sources.** The CVs the answer names, among those retrieved, become
+   its CV cards, each opened at the page that best matches the question.
 
-Flow: validate the request → retrieve (each tool call is a progress
-stage) → compose one structured answer from the retrieval result only →
-validate the answer against the retrieval result → stream progress, then
-exactly one answer or error.
+The stream carries progress, the answer text as it is written, then
+exactly one answer (the whole text, its sources and how many CVs it was
+written from) or one error.
 
-Validation against the retrieval result: unknown candidate ids are
-dropped (an emptied filter or rank becomes `empty`), the count comes from
-`search_cvs`, every cited page must be a retrieved page, and an unknown id
-in compare, fact or profile becomes `insufficient`.
+Known limits, accepted for the pilot: counts and lists are the model's
+reading of the retrieved CVs, not an exact search; the score floor can
+drop a relevant CV; the answer is not validated beyond its sources coming
+only from retrieved CVs.
 
 ## Design system
 
@@ -133,10 +152,11 @@ both themes.
 - The screen talks to one `ask` client module: mocks during the UI
   phase, `POST /api/ask` from the API phase, without touching components.
 - Stop aborts the request; the call ends without fallback.
-- One progress line reads the current stage (the stages mirror the tool
-  calls) and, once answered, how long the search took; after ~10 s it
-  reads a neutral "Taking longer than usual…". Schema repair and fallback
-  are never shown.
+- One progress line reads the current step (search, read, write) and,
+  once answered, how many CVs the answer was written from; after ~10 s it
+  reads a neutral "Taking longer than usual…". Fallback is never shown.
+- The answer appears as it is written, rendered from Markdown with the
+  design system's type; its CV cards follow once it is complete.
 - Sources open the CV's PDF at the cited page
   (`/cvs/<name>_<surname>_cv.pdf#page=N`) in a preview panel beside the
   conversation, its pages drawn with pdf.js (`pdfjs-dist`, loaded only
@@ -189,14 +209,15 @@ Every phase also ends with build and tests clean.
 
 | # | Question | Blocks |
 |---|----------|--------|
-| 2 | Answer acceptance run (`--repeat 20`, 0 final failures after repair) is pending quota; 7/7 clean so far. If it fails, answer payload fields become required-nullable. | API |
-| 3 | `alternative` fails the latency criterion; choose a replacement. | API |
-| 4 | Set the first-output and total limits from measured P95. | API |
+| 3 | `alternative` fails the latency criterion and the free-tier budget (Gemini 3.6 Flash: 5 requests a minute, 20 a day, at 2 calls per question); choose a replacement. | API |
+| 4 | Set the first-output and total limits from the measured P95 time to first word. | API |
+| 9 | Tune the retrieval score floor on the 30 indexed CVs (the server log lists each question's scores). | API |
 | 5 | Evaluate `lfm-2.5-2.6b` as a fast middle tier before the Gemini fallback. | Eval |
 
 Resolved in 1.14: 6, the JSON index is enough for the pilot pool; 7, not
 in v1, `lib` stays organised by domain (`AGENTS.md`, Conventions); 8, the
-breaker counts one strike per call.
+breaker counts one strike per call. Closed in 1.19: 2, the structured
+answer it measured no longer exists.
 
 ## Changelog
 
@@ -217,3 +238,9 @@ breaker counts one strike per call.
 | 1.12    | 2026-09-24 | Goal references PRD 1.10. User interface: sources open an in-app preview panel drawn with pdf.js, resizable, with download. |
 | 1.13    | 2026-09-24 | Goal references PRD 1.11. Progress line wording. Embeddings dropped: retrieval is structured filters plus keyword search over page text; the `embed` entry, its rule and the embedding index go. |
 | 1.14    | 2026-09-24 | Data access: the index and the CV PDFs. Indexer: committed `data/index.json`, extracted strings checked against the page text. Open questions 6–8 resolved (no database in v1, `lib` by domain, one breaker strike per call). |
+| 1.15    | 2026-09-24 | Retrieval and answering: tool calls as one structured retrieval plan run by the server; answers without a compose call; complete filter and count lists. Open question 3: the free-tier budget of `alternative`. |
+| 1.16    | 2026-09-24 | Goal references PRD 1.12. User interface: the settled progress line names the CVs checked; no timer. |
+| 1.17    | 2026-09-24 | Goal references PRD 1.13 (empty state: CV count and an example question). |
+| 1.18    | 2026-09-24 | Retrieval: upper bounds on years; a follow-up narrows only when the question refers back; a narrowed "nobody" names the other matches. |
+| 1.19    | 2026-09-24 | Retrieval and answering rebuilt: embeddings in Pinecone, a rules-first plan, a streamed Markdown answer from a mission prompt with the conversation, sources from the CVs it names. Data access adds Pinecone; the `embed` entry returns; `check-models` checks each job with its production code; open question 2 closed, 9 added. PRD §5 (answer shapes), §8 step 3 and §10.1 predate this and are to be revised. |
+| 1.20    | 2026-09-24 | Answer models: `openrouter-free` joins the menu and replaces Nemotron as the primary's fallback; OpenRouter's free allowance is shared per account. `check-models` dropped: model ids come from the provider's model list and are tried in the app. |

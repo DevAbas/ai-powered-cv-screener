@@ -1,40 +1,71 @@
-import type { Comparison } from "@/contracts/answer";
+import type { AnswerView, ViewCandidate } from "@/contracts/view";
 import { Table } from "@/components/ui/Table";
-import { CandidateName } from "./CandidateName";
+import { profileFacts } from "@/lib/answer-text";
 import type { SourceHref } from "./CvSourceLink";
 import { CvSourceLink } from "./CvSourceLink";
 
+type ComparisonView = Extract<AnswerView, { kind: "comparison" }>;
+
 export interface AnswerComparisonProps {
-  comparison: Comparison;
-  nameOf: (id: string) => string;
+  view: ComparisonView;
   sourceHref?: SourceHref | undefined;
 }
 
-/** Side-by-side of two candidates (PRD, Use cases: compare). */
-export function AnswerComparison({ comparison, nameOf, sourceHref }: AnswerComparisonProps) {
-  const [a, b] = comparison.candidateIds;
-  const header = (id: string) => (
-    <span className="flex flex-col items-start gap-1 normal-case">
-      <CandidateName name={nameOf(id)} />
-      <CvSourceLink candidateId={id} name={nameOf(id)} page={1} sourceHref={sourceHref} />
-    </span>
-  );
+interface Criterion {
+  label: string;
+  value: (candidate: ViewCandidate) => string;
+}
+
+const years = (value: number | null) => (value === null ? "—" : `${value} ${value === 1 ? "yr" : "yrs"}`);
+
+/** The criteria in order, with the skills the question is about after seniority. */
+function criteria(skills: readonly string[]): Criterion[] {
+  return [
+    { label: "Title", value: (c) => c.profile.headline },
+    { label: "Location", value: (c) => c.profile.location },
+    { label: "Seniority", value: (c) => profileFacts.seniority(c.profile) },
+    ...skills.map((skill, i): Criterion => ({ label: skill, value: (c) => years(c.skills[i]?.years ?? null) })),
+    { label: "Languages", value: (c) => profileFacts.languages(c.profile) },
+    { label: "Education", value: (c) => profileFacts.education(c.profile) },
+    { label: "Notice", value: (c) => profileFacts.notice(c.profile) },
+    { label: "Work", value: (c) => `${profileFacts.work(c.profile)} · ${c.profile.workAuthorization}` },
+  ];
+}
+
+/**
+ * DESIGN.md, Answer views: Comparison. Two candidates side by side, every
+ * fact from their CVs: one column each, headed by the name over the compact
+ * file card, and the criteria down the first column.
+ */
+export function AnswerComparison({ view, sourceHref }: AnswerComparisonProps) {
+  const [a, b] = view.candidates;
   return (
     <Table.Root>
-      <Table.Caption>{`Comparison of ${nameOf(a)} and ${nameOf(b)}`}</Table.Caption>
+      <Table.Caption>
+        Comparison of {a?.profile.name} and {b?.profile.name}
+      </Table.Caption>
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeader>Criterion</Table.ColumnHeader>
-          <Table.ColumnHeader>{header(a)}</Table.ColumnHeader>
-          <Table.ColumnHeader>{header(b)}</Table.ColumnHeader>
+          <Table.ColumnHeader>
+            <span className="sr-only">Criterion</span>
+          </Table.ColumnHeader>
+          {view.candidates.map((c) => (
+            <Table.ColumnHeader key={c.candidateId}>
+              <span className="flex flex-col items-start gap-1.5 tracking-normal normal-case">
+                <span className="text-label-lg leading-label-lg font-(weight:--font-weight-label-lg) text-on-surface">{c.profile.name}</span>
+                <CvSourceLink compact candidateId={c.candidateId} name={c.profile.name} page={c.page} sourceHref={sourceHref} />
+              </span>
+            </Table.ColumnHeader>
+          ))}
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {comparison.rows.map((row) => (
-          <Table.Row key={row.criterion}>
-            <Table.RowHeader>{row.criterion}</Table.RowHeader>
-            <Table.Cell>{row.a}</Table.Cell>
-            <Table.Cell>{row.b}</Table.Cell>
+        {criteria(view.skills).map((criterion) => (
+          <Table.Row key={criterion.label}>
+            <Table.RowHeader>{criterion.label}</Table.RowHeader>
+            {view.candidates.map((c) => (
+              <Table.Cell key={c.candidateId}>{criterion.value(c)}</Table.Cell>
+            ))}
           </Table.Row>
         ))}
       </Table.Body>

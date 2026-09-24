@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { CvSource, SourceHref } from "@/components/Answer";
 import { OpenSourceProvider } from "@/components/Answer";
@@ -8,36 +8,39 @@ import { CvPreview } from "@/components/CvPreview";
 import { ChatComposer } from "@/components/ChatComposer";
 import { ChatEmptyState } from "@/components/ChatEmptyState";
 import { ChatExchange } from "@/components/ChatExchange";
+import { CursorGrid } from "@/components/ui/CursorGrid";
 import { useChatScreen } from "@/hooks/useChatScreen";
 import { useElementHeight } from "@/hooks/useElementHeight";
 import { useFollowScroll } from "@/hooks/useFollowScroll";
-import { answerToText } from "@/lib/answer-text";
 import type { PoolCandidate } from "@/lib/pool/candidate";
 import { AppHeader } from "@/components/AppHeader";
 import { cvSourceHref } from "@/lib/pool/source-href";
+import { EXAMPLE_QUESTION } from "@/lib/chat/suggestions";
 import { cx } from "@/lib/recipe";
 
 export interface ChatScreenProps {
-  /** Every CV in the pool: its size is shown, and names resolve from it. */
+  /** Every CV in the pool: its size is shown in the empty state. */
   pool: readonly PoolCandidate[];
-  /** Suggested questions for the empty state (PRD, Core flow: Entry). */
-  suggestions: readonly string[];
   /** Links sources to their PDF; left out until the PDFs exist (PLAN, User interface). */
   sourceHref?: SourceHref | undefined;
 }
 
 /** The chat: header, conversation and composer in one column (PRD, Information architecture). */
-export function ChatScreen({ pool, suggestions, sourceHref = cvSourceHref }: ChatScreenProps) {
+export function ChatScreen({ pool, sourceHref = cvSourceHref }: ChatScreenProps) {
   const chat = useChatScreen();
   const { exchanges, model } = chat.state;
   const [draft, setDraft] = useState("");
   const lastExchange = useRef<HTMLLIElement>(null);
+  // The empty state's headline and composer: the grid behind them keeps clear of both.
+  const emptyStateText = useRef<HTMLDivElement>(null);
+  const emptyStateComposer = useRef<HTMLDivElement>(null);
   // The composer floats over the end of the conversation: scrolling to the
   // last exchange leaves its height free (scroll-margin-bottom, below).
   const [composerBar, composerHeight] = useElementHeight();
   const last = exchanges.at(-1);
   // Anything that makes the last exchange grow: a stage, the answer, an error.
-  const lastSignal = last ? `${last.status}:${last.steps.length}:${last.slow}:${last.answer ? 1 : 0}:${last.error?.message ?? ""}` : "";
+  // Anything that makes the last exchange grow, including each piece of streamed text.
+  const lastSignal = last ? `${last.status}:${last.steps.length}:${last.slow}:${last.text.length}:${last.view?.kind ?? ""}:${last.error?.message ?? ""}` : "";
   const follow = useFollowScroll(lastExchange, last?.id ?? "", lastSignal);
 
   // The CV open beside the conversation, and the room it takes on the right.
@@ -45,9 +48,6 @@ export function ChatScreen({ pool, suggestions, sourceHref = cvSourceHref }: Cha
   const [previewWidth, setPreviewWidth] = useState(0);
   const closePreview = useCallback(() => setPreview(null), []);
   const previewHref = preview ? sourceHref(preview.candidateId, preview.page)?.split("#")[0] : undefined;
-
-  const names = useMemo(() => new Map(pool.map((c) => [c.id, c.profile.name])), [pool]);
-  const nameOf = (id: string) => names.get(id) ?? id;
 
   // Keep the newest question in view as it is asked.
   useEffect(() => {
@@ -65,7 +65,8 @@ export function ChatScreen({ pool, suggestions, sourceHref = cvSourceHref }: Cha
     follow();
   }
 
-  const composer = (
+  // The empty state's composer shows an example question (DESIGN.md, Empty state).
+  const composer = (placeholder?: string) => (
     <ChatComposer
       value={draft}
       onChange={setDraft}
@@ -75,6 +76,7 @@ export function ChatScreen({ pool, suggestions, sourceHref = cvSourceHref }: Cha
       model={model}
       onModelChange={chat.setModel}
       autoFocus
+      placeholder={placeholder}
     />
   );
 
@@ -88,9 +90,17 @@ export function ChatScreen({ pool, suggestions, sourceHref = cvSourceHref }: Cha
         <AppHeader />
         <main aria-label="Conversation" className="flex flex-1 flex-col">
           {exchanges.length === 0 ? (
-            <div className="flex flex-1 flex-col items-center justify-center gap-8 px-gutter py-16">
-              <ChatEmptyState poolSize={pool.length} suggestions={suggestions} onAsk={ask} />
-              <div className="w-full max-w-composer">{composer}</div>
+            // `isolate`: the grid sits behind the empty state, above the page background.
+            <div className="relative isolate flex flex-1 flex-col items-center justify-center gap-8 px-gutter py-16">
+              <CursorGrid className="-z-10" clearOf={[emptyStateText, emptyStateComposer]} />
+              <ChatEmptyState ref={emptyStateText} poolSize={pool.length} />
+              {/* Third in the entrance (DESIGN.md, Layout: motion); it takes input from the first frame. */}
+              <div
+                ref={emptyStateComposer}
+                className="w-full max-w-composer motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--empty-state-word-delay)+var(--empty-state-stagger)*2)]"
+              >
+                {composer(EXAMPLE_QUESTION)}
+              </div>
             </div>
           ) : (
             <>
@@ -116,14 +126,12 @@ export function ChatScreen({ pool, suggestions, sourceHref = cvSourceHref }: Cha
                         status={exchange.status}
                         steps={exchange.steps}
                         slow={exchange.slow}
-                        answer={exchange.answer}
+                        text={exchange.text}
+                        view={exchange.view}
+                        checked={exchange.checked}
                         error={exchange.error}
-                        nameOf={nameOf}
                         sourceHref={sourceHref}
                         onRetry={() => retry(exchange.id)}
-                        onCopy={async () => {
-                          if (exchange.answer) await navigator.clipboard.writeText(answerToText(exchange.answer, nameOf));
-                        }}
                       />
                     </li>
                   ))}
@@ -134,7 +142,7 @@ export function ChatScreen({ pool, suggestions, sourceHref = cvSourceHref }: Cha
                 conversation stays visible as it passes beneath and beside it.
               */}
               <div ref={composerBar} className="sticky bottom-0 px-gutter pb-gutter">
-                <div className="mx-auto w-full max-w-composer">{composer}</div>
+                <div className="mx-auto w-full max-w-composer">{composer()}</div>
               </div>
             </>
           )}

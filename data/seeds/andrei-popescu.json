@@ -1,0 +1,132 @@
+{
+  "name": "Andrei Popescu",
+  "headline": "Senior Backend Engineer",
+  "role": "backend",
+  "seniority": "senior",
+  "location": "Bucharest, Romania",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 7
+    },
+    {
+      "name": "Django",
+      "years": 5
+    },
+    {
+      "name": "PostgreSQL",
+      "years": 7
+    },
+    {
+      "name": "Docker",
+      "years": 4
+    },
+    {
+      "name": "Redis",
+      "years": 3
+    },
+    {
+      "name": "AWS",
+      "years": 4
+    }
+  ],
+  "languages": [
+    {
+      "language": "Romanian",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Universitatea Politehnica din Bucuresti",
+      "year": 2017
+    }
+  ],
+  "employment": [
+    {
+      "company": "Danube Cloud Tech",
+      "title": "Senior Backend Engineer",
+      "industry": "Cloud Computing",
+      "from": "2021-03",
+      "to": null,
+      "description": "Danube Cloud Tech provides scalable cloud infrastructure solutions for enterprise clients.",
+      "stack": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "AWS"
+      ],
+      "highlights": [
+        "Worked as a Senior Backend Engineer in the Cloud Computing industry using Python, Django, PostgreSQL, and AWS.",
+        "Provided backend engineering leadership across various cloud projects."
+      ]
+    },
+    {
+      "company": "Carpathian Software",
+      "title": "Backend Developer",
+      "industry": "Financial Technology",
+      "from": "2019-06",
+      "to": "2021-02",
+      "description": "Carpathian Software develops secure transaction processing systems for banking institutions.",
+      "stack": [
+        "Python",
+        "Docker",
+        "Redis"
+      ],
+      "highlights": [
+        "Served as a Backend Developer within the Financial Technology industry utilizing Python, Docker, and Redis.",
+        "Delivered backend solutions without holding a leadership role during this period."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Provided leadership as a Senior Backend Engineer by mentoring junior developers and guiding architectural decisions."
+  },
+  "certifications": [
+    "AWS Certified Developer"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and Frameworks",
+      "skills": [
+        "Python",
+        "Django"
+      ]
+    },
+    {
+      "label": "Databases and Caching",
+      "skills": [
+        "PostgreSQL",
+        "Redis"
+      ]
+    },
+    {
+      "label": "Infrastructure and DevOps",
+      "skills": [
+        "Docker",
+        "AWS"
+      ]
+    }
+  ],
+  "summary": "Andrei Popescu is a senior backend engineer based in Bucharest, Romania, with 7 years of total experience. Expertise spans Python, Django, PostgreSQL, Docker, Redis, and AWS within the Cloud Computing and Financial Technology industries. Holds a bachelor degree in Computer Science and demonstrates leadership experience in backend development. Communicates in Romanian and English, and is available on a 30 day notice period for hybrid or remote roles.",
+  "contact": {
+    "email": "andrei.popescu@example.com",
+    "phone": "+1-555-007-0707"
+  },
+  "photoPrompt": "A professional headshot of a 30 year old male adult with short dark hair, a confident smile, wearing a navy blue button-down shirt.",
+  "template": 0
+}

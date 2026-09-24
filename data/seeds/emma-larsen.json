@@ -1,0 +1,134 @@
+{
+  "name": "Emma Larsen",
+  "headline": "Senior Backend Developer",
+  "role": "backend",
+  "seniority": "senior",
+  "location": "Copenhagen, Denmark",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 7
+    },
+    {
+      "name": "Django",
+      "years": 6
+    },
+    {
+      "name": "PostgreSQL",
+      "years": 7
+    },
+    {
+      "name": "Docker",
+      "years": 5
+    },
+    {
+      "name": "AWS",
+      "years": 4
+    },
+    {
+      "name": "Redis",
+      "years": 4
+    }
+  ],
+  "languages": [
+    {
+      "language": "Danish",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C2"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Copenhagen",
+      "year": 2017
+    }
+  ],
+  "employment": [
+    {
+      "company": "Nordic Byte Works",
+      "title": "Senior Backend Developer",
+      "industry": "Software Development",
+      "from": "2021-03",
+      "to": null,
+      "description": "Nordic Byte Works builds scalable cloud infrastructure solutions for enterprise customers.",
+      "stack": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "Docker",
+        "AWS",
+        "Redis"
+      ],
+      "highlights": [
+        "Worked as a Senior Backend Developer utilizing Python, Django, PostgreSQL, Docker, AWS, and Redis.",
+        "Delivered backend solutions in the Software Development industry."
+      ]
+    },
+    {
+      "company": "Viking Cloud Tech",
+      "title": "Backend Developer",
+      "industry": "Cloud Computing",
+      "from": "2018-02",
+      "to": "2021-02",
+      "description": "Viking Cloud Tech provides distributed storage and data processing pipelines.",
+      "stack": [
+        "Python",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "highlights": [
+        "Worked as a Backend Developer utilizing Python, PostgreSQL, and Docker.",
+        "Built data processing pipelines in the Cloud Computing industry."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Led small backend engineering squads in software development and cloud computing projects."
+  },
+  "certifications": [
+    "AWS Certified Developer"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and Frameworks",
+      "skills": [
+        "Python",
+        "Django"
+      ]
+    },
+    {
+      "label": "Databases and Caching",
+      "skills": [
+        "PostgreSQL",
+        "Redis"
+      ]
+    },
+    {
+      "label": "DevOps and Cloud",
+      "skills": [
+        "Docker",
+        "AWS"
+      ]
+    }
+  ],
+  "summary": "Emma Larsen is a senior backend developer with 7 years of total experience based in Copenhagen, Denmark. Expertise spans Python, Django, PostgreSQL, Docker, AWS, and Redis within the software development and cloud computing industries. Proven leadership experience includes guiding backend engineering squads.",
+  "contact": {
+    "email": "emma.larsen@example.com",
+    "phone": "+1-555-010-1010"
+  },
+  "photoPrompt": "A professional headshot of a 30-year-old woman with shoulder-length brown hair, smiling warmly, wearing a smart casual navy blazer against a neutral gray background.",
+  "template": 0
+}

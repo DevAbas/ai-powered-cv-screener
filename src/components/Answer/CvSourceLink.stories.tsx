@@ -14,7 +14,12 @@ type Story = StoryObj<typeof meta>;
 /** Without a PDF, the card says so and does not open anything. */
 export const WithoutPdf: Story = {};
 
-/** With a PDF, the card opens the CV at the cited page in a new tab; hover reads "Open file". */
+/** With a PDF, the card opens the CV at the cited page in a new tab; the tooltip says so. */
 export const WithPdf: Story = {
   args: { sourceHref: cvSourceHref },
+};
+
+/** Inside an answer view, beside the name: the icon and "CV" only; the name stays in its accessible name. */
+export const Compact: Story = {
+  args: { sourceHref: cvSourceHref, compact: true },
 };

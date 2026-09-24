@@ -1,0 +1,151 @@
+{
+  "name": "Maria Ioannou",
+  "headline": "Head of Product",
+  "role": "product",
+  "seniority": "principal",
+  "location": "Nicosia, Cyprus",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 14,
+  "skills": [
+    {
+      "name": "Product Strategy",
+      "years": 14
+    },
+    {
+      "name": "Roadmapping",
+      "years": 12
+    },
+    {
+      "name": "Agile Methodologies",
+      "years": 14
+    },
+    {
+      "name": "Team Leadership",
+      "years": 10
+    },
+    {
+      "name": "Data Analytics",
+      "years": 10
+    },
+    {
+      "name": "User Research",
+      "years": 11
+    }
+  ],
+  "languages": [
+    {
+      "language": "Greek",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C2"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Business Administration",
+      "institution": "University of Cyprus",
+      "year": 2011
+    }
+  ],
+  "employment": [
+    {
+      "company": "Troodos Tech",
+      "title": "Head of Product",
+      "industry": "Technology",
+      "from": "2021-03",
+      "to": null,
+      "description": "Troodos Tech builds digital platforms for enterprise clients.",
+      "stack": [
+        "Product Strategy",
+        "Roadmapping",
+        "Team Leadership",
+        "Agile Methodologies"
+      ],
+      "highlights": [
+        "Led product strategy and roadmapping initiatives as Head of Product.",
+        "Exercised team leadership using agile methodologies within the technology industry."
+      ]
+    },
+    {
+      "company": "Levant Software",
+      "title": "Senior Product Manager",
+      "industry": "Software",
+      "from": "2016-02",
+      "to": "2021-02",
+      "description": "Levant Software develops business applications for international markets.",
+      "stack": [
+        "Roadmapping",
+        "User Research",
+        "Data Analytics",
+        "Agile Methodologies"
+      ],
+      "highlights": [
+        "Managed roadmapping and user research projects as a senior product manager.",
+        "Applied data analytics and agile methodologies in the software industry."
+      ]
+    },
+    {
+      "company": "Kyrenia Systems",
+      "title": "Product Manager",
+      "industry": "Information Technology",
+      "from": "2012-09",
+      "to": "2016-01",
+      "description": "Kyrenia Systems provides IT services and software solutions.",
+      "stack": [
+        "Product Strategy",
+        "User Research",
+        "Data Analytics"
+      ],
+      "highlights": [
+        "Contributed to product strategy and user research as a product manager.",
+        "Utilized data analytics within the information technology industry."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Managed cross-functional product and engineering teams over 10 years."
+  },
+  "certifications": [
+    "Certified Scrum Product Owner",
+    "Pragmatic Institute Certified"
+  ],
+  "skillGroups": [
+    {
+      "label": "Product Management",
+      "skills": [
+        "Product Strategy",
+        "Roadmapping",
+        "User Research"
+      ]
+    },
+    {
+      "label": "Methodologies and Leadership",
+      "skills": [
+        "Agile Methodologies",
+        "Team Leadership"
+      ]
+    },
+    {
+      "label": "Analytics",
+      "skills": [
+        "Data Analytics"
+      ]
+    }
+  ],
+  "summary": "Maria Ioannou is a principal Head of Product based in Nicosia, Cyprus, with 14 years of total experience. Her expertise encompasses product strategy, roadmapping, agile methodologies, team leadership, data analytics, and user research. She has held leadership roles across technology, software, and information technology industries.",
+  "contact": {
+    "email": "maria.ioannou@example.com",
+    "phone": "+1-555-027-2727"
+  },
+  "photoPrompt": "A professional headshot of a woman in her late thirties with dark brown hair, a confident smile, wearing a smart navy blazer.",
+  "template": 2
+}

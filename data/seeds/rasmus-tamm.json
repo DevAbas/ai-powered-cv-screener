@@ -1,0 +1,128 @@
+{
+  "name": "Rasmus Tamm",
+  "headline": "Senior QA Engineer",
+  "role": "qa",
+  "seniority": "senior",
+  "location": "Tallinn, Estonia",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 7
+    },
+    {
+      "name": "Selenium",
+      "years": 6
+    },
+    {
+      "name": "PyTest",
+      "years": 5
+    },
+    {
+      "name": "Postman",
+      "years": 7
+    },
+    {
+      "name": "Docker",
+      "years": 4
+    },
+    {
+      "name": "Git",
+      "years": 7
+    }
+  ],
+  "languages": [
+    {
+      "language": "Estonian",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Tallinn University of Technology",
+      "year": 2018
+    }
+  ],
+  "employment": [
+    {
+      "company": "Tallinn QA Corp",
+      "title": "Senior QA Engineer",
+      "industry": "Software Testing",
+      "from": "2021-03",
+      "to": null,
+      "description": "Tallinn QA Corp builds automated testing frameworks for web applications.",
+      "stack": [
+        "Python",
+        "PyTest",
+        "Docker",
+        "Git"
+      ],
+      "highlights": [
+        "Worked as Senior QA Engineer using Python, PyTest, Docker, and Git.",
+        "Delivered software testing solutions in the Software Testing industry."
+      ]
+    },
+    {
+      "company": "Eesti Software Labs",
+      "title": "QA Engineer",
+      "industry": "Information Technology",
+      "from": "2019-03",
+      "to": "2021-02",
+      "description": "Eesti Software Labs develops cloud-based enterprise systems.",
+      "stack": [
+        "Python",
+        "Selenium",
+        "Postman",
+        "Git"
+      ],
+      "highlights": [
+        "Worked as QA Engineer using Python, Selenium, Postman, and Git.",
+        "Built test automation features in the Information Technology industry."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "ISTQB Certified Tester"
+  ],
+  "skillGroups": [
+    {
+      "label": "Programming and Automation",
+      "skills": [
+        "Python",
+        "Selenium",
+        "PyTest"
+      ]
+    },
+    {
+      "label": "Tools and Infrastructure",
+      "skills": [
+        "Postman",
+        "Docker",
+        "Git"
+      ]
+    }
+  ],
+  "summary": "Rasmus Tamm is a Senior QA Engineer based in Tallinn, Estonia with 7 years of total experience. As a senior QA professional, Rasmus specializes in Python, Selenium, PyTest, Postman, Docker, and Git. Rasmus holds a bachelor degree in Computer Science and works in hybrid or remote environments.",
+  "contact": {
+    "email": "rasmus.tamm@example.com",
+    "phone": "+1-555-021-2121"
+  },
+  "photoPrompt": "A thirty-year-old man with short brown hair, wearing a casual grey sweater, smiling slightly in a bright modern office.",
+  "template": 2
+}

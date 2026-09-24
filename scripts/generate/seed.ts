@@ -12,6 +12,7 @@ import {
 } from "@/contracts/candidate";
 import type { Seniority } from "@/contracts/candidate";
 import { aliasKey, normalizeProfile, normalizeSkill } from "@/lib/pool/normalize";
+import type { StructuredRequest } from "@/lib/ai/structured";
 import type { RosterCandidate } from "./roster";
 
 // Pure parts of the seed step: what the script derives, what the model
@@ -242,6 +243,12 @@ export function seedPrompt(roster: RosterCandidate, usedCompanies: readonly stri
     .filter(Boolean)
     .join("\n\n");
   return { instructions, prompt };
+}
+
+/** The seed call for one roster entry, as the seeds step sends it. */
+export function seedRequest(roster: RosterCandidate, usedCompanies: readonly string[]): StructuredRequest<GeneratedSeed> {
+  const { instructions, prompt } = seedPrompt(roster, usedCompanies);
+  return { schema: generatedSeedSchemaFor(roster.seniority), name: "candidate_seed", instructions, prompt };
 }
 
 /** Ids whose employment (company and title sets) is identical to another seed's. */

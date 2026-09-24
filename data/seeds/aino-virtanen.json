@@ -1,0 +1,127 @@
+{
+  "name": "Aino Virtanen",
+  "headline": "Site Reliability Engineer",
+  "role": "devops",
+  "seniority": "mid",
+  "location": "Helsinki, Finland",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "Citizen",
+  "availability": 14,
+  "yearsTotal": 5,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 5
+    },
+    {
+      "name": "Docker",
+      "years": 5
+    },
+    {
+      "name": "Kubernetes",
+      "years": 4
+    },
+    {
+      "name": "Terraform",
+      "years": 4
+    },
+    {
+      "name": "Linux",
+      "years": 5
+    },
+    {
+      "name": "AWS",
+      "years": 5
+    }
+  ],
+  "languages": [
+    {
+      "language": "Finnish",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Helsinki",
+      "year": 2020
+    }
+  ],
+  "employment": [
+    {
+      "company": "Saimaa Cloud Solutions",
+      "title": "Site Reliability Engineer",
+      "industry": "Cloud Infrastructure",
+      "from": "2023-01",
+      "to": null,
+      "description": "The company builds enterprise cloud automation products.",
+      "stack": [
+        "Kubernetes",
+        "Terraform",
+        "Python",
+        "AWS"
+      ],
+      "highlights": [
+        "Applied Kubernetes and Terraform for infrastructure management.",
+        "Utilized Python and AWS to scale cloud infrastructure operations."
+      ]
+    },
+    {
+      "company": "Suomi Tech Labs",
+      "title": "Junior DevOps Engineer",
+      "industry": "Software Development",
+      "from": "2021-01",
+      "to": "2022-12",
+      "description": "The company provides containerized deployment pipelines.",
+      "stack": [
+        "Docker",
+        "Linux",
+        "Python"
+      ],
+      "highlights": [
+        "Managed Docker and Linux environments for development teams.",
+        "Built deployment scripts using Python."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": false,
+    "note": ""
+  },
+  "certifications": [
+    "AWS Certified Solutions Architect"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and OS",
+      "skills": [
+        "Python",
+        "Linux"
+      ]
+    },
+    {
+      "label": "DevOps and Cloud",
+      "skills": [
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "AWS"
+      ]
+    }
+  ],
+  "summary": "Aino Virtanen is a mid Site Reliability Engineer based in Helsinki, Finland, with 5 years of total experience. She holds a bachelor degree in Computer Science and has worked with Kubernetes, Terraform, Python, AWS, Docker, and Linux. Her employment history includes roles as Site Reliability Engineer and Junior DevOps Engineer in cloud infrastructure and software development industries.",
+  "contact": {
+    "email": "aino.virtanen@example.com",
+    "phone": "+1-555-018-1818"
+  },
+  "photoPrompt": "A professional headshot of a mid-adult woman with blonde hair tied back, wearing a dark blue blazer, with a neutral expression against a plain gray background.",
+  "template": 2
+}

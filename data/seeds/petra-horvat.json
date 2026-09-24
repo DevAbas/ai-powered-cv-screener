@@ -1,0 +1,151 @@
+{
+  "name": "Petra Horvat",
+  "headline": "Backend Lead",
+  "role": "backend",
+  "seniority": "lead",
+  "location": "Zagreb, Croatia",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 10,
+  "skills": [
+    {
+      "name": "Python",
+      "years": 10
+    },
+    {
+      "name": "Django",
+      "years": 8
+    },
+    {
+      "name": "PostgreSQL",
+      "years": 9
+    },
+    {
+      "name": "Docker",
+      "years": 7
+    },
+    {
+      "name": "AWS",
+      "years": 6
+    },
+    {
+      "name": "Redis",
+      "years": 5
+    }
+  ],
+  "languages": [
+    {
+      "language": "Croatian",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Zagreb",
+      "year": 2017
+    }
+  ],
+  "employment": [
+    {
+      "company": "Sava Cloud Systems",
+      "title": "Backend Lead",
+      "industry": "Cloud Computing",
+      "from": "2021-06",
+      "to": null,
+      "description": "Sava Cloud Systems develops scalable cloud infrastructure and backend services.",
+      "stack": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "AWS",
+        "Docker",
+        "Redis"
+      ],
+      "highlights": [
+        "Lead backend engineering efforts using Python, Django, PostgreSQL, AWS, Docker, and Redis.",
+        "Demonstrated leadership capabilities as a Backend Lead in the cloud computing industry."
+      ]
+    },
+    {
+      "company": "Bora Data Corp",
+      "title": "Senior Backend Developer",
+      "industry": "Data Analytics",
+      "from": "2018-01",
+      "to": "2021-05",
+      "description": "Bora Data Corp builds enterprise data analytics pipelines.",
+      "stack": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "highlights": [
+        "Built data analytics services as a Senior Backend Developer using Python, Django, PostgreSQL, and Docker.",
+        "Delivered backend solutions in the data analytics industry."
+      ]
+    },
+    {
+      "company": "Adria Soft",
+      "title": "Backend Developer",
+      "industry": "Software Solutions",
+      "from": "2017-06",
+      "to": "2017-12",
+      "description": "Adria Soft provides custom software solutions for corporate clients.",
+      "stack": [
+        "Python",
+        "PostgreSQL"
+      ],
+      "highlights": [
+        "Developed software as a Backend Developer utilizing Python and PostgreSQL.",
+        "Contributed to projects in the software solutions industry."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Managed backend engineering teams and guided technical architecture decisions."
+  },
+  "certifications": [
+    "AWS Certified Solutions Architect"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages and Frameworks",
+      "skills": [
+        "Python",
+        "Django"
+      ]
+    },
+    {
+      "label": "Databases and Caching",
+      "skills": [
+        "PostgreSQL",
+        "Redis"
+      ]
+    },
+    {
+      "label": "Infrastructure",
+      "skills": [
+        "Docker",
+        "AWS"
+      ]
+    }
+  ],
+  "summary": "Petra Horvat is a Backend Lead based in Zagreb, Croatia with 10 years of total experience. The candidate specializes in Python, Django, PostgreSQL, Docker, AWS, and Redis within cloud computing, data analytics, and software solutions industries. Leadership experience includes guiding backend teams as a Backend Lead.",
+  "contact": {
+    "email": "petra.horvat@example.com",
+    "phone": "+1-555-009-0909"
+  },
+  "photoPrompt": "A professional headshot of a 33-year-old woman with shoulder-length brown hair, a neutral confident expression, wearing a dark gray blazer.",
+  "template": 2
+}
