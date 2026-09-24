@@ -68,6 +68,18 @@ typography:
     fontWeight: 500
     lineHeight: "1.2"
     letterSpacing: 0.01em
+  wordmark:
+    fontFamily: Google Sans
+    fontSize: 1rem
+    fontWeight: 600
+    lineHeight: "1.2"
+    letterSpacing: 0.16em
+  mark:
+    fontFamily: Google Sans
+    fontSize: 0.875rem
+    fontWeight: 600
+    lineHeight: "1"
+    letterSpacing: 0.02em
 rounded:
   none: 0px
   sm: 0.5rem
@@ -83,6 +95,14 @@ components:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.on-surface}"
     typography: "{typography.body-md}"
+  logo:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.mark}"
+    rounded: "{rounded.sm}"
+  logo-wordmark:
+    textColor: "{colors.on-surface}"
+    typography: "{typography.wordmark}"
   question:
     backgroundColor: "{colors.primary-container}"
     textColor: "{colors.on-primary-container}"
@@ -201,8 +221,8 @@ question tint, 7 the focus ring, 9 the solid fill, 11 accent text, 12 text on
 the tint. Hover and pressed are derived from step 9 (below).
 
 - **Primary (#00F8C0):** Mint. The only chromatic colour in the UI, used for
-  the primary action. Never for text blocks, content backgrounds or
-  decoration.
+  the primary action and the logo mark. Never for text blocks, content
+  backgrounds or decoration.
 - **On primary (#0A281E):** Text and icons on `primary`: Radix's contrast
   colour, since mint is too light for white text.
 - **Primary hover (#16DDAC) and pressed (#08C498):** `primary` with its OKLCH
@@ -233,7 +253,7 @@ the tint. Hover and pressed are derived from step 9 (below).
 ## Typography
 
 One family, Google Sans (SIL OFL), self-hosted. Two working weights, 400 and
-500; 600 only when a single element must dominate. No italics.
+500; 600 only when a single element must dominate: the logo. No italics.
 
 - **headline-lg / headline-md:** page and section titles, one-line summaries.
 - **body-lg:** primary input text.
@@ -241,6 +261,8 @@ One family, Google Sans (SIL OFL), self-hosted. Two working weights, 400 and
 - **body-sm:** secondary lines, metadata and menu rows.
 - **label-lg / label-md / label-sm:** buttons, tooltips, section headers
   (label-sm uppercase, letter-spaced).
+- **wordmark / mark:** the logo only: the product name uppercase, 600 and
+  widely letter-spaced; the "CV" letters of the mark, 600.
 
 Lines are never justified. Prefer lists and tables over paragraphs.
 
@@ -258,17 +280,23 @@ Breakpoints: sm 40rem, md 48rem, lg 64rem, xl 80rem.
 Motion is functional only, 150–200ms. Easings: standard
 `cubic-bezier(0.2, 0, 0, 1)`, decelerate `cubic-bezier(0, 0, 0, 1)` for
 entering elements, accelerate `cubic-bezier(0.3, 0, 1, 1)` for leaving ones.
+Loading motion is the one exception: the progress line breathes (a 1.6s
+opacity cycle on its glyph) and one band of ink sweeps its label every
+1.8s, both off under reduced motion; the values live in
+`src/styles/theme.css`. Following a response scrolls smoothly, never under
+reduced motion.
 
 ## Elevation & Depth
 
 Depth is tonal first: `surface` → `surface-container-lowest` →
-`surface-container` → `surface-container-high`. Shadows exist in three places
+`surface-container` → `surface-container-high`. Shadows exist in two places
 only: floating input containers use raised
-(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.06)`), the sticky header uses raised while
-the conversation scrolls beneath it, as a cue that there is more above, and
-menus use overlay (`0 0.5rem 2rem rgba(0, 0, 0, 0.10)`). In dark the same
-shadows use opacity 0.5 (raised) and 0.6 (overlay), since the light values
-are invisible on dark surfaces.
+(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.06)`) and menus use overlay
+(`0 0.5rem 2rem rgba(0, 0, 0, 0.10)`). In dark the same shadows use opacity
+0.5 (raised) and 0.6 (overlay), since the light values are invisible on dark
+surfaces. The sticky header casts no shadow and has no border: a 2rem
+gradient from `surface` to transparent below it fades the conversation out
+as it passes underneath.
 
 ## Shapes
 
@@ -284,6 +312,12 @@ Components are styled with these tokens only; which libraries they use and
 how states are selected is in `AGENTS.md`, Conventions. Icons are 1rem in
 text and in `xs` buttons, 1.25rem in other buttons.
 
+- **Logo:** the mark is "CV" in `mark` on a `primary` square of 1.75rem,
+  `rounded.sm`: the letters are traced from the font as outlines and centred
+  on their bounding box (`scripts/logo-mark.py`), so no font has to load and
+  they sit the same in every browser; the wordmark "SCREENER" follows in
+  `wordmark` (`logo-wordmark`). The same drawing, at the same colours, is
+  the favicon.
 - **Buttons:** primary is mint for the single main action; secondary is
   neutral on `surface-container`. Disabled: `surface-container` background
   with `on-surface-variant` text; the state is carried by the neutral fill,
@@ -330,9 +364,10 @@ text and in `xs` buttons, 1.25rem in other buttons.
 
 ## Do's and Don'ts
 
-- Do keep solid mint (`primary`) for interaction only; if more than one
-  solid mint element competes for attention, something is wrong. The mint
-  tint (`primary-container`) marks the recruiter's question only.
+- Do keep solid mint (`primary`) for interaction and the logo mark only; if
+  more than one solid mint element competes for attention, something is
+  wrong. The mint tint (`primary-container`) marks the recruiter's question
+  only.
 - Do use a tonal step before a border, and a border before a shadow.
 - Don't render states as filled or bordered boxes.
 - Don't box answers; only the question sits on a tint. No gradients, emoji

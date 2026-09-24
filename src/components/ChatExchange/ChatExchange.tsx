@@ -51,26 +51,32 @@ export function ChatExchange({ question, status, steps, slow, answer, error, nam
   return (
     <article className="flex min-w-0 flex-col gap-5 wrap-anywhere">
       <QuestionBubble>{question}</QuestionBubble>
-      {status === "running" && <AnswerProgress steps={steps} slow={slow} />}
       {status === "stopped" && <p className="text-body-sm leading-body-sm text-on-surface-variant">Stopped.</p>}
       {status === "error" && error && <AnswerError message={error.message} retryable={error.retryable} onRetry={onRetry} />}
-      {status === "answered" && answer && (
-        // The answer and its Copy action read as one block.
-        <div className="flex flex-col gap-1">
-          <Answer answer={answer} nameOf={nameOf} sourceHref={sourceHref} />
-          <div className="-ml-1.75 flex">
-            {/* The label repeats the button's name, so the trigger props are not spread. */}
-            <Tooltip content={COPY_LABELS[copyState]} side="bottom">
-              {() => (
-                <IconButton aria-label={COPY_LABELS[copyState]} variant="ghost" size="xs" onClick={copy}>
-                  {copyState === "copied" ? <Check aria-hidden /> : <Copy aria-hidden />}
-                </IconButton>
-              )}
-            </Tooltip>
-            <span aria-live="polite" className="sr-only">
-              {copyState === "idle" ? "" : COPY_LABELS[copyState]}
-            </span>
-          </div>
+      {status === "answered" && answer && <Answer answer={answer} nameOf={nameOf} sourceHref={sourceHref} />}
+      {/*
+        The footer row: the progress line, one instance from start to finish so
+        its clock carries over (alone under the question while running), and
+        beside it, once answered, the Copy action.
+      */}
+      {(status === "running" || steps.length > 0) && (
+        <div className="-mt-3 flex items-center gap-2">
+          <AnswerProgress steps={steps} working={status === "running"} slow={slow} />
+          {status === "answered" && answer && (
+            <>
+              {/* The label repeats the button's name, so the trigger props are not spread. */}
+              <Tooltip content={COPY_LABELS[copyState]} side="bottom">
+                {() => (
+                  <IconButton aria-label={COPY_LABELS[copyState]} variant="ghost" size="xs" onClick={copy}>
+                    {copyState === "copied" ? <Check aria-hidden /> : <Copy aria-hidden />}
+                  </IconButton>
+                )}
+              </Tooltip>
+              <span aria-live="polite" className="sr-only">
+                {copyState === "idle" ? "" : COPY_LABELS[copyState]}
+              </span>
+            </>
+          )}
         </div>
       )}
     </article>

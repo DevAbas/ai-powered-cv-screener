@@ -1,5 +1,6 @@
 import type { Comparison } from "@/contracts/answer";
 import { Table } from "@/components/ui/Table";
+import { CandidateName } from "./CandidateName";
 import type { SourceHref } from "./CvSourceLink";
 import { CvSourceLink } from "./CvSourceLink";
 
@@ -13,7 +14,10 @@ export interface AnswerComparisonProps {
 export function AnswerComparison({ comparison, nameOf, sourceHref }: AnswerComparisonProps) {
   const [a, b] = comparison.candidateIds;
   const header = (id: string) => (
-    <CvSourceLink candidateId={id} name={nameOf(id)} page={1} sourceHref={sourceHref} />
+    <span className="flex flex-col items-start gap-1 normal-case">
+      <CandidateName name={nameOf(id)} />
+      <CvSourceLink candidateId={id} name={nameOf(id)} page={1} sourceHref={sourceHref} />
+    </span>
   );
   return (
     <Table.Root>

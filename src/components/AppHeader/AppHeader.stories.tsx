@@ -1,14 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta } from "@storybook/nextjs-vite";
 import { AppHeader } from "./AppHeader";
 
-const meta = {
+export default {
   title: "App / AppHeader",
-  component: AppHeader,
   parameters: { layout: "fullscreen" },
-  args: { poolSize: 30 },
-} satisfies Meta<typeof AppHeader>;
+} satisfies Meta;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {};
+export const Default = () => <AppHeader />;

@@ -1,34 +1,21 @@
-"use client";
-
+import { Logo } from "@/components/Logo";
 import { ColorModeButton } from "@/components/ui/ColorModeButton";
-import { useScrolled } from "@/hooks/useScrolled";
-import { cx } from "@/lib/recipe";
-
-export interface AppHeaderProps {
-  poolSize: number;
-}
 
 /**
- * Product name, pool size and the colour mode toggle (PRD, Information
- * architecture). Stays at the top; once the conversation scrolls under it,
- * the raised shadow shows there is more above.
+ * Logo, product name and the colour mode toggle (PRD, Information
+ * architecture). Stays at the top; the conversation fades out as it passes
+ * underneath (DESIGN.md, Elevation & Depth), so no shadow and no border.
  */
-export function AppHeader({ poolSize }: AppHeaderProps) {
-  const scrolled = useScrolled();
+export function AppHeader() {
   return (
-    <header
-      className={cx(
-        "sticky top-0 z-10 flex h-14 shrink-0 items-center justify-between gap-4 border-b border-outline bg-surface px-gutter transition-shadow",
-        scrolled && "shadow-raised",
-      )}
-    >
-      <div className="flex items-baseline gap-3">
-        <h1 className="text-headline-md leading-headline-md font-(weight:--font-weight-headline-md) text-on-surface">
-          CV Screener
-        </h1>
-        <p className="text-body-sm leading-body-sm text-on-surface-variant">{poolSize} CVs in the pool</p>
-      </div>
+    <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center justify-between gap-4 bg-surface px-gutter">
+      {/* A flex box, not a line box: the heading is exactly as tall as the logo, so the logo centres in the header. */}
+      <h1 className="flex">
+        <Logo />
+      </h1>
       <ColorModeButton size="sm" />
+      {/* The fade: 2rem of `surface` thinning to nothing, over the content below. */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-full h-8 bg-linear-to-b from-surface to-transparent" />
     </header>
   );
 }

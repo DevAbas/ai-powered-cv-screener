@@ -10,6 +10,10 @@
     scrollbar-gutter: stable;
     scrollbar-width: thin;
     scrollbar-color: var(--color-outline) transparent;
+    /* Following a response glides rather than jumps (DESIGN.md, Layout: motion); never under reduced motion. */
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
   }
 }
 

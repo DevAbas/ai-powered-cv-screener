@@ -1,0 +1,1 @@
+export { useFollowScroll } from "./useFollowScroll";

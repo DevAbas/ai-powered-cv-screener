@@ -2,7 +2,7 @@ import type { Answer, AnswerCandidate } from "@/contracts/answer";
 
 // Plain-text form of an answer for "copy an answer" (PRD, Core flow: Exit).
 
-const source = (name: string, page: number) => `(${name}, p. ${page})`;
+const source = (name: string, page: number) => `(${name}, CV p. ${page})`;
 
 function candidateLines(candidates: readonly AnswerCandidate[], ordered: boolean): string[] {
   return candidates.map((c, i) => `${ordered ? `${i + 1}.` : "-"} ${c.name}: ${c.reason} ${source(c.name, c.page)}`);

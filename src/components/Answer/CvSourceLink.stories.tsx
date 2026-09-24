@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { cvSourceHref } from "@/lib/pool/source-href";
 import { CvSourceLink } from "./CvSourceLink";
 
 const meta = {
@@ -15,5 +16,5 @@ export const WithoutPdf: Story = {};
 
 /** With a PDF, it opens the CV at the cited page in a new tab. */
 export const WithPdf: Story = {
-  args: { sourceHref: (id, page) => `/cvs/${id}.pdf#page=${page}` },
+  args: { sourceHref: cvSourceHref },
 };

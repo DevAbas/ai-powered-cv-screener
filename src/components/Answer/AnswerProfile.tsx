@@ -1,4 +1,5 @@
 import type { ProfileSummary } from "@/contracts/answer";
+import { CandidateName } from "./CandidateName";
 import type { SourceHref } from "./CvSourceLink";
 import { CvSourceLink } from "./CvSourceLink";
 
@@ -14,7 +15,8 @@ export function AnswerProfile({ profile, nameOf, sourceHref }: AnswerProfileProp
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <p className="text-body-md leading-body-md text-on-surface">{profile.headline}</p>
-        <div>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <CandidateName name={nameOf(profile.candidateId)} />
           <CvSourceLink candidateId={profile.candidateId} name={nameOf(profile.candidateId)} page={1} sourceHref={sourceHref} />
         </div>
       </div>

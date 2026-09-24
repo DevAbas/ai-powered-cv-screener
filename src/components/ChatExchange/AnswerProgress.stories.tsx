@@ -17,3 +17,4 @@ type Story = StoryObj<typeof meta>;
 export const FirstStage: Story = {};
 export const LastStage: Story = { args: { steps: all } };
 export const TakingLonger: Story = { args: { steps: all, slow: true } };
+export const Settled: Story = { args: { steps: all, working: false } };

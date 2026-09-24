@@ -2,8 +2,8 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.7          |
-| Date    | 2026-09-23   |
+| Version | 1.9          |
+| Date    | 2026-09-24   |
 | Status  | Approved     |
 | Owner   | Product      |
 
@@ -150,8 +150,9 @@ Every interface decision is checked against these five.
 
 **One column: the conversation.**
 - Messages with their sources, empty state, loading state and input.
-- Header: product name, pool size, and a light/dark toggle; the default
-  follows the system setting and the toggle overrides it.
+- Header: logo, product name and a light/dark toggle; the default follows
+  the system setting and the toggle overrides it. The pool size is shown in
+  the empty state (§8 step 1), not in the header.
 
 **Mobile (secondary):** the same column at full width.
 
@@ -166,9 +167,10 @@ Every interface decision is checked against these five.
 - Empty result and out-of-scope are distinct, explicit states.
 
 ### 10.2 Sources
-- A source is shown in the answer as the CV's name and cited page.
-- It links to the original PDF at that page, opened by the browser in a
-  new tab.
+- A source is shown in the answer as the candidate's name and the word
+  "CV" with a link mark; the cited page is not displayed.
+- It links to the original PDF at the cited page, opened by the browser in
+  a new tab.
 
 ### 10.3 Conversation
 - Follow-up questions use the context of previous answers.
@@ -233,3 +235,5 @@ None open. Resolved in v1.2:
 | 1.5     | 2026-09-23 | Header: conventions in `AGENTS.md`, schemas in `src/contracts`; no stack in PLAN. §10.5: model shown with its maker's logo, not the routing provider's. |
 | 1.6     | 2026-09-23 | Chat only: the pool panel and CV list are removed. §7, §8 step 5, §9, §10.2: sources link to the original PDF at the cited page, opened in a new tab. §10.4 removed. |
 | 1.7     | 2026-09-23 | §8 step 3: progress is shown while searching, then the answer (not streamed text). |
+| 1.8     | 2026-09-24 | §9: header shows the logo and product name; the pool size moves to the empty state only. |
+| 1.9     | 2026-09-24 | §10.2: a source shows the name and "CV" with a link mark; the page is where the link lands, not text. |

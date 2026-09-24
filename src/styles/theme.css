@@ -63,6 +63,25 @@
   --default-transition-duration: 150ms;
   --default-transition-timing-function: var(--ease-standard);
 
+  /* DESIGN.md, Layout: loading motion. A slow opacity cycle on the glyph and
+     the current step, and one band of ink sweeping the working label. */
+  --animate-breath: breath 1.6s var(--ease-standard) infinite;
+  --animate-shimmer: shimmer 1.8s linear infinite;
+  @keyframes breath {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes shimmer {
+    to {
+      background-position: -125% 0;
+    }
+  }
+
   /* DESIGN.md, Layout: breakpoints */
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
@@ -80,4 +99,24 @@
 @theme inline {
   --font-sans: var(--font-google-sans);
   --spacing: var(--spacing-base);
+}
+
+/*
+ * The sweeping band of ink behind `--animate-shimmer`: the text shows the
+ * gradient. The ink is named, not `currentColor`: the text colour itself has
+ * to be transparent for the gradient to show through.
+ */
+@utility shimmer-text {
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--color-on-surface) 50%, transparent) 30%,
+    var(--color-on-surface) 50%,
+    color-mix(in srgb, var(--color-on-surface) 50%, transparent) 70%
+  );
+  background-size: 250% 100%;
+  background-position: 125% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }

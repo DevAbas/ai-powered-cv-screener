@@ -1,5 +1,4 @@
-import { Check, Clock, LoaderCircle } from "lucide-react";
-import { capHeightBox, cx } from "@/lib/recipe";
+import { ThoughtLine } from "@/components/ui/ThoughtLine";
 
 export interface AnswerProgressStep {
   stage: string;
@@ -8,30 +7,20 @@ export interface AnswerProgressStep {
 
 export interface AnswerProgressProps {
   steps: readonly AnswerProgressStep[];
-  /** Adds the neutral "Taking longer than usual…" line (PLAN, User interface). */
+  /**
+   * The request is still running; false settles the line into "Searched for …".
+   * @default true
+   */
+  working?: boolean;
+  /** Swaps in the neutral "Taking longer than usual…" line (PLAN, User interface). */
   slow?: boolean;
 }
 
-/** The stages of the running request; the last one is in progress. */
-export function AnswerProgress({ steps, slow = false }: AnswerProgressProps) {
-  return (
-    <ul aria-live="polite" aria-label="Progress" className="flex flex-col gap-1 text-body-sm leading-body-sm">
-      {steps.map((step, i) => {
-        const current = i === steps.length - 1;
-        const Icon = current ? LoaderCircle : Check;
-        return (
-          <li key={step.stage} className={cx("flex items-center gap-2", current ? "text-on-surface" : "text-on-surface-variant")}>
-            <Icon aria-hidden className={cx("size-4 shrink-0 text-on-surface-variant", current && "motion-safe:animate-spin")} />
-            <span className={capHeightBox}>{step.message}</span>
-          </li>
-        );
-      })}
-      {slow && (
-        <li className="flex items-center gap-2 text-on-surface-variant">
-          <Clock aria-hidden className="size-4 shrink-0" />
-          <span className={capHeightBox}>Taking longer than usual…</span>
-        </li>
-      )}
-    </ul>
-  );
+const STARTING = "Searching the pool…";
+const SLOW = "Taking longer than usual…";
+
+/** One line that reads the current stage of the request and settles into how long it took. */
+export function AnswerProgress({ steps, working = true, slow = false }: AnswerProgressProps) {
+  const current = steps[steps.length - 1]?.message ?? STARTING;
+  return <ThoughtLine working={working} label={slow ? SLOW : current} doneLabel="Searched for" />;
 }
