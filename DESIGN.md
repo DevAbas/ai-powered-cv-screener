@@ -470,10 +470,11 @@ viewport, never under 30rem. Below `lg` it fills the
 - **Progress line:** one `label-lg` line with a sparkle glyph, between the
   question and the answer: the glyph breathes and a band of ink sweeps the
   label while the current step runs (Layout: loading motion); once answered
-  it settles into "Checked 8 CVs" (the CVs the answer was written from; "Answered"
-  when it needed none) in `on-surface-variant`, in plain words for a
-  non-technical reader; after Stop into "Stopped searching", after an error
-  into "The search didn't finish". No clock.
+  it settles into what the search did ("Matched 7 of 30 CVs", "Read 2 CVs",
+  or "Answered" when no CV was searched) in `on-surface-variant`, in plain
+  words for a non-technical reader, followed by "· answered by <model>" when
+  the fallback model answered; after Stop into "Stopped searching", after an
+  error into "The search didn't finish". No clock.
 
 ## Do's and Don'ts
 
