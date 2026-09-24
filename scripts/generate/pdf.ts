@@ -42,6 +42,12 @@ export function formatDegree(degree: string, field: string): string {
   return `${DEGREE_LABELS[degree] ?? DEGREE_LABELS.other} ${field}`;
 }
 
+/** A skill with its years when the seed states them: "React (7 years)". */
+export function formatSkill(skill: { name: string; years?: number }): string {
+  if (skill.years === undefined) return skill.name;
+  return `${skill.name} (${skill.years} ${skill.years === 1 ? "year" : "years"})`;
+}
+
 /** Notice period in days as the CV states it. */
 export function formatAvailability(days: number): string {
   return days === 0 ? "Available immediately" : `Notice period: ${days} days`;

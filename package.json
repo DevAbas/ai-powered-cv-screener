@@ -11,6 +11,7 @@
     "test": "vitest run",
     "check-models": "tsx scripts/check-models.ts",
     "generate": "tsx scripts/generate/index.ts",
+    "index": "tsx scripts/index/index.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "design:export": "design.md export --format css-tailwind DESIGN.md > src/styles/tokens.generated.css.tmp && mv src/styles/tokens.generated.css.tmp src/styles/tokens.generated.css",

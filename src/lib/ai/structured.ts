@@ -244,17 +244,24 @@ export async function runStructured<T>(
   const combined = signal ? AbortSignal.any([signal, total.signal]) : total.signal;
   const attempt: AttemptOptions = { signal: combined, firstOutputMs: budget.firstOutputMs };
 
-  /** One model, with the single quick retry after a 5xx. Breaker bookkeeping only for the primary. */
+  /**
+   * One model, with the single quick retry after a 5xx. Breaker bookkeeping
+   * only for the primary, and once per call: a 5xx and its failed retry are
+   * one strike.
+   */
   const tryModel = async (target: ModelTarget, isPrimary: boolean): Promise<StructuredResult<T>> => {
     for (let retried = false; ; retried = true) {
       try {
         return await generateWithRepair(modelFor(target), request, attempt);
       } catch (error) {
         if (combined.aborted) throw error;
+        if (!retried && isServerError(error)) {
+          await delay(Math.random() * retryJitterMs, combined);
+          continue;
+        }
         if (isPrimary && isDailyQuotaError(error)) breaker.trip(entry.id);
         else if (isPrimary && isBreakerFailure(error)) breaker.recordFailure(entry.id);
-        if (retried || !isServerError(error)) throw error;
-        await delay(Math.random() * retryJitterMs, combined);
+        throw error;
       }
     }
   };

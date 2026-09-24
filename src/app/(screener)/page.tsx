@@ -1,9 +1,9 @@
 import { ChatScreen } from "@/components/ChatScreen";
-import { MOCK_POOL } from "@/mocks/pool";
-import { SUGGESTED_QUESTIONS } from "@/mocks/suggestions";
+import { SUGGESTED_QUESTIONS } from "@/lib/chat/suggestions";
+import { loadIndex, toPoolCandidate } from "@/lib/pool/index-file";
 
-// UI phase: the pool and suggestions come from the mocks. The API phase reads
-// the pool from the index here, on the server, with no component change.
+// The pool comes from the index, read on the server (PLAN, Data access);
+// only names and page counts reach the client.
 export default function ChatPage() {
-  return <ChatScreen pool={MOCK_POOL} suggestions={SUGGESTED_QUESTIONS} />;
+  return <ChatScreen pool={loadIndex().map(toPoolCandidate)} suggestions={SUGGESTED_QUESTIONS} />;
 }

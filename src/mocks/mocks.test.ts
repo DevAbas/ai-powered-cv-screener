@@ -5,7 +5,7 @@ import { ANSWERS, malformedAnswer } from "./answers";
 import { mockAsk, scenarioFor } from "./ask";
 import { findCandidate, MOCK_POOL } from "./pool";
 import { SCENARIOS } from "./scenarios";
-import { SUGGESTED_QUESTIONS } from "./suggestions";
+import { SUGGESTED_QUESTIONS } from "@/lib/chat/suggestions";
 
 const request = (question: string) => ({ question, model: "primary" as const, history: [] });
 

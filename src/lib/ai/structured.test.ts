@@ -323,8 +323,10 @@ describe("runStructured: circuit breaker", () => {
     expect(breaker.isOpen(entry.id)).toBe(false);
   });
 
-  it("counts each 5xx: a 5xx and its failed retry open the breaker", async () => {
+  it("counts one strike per call: a 5xx and its failed retry do not open the breaker alone", async () => {
     const breaker = new CircuitBreaker();
+    await run(failingThen(apiError(503), apiError(503)), mockModel(VALID), { breaker, retryJitterMs: 10 });
+    expect(breaker.isOpen(entry.id)).toBe(false);
     await run(failingThen(apiError(503), apiError(503)), mockModel(VALID), { breaker, retryJitterMs: 10 });
     expect(breaker.isOpen(entry.id)).toBe(true);
   });

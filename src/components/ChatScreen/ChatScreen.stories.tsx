@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { MOCK_POOL } from "@/mocks/pool";
-import { SUGGESTED_QUESTIONS } from "@/mocks/suggestions";
+import { SUGGESTED_QUESTIONS } from "@/lib/chat/suggestions";
 import { ChatScreen } from "./ChatScreen";
 
 const meta = {

@@ -1,9 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { cvFileName, cvSourceHref } from "./source-href";
+import { cvFileName, cvIdFromFileName, cvSourceHref } from "./source-href";
 
 describe("cvFileName", () => {
   it("names the file name_surname_cv.pdf", () => {
     expect(cvFileName("daan-de-vries")).toBe("daan_de_vries_cv.pdf");
+  });
+});
+
+describe("cvIdFromFileName", () => {
+  it("inverts cvFileName", () => {
+    expect(cvIdFromFileName(cvFileName("daan-de-vries"))).toBe("daan-de-vries");
+  });
+
+  it("ignores other files", () => {
+    expect(cvIdFromFileName("notes.pdf")).toBeUndefined();
+    expect(cvIdFromFileName("Lena_Novak_cv.pdf")).toBeUndefined();
+    expect(cvIdFromFileName("lena_novak_cv.pdf.tmp")).toBeUndefined();
   });
 });
 

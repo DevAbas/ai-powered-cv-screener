@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countPdfPages, formatAvailability, formatDegree, formatMonth, formatMonthNumeric, formatWorkModes } from "./pdf";
+import { countPdfPages, formatAvailability, formatDegree, formatMonth, formatMonthNumeric, formatSkill, formatWorkModes } from "./pdf";
 
 describe("countPdfPages", () => {
   it("counts page objects, not the page tree", () => {
@@ -19,5 +19,8 @@ describe("formatting", () => {
     expect(formatAvailability(0)).toBe("Available immediately");
     expect(formatAvailability(30)).toBe("Notice period: 30 days");
     expect(formatWorkModes(["hybrid", "relocation"])).toBe("Hybrid · Open to relocation");
+    expect(formatSkill({ name: "React", years: 7 })).toBe("React (7 years)");
+    expect(formatSkill({ name: "Jest", years: 1 })).toBe("Jest (1 year)");
+    expect(formatSkill({ name: "Redux" })).toBe("Redux");
   });
 });

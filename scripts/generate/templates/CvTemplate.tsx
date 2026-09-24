@@ -1,11 +1,12 @@
 import { Page, StyleSheet, Text, View } from "@react-pdf/renderer";
-import { formatAvailability, formatDegree, formatMonth, formatMonthNumeric, formatWorkModes } from "../pdf";
+import { formatAvailability, formatDegree, formatMonth, formatMonthNumeric, formatSkill, formatWorkModes } from "../pdf";
 import { CvDocument, Photo } from "./shared";
 import type { TemplateProps } from "./shared";
 
 // One layout, after the sample CV the pilot was given: photo and name at
 // the top, the headline in the accent, a contact line, then sections with
-// uppercase letter-spaced headings over a hairline. The accent is the design
+// uppercase letter-spaced headings over a hairline. Skills carry their years
+// and every job its industry, so the index can read both from the PDF. The accent is the design
 // system's `primary-text` (DESIGN.md, Colors): the accent as text on a light
 // surface. Variants differ in font and date style only, so the pool's CVs
 // are not byte-for-byte alike (PLAN, Generation pipeline).
@@ -52,6 +53,7 @@ function stylesFor(v: CvVariant) {
     jobHead: { flexDirection: "row", justifyContent: "space-between", alignItems: "baseline", marginBottom: 3 },
     jobTitle: { fontSize: 10.5 },
     dates: { fontSize: 9, color: MUTED },
+    industry: { fontSize: 9, color: MUTED, marginBottom: 3 },
     bullet: { flexDirection: "row", paddingLeft: 2 },
     bulletGlyph: { width: 12 },
     bulletText: { flex: 1 },
@@ -87,7 +89,7 @@ export function CvTemplate({ seed, photo, variant }: TemplateProps & { variant: 
 
         <View style={s.section}>
           <Text style={s.h2}>Skills</Text>
-          <Text style={s.inline}>{seed.skills.map((skill) => skill.name).join(SEP)}</Text>
+          <Text style={s.inline}>{seed.skills.map(formatSkill).join(SEP)}</Text>
         </View>
 
         <View style={s.section}>
@@ -100,6 +102,7 @@ export function CvTemplate({ seed, photo, variant }: TemplateProps & { variant: 
                 </Text>
                 <Text style={s.dates}>{period(job.from, job.to)}</Text>
               </View>
+              <Text style={s.industry}>Industry: {job.industry}</Text>
               {job.highlights.map((line) => (
                 <View key={line} style={s.bullet}>
                   <Text style={s.bulletGlyph}>{variant.bullet}</Text>

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
 import { MOCK_POOL } from "@/mocks/pool";
-import { SUGGESTED_QUESTIONS } from "@/mocks/suggestions";
+import { SUGGESTED_QUESTIONS } from "@/lib/chat/suggestions";
 import { ChatEmptyState } from "./ChatEmptyState";
 
 const meta = {

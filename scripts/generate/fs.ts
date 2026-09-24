@@ -2,8 +2,9 @@ import { mkdir, readFile, rename, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { cvFileName } from "@/lib/pool/source-href";
 
-// Where the pipeline writes (PLAN, Generation pipeline). App code never
-// reads `data/`; the PDFs are public so sources can link to them.
+// Where the pipeline writes (PLAN, Generation pipeline). Of `data/`, app code
+// reads only the index (`data/index.json`); the PDFs are public so sources
+// can link to them.
 
 export const DATA_DIR = path.resolve("data");
 export const SEEDS_DIR = path.join(DATA_DIR, "seeds");

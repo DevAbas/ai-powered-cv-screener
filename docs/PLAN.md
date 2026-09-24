@@ -2,7 +2,7 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.13                                     |
+| Version | 1.14                                     |
 | Date    | 2026-09-24                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
@@ -23,7 +23,7 @@ its own plan in `docs/plans/<feature>.md`.
 
 ## Data access
 
-The app reads only the index.
+The app reads only the index and the CV PDFs.
 
 ## Model registry
 
@@ -88,6 +88,10 @@ For each PDF: text per page, one structured profile extracted by the
 `extract` entry, and skills, languages and roles normalised. No
 embeddings: at ~30 CVs, structured filters and keyword search over the
 page text retrieve everything the questions need.
+
+The index is one committed JSON file, `data/index.json`; no database in
+v1. Extracted strings are checked against the page text: they keep the
+CV's capitalisation, and the role follows the headline when it names one.
 
 ## Retrieval and answering
 
@@ -189,9 +193,10 @@ Every phase also ends with build and tests clean.
 | 3 | `alternative` fails the latency criterion; choose a replacement. | API |
 | 4 | Set the first-output and total limits from measured P95. | API |
 | 5 | Evaluate `lfm-2.5-2.6b` as a fast middle tier before the Gemini fallback. | Eval |
-| 6 | Add a database in `lib/db` following the vercel/chatbot structure; candidate PGlite + Drizzle. | Indexer |
-| 7 | Restructure `lib/` in the vercel/chatbot style. | Indexer |
-| 8 | Circuit breaker counts one strike per call, not per attempt. | Indexer |
+
+Resolved in 1.14: 6, the JSON index is enough for the pilot pool; 7, not
+in v1, `lib` stays organised by domain (`AGENTS.md`, Conventions); 8, the
+breaker counts one strike per call.
 
 ## Changelog
 
@@ -211,3 +216,4 @@ Every phase also ends with build and tests clean.
 | 1.11    | 2026-09-24 | Open question 1 resolved: photos from the paid `image` entry, run only by name (no free image model on any provider). Generation pipeline: fixed EU roster shared with the mocks; seed prose restates structured facts; one ATS layout in three variants; `<name>_<surname>_cv.pdf`. Goal references PRD 1.9. |
 | 1.12    | 2026-09-24 | Goal references PRD 1.10. User interface: sources open an in-app preview panel drawn with pdf.js, resizable, with download. |
 | 1.13    | 2026-09-24 | Goal references PRD 1.11. Progress line wording. Embeddings dropped: retrieval is structured filters plus keyword search over page text; the `embed` entry, its rule and the embedding index go. |
+| 1.14    | 2026-09-24 | Data access: the index and the CV PDFs. Indexer: committed `data/index.json`, extracted strings checked against the page text. Open questions 6–8 resolved (no database in v1, `lib` by domain, one breaker strike per call). |

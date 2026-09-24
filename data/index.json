@@ -1,0 +1,312 @@
+[
+  {
+    "id": "jane-doe",
+    "file": "/cvs/jane_doe_cv.pdf",
+    "pages": 2,
+    "text": [
+      "Jane Doe\nFrontend Lead\njane.doe@example.com · +1-555-002-0202 · Dublin, Ireland\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nJane Doe is a Frontend Lead based in Dublin, Ireland with 10 years of experience across Financial Technology, Cloud\nSoftware, and Digital Media. She holds a bachelor degree in Computer Science from Trinity College Dublin and\nspecializes in JavaScript, TypeScript, React, Vue.js, Redux, HTML5/CSS3, Webpack, and Jest. Her background includes\nleadership experience guiding frontend teams and mentoring junior developers.\nSKILLS\nJavaScript (10 years) · TypeScript (8 years) · React (7 years) · Vue.js (4 years) · Redux (6 years) · HTML5/CSS3\n(10 years) · Webpack (6 years) · Jest (5 years)\nEXPERIENCE\nFrontend Lead — Emerald Paytech Mar 2021 – Present\nIndustry: Financial Technology\n• Led frontend development using JavaScript, TypeScript, React, Redux, and Jest.\n• Guided technical vision and mentored junior developers within Financial Technology.\nSenior Frontend Engineer — Celtic Cloud Systems Jan 2018 – Feb 2021\nIndustry: Cloud Software\n• Built interactive monitoring dashboards using TypeScript, Vue.js, Webpack, and HTML5/CSS3.\n• Engineered web interface components for Cloud Software platforms.\nFrontend Developer — Liffey Media Mar 2016 – Dec 2017\nIndustry: Digital Media\n• Developed user interfaces for web applications utilizing JavaScript, HTML5/CSS3, and Webpack.\n• Created modern responsive layouts in the Digital Media sector.\nEDUCATION\nBSc Computer Science 2015\nTrinity College Dublin\nLANGUAGES\nEnglish (native) · Irish (B2)",
+      "CERTIFICATIONS\nAWS Certified Developer - Associate"
+    ],
+    "profile": {
+      "name": "Jane Doe",
+      "headline": "Frontend Lead",
+      "role": "frontend",
+      "seniority": "lead",
+      "location": "Dublin, Ireland",
+      "remote": [
+        "hybrid",
+        "remote"
+      ],
+      "workAuthorization": "EU Citizen",
+      "availability": 30,
+      "yearsTotal": 10,
+      "skills": [
+        {
+          "name": "JavaScript",
+          "years": 10
+        },
+        {
+          "name": "TypeScript",
+          "years": 8
+        },
+        {
+          "name": "React",
+          "years": 7
+        },
+        {
+          "name": "Vue.js",
+          "years": 4
+        },
+        {
+          "name": "Redux",
+          "years": 6
+        },
+        {
+          "name": "HTML5/CSS3",
+          "years": 10
+        },
+        {
+          "name": "Webpack",
+          "years": 6
+        },
+        {
+          "name": "Jest",
+          "years": 5
+        }
+      ],
+      "languages": [
+        {
+          "language": "English",
+          "level": "native"
+        },
+        {
+          "language": "Irish",
+          "level": "B2"
+        }
+      ],
+      "education": [
+        {
+          "degree": "bachelor",
+          "field": "Computer Science",
+          "institution": "Trinity College Dublin",
+          "year": 2015
+        }
+      ],
+      "employment": [
+        {
+          "company": "Emerald Paytech",
+          "title": "Frontend Lead",
+          "industry": "Financial Technology",
+          "from": "2021-03",
+          "to": null
+        },
+        {
+          "company": "Celtic Cloud Systems",
+          "title": "Senior Frontend Engineer",
+          "industry": "Cloud Software",
+          "from": "2018-01",
+          "to": "2021-02"
+        },
+        {
+          "company": "Liffey Media",
+          "title": "Frontend Developer",
+          "industry": "Digital Media",
+          "from": "2016-03",
+          "to": "2017-12"
+        }
+      ],
+      "leadership": {
+        "has": true,
+        "note": "Guided frontend teams and mentored junior developers"
+      },
+      "certifications": [
+        "AWS Certified Developer - Associate"
+      ]
+    },
+    "medianTenureMonths": 38
+  },
+  {
+    "id": "lena-novak",
+    "file": "/cvs/lena_novak_cv.pdf",
+    "pages": 1,
+    "text": [
+      "Lena Novak\nSenior Frontend Engineer\nlena.novak@example.com · +1-555-001-0101 · Berlin, Germany\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nSenior Frontend Engineer based in Berlin, Germany, with 7 years of total software development experience\nacross the E-commerce and Digital Media industries. Skilled in React, TypeScript, JavaScript, HTML/CSS,\nNext.js, Redux, Webpack, and Jest. Currently employed at Kinetix Digital after previously working at AeroFlux\nMedia, with experience leading technical frontend initiatives and mentoring junior team members.\nSKILLS\nReact (7 years) · TypeScript (6 years) · JavaScript (7 years) · HTML/CSS (7 years) · Next.js (4\nyears) · Redux (5 years) · Webpack (5 years) · Jest (4 years)\nEXPERIENCE\nSenior Frontend Engineer — Kinetix Digital Mar 2022 – Present\nIndustry: E-commerce\n• Developed scalable web application features using React, TypeScript, and Next.js.\n• Implemented automated unit tests with Jest and built responsive user interfaces using HTML/CSS.\nFrontend Developer — AeroFlux Media Mar 2019 – Feb 2022\nIndustry: Digital Media\n• Engineered interactive frontend components using React, JavaScript, and Redux.\n• Configured frontend asset bundling with Webpack and styled web pages with HTML/CSS.\nEDUCATION\nBSc Computer Science 2018\nTechnical University of Berlin\nLANGUAGES\nGerman (native) · English (C1)\nCERTIFICATIONS\nAWS Certified Developer - Associate"
+    ],
+    "profile": {
+      "name": "Lena Novak",
+      "headline": "Senior Frontend Engineer",
+      "role": "frontend",
+      "seniority": "senior",
+      "location": "Berlin, Germany",
+      "remote": [
+        "hybrid",
+        "remote"
+      ],
+      "workAuthorization": "EU Citizen",
+      "availability": 30,
+      "yearsTotal": 7,
+      "skills": [
+        {
+          "name": "React",
+          "years": 7
+        },
+        {
+          "name": "TypeScript",
+          "years": 6
+        },
+        {
+          "name": "JavaScript",
+          "years": 7
+        },
+        {
+          "name": "HTML/CSS",
+          "years": 7
+        },
+        {
+          "name": "Next.js",
+          "years": 4
+        },
+        {
+          "name": "Redux",
+          "years": 5
+        },
+        {
+          "name": "Webpack",
+          "years": 5
+        },
+        {
+          "name": "Jest",
+          "years": 4
+        }
+      ],
+      "languages": [
+        {
+          "language": "German",
+          "level": "native"
+        },
+        {
+          "language": "English",
+          "level": "C1"
+        }
+      ],
+      "education": [
+        {
+          "degree": "bachelor",
+          "field": "Computer Science",
+          "institution": "Technical University of Berlin",
+          "year": 2018
+        }
+      ],
+      "employment": [
+        {
+          "company": "Kinetix Digital",
+          "title": "Senior Frontend Engineer",
+          "industry": "E-commerce",
+          "from": "2022-03",
+          "to": null
+        },
+        {
+          "company": "AeroFlux Media",
+          "title": "Frontend Developer",
+          "industry": "Digital Media",
+          "from": "2019-03",
+          "to": "2022-02"
+        }
+      ],
+      "leadership": {
+        "has": true,
+        "note": "Led technical frontend initiatives and mentored junior team members"
+      },
+      "certifications": [
+        "AWS Certified Developer - Associate"
+      ]
+    },
+    "medianTenureMonths": 45.5
+  },
+  {
+    "id": "sofia-almeida",
+    "file": "/cvs/sofia_almeida_cv.pdf",
+    "pages": 2,
+    "text": [
+      "Sofia Almeida\nSenior Frontend Developer\nsofia.almeida@example.com · +1-555-004-0404 · Lisbon, Portugal\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nSenior Frontend Developer based in Lisbon, Portugal, with 7 years of total experience across Financial\nTechnology, E-commerce, and Digital Publishing. Skilled in React, TypeScript, JavaScript, HTML/CSS, Next.js,\nRedux, Jest, and Webpack. Holds a bachelor degree in Computer Science and has leadership experience\nmentoring junior frontend developers.\nSKILLS\nJavaScript (7 years) · React (7 years) · HTML/CSS (7 years) · TypeScript (6 years) · Redux (5\nyears) · Next.js (4 years) · Jest (4 years) · Webpack (3 years)\nEXPERIENCE\nSenior Frontend Developer — Tagus Vista Solutions Mar 2022 – Present\nIndustry: Financial Technology\n• Architected web application interfaces using React, TypeScript, and Next.js.\n• Managed application state using Redux and implemented automated test suites with Jest.\nFrontend Developer — Lusitania Web Labs Sep 2019 – Feb 2022\nIndustry: E-commerce\n• Developed interactive user interfaces using React, JavaScript, and HTML/CSS.\n• Configured application build pipelines with Webpack and managed state with Redux.\nJunior Frontend Developer — Atlantico Interactive Sep 2018 – Aug 2019\nIndustry: Digital Publishing\n• Built responsive web pages using JavaScript and HTML/CSS.\n• Optimized asset bundling scripts using Webpack.\nEDUCATION\nBSc Computer Science 2018\nUniversity of Lisbon\nLANGUAGES\nPortuguese (native) · English (C1)",
+      "CERTIFICATIONS\nAWS Certified Cloud Practitioner"
+    ],
+    "profile": {
+      "name": "Sofia Almeida",
+      "headline": "Senior Frontend Developer",
+      "role": "frontend",
+      "seniority": "senior",
+      "location": "Lisbon, Portugal",
+      "remote": [
+        "hybrid",
+        "remote"
+      ],
+      "workAuthorization": "EU Citizen",
+      "availability": 30,
+      "yearsTotal": 7,
+      "skills": [
+        {
+          "name": "JavaScript",
+          "years": 7
+        },
+        {
+          "name": "React",
+          "years": 7
+        },
+        {
+          "name": "HTML/CSS",
+          "years": 7
+        },
+        {
+          "name": "TypeScript",
+          "years": 6
+        },
+        {
+          "name": "Redux",
+          "years": 5
+        },
+        {
+          "name": "Next.js",
+          "years": 4
+        },
+        {
+          "name": "Jest",
+          "years": 4
+        },
+        {
+          "name": "Webpack",
+          "years": 3
+        }
+      ],
+      "languages": [
+        {
+          "language": "Portuguese",
+          "level": "native"
+        },
+        {
+          "language": "English",
+          "level": "C1"
+        }
+      ],
+      "education": [
+        {
+          "degree": "bachelor",
+          "field": "Computer Science",
+          "institution": "University of Lisbon",
+          "year": 2018
+        }
+      ],
+      "employment": [
+        {
+          "company": "Tagus Vista Solutions",
+          "title": "Senior Frontend Developer",
+          "industry": "Financial Technology",
+          "from": "2022-03",
+          "to": null
+        },
+        {
+          "company": "Lusitania Web Labs",
+          "title": "Frontend Developer",
+          "industry": "E-commerce",
+          "from": "2019-09",
+          "to": "2022-02"
+        },
+        {
+          "company": "Atlantico Interactive",
+          "title": "Junior Frontend Developer",
+          "industry": "Digital Publishing",
+          "from": "2018-09",
+          "to": "2019-08"
+        }
+      ],
+      "leadership": {
+        "has": true,
+        "note": "Mentoring junior frontend developers"
+      },
+      "certifications": [
+        "AWS Certified Cloud Practitioner"
+      ]
+    },
+    "medianTenureMonths": 30
+  }
+]
