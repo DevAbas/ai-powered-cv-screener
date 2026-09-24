@@ -168,9 +168,9 @@ describe("withFallback", () => {
     expect(run).toHaveBeenCalledTimes(1);
   });
 
-  it("never switches models for embed, which has no query-time fallback", async () => {
+  it("never switches models for image, which has no fallback", async () => {
     const run = vi.fn().mockRejectedValue(apiError(503));
-    await expect(withFallback(getEntry("embed"), run, { attempts: 2, sleep: noSleep })).rejects.toThrow();
-    expect(run.mock.calls.every(([target]) => target.model === getEntry("embed").model)).toBe(true);
+    await expect(withFallback(getEntry("image"), run, { attempts: 2, sleep: noSleep })).rejects.toThrow();
+    expect(run.mock.calls.every(([target]) => target.model === getEntry("image").model)).toBe(true);
   });
 });

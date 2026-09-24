@@ -11,7 +11,7 @@ export type Provider = "openrouter" | "google";
 /** Model maker. UI logos resolve from `public/icons/providers/<vendor>.svg`. */
 export type Vendor = "google" | "nvidia";
 
-export type ModelId = AnswerModelId | "extract" | "generate" | "embed" | "image";
+export type ModelId = AnswerModelId | "extract" | "generate" | "image";
 
 export type Tier = "free" | "paid";
 
@@ -20,15 +20,12 @@ export interface Capabilities {
   structuredOutput: boolean;
   streaming: boolean;
   image: boolean;
-  embedding: boolean;
 }
 
 export interface ModelTarget {
   provider: Provider;
   vendor: Vendor;
   model: string;
-  /** Output dimensions for embedding models. */
-  dimensions?: number;
 }
 
 export interface ModelEntry extends ModelTarget {
@@ -38,10 +35,8 @@ export interface ModelEntry extends ModelTarget {
   capabilities: Capabilities;
   tier: Tier;
   recommended?: boolean;
-  /** Used when the primary fails after retries. Never set on `embed`. */
+  /** Used when the primary fails after retries. */
   fallback?: ModelTarget;
-  /** `embed` only: may rebuild the whole index, never embed a single query. */
-  rebuildFallback?: ModelTarget;
 }
 
 const ANSWER_CAPABILITIES: Capabilities = {
@@ -49,7 +44,6 @@ const ANSWER_CAPABILITIES: Capabilities = {
   structuredOutput: true,
   streaming: true,
   image: false,
-  embedding: false,
 };
 
 const GEMINI_FLASH: ModelTarget = {
@@ -114,33 +108,8 @@ export const REGISTRY: Readonly<Record<ModelId, ModelEntry>> = {
       structuredOutput: false,
       streaming: false,
       image: true,
-      embedding: false,
     },
     tier: "paid",
-  },
-  embed: {
-    id: "embed",
-    displayName: "Gemini Embedding 2",
-    description: "Page embeddings for evidence retrieval.",
-    provider: "google",
-    vendor: "google",
-    model: "gemini-embedding-2",
-    dimensions: 256,
-    capabilities: {
-      tools: false,
-      structuredOutput: false,
-      streaming: false,
-      image: false,
-      embedding: true,
-    },
-    tier: "free",
-    rebuildFallback: {
-      provider: "openrouter",
-      vendor: "nvidia",
-      model: "nvidia/nemotron-3-embed-1b:free",
-      // The only size this model accepts; a rebuilt index records its own dims.
-      dimensions: 2048,
-    },
   },
 };
 

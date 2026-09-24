@@ -2,11 +2,11 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.11                                     |
-| Date    | 2026-09-23                               |
+| Version | 1.13                                     |
+| Date    | 2026-09-24                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
-| Goal    | Deliver the v1 pilot defined in PRD 1.9  |
+| Goal    | Deliver the v1 pilot defined in PRD 1.11 |
 
 If the code and this document disagree, change this document first, then
 the code. This plan is not extended with new features; a new feature gets
@@ -23,7 +23,7 @@ its own plan in `docs/plans/<feature>.md`.
 
 ## Data access
 
-The app reads only the index and the embeddings.
+The app reads only the index.
 
 ## Model registry
 
@@ -61,12 +61,6 @@ Until the eval exists, only criterion 1 applies.
   fallback.
 - A per-entry circuit breaker skips a failing primary for a cooldown.
 
-### Embeddings
-
-A question is embedded only with the model that built the index. There
-is no fallback at query time; a different model may be used only to
-rebuild the whole index.
-
 ## Generation pipeline
 
 ~30 candidates: frontend 6, backend 6, data 4, DevOps 4, QA 4, product 3,
@@ -81,16 +75,19 @@ the mock pool mirrors it and a test keeps them equal. Three steps:
 2. Photos: one AI-generated photo per candidate from the `image` entry,
    which is paid, so the step runs only when named; a failed photo is
    reported, never fatal, and the CV simply has no photo.
-3. PDFs: one ATS-friendly single-column layout in three variants (font,
-   heading colour, date style), so formats differ (PRD, Problem) while
-   every CV parses; the photo is embedded when it exists. Files are
+3. PDFs: one single-column layout after the sample CV the pilot was given
+   (photo, name, accent headline, contact line, uppercase section headings
+   over hairlines), in three variants (font, date style) so formats differ
+   (PRD, Problem) while every CV parses; the accent is the design system's
+   `primary-text`; the photo is embedded when it exists. Files are
    `public/cvs/<name>_<surname>_cv.pdf`.
 
 ## Indexer
 
 For each PDF: text per page, one structured profile extracted by the
-`extract` entry, skills, languages and roles normalised, and one
-embedding per page.
+`extract` entry, and skills, languages and roles normalised. No
+embeddings: at ~30 CVs, structured filters and keyword search over the
+page text retrieve everything the questions need.
 
 ## Retrieval and answering
 
@@ -100,8 +97,9 @@ Retrieval is required; the whole pool is never placed in a prompt.
   exact count; it can scope a follow-up to the previous answer.
 - `get_cv` returns one profile with its pages, for compare, fact and
   profile questions.
-- Evidence pages are found by embedding similarity, scoped to the matched
-  candidates.
+- Evidence pages are found by keyword match over the page text (the page
+  with the most of the question's terms; the first page otherwise), scoped
+  to the matched candidates.
 
 Flow: validate the request → retrieve (each tool call is a progress
 stage) → compose one structured answer from the retrieval result only →
@@ -131,12 +129,16 @@ both themes.
 - The screen talks to one `ask` client module: mocks during the UI
   phase, `POST /api/ask` from the API phase, without touching components.
 - Stop aborts the request; the call ends without fallback.
-- Progress stages mirror the tool calls; after ~10 s a neutral "Taking
-  longer than usual…" line appears. Schema repair and fallback are never
-  shown.
-- Sources link to the CV's PDF at the cited page
-  (`/cvs/<name>_<surname>_cv.pdf#page=N`), opened by the browser. No
-  in-app PDF viewer.
+- One progress line reads the current stage (the stages mirror the tool
+  calls) and, once answered, how long the search took; after ~10 s it
+  reads a neutral "Taking longer than usual…". Schema repair and fallback
+  are never shown.
+- Sources open the CV's PDF at the cited page
+  (`/cvs/<name>_<surname>_cv.pdf#page=N`) in a preview panel beside the
+  conversation, its pages drawn with pdf.js (`pdfjs-dist`, loaded only
+  when a preview opens) so no browser viewer controls appear. Download
+  saves the PDF; outside the screen (component previews) the same card is
+  a link.
 
 ## Evaluation (built last)
 
@@ -162,8 +164,8 @@ A model that fails any threshold leaves the registry.
    with mock data at desktop and mobile widths.
 4. **Generation** — done when 30 unique seeds, photos and PDFs are
    committed and a re-run is a no-op.
-5. **Indexer** — done when the index and embeddings are committed and
-   three profiles are spot-checked against their PDFs.
+5. **Indexer** — done when the index is committed and three profiles are
+   spot-checked against their PDFs.
 6. **API** — done when every PRD use case returns the right `kind` end to
    end and progress stages mirror the tool calls.
 7. **Eval** — done when all golden questions pass.
@@ -175,7 +177,7 @@ Every phase also ends with build and tests clean.
 - Every phase is done.
 - PRD, Success criteria is verified.
 - Lint, typecheck, build, tests and eval are clean on a fresh clone.
-- Pool, index and embeddings are committed; the commands in `AGENTS.md`
+- Pool and index are committed; the commands in `AGENTS.md`
   work as written.
 - Anything left over becomes its own plan in `docs/plans/<feature>.md`.
 
@@ -187,7 +189,7 @@ Every phase also ends with build and tests clean.
 | 3 | `alternative` fails the latency criterion; choose a replacement. | API |
 | 4 | Set the first-output and total limits from measured P95. | API |
 | 5 | Evaluate `lfm-2.5-2.6b` as a fast middle tier before the Gemini fallback. | Eval |
-| 6 | Add a database in `lib/db` following the vercel/chatbot structure; candidate PGlite + pgvector + Drizzle. | Indexer |
+| 6 | Add a database in `lib/db` following the vercel/chatbot structure; candidate PGlite + Drizzle. | Indexer |
 | 7 | Restructure `lib/` in the vercel/chatbot style. | Indexer |
 | 8 | Circuit breaker counts one strike per call, not per attempt. | Indexer |
 
@@ -207,3 +209,5 @@ Every phase also ends with build and tests clean.
 | 1.9     | 2026-09-23 | Goal references PRD 1.6. User interface: sources link to the PDF at the cited page; no in-app viewer, no pool panel. |
 | 1.10    | 2026-09-23 | Build order, phase 3: desktop and mobile widths (no stacked panels since 1.9). |
 | 1.11    | 2026-09-24 | Open question 1 resolved: photos from the paid `image` entry, run only by name (no free image model on any provider). Generation pipeline: fixed EU roster shared with the mocks; seed prose restates structured facts; one ATS layout in three variants; `<name>_<surname>_cv.pdf`. Goal references PRD 1.9. |
+| 1.12    | 2026-09-24 | Goal references PRD 1.10. User interface: sources open an in-app preview panel drawn with pdf.js, resizable, with download. |
+| 1.13    | 2026-09-24 | Goal references PRD 1.11. Progress line wording. Embeddings dropped: retrieval is structured filters plus keyword search over page text; the `embed` entry, its rule and the embedding index go. |

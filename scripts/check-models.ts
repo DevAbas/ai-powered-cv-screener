@@ -1,7 +1,7 @@
 // Verifies every model registry entry against its declared capabilities
 // (PLAN, Model registry). Model ids are pinned in the registry only after this passes.
 //
-//   npm run check-models                              every free entry, fallback and rebuild fallback
+//   npm run check-models                              every free entry and fallback
 //   npm run check-models -- --only image              a paid entry runs only when named
 //   npm run check-models -- --only primary --roles main
 //   npm run check-models -- --probe google:gemini-3.6-flash,openrouter:qwen/qwen3.8-27b:free
@@ -12,13 +12,13 @@
 // streaming); a probe id without a provider prefix is an OpenRouter id.
 
 import { loadEnvConfig } from "@next/env";
-import { embed, generateText, isStepCount, NoObjectGeneratedError, streamText, tool } from "ai";
+import { generateText, isStepCount, NoObjectGeneratedError, streamText, tool } from "ai";
 import type { LanguageModel } from "ai";
 import { z } from "zod";
 import { ANSWER_KIND_RULES, AnswerSchema } from "@/contracts/answer";
 import { CandidateProfileSchema } from "@/contracts/candidate";
 import type { RoutedModel } from "@/lib/ai/providers";
-import { embeddingModel, embeddingProviderOptions, languageModel, missingApiKeys } from "@/lib/ai/providers";
+import { languageModel, missingApiKeys } from "@/lib/ai/providers";
 import type { ModelEntry, ModelId, ModelTarget, Provider } from "@/lib/ai/registry";
 import { REGISTRY } from "@/lib/ai/registry";
 import { errorStatus, withRetry } from "@/lib/ai/retry";
@@ -29,10 +29,10 @@ loadEnvConfig(process.cwd());
 
 const TIMEOUT_MS = 90_000;
 
-const CAPABILITIES = ["tools", "answer", "extract", "streaming", "embedding", "image"] as const;
+const CAPABILITIES = ["tools", "answer", "extract", "streaming", "image"] as const;
 type Capability = (typeof CAPABILITIES)[number];
 const PROBE_DEFAULT: readonly Capability[] = ["tools", "answer", "extract", "streaming"];
-const ROLES = ["main", "fallback", "rebuild only", "probe"] as const;
+const ROLES = ["main", "fallback", "probe"] as const;
 
 interface Check {
   entry: string;
@@ -78,20 +78,6 @@ interface Hooks {
 async function probe(check: Check, { onRepair, onFirstOutput }: Hooks): Promise<string> {
   const abortSignal = AbortSignal.timeout(TIMEOUT_MS);
   const common = { maxRetries: 0, abortSignal } as const;
-
-  if (check.capability === "embedding") {
-    const target = check.target;
-    const { embedding } = await embed({
-      ...common,
-      model: embeddingModel(target),
-      value: "Senior React developer with TypeScript",
-      providerOptions: embeddingProviderOptions(target, "query"),
-    });
-    if (target.dimensions !== undefined && embedding.length !== target.dimensions) {
-      throw new Error(`expected ${target.dimensions} dims, got ${embedding.length}`);
-    }
-    return `${embedding.length} dims`;
-  }
 
   const model: LanguageModel = languageModel(check.target);
 
@@ -212,7 +198,6 @@ function capabilitiesOf(entry: ModelEntry): Capability[] {
   if (capabilities.tools) list.push("tools");
   if (capabilities.structuredOutput) list.push(PROFILE_ENTRIES.has(entry.id) ? "extract" : "answer");
   if (capabilities.streaming) list.push("streaming");
-  if (capabilities.embedding) list.push("embedding");
   if (capabilities.image) list.push("image");
   return list;
 }
@@ -221,7 +206,6 @@ function checksFor(entry: ModelEntry): Check[] {
   const roles: [Check["role"], ModelTarget | undefined][] = [
     ["main", entry],
     ["fallback", entry.fallback],
-    ["rebuild only", entry.rebuildFallback],
   ];
   return roles.flatMap(([role, target]) =>
     target ? capabilitiesOf(entry).map((capability) => ({ entry: entry.id, role, target, capability })) : [],
@@ -245,7 +229,7 @@ function parseArgs(argv: string[]) {
 function parseProbe(id: string): RoutedModel {
   const match = /^(google|openrouter):(.+)$/.exec(id);
   const provider: Provider = match ? (match[1] as Provider) : "openrouter";
-  return { provider, model: match ? match[2] : id, dimensions: 256 };
+  return { provider, model: match ? match[2] : id };
 }
 
 function assertKnown(kind: string, values: string[] | undefined, known: readonly string[]) {

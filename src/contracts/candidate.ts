@@ -136,16 +136,3 @@ export const IndexEntrySchema = z.object({
   medianTenureMonths: z.number().min(0).nullable(),
 });
 export type IndexEntry = z.infer<typeof IndexEntrySchema>;
-
-export const EmbeddingIndexSchema = z.object({
-  model: z.string().min(1),
-  dims: z.number().int().min(1),
-  vectors: z.array(
-    z.object({
-      id: CandidateIdSchema,
-      page: z.number().int().min(1),
-      v: z.array(z.number()),
-    }),
-  ),
-});
-export type EmbeddingIndex = z.infer<typeof EmbeddingIndexSchema>;

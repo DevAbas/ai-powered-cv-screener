@@ -1,6 +1,6 @@
 // Pure helpers of the PDF step.
 
-/** Page count a PDF may have; the indexer embeds one vector per page. */
+/** Page count a CV may have; the indexer keeps text per page. */
 export const MAX_PAGES = 3;
 
 /**

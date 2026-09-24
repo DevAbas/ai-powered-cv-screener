@@ -134,7 +134,7 @@ export interface FallbackOptions extends RetryOptions {
 
 /**
  * Runs `run` on the entry's model with retries, then on its `fallback` if
- * the primary is unavailable. Entries without `fallback` (such as `embed`)
+ * the primary is unavailable. Entries without `fallback` (such as `image`)
  * never switch models.
  */
 export async function withFallback<T>(
