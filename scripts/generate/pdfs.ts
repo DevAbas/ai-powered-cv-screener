@@ -42,7 +42,7 @@ export async function runPdfs(options: StepOptions): Promise<StepReport> {
     }
     const hasPhoto = await exists(photoPath(id));
     if (options.dryRun) {
-      log("pdfs", id, `would render template ${seed.template}${hasPhoto ? " with photo" : " with initials"}`);
+      log("pdfs", id, `would render template ${seed.template}${hasPhoto ? " with photo" : " without photo"}`);
       report.done.push(id);
       continue;
     }
@@ -54,7 +54,7 @@ export async function runPdfs(options: StepOptions): Promise<StepReport> {
       await writeFileAtomic(pdfPath(id), pdf);
       manifest[id] = { pages, photo: hasPhoto };
       report.done.push(id);
-      log("pdfs", id, `written (template ${seed.template}, ${pages} page(s)${hasPhoto ? ", photo" : ", initials"})`);
+      log("pdfs", id, `written (template ${seed.template}, ${pages} page(s)${hasPhoto ? ", photo" : ", no photo"})`);
     } catch (error) {
       report.failed.push(id);
       log("pdfs", id, `FAILED: ${shortError(error)}`);

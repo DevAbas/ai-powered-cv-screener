@@ -1,0 +1,161 @@
+{
+  "name": "Jane Doe",
+  "headline": "Frontend Lead",
+  "role": "frontend",
+  "seniority": "lead",
+  "location": "Dublin, Ireland",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 10,
+  "skills": [
+    {
+      "name": "JavaScript",
+      "years": 10
+    },
+    {
+      "name": "TypeScript",
+      "years": 8
+    },
+    {
+      "name": "React",
+      "years": 7
+    },
+    {
+      "name": "Vue.js",
+      "years": 4
+    },
+    {
+      "name": "Redux",
+      "years": 6
+    },
+    {
+      "name": "HTML5/CSS3",
+      "years": 10
+    },
+    {
+      "name": "Webpack",
+      "years": 6
+    },
+    {
+      "name": "Jest",
+      "years": 5
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "level": "native"
+    },
+    {
+      "language": "Irish",
+      "level": "B2"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Trinity College Dublin",
+      "year": 2015
+    }
+  ],
+  "employment": [
+    {
+      "company": "Emerald Paytech",
+      "title": "Frontend Lead",
+      "industry": "Financial Technology",
+      "from": "2021-03",
+      "to": null,
+      "description": "Emerald Paytech provides secure cloud-based payment gateways for digital commerce.",
+      "stack": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Redux",
+        "Jest"
+      ],
+      "highlights": [
+        "Led frontend development using JavaScript, TypeScript, React, Redux, and Jest.",
+        "Guided technical vision and mentored junior developers within Financial Technology."
+      ]
+    },
+    {
+      "company": "Celtic Cloud Systems",
+      "title": "Senior Frontend Engineer",
+      "industry": "Cloud Software",
+      "from": "2018-01",
+      "to": "2021-02",
+      "description": "Celtic Cloud Systems develops enterprise dashboard monitoring tools for cloud infrastructure.",
+      "stack": [
+        "TypeScript",
+        "Vue.js",
+        "Webpack",
+        "HTML5/CSS3"
+      ],
+      "highlights": [
+        "Built interactive monitoring dashboards using TypeScript, Vue.js, Webpack, and HTML5/CSS3.",
+        "Engineered web interface components for Cloud Software platforms."
+      ]
+    },
+    {
+      "company": "Liffey Media",
+      "title": "Frontend Developer",
+      "industry": "Digital Media",
+      "from": "2016-03",
+      "to": "2017-12",
+      "description": "Liffey Media builds content streaming web applications for European digital broadcasters.",
+      "stack": [
+        "JavaScript",
+        "HTML5/CSS3",
+        "Webpack"
+      ],
+      "highlights": [
+        "Developed user interfaces for web applications utilizing JavaScript, HTML5/CSS3, and Webpack.",
+        "Created modern responsive layouts in the Digital Media sector."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Led a frontend team of 6 engineers and mentored junior developers."
+  },
+  "certifications": [
+    "AWS Certified Developer - Associate"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages",
+      "skills": [
+        "JavaScript",
+        "TypeScript",
+        "HTML5/CSS3"
+      ]
+    },
+    {
+      "label": "Frameworks and Libraries",
+      "skills": [
+        "React",
+        "Vue.js",
+        "Redux"
+      ]
+    },
+    {
+      "label": "Tools and Testing",
+      "skills": [
+        "Webpack",
+        "Jest"
+      ]
+    }
+  ],
+  "summary": "Jane Doe is a Frontend Lead based in Dublin, Ireland with 10 years of experience across Financial Technology, Cloud Software, and Digital Media. She holds a bachelor degree in Computer Science from Trinity College Dublin and specializes in JavaScript, TypeScript, React, Vue.js, Redux, HTML5/CSS3, Webpack, and Jest. Her background includes leadership experience guiding frontend teams and mentoring junior developers.",
+  "contact": {
+    "email": "jane.doe@example.com",
+    "phone": "+1-555-002-0202"
+  },
+  "photoPrompt": "A headshot of a 33-year-old woman with shoulder-length brown hair, a friendly expression, wearing a navy blazer over a light shirt against a soft grey backdrop.",
+  "template": 1
+}

@@ -1,0 +1,145 @@
+{
+  "name": "Lena Novak",
+  "headline": "Senior Frontend Engineer",
+  "role": "frontend",
+  "seniority": "senior",
+  "location": "Berlin, Germany",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "React",
+      "years": 7
+    },
+    {
+      "name": "TypeScript",
+      "years": 6
+    },
+    {
+      "name": "JavaScript",
+      "years": 7
+    },
+    {
+      "name": "HTML/CSS",
+      "years": 7
+    },
+    {
+      "name": "Next.js",
+      "years": 4
+    },
+    {
+      "name": "Redux",
+      "years": 5
+    },
+    {
+      "name": "Webpack",
+      "years": 5
+    },
+    {
+      "name": "Jest",
+      "years": 4
+    }
+  ],
+  "languages": [
+    {
+      "language": "German",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "Technical University of Berlin",
+      "year": 2018
+    }
+  ],
+  "employment": [
+    {
+      "company": "Kinetix Digital",
+      "title": "Senior Frontend Engineer",
+      "industry": "E-commerce",
+      "from": "2022-03",
+      "to": null,
+      "description": "Kinetix Digital develops cloud-based storefront engines for digital retailers.",
+      "stack": [
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Jest",
+        "HTML/CSS"
+      ],
+      "highlights": [
+        "Developed scalable web application features using React, TypeScript, and Next.js.",
+        "Implemented automated unit tests with Jest and built responsive user interfaces using HTML/CSS."
+      ]
+    },
+    {
+      "company": "AeroFlux Media",
+      "title": "Frontend Developer",
+      "industry": "Digital Media",
+      "from": "2019-03",
+      "to": "2022-02",
+      "description": "AeroFlux Media builds streaming management platforms for online publishers.",
+      "stack": [
+        "React",
+        "JavaScript",
+        "Redux",
+        "Webpack",
+        "HTML/CSS"
+      ],
+      "highlights": [
+        "Engineered interactive frontend components using React, JavaScript, and Redux.",
+        "Configured frontend asset bundling with Webpack and styled web pages with HTML/CSS."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Led technical frontend initiatives and mentored junior team members."
+  },
+  "certifications": [
+    "AWS Certified Developer - Associate"
+  ],
+  "skillGroups": [
+    {
+      "label": "Core Frontend",
+      "skills": [
+        "JavaScript",
+        "HTML/CSS",
+        "TypeScript"
+      ]
+    },
+    {
+      "label": "Frameworks and Libraries",
+      "skills": [
+        "React",
+        "Next.js",
+        "Redux"
+      ]
+    },
+    {
+      "label": "Tooling and Testing",
+      "skills": [
+        "Webpack",
+        "Jest"
+      ]
+    }
+  ],
+  "summary": "Senior Frontend Engineer based in Berlin, Germany, with 7 years of total software development experience across the E-commerce and Digital Media industries. Skilled in React, TypeScript, JavaScript, HTML/CSS, Next.js, Redux, Webpack, and Jest. Currently employed at Kinetix Digital after previously working at AeroFlux Media, with experience leading technical frontend initiatives and mentoring junior team members.",
+  "contact": {
+    "email": "lena.novak@example.com",
+    "phone": "+1-555-001-0101"
+  },
+  "photoPrompt": "A professional studio portrait of a 30-year-old woman with dark blonde hair tied back, a warm confident expression, wearing a navy blue blazer over a light grey top.",
+  "template": 0
+}

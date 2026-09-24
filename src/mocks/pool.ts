@@ -6,10 +6,10 @@ import type { PoolCandidate } from "@/lib/pool/candidate";
 // phase.
 
 export const MOCK_POOL: readonly PoolCandidate[] = [
-  { id: "lena-novak", pages: 2, profile: { name: "Lena Novak", headline: "Senior Frontend Engineer", role: "frontend", seniority: "senior", location: "Berlin, Germany" } },
-  { id: "jane-doe", pages: 3, profile: { name: "Jane Doe", headline: "Frontend Lead", role: "frontend", seniority: "lead", location: "Dublin, Ireland" } },
+  { id: "lena-novak", pages: 1, profile: { name: "Lena Novak", headline: "Senior Frontend Engineer", role: "frontend", seniority: "senior", location: "Berlin, Germany" } },
+  { id: "jane-doe", pages: 1, profile: { name: "Jane Doe", headline: "Frontend Lead", role: "frontend", seniority: "lead", location: "Dublin, Ireland" } },
   { id: "marco-bianchi", pages: 2, profile: { name: "Marco Bianchi", headline: "Frontend Engineer", role: "frontend", seniority: "mid", location: "Milan, Italy" } },
-  { id: "sofia-almeida", pages: 2, profile: { name: "Sofia Almeida", headline: "Senior Frontend Developer", role: "frontend", seniority: "senior", location: "Lisbon, Portugal" } },
+  { id: "sofia-almeida", pages: 1, profile: { name: "Sofia Almeida", headline: "Senior Frontend Developer", role: "frontend", seniority: "senior", location: "Lisbon, Portugal" } },
   { id: "tomasz-kowalski", pages: 1, profile: { name: "Tomasz Kowalski", headline: "Junior Frontend Developer", role: "frontend", seniority: "junior", location: "Warsaw, Poland" } },
   { id: "daan-de-vries", pages: 3, profile: { name: "Daan de Vries", headline: "Principal UI Engineer", role: "frontend", seniority: "principal", location: "Amsterdam, Netherlands" } },
   { id: "andrei-popescu", pages: 2, profile: { name: "Andrei Popescu", headline: "Senior Backend Engineer", role: "backend", seniority: "senior", location: "Bucharest, Romania" } },

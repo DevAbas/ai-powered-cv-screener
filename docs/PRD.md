@@ -2,7 +2,7 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.9          |
+| Version | 1.11         |
 | Date    | 2026-09-24   |
 | Status  | Approved     |
 | Owner   | Product      |
@@ -81,7 +81,7 @@ different answer shape.
 |---|----------|---------|-----------------------|
 | 1 | Filter | "Who has React and TypeScript?" | List of candidates, each with a source |
 | 2 | Rank | "Top 3 for a Frontend Lead role" | Ordered list with a short reason each |
-| 3 | Compare | "Compare Ali and Nigar on backend experience" | Side-by-side of two candidates |
+| 3 | Compare | "Compare Andrei and Elena on backend experience" | Side-by-side of two candidates |
 | 4 | Single fact | "Where did Lena work last?" | Short fact with one source |
 | 5 | Profile summary | "Summarize Jane Doe's profile" | Structured overview of one candidate |
 | 6 | Aggregate | "How many candidates know Python?" | Exact count, optionally the list |
@@ -118,7 +118,7 @@ answer questions about all of them, so candidate data must capture them.
 Every interface decision is checked against these five.
 
 1. **Evidence, not answers.** Every answer shows which CVs it came from.
-   One click opens the CV at the relevant page.
+   One click opens the CV at the relevant page, beside the conversation.
 2. **Built for comparison, not conversation.** Answers favour lists,
    tables and side-by-side layouts over paragraphs. The recruiter is
    filtering, not chatting.
@@ -136,12 +136,13 @@ Every interface decision is checked against these five.
 1. **Entry.** Recruiter opens the tool and sees the pool size and
    suggested questions. Never a blank screen.
 2. **Ask.** Types a question in natural language.
-3. **Wait.** Sees that the pool is being searched, step by step, until the
-   answer arrives.
+3. **Wait.** Sees which step of the search is running until the answer
+   arrives, and afterwards how long it took.
 4. **Answer.** Sees the answer in the shape that fits the question type,
    with sources.
-5. **Verify.** Clicks a source; the original CV opens in a new tab at the
-   cited page, and the conversation stays as it was.
+5. **Verify.** Clicks a source; the original CV opens in a preview beside
+   the conversation at the cited page, and the conversation stays as it
+   was. The preview can be resized, downloaded and closed.
 6. **Continue.** Asks a follow-up that builds on the previous answer
    ("of those, who speaks German?") or starts a new search.
 7. **Exit.** Can copy an answer.
@@ -169,8 +170,9 @@ Every interface decision is checked against these five.
 ### 10.2 Sources
 - A source is shown in the answer as the candidate's name and the word
   "CV" with a link mark; the cited page is not displayed.
-- It links to the original PDF at the cited page, opened by the browser in
-  a new tab.
+- It opens the original PDF at the cited page in a preview panel beside
+  the conversation, with a download; outside the app (previews, copied
+  text) it is a link to the PDF.
 
 ### 10.3 Conversation
 - Follow-up questions use the context of previous answers.
@@ -237,3 +239,5 @@ None open. Resolved in v1.2:
 | 1.7     | 2026-09-23 | §8 step 3: progress is shown while searching, then the answer (not streamed text). |
 | 1.8     | 2026-09-24 | §9: header shows the logo and product name; the pool size moves to the empty state only. |
 | 1.9     | 2026-09-24 | §10.2: a source shows the name and "CV" with a link mark; the page is where the link lands, not text. |
+| 1.10    | 2026-09-24 | §7, §8 step 5, §10.2: a source opens the CV in a resizable preview beside the conversation, with download and close, instead of a new tab. |
+| 1.11    | 2026-09-24 | §5: examples name candidates in the pilot pool. §8 step 3: one progress line shows the current step, then the time the search took. |

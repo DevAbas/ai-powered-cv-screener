@@ -97,7 +97,6 @@ describe("templates", () => {
     const streams = contentStreams(pdf).toLowerCase();
     expect(streams).toContain(hex("Senior Frontend Engineer").toLowerCase());
     expect(streams).toContain(hex("Nordwind Labs").toLowerCase());
-    expect(streams).toContain(hex("Page 1 | 1").toLowerCase());
   });
 
   it("renders the same bytes for the same input", async () => {

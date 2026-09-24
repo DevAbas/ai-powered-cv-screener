@@ -183,6 +183,19 @@ components:
   table-cell:
     textColor: "{colors.on-surface}"
     typography: "{typography.body-md}"
+  file-card:
+    backgroundColor: "{colors.surface-container-lowest}"
+    textColor: "{colors.on-surface}"
+    typography: "{typography.label-lg}"
+    rounded: "{rounded.md}"
+  file-card-hover:
+    backgroundColor: "{colors.surface-container-low}"
+  file-card-pressed:
+    backgroundColor: "{colors.surface-container}"
+  preview:
+    backgroundColor: "{colors.surface-container-lowest}"
+    textColor: "{colors.on-surface}"
+    typography: "{typography.label-lg}"
   tooltip:
     backgroundColor: "{colors.inverse-surface}"
     textColor: "{colors.inverse-on-surface}"
@@ -221,8 +234,8 @@ question tint, 7 the focus ring, 9 the solid fill, 11 accent text, 12 text on
 the tint. Hover and pressed are derived from step 9 (below).
 
 - **Primary (#00F8C0):** Mint. The only chromatic colour in the UI, used for
-  the primary action and the logo mark. Never for text blocks, content
-  backgrounds or decoration.
+  the primary action, the logo mark and the band of the PDF icon. Never for
+  text blocks, content backgrounds or decoration.
 - **On primary (#0A281E):** Text and icons on `primary`: Radix's contrast
   colour, since mint is too light for white text.
 - **Primary hover (#16DDAC) and pressed (#08C498):** `primary` with its OKLCH
@@ -289,12 +302,14 @@ reduced motion.
 ## Elevation & Depth
 
 Depth is tonal first: `surface` → `surface-container-lowest` →
-`surface-container` → `surface-container-high`. Shadows exist in two places
-only: floating input containers use raised
-(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.06)`) and menus use overlay
-(`0 0.5rem 2rem rgba(0, 0, 0, 0.10)`). In dark the same shadows use opacity
-0.5 (raised) and 0.6 (overlay), since the light values are invisible on dark
-surfaces. The sticky header casts no shadow and has no border: a 2rem
+`surface-container` → `surface-container-high`. Shadows exist in three
+places only: floating input containers use raised
+(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.06)`), menus use overlay
+(`0 0.5rem 2rem rgba(0, 0, 0, 0.10)`), and the file card uses soft
+(`0 0.125rem 0.75rem rgba(0, 0, 0, 0.04)`), which it loses while pressed,
+so the press reads as the card meeting the page. In dark the same shadows
+use opacity 0.5 (raised), 0.6 (overlay) and 0.35 (soft), since the light
+values are invisible on dark surfaces. The sticky header casts no shadow and has no border: a 2rem
 gradient from `surface` to transparent below it fades the conversation out
 as it passes underneath.
 
@@ -326,7 +341,7 @@ text and in `xs` buttons, 1.25rem in other buttons.
   secondary and the model chip. A ghost icon button shows a
   `surface-container-low` circle on hover and `surface-container-high` while
   pressed. Sizes: `xs` 1.875rem, `sm` 2rem, `md` 2.25rem tall.
-- **Icons:** `on-surface-variant` at rest, `on-surface` on hover, `outline-variant` when disabled.
+- **Icons:** `on-surface-variant` at rest, `on-surface` on hover, `outline-variant` when disabled; 1.25rem beside a headline (a candidate's name).
 - **Inputs:** no border at rest when placed on `surface`; the background
   step separates them. Focus: 2px `primary-outline` ring.
 - **Composer:** the largest floating container: `surface-container-lowest`,
@@ -350,7 +365,34 @@ text and in `xs` buttons, 1.25rem in other buttons.
   `surface-container-low`; the selected row keeps no background and is
   marked only by a `primary-text` check icon.
 - **Links:** `on-surface` with underline; hover `primary-text`.
-- **Lists:** rows separated by `outline`; never a coloured background.
+- **File card:** the one card in the interface, for a CV that opens: the
+  1.5rem PDF icon, its document in `on-surface` and its download badge in
+  solid `primary` with an `on-primary` arrow (like the logo mark, a thing,
+  not a text block), the file name in `label-lg` and a `body-sm`
+  line beneath saying "PDF", which reads "Open file" on hover;
+  `surface-container-lowest` with an `outline` border, the soft shadow,
+  `rounded.md`, 15.625rem (250px) wide (narrower only when the column is),
+  a longer file
+  name cut with an ellipsis. Hover is `surface-container-low`, and the line
+  reads "Open file"; pressed goes one tone further, `surface-container`,
+  without the shadow; both transition.
+- **CV preview:** a file card opens the CV in a panel docked to the right
+  edge, full height, `surface-container-lowest` with an `outline` left edge
+  and no shadow: the CV's pages drawn one under another on
+  `surface-container`, each page on `surface-container-lowest` with the
+  raised shadow and a gutter of 1rem, under a 3.5rem header with the PDF
+  icon, the file name in `label-lg`, and ghost icon buttons Download and
+  Close; while the pages load, a spinner and "Loading the CV…" sit in the
+  middle. It opens 30rem wide, is dragged wider or narrower by
+  its left edge between 20rem and 70% of the viewport (the conversation
+  keeps the rest), and the handle is a `divider` line that fills to
+  `outline-variant` on hover and while dragging; it opens at 35% of the
+viewport, never under 30rem. Below `lg` it fills the
+  screen instead, with the same header and no handle. Escape closes it.
+- **Lists:** rows separated by whitespace (`spacing.base` × 5), never by a
+  rule or a coloured background. A candidate row is the name in
+  `headline-md` behind a person icon, why they match in `body-md`
+  `on-surface-variant`, and the file card.
 - **Scrollbars:** thin, with a transparent track and an `outline` thumb:
   visible on a careful look, never competing with content.
 - **Tables:** header in `label-sm` `on-surface-variant`; cells `body-md`;
@@ -361,10 +403,16 @@ text and in `xs` buttons, 1.25rem in other buttons.
 - **States:** empty, insufficient information, out of scope and error are a
   single line of text with a small leading icon. Colour appears only on the
   warning and error icons.
+- **Progress line:** one `label-lg` line with a sparkle glyph and a
+  tabular clock: the glyph breathes and a band of ink sweeps the label
+  while the current step runs (Layout: loading motion); once answered it
+  settles into "Searched for 4.2s" in `on-surface-variant` and the Copy
+  action sits beside it.
 
 ## Do's and Don'ts
 
-- Do keep solid mint (`primary`) for interaction and the logo mark only; if
+- Do keep solid mint (`primary`) for interaction, the logo mark and the PDF
+  icon's badge only; if
   more than one solid mint element competes for attention, something is
   wrong. The mint tint (`primary-container`) marks the recruiter's question
   only.
@@ -372,7 +420,8 @@ text and in `xs` buttons, 1.25rem in other buttons.
 - Don't render states as filled or bordered boxes.
 - Don't box answers; only the question sits on a tint. No gradients, emoji
   or decorative illustration.
-- Don't wrap content in cards; whitespace is the container.
+- Don't wrap content in cards; whitespace is the container. The file card
+  is the exception: it is the file, not a container for content.
 - Every colour, size and radius on screen traces to a token in this file.
 - Don't add a second accent for any purpose.
 - Don't use weights above 500 for running text.

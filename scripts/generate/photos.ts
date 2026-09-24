@@ -11,7 +11,7 @@ import { readSeeds } from "./seeds";
 
 // Step 2: one photo per seed from the paid `image` entry (PLAN, Generation
 // pipeline). Runs only when named. A failed photo is reported, never fatal:
-// the PDF shows initials instead.
+// the CV simply has no photo.
 
 const CALL_TIMEOUT_MS = 120_000;
 

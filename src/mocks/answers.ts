@@ -8,7 +8,7 @@ export const filterAnswer: Answer = {
   summary: "4 candidates list both React and TypeScript.",
   candidates: [
     { candidateId: "lena-novak", name: "Lena Novak", reason: "Experience with React for 6 years and with TypeScript for 5 years.", page: 1 },
-    { candidateId: "jane-doe", name: "Jane Doe", reason: "Worked with React and TypeScript in her last two roles.", page: 2 },
+    { candidateId: "jane-doe", name: "Jane Doe", reason: "Worked with React and TypeScript in her last two roles.", page: 1 },
     { candidateId: "sofia-almeida", name: "Sofia Almeida", reason: "Experience with React for 4 years and with TypeScript for 3 years.", page: 1 },
     { candidateId: "leon-fischer", name: "Leon Fischer", reason: "Builds the frontend of a Node stack with React and TypeScript.", page: 1 },
   ],
@@ -18,7 +18,7 @@ export const followUpAnswer: Answer = {
   kind: "filter",
   summary: "2 of those 4 speak German.",
   candidates: [
-    { candidateId: "lena-novak", name: "Lena Novak", reason: "Native German speaker.", page: 2 },
+    { candidateId: "lena-novak", name: "Lena Novak", reason: "Native German speaker.", page: 1 },
     { candidateId: "leon-fischer", name: "Leon Fischer", reason: "Speaks German at C2 level.", page: 2 },
   ],
 };

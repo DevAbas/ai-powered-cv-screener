@@ -56,6 +56,7 @@ Run `nvm use` first, in every shell: the Node version comes from `.nvmrc`
 | `npm run design:export` | Regenerate `src/styles/tokens.generated.css` from `DESIGN.md` |
 | `npm run storybook` | Component previews on port 6006 |
 | `npm run build-storybook` | Static build of the component previews |
+| `python3 scripts/logo-mark.py` | Retrace the logo mark and favicon from the font (needs `fontTools` and `brotli`); rerun when the font or the `mark` token changes |
 
 Add each new script here when its phase is implemented and verified, not
 before.
@@ -72,7 +73,8 @@ before.
 - Routes live in a route group per feature (`src/app/(screener)/`);
   application code stays outside `app`.
 - Components: UI primitives in `src/components/ui/<Name>/`, product
-  components in `src/components/<Name>/`. Folder and files are named after
+  components in `src/components/<Name>/`, icons of our own (the PDF file
+  icon) in `src/components/ui/Icons/`. Folder and files are named after
   the component: `<Name>.tsx`, `<Name>.stories.tsx`, `<Name>.recipe.ts` and
   an `index.ts` with explicit named and type exports. Parts used only by one
   component live in its folder with their own file and story
@@ -107,7 +109,12 @@ before.
   while `data-modality="keyboard"` (`useInteractionModality`), and
   transitions (`data-closed`).
 - No hardcoded colors or sizes.
-- Icons: `lucide-react` only.
+- Icons: `lucide-react`, plus our own in `src/components/ui/Icons` and the
+  logo mark; colours on them are token classes (`fill-primary`), never
+  literal.
+- `scripts/generate/` is an ES module package (its own `package.json`)
+  because `@react-pdf/renderer` ships ESM only; a CommonJS import from
+  there uses the default export of a CJS package (`nextEnv.loadEnvConfig`).
 
 ## Git
 

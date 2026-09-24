@@ -11,10 +11,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Until the PDFs exist, a source is text. */
+/** Without a PDF, the card says so and does not open anything. */
 export const WithoutPdf: Story = {};
 
-/** With a PDF, it opens the CV at the cited page in a new tab. */
+/** With a PDF, the card opens the CV at the cited page in a new tab; hover reads "Open file". */
 export const WithPdf: Story = {
   args: { sourceHref: cvSourceHref },
 };

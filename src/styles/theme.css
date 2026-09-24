@@ -20,6 +20,7 @@
   color-scheme: light;
   --shadow-opacity-raised: 0.06;
   --shadow-opacity-overlay: 0.1;
+  --shadow-opacity-soft: 0.04;
 
   @variant dark {
     color-scheme: dark;
@@ -48,6 +49,7 @@
     /* Black at the light opacities is invisible on dark surfaces. */
     --shadow-opacity-raised: 0.5;
     --shadow-opacity-overlay: 0.6;
+    --shadow-opacity-soft: 0.35;
   }
 }
 
@@ -55,6 +57,7 @@
   /* DESIGN.md, Elevation & Depth; the opacity differs per theme (above). */
   --shadow-raised: 0 0.25rem 1.5rem rgb(0 0 0 / var(--shadow-opacity-raised));
   --shadow-overlay: 0 0.5rem 2rem rgb(0 0 0 / var(--shadow-opacity-overlay));
+  --shadow-soft: 0 0.125rem 0.75rem rgb(0 0 0 / var(--shadow-opacity-soft));
 
   /* DESIGN.md, Layout: motion */
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
@@ -94,6 +97,11 @@
   --container-composer: 52rem;
   /* DESIGN.md, Components: Question, the widest the question box grows */
   --container-question: 33.75rem;
+  /* DESIGN.md, Components: File card, its width */
+  --container-file-card: 15.625rem;
+  /* DESIGN.md, Components: CV preview, where it opens and its narrowest */
+  --container-preview: 30rem;
+  --container-preview-min: 20rem;
 }
 
 @theme inline {

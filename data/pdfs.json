@@ -1,0 +1,14 @@
+{
+  "jane-doe": {
+    "pages": 1,
+    "photo": false
+  },
+  "lena-novak": {
+    "pages": 1,
+    "photo": false
+  },
+  "sofia-almeida": {
+    "pages": 1,
+    "photo": false
+  }
+}

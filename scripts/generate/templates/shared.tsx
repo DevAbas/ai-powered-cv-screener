@@ -29,10 +29,10 @@ export function CvDocument({ seed, children }: { seed: CandidateSeed; children: 
   );
 }
 
-/** The candidate's photo in the header; nothing when there is none. */
+/** The candidate's photo in the header, a rounded square; nothing when there is none. */
 export function Photo({ photo, size }: { photo: Buffer | undefined; size: number }) {
   if (!photo) return null;
   // A react-pdf Image is not a DOM <img>: it has no alt prop.
   // eslint-disable-next-line jsx-a11y/alt-text
-  return <Image src={{ data: photo, format: "jpg" }} style={{ width: size, height: size, marginLeft: 12 }} />;
+  return <Image src={{ data: photo, format: "jpg" }} style={{ width: size, height: size, borderRadius: 8 }} />;
 }

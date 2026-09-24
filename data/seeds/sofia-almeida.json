@@ -1,0 +1,162 @@
+{
+  "name": "Sofia Almeida",
+  "headline": "Senior Frontend Developer",
+  "role": "frontend",
+  "seniority": "senior",
+  "location": "Lisbon, Portugal",
+  "remote": [
+    "hybrid",
+    "remote"
+  ],
+  "workAuthorization": "EU Citizen",
+  "availability": 30,
+  "yearsTotal": 7,
+  "skills": [
+    {
+      "name": "JavaScript",
+      "years": 7
+    },
+    {
+      "name": "React",
+      "years": 7
+    },
+    {
+      "name": "HTML/CSS",
+      "years": 7
+    },
+    {
+      "name": "TypeScript",
+      "years": 6
+    },
+    {
+      "name": "Redux",
+      "years": 5
+    },
+    {
+      "name": "Next.js",
+      "years": 4
+    },
+    {
+      "name": "Jest",
+      "years": 4
+    },
+    {
+      "name": "Webpack",
+      "years": 3
+    }
+  ],
+  "languages": [
+    {
+      "language": "Portuguese",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "level": "C1"
+    }
+  ],
+  "education": [
+    {
+      "degree": "bachelor",
+      "field": "Computer Science",
+      "institution": "University of Lisbon",
+      "year": 2018
+    }
+  ],
+  "employment": [
+    {
+      "company": "Tagus Vista Solutions",
+      "title": "Senior Frontend Developer",
+      "industry": "Financial Technology",
+      "from": "2022-03",
+      "to": null,
+      "description": "Tagus Vista Solutions builds cloud-based web application solutions for retail banking and financial services.",
+      "stack": [
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Redux",
+        "Jest"
+      ],
+      "highlights": [
+        "Architected web application interfaces using React, TypeScript, and Next.js.",
+        "Managed application state using Redux and implemented automated test suites with Jest."
+      ]
+    },
+    {
+      "company": "Lusitania Web Labs",
+      "title": "Frontend Developer",
+      "industry": "E-commerce",
+      "from": "2019-09",
+      "to": "2022-02",
+      "description": "Lusitania Web Labs develops custom digital storefronts and online shopping solutions.",
+      "stack": [
+        "React",
+        "JavaScript",
+        "HTML/CSS",
+        "Redux",
+        "Webpack"
+      ],
+      "highlights": [
+        "Developed interactive user interfaces using React, JavaScript, and HTML/CSS.",
+        "Configured application build pipelines with Webpack and managed state with Redux."
+      ]
+    },
+    {
+      "company": "Atlantico Interactive",
+      "title": "Junior Frontend Developer",
+      "industry": "Digital Publishing",
+      "from": "2018-09",
+      "to": "2019-08",
+      "description": "Atlantico Interactive creates digital content management and publishing platforms for online media.",
+      "stack": [
+        "JavaScript",
+        "HTML/CSS",
+        "Webpack"
+      ],
+      "highlights": [
+        "Built responsive web pages using JavaScript and HTML/CSS.",
+        "Optimized asset bundling scripts using Webpack."
+      ]
+    }
+  ],
+  "leadership": {
+    "has": true,
+    "note": "Mentored junior frontend developers at Tagus Vista Solutions."
+  },
+  "certifications": [
+    "AWS Certified Cloud Practitioner"
+  ],
+  "skillGroups": [
+    {
+      "label": "Languages",
+      "skills": [
+        "JavaScript",
+        "TypeScript",
+        "HTML/CSS"
+      ]
+    },
+    {
+      "label": "Frameworks and Libraries",
+      "skills": [
+        "React",
+        "Next.js",
+        "Redux"
+      ]
+    },
+    {
+      "label": "Build and Testing",
+      "skills": [
+        "Jest",
+        "Webpack"
+      ]
+    }
+  ],
+  "summary": "Senior Frontend Developer based in Lisbon, Portugal, with 7 years of total experience across Financial Technology, E-commerce, and Digital Publishing. Skilled in React, TypeScript, JavaScript, HTML/CSS, Next.js, Redux, Jest, and Webpack. Holds a bachelor degree in Computer Science and has leadership experience mentoring junior frontend developers.",
+  "contact": {
+    "email": "sofia.almeida@example.com",
+    "phone": "+1-555-004-0404"
+  },
+  "photoPrompt": "A 30-year-old woman with dark brown hair tied back, a warm professional expression, wearing a navy blazer against a neutral backdrop.",
+  "template": 0
+}
