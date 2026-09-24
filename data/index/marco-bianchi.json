@@ -1,9 +1,49 @@
 {
   "id": "marco-bianchi",
-  "file": "/cvs/marco_bianchi_cv.pdf",
   "pages": 1,
-  "text": [
-    "Marco Bianchi\nFrontend Engineer\nmarco.bianchi@example.com · +1-555-003-0303 · Milan, Italy\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nMarco Bianchi is a mid Frontend Engineer based in Milan, Italy with 5.0 years of total experience. Their core\nexpertise includes JavaScript, TypeScript, React, HTML, CSS, and Git. They have worked in the software\ndevelopment and digital agency industries. They hold a bachelor degree in Computer Science from University\nof Milan.\nSKILLS\nJavaScript (5 years) · TypeScript (4.5 years) · React (4.5 years) · HTML (5 years) · CSS (5 years) ·\nGit (5 years)\nEXPERIENCE\nFrontend Engineer — Vetra Tech 01/2023 – Present\nIndustry: Software Development\n– Developed frontend features as a mid Frontend Engineer using JavaScript, TypeScript, React, HTML, CSS,\nand Git.\n– Contributed to software development projects in the retail industry.\nFrontend Engineer — Navigli Web 06/2021 – 12/2022\nIndustry: Digital Agency\n– Built responsive web interfaces as a mid Frontend Engineer using JavaScript, React, HTML, CSS, and Git.\n– Delivered digital agency projects within the software development domain.\nEDUCATION\nBSc Computer Science 2021\nUniversity of Milan\nLANGUAGES\nItalian (native) · English (C1)\nCERTIFICATIONS\nJavaScript Developer Certificate"
+  "chunks": [
+    {
+      "id": "marco-bianchi:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Marco Bianchi\nFrontend Engineer\nmarco.bianchi@example.com · +1-555-003-0303 · Milan, Italy\nHybrid · Remote · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "marco-bianchi:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nMarco Bianchi is a mid Frontend Engineer based in Milan, Italy with 5.0 years of total experience. Their core\nexpertise includes JavaScript, TypeScript, React, HTML, CSS, and Git. They have worked in the software\ndevelopment and digital agency industries. They hold a bachelor degree in Computer Science from University\nof Milan."
+    },
+    {
+      "id": "marco-bianchi:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nJavaScript (5 years) · TypeScript (4.5 years) · React (4.5 years) · HTML (5 years) · CSS (5 years) ·\nGit (5 years)"
+    },
+    {
+      "id": "marco-bianchi:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nFrontend Engineer — Vetra Tech 01/2023 – Present\nIndustry: Software Development\n– Developed frontend features as a mid Frontend Engineer using JavaScript, TypeScript, React, HTML, CSS,\nand Git.\n– Contributed to software development projects in the retail industry.\nFrontend Engineer — Navigli Web 06/2021 – 12/2022\nIndustry: Digital Agency\n– Built responsive web interfaces as a mid Frontend Engineer using JavaScript, React, HTML, CSS, and Git.\n– Delivered digital agency projects within the software development domain."
+    },
+    {
+      "id": "marco-bianchi:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2021\nUniversity of Milan"
+    },
+    {
+      "id": "marco-bianchi:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nItalian (native) · English (C1)"
+    },
+    {
+      "id": "marco-bianchi:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nJavaScript Developer Certificate"
+    }
   ],
   "profile": {
     "name": "Marco Bianchi",
@@ -85,6 +125,113 @@
     "certifications": [
       "JavaScript Developer Certificate"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 32
 }

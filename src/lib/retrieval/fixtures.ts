@@ -1,18 +1,20 @@
 import type { CandidateProfile, IndexEntry } from "@/contracts/candidate";
-import { cvFileName } from "@/lib/pool/source-href";
+import { buildIndexEntry } from "@/lib/pool/build-entry";
 
 // A small index for retrieval and answering tests. Not the pilot pool:
 // tests must not change when the pool is regenerated.
 
+const NOW = new Date(Date.UTC(2026, 8, 24));
+
 function entry(id: string, text: string[], profile: CandidateProfile): IndexEntry {
-  return { id, file: `/cvs/${cvFileName(id)}`, pages: text.length, text, profile, medianTenureMonths: 30 };
+  return buildIndexEntry(id, text, profile, {}, NOW).entry;
 }
 
 export const LENA = entry(
   "lena-novak",
   [
-    "Lena Novak\nSenior Frontend Engineer\nBerlin, Germany\nSKILLS\nReact (7 years) · TypeScript (6 years) · HTML/CSS (7 years)",
-    "EXPERIENCE\nSenior Frontend Engineer — Kinetix Digital Mar 2022 – Present\nIndustry: E-commerce\nLANGUAGES\nGerman (native) · English (C1)",
+    "Lena Novak\nSenior Frontend Engineer\nBerlin, Germany\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nSeven years of frontend work.\nSKILLS\nReact (7 years) · TypeScript (6 years) · HTML/CSS (7 years)",
+    "EXPERIENCE\nSenior Frontend Engineer — Kinetix Digital Mar 2022 – Present\nIndustry: E-commerce\nEDUCATION\nBSc Computer Science 2018\nTU Berlin\nLANGUAGES\nGerman (native) · English (C1)\nLEADERSHIP\nMentored junior developers\nCERTIFICATIONS\nAWS Certified Developer - Associate",
   ],
   {
     name: "Lena Novak",
@@ -42,7 +44,9 @@ export const LENA = entry(
 
 export const ANDREI = entry(
   "andrei-popescu",
-  ["Andrei Popescu\nSenior Backend Engineer\nBucharest, Romania\nSKILLS\nPython (8 years) · Go (4 years) · PostgreSQL (6 years)\nLANGUAGES\nRomanian (native) · English (C1)"],
+  [
+    "Andrei Popescu\nSenior Backend Engineer\nBucharest, Romania\nOn-site · Hybrid · EU Citizen · Notice period: 60 days\nSKILLS\nPython (8 years) · Go (4 years) · PostgreSQL (6 years)\nEXPERIENCE\nSenior Backend Engineer — Carpathia Cloud Jan 2019 – Present\nIndustry: Cloud Software\nEDUCATION\nMSc Computer Science 2016\nUniversity of Bucharest\nLANGUAGES\nRomanian (native) · English (C1)",
+  ],
   {
     name: "Andrei Popescu",
     headline: "Senior Backend Engineer",
@@ -71,7 +75,9 @@ export const ANDREI = entry(
 
 export const ELENA = entry(
   "elena-georgiou",
-  ["Elena Georgiou\nBackend Engineer\nAthens, Greece\nSKILLS\nJava (5 years) · Python (3 years)\nLANGUAGES\nGreek (native) · English (B2)"],
+  [
+    "Elena Georgiou\nBackend Engineer\nAthens, Greece\nRemote · EU Citizen · Available immediately\nSKILLS\nJava (5 years) · Python (3 years)\nEXPERIENCE\nBackend Engineer — Aegean Pay Jun 2021 – Present\nIndustry: Financial Technology\nEDUCATION\nBSc Informatics 2020\nUniversity of Athens\nLANGUAGES\nGreek (native) · English (B2)",
+  ],
   {
     name: "Elena Georgiou",
     headline: "Backend Engineer",

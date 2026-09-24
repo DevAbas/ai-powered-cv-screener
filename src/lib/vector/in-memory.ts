@@ -1,7 +1,7 @@
-import type { VectorMatch, VectorRecord, VectorStore } from "./vector-store";
+import type { ChunkMetadata, MetadataFilter, VectorMatch, VectorRecord, VectorStore } from "./vector-store";
 
 // An in-memory VectorStore: the fake for tests, with the same cosine ranking
-// the real index uses.
+// and the same filter semantics the real index uses.
 
 export function cosineSimilarity(a: readonly number[], b: readonly number[]): number {
   let dot = 0;
@@ -15,6 +15,18 @@ export function cosineSimilarity(a: readonly number[], b: readonly number[]): nu
   return normA === 0 || normB === 0 ? 0 : dot / Math.sqrt(normA * normB);
 }
 
+/** True when the metadata satisfies the filter; a list field matches when any of its values does. */
+export function matchesFilter(metadata: ChunkMetadata, filter?: MetadataFilter): boolean {
+  if (!filter) return true;
+  if ("$and" in filter && Array.isArray(filter.$and)) return filter.$and.every((part) => matchesFilter(metadata, part));
+  return Object.entries(filter as Record<string, { $eq: string | number } | { $in: (string | number)[] }>).every(([field, condition]) => {
+    const value = metadata[field];
+    const values: (string | number)[] = Array.isArray(value) ? value : value === undefined ? [] : [value];
+    if ("$eq" in condition) return values.includes(condition.$eq);
+    return condition.$in.some((wanted) => values.includes(wanted));
+  });
+}
+
 export function createInMemoryStore(initial: readonly VectorRecord[] = []): VectorStore & { records: Map<string, VectorRecord> } {
   const records = new Map(initial.map((r) => [r.id, r]));
   return {
@@ -22,18 +34,28 @@ export function createInMemoryStore(initial: readonly VectorRecord[] = []): Vect
     async upsert(batch) {
       for (const record of batch) records.set(record.id, record);
     },
-    async query(vector, topK) {
-      const matches: VectorMatch[] = [...records.values()].map((r) => ({ id: r.id, score: cosineSimilarity(vector, r.values) }));
+    async query(vector, topK, filter) {
+      const matches: VectorMatch[] = [...records.values()]
+        .filter((r) => matchesFilter(r.metadata, filter))
+        .map((r) => ({ id: r.id, score: cosineSimilarity(vector, r.values), metadata: r.metadata }));
       return matches.sort((a, b) => b.score - a.score).slice(0, topK);
     },
-    async listIds() {
-      return [...records.keys()];
+    async listIds(prefix = "") {
+      return [...records.keys()].filter((id) => id.startsWith(prefix));
+    },
+    async deleteMany(ids) {
+      for (const id of ids) records.delete(id);
+    },
+    async deleteAll() {
+      records.clear();
     },
     async fetch(ids) {
-      return new Map(ids.flatMap((id): [string, number[]][] => {
-        const record = records.get(id);
-        return record ? [[id, record.values]] : [];
-      }));
+      return new Map(
+        ids.flatMap((id): [string, number[]][] => {
+          const record = records.get(id);
+          return record ? [[id, record.values]] : [];
+        }),
+      );
     },
   };
 }

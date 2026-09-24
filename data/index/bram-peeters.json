@@ -1,10 +1,55 @@
 {
   "id": "bram-peeters",
-  "file": "/cvs/bram_peeters_cv.pdf",
   "pages": 2,
-  "text": [
-    "Bram Peeters\nQA Lead\nbram.peeters@example.com · +1-555-023-2323 · Antwerp, Belgium\nHybrid · Remote · Citizenship Belgium · Notice period: 30 days\nSUMMARY\nBram Peeters is a QA Lead with 10 years of experience based in Antwerp, Belgium. Expertise includes Selenium,\nCypress, Java, Python, SQL, and Jira. Has leadership experience managing testing teams in Software and FinTech\nindustries. Fluent in Dutch and English.\nSKILLS\nSelenium (10 years) · Cypress (5 years) · Java (10 years) · Python (6 years) · SQL (8 years) · Jira (10 years)\nEXPERIENCE\nQA Lead — Schelde Software Labs Mar 2021 – Present\nIndustry: Software\n• Worked as QA Lead in Software industry using Selenium, Cypress, Java, Python, and Jira.\n• Demonstrated leadership capabilities as QA Lead.\nSenior QA Engineer — Brabo Tech Solutions Mar 2016 – Feb 2021\nIndustry: FinTech\n• Worked as Senior QA Engineer in FinTech industry using Selenium, Java, SQL, and Jira.\n• Delivered testing projects for payment systems.\nEDUCATION\nBSc Computer Science 2014\nUniversity of Antwerp\nLANGUAGES\nDutch (native) · English (C1)\nLEADERSHIP\nManaged QA teams and testing strategies across multiple projects.\nCERTIFICATIONS",
-    "ISTQB Advanced Level Test Manager"
+  "chunks": [
+    {
+      "id": "bram-peeters:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Bram Peeters\nQA Lead\nbram.peeters@example.com · +1-555-023-2323 · Antwerp, Belgium\nHybrid · Remote · Citizenship Belgium · Notice period: 30 days"
+    },
+    {
+      "id": "bram-peeters:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nBram Peeters is a QA Lead with 10 years of experience based in Antwerp, Belgium. Expertise includes Selenium,\nCypress, Java, Python, SQL, and Jira. Has leadership experience managing testing teams in Software and FinTech\nindustries. Fluent in Dutch and English."
+    },
+    {
+      "id": "bram-peeters:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nSelenium (10 years) · Cypress (5 years) · Java (10 years) · Python (6 years) · SQL (8 years) · Jira (10 years)"
+    },
+    {
+      "id": "bram-peeters:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nQA Lead — Schelde Software Labs Mar 2021 – Present\nIndustry: Software\n• Worked as QA Lead in Software industry using Selenium, Cypress, Java, Python, and Jira.\n• Demonstrated leadership capabilities as QA Lead.\nSenior QA Engineer — Brabo Tech Solutions Mar 2016 – Feb 2021\nIndustry: FinTech\n• Worked as Senior QA Engineer in FinTech industry using Selenium, Java, SQL, and Jira.\n• Delivered testing projects for payment systems."
+    },
+    {
+      "id": "bram-peeters:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2014\nUniversity of Antwerp"
+    },
+    {
+      "id": "bram-peeters:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nDutch (native) · English (C1)"
+    },
+    {
+      "id": "bram-peeters:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nManaged QA teams and testing strategies across multiple projects."
+    },
+    {
+      "id": "bram-peeters:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "ISTQB Advanced Level Test Manager"
+    }
   ],
   "profile": {
     "name": "Bram Peeters",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Managed QA teams and testing strategies across multiple projects."
+      "note": "Managed QA teams and testing strategies across multiple projects"
     },
     "certifications": [
       "ISTQB Advanced Level Test Manager"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 63.5
 }

@@ -153,12 +153,14 @@ export const CandidateSeedSchema = CandidateProfileSchema.extend({
 });
 export type CandidateSeed = z.infer<typeof CandidateSeedSchema>;
 
+/** One indexed CV (PLAN, Indexer): its section chunks, its profile and where each field was read. */
 export const IndexEntrySchema = z.object({
   id: CandidateIdSchema,
-  file: z.string().min(1),
   pages: z.number().int().min(1),
-  text: z.array(z.string()),
+  chunks: z.array(ChunkSchema).min(1),
   profile: CandidateProfileSchema,
+  /** By field path: "headline", "skills.0", "employment.1", "leadership", ... */
+  sources: z.record(z.string(), FieldSourceSchema),
   medianTenureMonths: z.number().min(0).nullable(),
 });
 export type IndexEntry = z.infer<typeof IndexEntrySchema>;

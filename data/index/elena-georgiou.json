@@ -1,9 +1,49 @@
 {
   "id": "elena-georgiou",
-  "file": "/cvs/elena_georgiou_cv.pdf",
   "pages": 1,
-  "text": [
-    "Elena Georgiou\nBackend Engineer\nelena.georgiou@example.com · +1-555-008-0808 · Athens, Greece\nRemote · Hybrid · EU Citizen · Notice period: 30 days\nSUMMARY\nElena Georgiou is a mid Backend Engineer based in Athens, Greece, with 4 years of total experience. She specializes in\nPython, Django, PostgreSQL, Docker, AWS, and Git. She holds a bachelor in Computer Science and has worked in the\nCloud Computing and Software Development industries.\nSKILLS\nPython (4 years) · Django (3 years) · PostgreSQL (4 years) · Docker (3 years) · AWS (3 years) · Git (4 years)\nEXPERIENCE\nBackend Engineer — Aegean Cloud Systems Jan 2023 – Present\nIndustry: Cloud Computing\n• Develop backend applications using Python, Django, and PostgreSQL.\n• Deploy cloud infrastructure via AWS and manage source code with Git.\nJunior Backend Engineer — Hellas Digital Sep 2021 – Dec 2022\nIndustry: Software Development\n• Write Python and PostgreSQL queries for web software.\n• Containerize services using Docker and track changes with Git.\nEDUCATION\nBSc Computer Science 2021\nNational and Kapodistrian University of Athens\nLANGUAGES\nGreek (native) · English (C1)\nCERTIFICATIONS\nAWS Certified Developer"
+  "chunks": [
+    {
+      "id": "elena-georgiou:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Elena Georgiou\nBackend Engineer\nelena.georgiou@example.com · +1-555-008-0808 · Athens, Greece\nRemote · Hybrid · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "elena-georgiou:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nElena Georgiou is a mid Backend Engineer based in Athens, Greece, with 4 years of total experience. She specializes in\nPython, Django, PostgreSQL, Docker, AWS, and Git. She holds a bachelor in Computer Science and has worked in the\nCloud Computing and Software Development industries."
+    },
+    {
+      "id": "elena-georgiou:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (4 years) · Django (3 years) · PostgreSQL (4 years) · Docker (3 years) · AWS (3 years) · Git (4 years)"
+    },
+    {
+      "id": "elena-georgiou:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nBackend Engineer — Aegean Cloud Systems Jan 2023 – Present\nIndustry: Cloud Computing\n• Develop backend applications using Python, Django, and PostgreSQL.\n• Deploy cloud infrastructure via AWS and manage source code with Git.\nJunior Backend Engineer — Hellas Digital Sep 2021 – Dec 2022\nIndustry: Software Development\n• Write Python and PostgreSQL queries for web software.\n• Containerize services using Docker and track changes with Git."
+    },
+    {
+      "id": "elena-georgiou:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2021\nNational and Kapodistrian University of Athens"
+    },
+    {
+      "id": "elena-georgiou:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nGreek (native) · English (C1)"
+    },
+    {
+      "id": "elena-georgiou:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nAWS Certified Developer"
+    }
   ],
   "profile": {
     "name": "Elena Georgiou",
@@ -85,6 +125,113 @@
     "certifications": [
       "AWS Certified Developer"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 30.5
 }

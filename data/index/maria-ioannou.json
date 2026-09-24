@@ -1,10 +1,55 @@
 {
   "id": "maria-ioannou",
-  "file": "/cvs/maria_ioannou_cv.pdf",
   "pages": 2,
-  "text": [
-    "Maria Ioannou\nHead of Product\nmaria.ioannou@example.com · +1-555-027-2727 · Nicosia, Cyprus\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nMaria Ioannou is a principal Head of Product based in Nicosia, Cyprus, with 14 years of total experience. Her\nexpertise encompasses product strategy, roadmapping, agile methodologies, team leadership, data analytics,\nand user research. She has held leadership roles across technology, software, and information technology\nindustries.\nSKILLS\nProduct Strategy (14 years) · Roadmapping (12 years) · Agile Methodologies (14 years) ·\nTeam Leadership (10 years) · Data Analytics (10 years) · User Research (11 years)\nEXPERIENCE\nHead of Product — Troodos Tech 03/2021 – Present\nIndustry: Technology\n– Led product strategy and roadmapping initiatives as Head of Product.\n– Exercised team leadership using agile methodologies within the technology industry.\nSenior Product Manager — Levant Software 02/2016 – 02/2021\nIndustry: Software\n– Managed roadmapping and user research projects as a senior product manager.\n– Applied data analytics and agile methodologies in the software industry.\nProduct Manager — Kyrenia Systems 09/2012 – 01/2016\nIndustry: Information Technology\n– Contributed to product strategy and user research as a product manager.\n– Utilized data analytics within the information technology industry.\nEDUCATION\nBSc Business Administration 2011\nUniversity of Cyprus\nLANGUAGES\nGreek (native) · English (C2)",
-    "LEADERSHIP\nManaged cross-functional product and engineering teams over 10 years.\nCERTIFICATIONS\nCertified Scrum Product Owner · Pragmatic Institute Certified"
+  "chunks": [
+    {
+      "id": "maria-ioannou:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Maria Ioannou\nHead of Product\nmaria.ioannou@example.com · +1-555-027-2727 · Nicosia, Cyprus\nHybrid · Remote · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "maria-ioannou:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nMaria Ioannou is a principal Head of Product based in Nicosia, Cyprus, with 14 years of total experience. Her\nexpertise encompasses product strategy, roadmapping, agile methodologies, team leadership, data analytics,\nand user research. She has held leadership roles across technology, software, and information technology\nindustries."
+    },
+    {
+      "id": "maria-ioannou:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nProduct Strategy (14 years) · Roadmapping (12 years) · Agile Methodologies (14 years) ·\nTeam Leadership (10 years) · Data Analytics (10 years) · User Research (11 years)"
+    },
+    {
+      "id": "maria-ioannou:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nHead of Product — Troodos Tech 03/2021 – Present\nIndustry: Technology\n– Led product strategy and roadmapping initiatives as Head of Product.\n– Exercised team leadership using agile methodologies within the technology industry.\nSenior Product Manager — Levant Software 02/2016 – 02/2021\nIndustry: Software\n– Managed roadmapping and user research projects as a senior product manager.\n– Applied data analytics and agile methodologies in the software industry.\nProduct Manager — Kyrenia Systems 09/2012 – 01/2016\nIndustry: Information Technology\n– Contributed to product strategy and user research as a product manager.\n– Utilized data analytics within the information technology industry."
+    },
+    {
+      "id": "maria-ioannou:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Business Administration 2011\nUniversity of Cyprus"
+    },
+    {
+      "id": "maria-ioannou:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nGreek (native) · English (C2)"
+    },
+    {
+      "id": "maria-ioannou:leadership:2",
+      "section": "leadership",
+      "page": 2,
+      "text": "LEADERSHIP\nManaged cross-functional product and engineering teams over 10 years."
+    },
+    {
+      "id": "maria-ioannou:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nCertified Scrum Product Owner · Pragmatic Institute Certified"
+    }
   ],
   "profile": {
     "name": "Maria Ioannou",
@@ -88,12 +133,129 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Managed cross-functional product and engineering teams over 10 years."
+      "note": "Managed cross-functional product and engineering teams over 10 years"
     },
     "certifications": [
       "Certified Scrum Product Owner",
       "Pragmatic Institute Certified"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.2": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 2,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    },
+    "certifications.1": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 61
 }

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { Embedder } from "@/lib/ai/embedder";
 import { ANDREI, ELENA, LENA, TEST_INDEX } from "@/lib/retrieval/fixtures";
 import { createInMemoryStore } from "@/lib/vector/in-memory";
-import { documentText, syncVectors } from "./vectors";
+import { chunkDocumentText, chunkMetadata, syncVectors } from "./vectors";
 
 const embedder = (): Embedder & { embedDocuments: ReturnType<typeof vi.fn> } => ({
   dimensions: 2,
@@ -10,35 +10,50 @@ const embedder = (): Embedder & { embedDocuments: ReturnType<typeof vi.fn> } => 
   embedQuery: vi.fn(async () => [1, 0]),
 });
 
+const chunkCount = TEST_INDEX.reduce((n, entry) => n + entry.chunks.length, 0);
+
 describe("syncVectors", () => {
-  it("embeds every CV once, keyed by candidate id, with its name and file", async () => {
+  it("stores one record per chunk, keyed by the chunk id, with the metadata the search filters on", async () => {
     const store = createInMemoryStore();
     const report = await syncVectors(TEST_INDEX, { embedder: embedder(), store }, { force: false });
     expect(report).toEqual({ done: ["andrei-popescu", "elena-georgiou", "lena-novak"], skipped: [] });
-    expect(store.records.get("lena-novak")?.metadata).toEqual({ name: "Lena Novak", file: "/cvs/lena_novak_cv.pdf" });
+    expect(store.records.size).toBe(chunkCount);
+    expect(store.records.get("lena-novak:skills:1")?.metadata).toEqual({
+      candidateId: "lena-novak",
+      section: "skills",
+      page: 1,
+      role: "frontend",
+      seniority: "senior",
+      skills: ["React", "TypeScript", "HTML/CSS"],
+      languages: ["German", "English"],
+    });
   });
 
-  it("skips what is stored, and replaces it when forced", async () => {
-    const store = createInMemoryStore([{ id: LENA.id, values: [9, 9], metadata: { name: "Lena Novak", file: LENA.file } }]);
-    const first = embedder();
-    expect(await syncVectors(TEST_INDEX, { embedder: first, store }, { force: false })).toEqual({
-      done: ["andrei-popescu", "elena-georgiou"],
-      skipped: ["lena-novak"],
-    });
+  it("skips a CV whose chunks are all stored, replaces a partial one, and redoes everything when forced", async () => {
+    const store = createInMemoryStore();
+    await syncVectors([LENA], { embedder: embedder(), store }, { force: false });
+    await store.deleteMany(["lena-novak:skills:1"]);
     const again = embedder();
-    await syncVectors(TEST_INDEX, { embedder: again, store }, { force: false });
-    expect(again.embedDocuments).not.toHaveBeenCalled();
-    await syncVectors(TEST_INDEX, { embedder: again, store }, { force: true, only: [LENA.id] });
-    expect(store.records.get("lena-novak")?.values).toEqual([1, 0]);
+    expect(await syncVectors(TEST_INDEX, { embedder: again, store }, { force: false })).toEqual({
+      done: ["andrei-popescu", "elena-georgiou", "lena-novak"],
+      skipped: [],
+    });
+    const third = embedder();
+    expect(await syncVectors(TEST_INDEX, { embedder: third, store }, { force: false })).toEqual({ done: [], skipped: ["andrei-popescu", "elena-georgiou", "lena-novak"] });
+    expect(third.embedDocuments).not.toHaveBeenCalled();
+    await syncVectors(TEST_INDEX, { embedder: third, store }, { force: true, only: [ELENA.id] });
+    expect(third.embedDocuments).toHaveBeenCalledTimes(1);
+    expect(store.records.size).toBe(chunkCount);
   });
 
   it("limits the work to the ids asked for", async () => {
     const store = createInMemoryStore();
-    const report = await syncVectors([ANDREI, ELENA, LENA], { embedder: embedder(), store }, { force: false, only: [ELENA.id] });
-    expect(report.done).toEqual(["elena-georgiou"]);
+    expect((await syncVectors([ANDREI, ELENA, LENA], { embedder: embedder(), store }, { force: false, only: [ELENA.id] })).done).toEqual(["elena-georgiou"]);
   });
 
-  it("embeds who the candidate is with the CV text", () => {
-    expect(documentText(LENA).split("\n")[0]).toBe("Lena Novak: Senior Frontend Engineer, Berlin, Germany");
+  it("embeds who the candidate is with the chunk's text", () => {
+    const chunk = LENA.chunks[0];
+    expect(chunkDocumentText(LENA, chunk).split("\n")[0]).toBe("Lena Novak: Senior Frontend Engineer, Berlin, Germany");
+    expect(chunkMetadata(LENA, chunk).page).toBe(1);
   });
 });

@@ -1,10 +1,55 @@
 {
   "id": "luca-borg",
-  "file": "/cvs/luca_borg_cv.pdf",
   "pages": 2,
-  "text": [
-    "Luca Borg\nProduct Owner\nluca.borg@example.com · +1-555-026-2626 · Valletta, Malta\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nLuca Borg is a mid Product Owner based in Valletta, Malta, with 4 years of total experience. Expertise spans Jira, Agile,\nScrum, Figma, SQL, and Product Strategy within the Software and Technology industries. Holds a bachelor degree in\nBusiness Administration from University of Malta.\nSKILLS\nJira (4 years) · Agile (4 years) · Scrum (4 years) · Figma (3 years) · SQL (3 years) · Product Strategy (4 years)\nEXPERIENCE\nProduct Owner — Melita Software Solutions Jan 2023 – Present\nIndustry: Software\n• Worked as Product Owner in Software utilizing Jira and Agile.\n• Applied Scrum and Figma for Product Strategy initiatives.\nJunior Product Owner — Mediterra Tech Jul 2021 – Dec 2022\nIndustry: Technology\n• Served as Junior Product Owner in Technology using Jira and Agile.\n• Utilized SQL and Product Strategy within the Technology sector.\nEDUCATION\nBSc Business Administration 2021\nUniversity of Malta\nLANGUAGES\nEnglish (native) · Italian (C1)\nLEADERSHIP\nLed Scrum ceremonies and guided cross-functional teams in mid seniority product roles.\nCERTIFICATIONS",
-    "Certified Scrum Product Owner"
+  "chunks": [
+    {
+      "id": "luca-borg:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Luca Borg\nProduct Owner\nluca.borg@example.com · +1-555-026-2626 · Valletta, Malta\nHybrid · Remote · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "luca-borg:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nLuca Borg is a mid Product Owner based in Valletta, Malta, with 4 years of total experience. Expertise spans Jira, Agile,\nScrum, Figma, SQL, and Product Strategy within the Software and Technology industries. Holds a bachelor degree in\nBusiness Administration from University of Malta."
+    },
+    {
+      "id": "luca-borg:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nJira (4 years) · Agile (4 years) · Scrum (4 years) · Figma (3 years) · SQL (3 years) · Product Strategy (4 years)"
+    },
+    {
+      "id": "luca-borg:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nProduct Owner — Melita Software Solutions Jan 2023 – Present\nIndustry: Software\n• Worked as Product Owner in Software utilizing Jira and Agile.\n• Applied Scrum and Figma for Product Strategy initiatives.\nJunior Product Owner — Mediterra Tech Jul 2021 – Dec 2022\nIndustry: Technology\n• Served as Junior Product Owner in Technology using Jira and Agile.\n• Utilized SQL and Product Strategy within the Technology sector."
+    },
+    {
+      "id": "luca-borg:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Business Administration 2021\nUniversity of Malta"
+    },
+    {
+      "id": "luca-borg:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nEnglish (native) · Italian (C1)"
+    },
+    {
+      "id": "luca-borg:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nLed Scrum ceremonies and guided cross-functional teams in mid seniority product roles."
+    },
+    {
+      "id": "luca-borg:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "Certified Scrum Product Owner"
+    }
   ],
   "profile": {
     "name": "Luca Borg",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led Scrum ceremonies and guided cross-functional teams in mid seniority product roles."
+      "note": "Led Scrum ceremonies and guided cross-functional teams in mid seniority product roles"
     },
     "certifications": [
       "Certified Scrum Product Owner"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 31.5
 }

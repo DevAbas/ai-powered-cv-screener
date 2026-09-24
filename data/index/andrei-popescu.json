@@ -1,10 +1,55 @@
 {
   "id": "andrei-popescu",
-  "file": "/cvs/andrei_popescu_cv.pdf",
   "pages": 2,
-  "text": [
-    "Andrei Popescu\nSenior Backend Engineer\nandrei.popescu@example.com · +1-555-007-0707 · Bucharest, Romania\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nAndrei Popescu is a senior backend engineer based in Bucharest, Romania, with 7 years of total experience.\nExpertise spans Python, Django, PostgreSQL, Docker, Redis, and AWS within the Cloud Computing and\nFinancial Technology industries. Holds a bachelor degree in Computer Science and demonstrates leadership\nexperience in backend development. Communicates in Romanian and English, and is available on a 30 day\nnotice period for hybrid or remote roles.\nSKILLS\nPython (7 years) · Django (5 years) · PostgreSQL (7 years) · Docker (4 years) · Redis (3 years) ·\nAWS (4 years)\nEXPERIENCE\nSenior Backend Engineer — Danube Cloud Tech Mar 2021 – Present\nIndustry: Cloud Computing\n• Worked as a Senior Backend Engineer in the Cloud Computing industry using Python, Django,\nPostgreSQL, and AWS.\n• Provided backend engineering leadership across various cloud projects.\nBackend Developer — Carpathian Software Jun 2019 – Feb 2021\nIndustry: Financial Technology\n• Served as a Backend Developer within the Financial Technology industry utilizing Python, Docker, and\nRedis.\n• Delivered backend solutions without holding a leadership role during this period.\nEDUCATION\nBSc Computer Science 2017\nUniversitatea Politehnica din Bucuresti\nLANGUAGES\nRomanian (native) · English (C1)\nLEADERSHIP",
-    "Provided leadership as a Senior Backend Engineer by mentoring junior developers and guiding architectural\ndecisions.\nCERTIFICATIONS\nAWS Certified Developer"
+  "chunks": [
+    {
+      "id": "andrei-popescu:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Andrei Popescu\nSenior Backend Engineer\nandrei.popescu@example.com · +1-555-007-0707 · Bucharest, Romania\nHybrid · Remote · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "andrei-popescu:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nAndrei Popescu is a senior backend engineer based in Bucharest, Romania, with 7 years of total experience.\nExpertise spans Python, Django, PostgreSQL, Docker, Redis, and AWS within the Cloud Computing and\nFinancial Technology industries. Holds a bachelor degree in Computer Science and demonstrates leadership\nexperience in backend development. Communicates in Romanian and English, and is available on a 30 day\nnotice period for hybrid or remote roles."
+    },
+    {
+      "id": "andrei-popescu:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (7 years) · Django (5 years) · PostgreSQL (7 years) · Docker (4 years) · Redis (3 years) ·\nAWS (4 years)"
+    },
+    {
+      "id": "andrei-popescu:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nSenior Backend Engineer — Danube Cloud Tech Mar 2021 – Present\nIndustry: Cloud Computing\n• Worked as a Senior Backend Engineer in the Cloud Computing industry using Python, Django,\nPostgreSQL, and AWS.\n• Provided backend engineering leadership across various cloud projects.\nBackend Developer — Carpathian Software Jun 2019 – Feb 2021\nIndustry: Financial Technology\n• Served as a Backend Developer within the Financial Technology industry utilizing Python, Docker, and\nRedis.\n• Delivered backend solutions without holding a leadership role during this period."
+    },
+    {
+      "id": "andrei-popescu:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2017\nUniversitatea Politehnica din Bucuresti"
+    },
+    {
+      "id": "andrei-popescu:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nRomanian (native) · English (C1)"
+    },
+    {
+      "id": "andrei-popescu:leadership:2",
+      "section": "leadership",
+      "page": 2,
+      "text": "Provided leadership as a Senior Backend Engineer by mentoring junior developers and guiding architectural\ndecisions."
+    },
+    {
+      "id": "andrei-popescu:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nAWS Certified Developer"
+    }
   ],
   "profile": {
     "name": "Andrei Popescu",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Provided leadership as a Senior Backend Engineer by mentoring junior developers and guiding architectural decisions."
+      "note": "Provided leadership as a Senior Backend Engineer by mentoring junior developers and guiding architectural\ndecisions"
     },
     "certifications": [
       "AWS Certified Developer"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 2,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 44
 }

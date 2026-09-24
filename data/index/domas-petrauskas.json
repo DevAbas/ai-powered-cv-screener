@@ -1,9 +1,49 @@
 {
   "id": "domas-petrauskas",
-  "file": "/cvs/domas_petrauskas_cv.pdf",
   "pages": 1,
-  "text": [
-    "Domas Petrauskas\nJunior Backend Developer\ndomas.petrauskas@example.com · +1-555-012-1212 · Vilnius, Lithuania\nHybrid · Remote · EU Citizen · Notice period: 14 days\nSUMMARY\nDomas Petrauskas is a junior backend developer based in Vilnius, Lithuania with 1.5 years of total experience.\nThey hold a bachelor degree in Software Engineering from Vilnius University and specialize in Python,\nFastAPI, and PostgreSQL. They are available in 14 days and accept hybrid and remote work.\nSKILLS\nPython (1.5 years) · FastAPI (1 year) · PostgreSQL (1.5 years) · Docker (1 year) · Git (1.5 years) ·\nLinux (1 year)\nEXPERIENCE\nJunior Backend Developer — Vilnius Cloud Systems 01/2025 – Present\nIndustry: Cloud Computing\n– Develop backend microservices using Python and FastAPI in the cloud computing industry.\n– Manage PostgreSQL databases and containerize applications with Docker as a Junior Backend Developer.\nJunior Software Developer — Baltic Tech Labs 03/2024 – 12/2024\nIndustry: Information Technology\n– Write Python scripts and manage version control with Git in the information technology industry.\n– Maintain Linux servers and query PostgreSQL data as a Junior Software Developer.\nEDUCATION\nBSc Software Engineering 2024\nVilnius University\nLANGUAGES\nLithuanian (native) · English (C1)\nCERTIFICATIONS\nPython Institute Certified Associate"
+  "chunks": [
+    {
+      "id": "domas-petrauskas:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Domas Petrauskas\nJunior Backend Developer\ndomas.petrauskas@example.com · +1-555-012-1212 · Vilnius, Lithuania\nHybrid · Remote · EU Citizen · Notice period: 14 days"
+    },
+    {
+      "id": "domas-petrauskas:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nDomas Petrauskas is a junior backend developer based in Vilnius, Lithuania with 1.5 years of total experience.\nThey hold a bachelor degree in Software Engineering from Vilnius University and specialize in Python,\nFastAPI, and PostgreSQL. They are available in 14 days and accept hybrid and remote work."
+    },
+    {
+      "id": "domas-petrauskas:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (1.5 years) · FastAPI (1 year) · PostgreSQL (1.5 years) · Docker (1 year) · Git (1.5 years) ·\nLinux (1 year)"
+    },
+    {
+      "id": "domas-petrauskas:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nJunior Backend Developer — Vilnius Cloud Systems 01/2025 – Present\nIndustry: Cloud Computing\n– Develop backend microservices using Python and FastAPI in the cloud computing industry.\n– Manage PostgreSQL databases and containerize applications with Docker as a Junior Backend Developer.\nJunior Software Developer — Baltic Tech Labs 03/2024 – 12/2024\nIndustry: Information Technology\n– Write Python scripts and manage version control with Git in the information technology industry.\n– Maintain Linux servers and query PostgreSQL data as a Junior Software Developer."
+    },
+    {
+      "id": "domas-petrauskas:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Software Engineering 2024\nVilnius University"
+    },
+    {
+      "id": "domas-petrauskas:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nLithuanian (native) · English (C1)"
+    },
+    {
+      "id": "domas-petrauskas:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nPython Institute Certified Associate"
+    }
   ],
   "profile": {
     "name": "Domas Petrauskas",
@@ -85,6 +125,113 @@
     "certifications": [
       "Python Institute Certified Associate"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 15.5
 }

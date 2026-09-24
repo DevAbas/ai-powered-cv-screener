@@ -1,10 +1,55 @@
 {
   "id": "pablo-ruiz",
-  "file": "/cvs/pablo_ruiz_cv.pdf",
   "pages": 2,
-  "text": [
-    "Pablo Ruiz\nDevOps Lead\npablo.ruiz@example.com · +1-555-019-1919 · Madrid, Spain\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nPablo Ruiz is a DevOps Lead with 10 years of total experience based in Madrid, Spain. Expertise includes\nDocker, Kubernetes, Terraform, AWS, Python, and Linux across cloud computing and software infrastructure\nindustries. Demonstrated leadership in managing technical teams and scalable systems.\nSKILLS\nDocker (10 years) · Kubernetes (8 years) · Terraform (7 years) · AWS (9 years) · Python (6 years) ·\nLinux (10 years)\nEXPERIENCE\nDevOps Lead — Solana Cloud Labs Mar 2020 – Present\nIndustry: Cloud Computing\n• Worked as DevOps Lead with Kubernetes, Terraform, AWS, Linux, and Python.\n• Delivered cloud computing industry leadership and operations with Kubernetes and Terraform.\nDevOps Engineer — Sierra Systems Apr 2016 – Feb 2020\nIndustry: Software Infrastructure\n• Worked as DevOps Engineer with Docker, Linux, AWS, and Python.\n• Maintained software infrastructure systems using Docker and Linux.\nEDUCATION\nBSc Computer Science 2014\nUniversidad Politecnica de Madrid\nLANGUAGES\nSpanish (native) · English (C1)\nLEADERSHIP\nLed infrastructure and DevOps engineering teams in cloud computing.\nCERTIFICATIONS",
-    "AWS Certified Solutions Architect"
+  "chunks": [
+    {
+      "id": "pablo-ruiz:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Pablo Ruiz\nDevOps Lead\npablo.ruiz@example.com · +1-555-019-1919 · Madrid, Spain\nHybrid · Remote · Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "pablo-ruiz:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nPablo Ruiz is a DevOps Lead with 10 years of total experience based in Madrid, Spain. Expertise includes\nDocker, Kubernetes, Terraform, AWS, Python, and Linux across cloud computing and software infrastructure\nindustries. Demonstrated leadership in managing technical teams and scalable systems."
+    },
+    {
+      "id": "pablo-ruiz:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nDocker (10 years) · Kubernetes (8 years) · Terraform (7 years) · AWS (9 years) · Python (6 years) ·\nLinux (10 years)"
+    },
+    {
+      "id": "pablo-ruiz:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nDevOps Lead — Solana Cloud Labs Mar 2020 – Present\nIndustry: Cloud Computing\n• Worked as DevOps Lead with Kubernetes, Terraform, AWS, Linux, and Python.\n• Delivered cloud computing industry leadership and operations with Kubernetes and Terraform.\nDevOps Engineer — Sierra Systems Apr 2016 – Feb 2020\nIndustry: Software Infrastructure\n• Worked as DevOps Engineer with Docker, Linux, AWS, and Python.\n• Maintained software infrastructure systems using Docker and Linux."
+    },
+    {
+      "id": "pablo-ruiz:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2014\nUniversidad Politecnica de Madrid"
+    },
+    {
+      "id": "pablo-ruiz:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nSpanish (native) · English (C1)"
+    },
+    {
+      "id": "pablo-ruiz:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nLed infrastructure and DevOps engineering teams in cloud computing."
+    },
+    {
+      "id": "pablo-ruiz:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "AWS Certified Solutions Architect"
+    }
   ],
   "profile": {
     "name": "Pablo Ruiz",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led infrastructure and DevOps engineering teams in cloud computing."
+      "note": "Led infrastructure and DevOps engineering teams in cloud computing"
     },
     "certifications": [
       "AWS Certified Solutions Architect"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 63
 }

@@ -1,10 +1,55 @@
 {
   "id": "viktor-ivanov",
-  "file": "/cvs/viktor_ivanov_cv.pdf",
   "pages": 2,
-  "text": [
-    "Viktor Ivanov\nApplication Security Engineer\nviktor.ivanov@example.com · +1-555-030-3030 · Sofia, Bulgaria\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nViktor Ivanov is a senior application security engineer based in Sofia, Bulgaria, with 7 years of total experience\nin the information security industry. They specialize in Python, Docker, Kubernetes, AWS, Terraform, and\nLinux, and hold leadership experience in security reviews. They possess a bachelor degree in Computer\nScience and are proficient in Bulgarian and English.\nSKILLS\nPython (7 years) · Docker (5 years) · Kubernetes (4 years) · AWS (6 years) · Terraform (4 years) ·\nLinux (7 years)\nEXPERIENCE\nApplication Security Engineer — Balkan Cyber Systems 03/2021 – Present\nIndustry: Information Security\n– Applied Python and Linux to secure Kubernetes clusters in AWS.\n– Demonstrated leadership in information security across seven years of total experience.\nSecurity Analyst — Rhodope Tech Labs 01/2019 – 02/2021\nIndustry: Information Security\n– Built compliance monitors using Python, Docker, and Terraform on Linux.\n– Exercised senior technical leadership within the information security industry.\nEDUCATION\nBSc Computer Science 2018\nSofia University\nLANGUAGES\nBulgarian (native) · English (C1)\nLEADERSHIP\nLed security reviews and mentored junior engineers across multiple teams.",
-    "CERTIFICATIONS\nCertified Information Systems Security Professional"
+  "chunks": [
+    {
+      "id": "viktor-ivanov:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Viktor Ivanov\nApplication Security Engineer\nviktor.ivanov@example.com · +1-555-030-3030 · Sofia, Bulgaria\nHybrid · Remote · Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "viktor-ivanov:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nViktor Ivanov is a senior application security engineer based in Sofia, Bulgaria, with 7 years of total experience\nin the information security industry. They specialize in Python, Docker, Kubernetes, AWS, Terraform, and\nLinux, and hold leadership experience in security reviews. They possess a bachelor degree in Computer\nScience and are proficient in Bulgarian and English."
+    },
+    {
+      "id": "viktor-ivanov:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (7 years) · Docker (5 years) · Kubernetes (4 years) · AWS (6 years) · Terraform (4 years) ·\nLinux (7 years)"
+    },
+    {
+      "id": "viktor-ivanov:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nApplication Security Engineer — Balkan Cyber Systems 03/2021 – Present\nIndustry: Information Security\n– Applied Python and Linux to secure Kubernetes clusters in AWS.\n– Demonstrated leadership in information security across seven years of total experience.\nSecurity Analyst — Rhodope Tech Labs 01/2019 – 02/2021\nIndustry: Information Security\n– Built compliance monitors using Python, Docker, and Terraform on Linux.\n– Exercised senior technical leadership within the information security industry."
+    },
+    {
+      "id": "viktor-ivanov:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2018\nSofia University"
+    },
+    {
+      "id": "viktor-ivanov:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nBulgarian (native) · English (C1)"
+    },
+    {
+      "id": "viktor-ivanov:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nLed security reviews and mentored junior engineers across multiple teams."
+    },
+    {
+      "id": "viktor-ivanov:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nCertified Information Systems Security Professional"
+    }
   ],
   "profile": {
     "name": "Viktor Ivanov",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led security reviews and mentored junior engineers across multiple teams."
+      "note": "Led security reviews and mentored junior engineers across multiple teams"
     },
     "certifications": [
       "Certified Information Systems Security Professional"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 46.5
 }

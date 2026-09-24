@@ -1,9 +1,49 @@
 {
   "id": "anna-schmidt",
-  "file": "/cvs/anna_schmidt_cv.pdf",
   "pages": 1,
-  "text": [
-    "Anna Schmidt\nPlatform Engineer\nanna.schmidt@example.com · +1-555-020-2020 · Vienna, Austria\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nAnna Schmidt is a mid-level Platform Engineer based in Vienna, Austria, with 4 years of total experience. She specializes\nin Python, Docker, Kubernetes, Terraform, AWS, and Linux. Her background spans the Cloud Infrastructure and Cyber\nSecurity industries with a focus on DevOps practices.\nSKILLS\nPython (4 years) · Docker (4 years) · Kubernetes (3 years) · Terraform (3 years) · AWS (4 years) ·\nLinux (4 years)\nEXPERIENCE\nPlatform Engineer — Semmering Cloud Tech Jan 2023 – Present\nIndustry: Cloud Infrastructure\n• Performed Platform Engineer duties at Semmering Cloud Tech in the Cloud Infrastructure industry.\n• Utilized Python, Kubernetes, Terraform, AWS, and Linux to manage infrastructure platforms.\nJunior DevOps Engineer — Alps Cyber Systems Jan 2022 – Dec 2022\nIndustry: Cyber Security\n• Served as Junior DevOps Engineer in the Cyber Security industry at Alps Cyber Systems.\n• Applied Docker, Linux, and Python to support secure system operations.\nEDUCATION\nBSc Computer Science 2021\nTechnical University of Vienna\nLANGUAGES\nGerman (native) · English (C1)\nCERTIFICATIONS\nAWS Certified Solutions Architect"
+  "chunks": [
+    {
+      "id": "anna-schmidt:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Anna Schmidt\nPlatform Engineer\nanna.schmidt@example.com · +1-555-020-2020 · Vienna, Austria\nHybrid · Remote · Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "anna-schmidt:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nAnna Schmidt is a mid-level Platform Engineer based in Vienna, Austria, with 4 years of total experience. She specializes\nin Python, Docker, Kubernetes, Terraform, AWS, and Linux. Her background spans the Cloud Infrastructure and Cyber\nSecurity industries with a focus on DevOps practices."
+    },
+    {
+      "id": "anna-schmidt:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (4 years) · Docker (4 years) · Kubernetes (3 years) · Terraform (3 years) · AWS (4 years) ·\nLinux (4 years)"
+    },
+    {
+      "id": "anna-schmidt:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nPlatform Engineer — Semmering Cloud Tech Jan 2023 – Present\nIndustry: Cloud Infrastructure\n• Performed Platform Engineer duties at Semmering Cloud Tech in the Cloud Infrastructure industry.\n• Utilized Python, Kubernetes, Terraform, AWS, and Linux to manage infrastructure platforms.\nJunior DevOps Engineer — Alps Cyber Systems Jan 2022 – Dec 2022\nIndustry: Cyber Security\n• Served as Junior DevOps Engineer in the Cyber Security industry at Alps Cyber Systems.\n• Applied Docker, Linux, and Python to support secure system operations."
+    },
+    {
+      "id": "anna-schmidt:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2021\nTechnical University of Vienna"
+    },
+    {
+      "id": "anna-schmidt:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nGerman (native) · English (C1)"
+    },
+    {
+      "id": "anna-schmidt:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nAWS Certified Solutions Architect"
+    }
   ],
   "profile": {
     "name": "Anna Schmidt",
@@ -85,6 +125,113 @@
     "certifications": [
       "AWS Certified Solutions Architect"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 28.5
 }

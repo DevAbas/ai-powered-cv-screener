@@ -1,10 +1,55 @@
 {
   "id": "ines-garcia",
-  "file": "/cvs/ines_garcia_cv.pdf",
   "pages": 2,
-  "text": [
-    "Inés García\nMachine Learning Engineer\nines.garcia@example.com · +1-555-016-1616 · Barcelona, Spain\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nInés García is a senior Machine Learning Engineer based in Barcelona, Spain with 7 years of professional\nexperience. Her core stack includes Python, PyTorch, TensorFlow, Docker, Kubernetes, AWS, and SQL. She\nhas demonstrated leadership by guiding junior team members in AI and data analytics projects. She holds a\nmaster degree in Artificial Intelligence and is available on a 30 day notice.\nSKILLS\nPython (7 years) · PyTorch (5 years) · TensorFlow (4 years) · Docker (6 years) ·\nKubernetes (3 years) · AWS (5 years) · SQL (7 years)\nEXPERIENCE\nSenior Machine Learning Engineer — Catalunya Neural Corp Jun 2021 – Present\nIndustry: Artificial Intelligence\n• Architected AI models as a Senior Machine Learning Engineer using Python and PyTorch.\n• Deployed services on AWS with Docker and Kubernetes in the Artificial Intelligence industry.\nMachine Learning Engineer — Iberia Data Systems Jan 2019 – May 2021\nIndustry: Data Analytics\n• Engineered data pipelines using Python, SQL, and TensorFlow.\n• Maintained cloud infrastructure on AWS for the Data Analytics industry.\nEDUCATION\nMSc Artificial Intelligence 2018\nUniversitat Politècnica de Catalunya\nLANGUAGES\nSpanish (native) · English (C1)\nLEADERSHIP\nLed junior engineers and mentored interns in machine learning practices.",
-    "CERTIFICATIONS\nAWS Certified Machine Learning"
+  "chunks": [
+    {
+      "id": "ines-garcia:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Inés García\nMachine Learning Engineer\nines.garcia@example.com · +1-555-016-1616 · Barcelona, Spain\nHybrid · Remote · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "ines-garcia:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nInés García is a senior Machine Learning Engineer based in Barcelona, Spain with 7 years of professional\nexperience. Her core stack includes Python, PyTorch, TensorFlow, Docker, Kubernetes, AWS, and SQL. She\nhas demonstrated leadership by guiding junior team members in AI and data analytics projects. She holds a\nmaster degree in Artificial Intelligence and is available on a 30 day notice."
+    },
+    {
+      "id": "ines-garcia:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (7 years) · PyTorch (5 years) · TensorFlow (4 years) · Docker (6 years) ·\nKubernetes (3 years) · AWS (5 years) · SQL (7 years)"
+    },
+    {
+      "id": "ines-garcia:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nSenior Machine Learning Engineer — Catalunya Neural Corp Jun 2021 – Present\nIndustry: Artificial Intelligence\n• Architected AI models as a Senior Machine Learning Engineer using Python and PyTorch.\n• Deployed services on AWS with Docker and Kubernetes in the Artificial Intelligence industry.\nMachine Learning Engineer — Iberia Data Systems Jan 2019 – May 2021\nIndustry: Data Analytics\n• Engineered data pipelines using Python, SQL, and TensorFlow.\n• Maintained cloud infrastructure on AWS for the Data Analytics industry."
+    },
+    {
+      "id": "ines-garcia:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nMSc Artificial Intelligence 2018\nUniversitat Politècnica de Catalunya"
+    },
+    {
+      "id": "ines-garcia:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nSpanish (native) · English (C1)"
+    },
+    {
+      "id": "ines-garcia:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nLed junior engineers and mentored interns in machine learning practices."
+    },
+    {
+      "id": "ines-garcia:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nAWS Certified Machine Learning"
+    }
   ],
   "profile": {
     "name": "Inés García",
@@ -85,11 +130,123 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led junior engineers and mentored interns in machine learning practices."
+      "note": "Led junior engineers and mentored interns in machine learning practices"
     },
     "certifications": [
       "AWS Certified Machine Learning"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.6": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 46.5
 }

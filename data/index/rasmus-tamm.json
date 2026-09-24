@@ -1,9 +1,49 @@
 {
   "id": "rasmus-tamm",
-  "file": "/cvs/rasmus_tamm_cv.pdf",
   "pages": 1,
-  "text": [
-    "Rasmus Tamm\nSenior QA Engineer\nrasmus.tamm@example.com · +1-555-021-2121 · Tallinn, Estonia\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nRasmus Tamm is a Senior QA Engineer based in Tallinn, Estonia with 7 years of total experience. As a senior\nQA professional, Rasmus specializes in Python, Selenium, PyTest, Postman, Docker, and Git. Rasmus holds\na bachelor degree in Computer Science and works in hybrid or remote environments.\nSKILLS\nPython (7 years) · Selenium (6 years) · PyTest (5 years) · Postman (7 years) · Docker (4 years) ·\nGit (7 years)\nEXPERIENCE\nSenior QA Engineer — Tallinn QA Corp 03/2021 – Present\nIndustry: Software Testing\n– Worked as Senior QA Engineer using Python, PyTest, Docker, and Git.\n– Delivered software testing solutions in the Software Testing industry.\nQA Engineer — Eesti Software Labs 03/2019 – 02/2021\nIndustry: Information Technology\n– Worked as QA Engineer using Python, Selenium, Postman, and Git.\n– Built test automation features in the Information Technology industry.\nEDUCATION\nBSc Computer Science 2018\nTallinn University of Technology\nLANGUAGES\nEstonian (native) · English (C1)\nCERTIFICATIONS\nISTQB Certified Tester"
+  "chunks": [
+    {
+      "id": "rasmus-tamm:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Rasmus Tamm\nSenior QA Engineer\nrasmus.tamm@example.com · +1-555-021-2121 · Tallinn, Estonia\nHybrid · Remote · Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "rasmus-tamm:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nRasmus Tamm is a Senior QA Engineer based in Tallinn, Estonia with 7 years of total experience. As a senior\nQA professional, Rasmus specializes in Python, Selenium, PyTest, Postman, Docker, and Git. Rasmus holds\na bachelor degree in Computer Science and works in hybrid or remote environments."
+    },
+    {
+      "id": "rasmus-tamm:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (7 years) · Selenium (6 years) · PyTest (5 years) · Postman (7 years) · Docker (4 years) ·\nGit (7 years)"
+    },
+    {
+      "id": "rasmus-tamm:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nSenior QA Engineer — Tallinn QA Corp 03/2021 – Present\nIndustry: Software Testing\n– Worked as Senior QA Engineer using Python, PyTest, Docker, and Git.\n– Delivered software testing solutions in the Software Testing industry.\nQA Engineer — Eesti Software Labs 03/2019 – 02/2021\nIndustry: Information Technology\n– Worked as QA Engineer using Python, Selenium, Postman, and Git.\n– Built test automation features in the Information Technology industry."
+    },
+    {
+      "id": "rasmus-tamm:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2018\nTallinn University of Technology"
+    },
+    {
+      "id": "rasmus-tamm:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nEstonian (native) · English (C1)"
+    },
+    {
+      "id": "rasmus-tamm:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nISTQB Certified Tester"
+    }
   ],
   "profile": {
     "name": "Rasmus Tamm",
@@ -85,6 +125,113 @@
     "certifications": [
       "ISTQB Certified Tester"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 45.5
 }

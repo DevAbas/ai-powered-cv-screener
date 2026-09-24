@@ -1,10 +1,55 @@
 {
   "id": "jonas-weber",
-  "file": "/cvs/jonas_weber_cv.pdf",
   "pages": 2,
-  "text": [
-    "Jonas Weber\nLead Data Engineer\njonas.weber@example.com · +1-555-015-1515 · Munich, Germany\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nJonas Weber is a Lead Data Engineer based in Munich, Germany, with 10 years of experience in enterprise\nsoftware and financial technology. They specialize in Python, SQL, Apache Spark, AWS, Docker, and Airflow.\nThey have formal leadership experience managing technical teams and hold a degree in Computer Science.\nSKILLS\nPython (10 years) · SQL (10 years) · Apache Spark (7 years) · AWS (6 years) · Docker (5 years) ·\nAirflow (5 years)\nEXPERIENCE\nLead Data Engineer — Bavaria Data Solutions 01/2021 – Present\nIndustry: Enterprise Software\n– Led data engineering initiatives as Lead Data Engineer using Python, SQL, Apache Spark, AWS, Docker,\nand Airflow.\n– Managed enterprise software data workflows.\nSenior Data Engineer — Alpine Analytics Corp 03/2016 – 12/2020\nIndustry: Financial Technology\n– Worked as Senior Data Engineer utilizing Python, SQL, Apache Spark, and AWS.\n– Delivered financial technology data pipelines.\nEDUCATION\nBSc Computer Science 2014\nTechnical University of Munich\nLANGUAGES\nGerman (native) · English (C1)\nLEADERSHIP\nLed engineering teams as a Lead Data Engineer across enterprise software projects.",
-    "CERTIFICATIONS\nAWS Certified Data Analytics"
+  "chunks": [
+    {
+      "id": "jonas-weber:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Jonas Weber\nLead Data Engineer\njonas.weber@example.com · +1-555-015-1515 · Munich, Germany\nHybrid · Remote · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "jonas-weber:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nJonas Weber is a Lead Data Engineer based in Munich, Germany, with 10 years of experience in enterprise\nsoftware and financial technology. They specialize in Python, SQL, Apache Spark, AWS, Docker, and Airflow.\nThey have formal leadership experience managing technical teams and hold a degree in Computer Science."
+    },
+    {
+      "id": "jonas-weber:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (10 years) · SQL (10 years) · Apache Spark (7 years) · AWS (6 years) · Docker (5 years) ·\nAirflow (5 years)"
+    },
+    {
+      "id": "jonas-weber:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nLead Data Engineer — Bavaria Data Solutions 01/2021 – Present\nIndustry: Enterprise Software\n– Led data engineering initiatives as Lead Data Engineer using Python, SQL, Apache Spark, AWS, Docker,\nand Airflow.\n– Managed enterprise software data workflows.\nSenior Data Engineer — Alpine Analytics Corp 03/2016 – 12/2020\nIndustry: Financial Technology\n– Worked as Senior Data Engineer utilizing Python, SQL, Apache Spark, and AWS.\n– Delivered financial technology data pipelines."
+    },
+    {
+      "id": "jonas-weber:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2014\nTechnical University of Munich"
+    },
+    {
+      "id": "jonas-weber:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nGerman (native) · English (C1)"
+    },
+    {
+      "id": "jonas-weber:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nLed engineering teams as a Lead Data Engineer across enterprise software projects."
+    },
+    {
+      "id": "jonas-weber:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nAWS Certified Data Analytics"
+    }
   ],
   "profile": {
     "name": "Jonas Weber",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led engineering teams as a Lead Data Engineer across enterprise software projects."
+      "note": "Led engineering teams as a Lead Data Engineer across enterprise software projects"
     },
     "certifications": [
       "AWS Certified Data Analytics"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 63.5
 }

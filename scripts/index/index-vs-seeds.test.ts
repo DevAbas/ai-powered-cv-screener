@@ -1,42 +1,26 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { CandidateSeedSchema } from "@/contracts/candidate";
 import { INDEX_DIR, readIndexEntries } from "@/lib/pool/index-files";
-import { normalizeLanguages, normalizeSkills } from "@/lib/pool/normalize";
-import { seedPath } from "../generate/fs";
+import { readSeeds } from "../generate/seeds";
+import { accuracyReport, compareEntry, COMPARED_FIELDS } from "./accuracy";
 
 // The committed index checked against the seeds its PDFs were rendered from
-// (PLAN, Build order: Indexer): every fact the PDF prints.
+// (PLAN, Indexer): every fact the PDF prints, and the accuracy thresholds.
 
 const index = existsSync(INDEX_DIR) ? readIndexEntries() : [];
-const seeded = index.filter((entry) => existsSync(seedPath(entry.id)));
-
-const sorted = (values: readonly string[]) => [...values].sort();
+const seeds = await readSeeds();
+const seeded = index.filter((entry) => seeds.has(entry.id));
 
 describe.runIf(seeded.length > 0)("index against seeds", () => {
   it.each(seeded.map((entry) => [entry.id, entry] as const))("%s matches its seed", (_id, entry) => {
-    const seed = CandidateSeedSchema.parse(JSON.parse(readFileSync(seedPath(entry.id), "utf8")));
-    const profile = entry.profile;
+    const result = compareEntry(entry, seeds.get(entry.id)!);
+    expect(COMPARED_FIELDS.filter((field) => !result[field])).toEqual([]);
+    expect(entry.pages).toBeGreaterThan(0);
+  });
 
-    expect(profile.name).toBe(seed.name);
-    expect(profile.headline).toBe(seed.headline);
-    expect(profile.role).toBe(seed.role);
-    expect(profile.seniority).toBe(seed.seniority);
-    expect(profile.location).toBe(seed.location);
-    expect(sorted(profile.remote)).toEqual(sorted(seed.remote));
-    expect(profile.workAuthorization).toBe(seed.workAuthorization);
-    expect(profile.availability).toBe(seed.availability);
-    expect(profile.yearsTotal).toBe(seed.yearsTotal);
-    const bySkill = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name);
-    expect([...profile.skills].sort(bySkill)).toEqual(normalizeSkills(seed.skills).sort(bySkill));
-    expect(normalizeLanguages(seed.languages)).toEqual(expect.arrayContaining(profile.languages));
-    expect(profile.languages).toHaveLength(seed.languages.length);
-    expect(profile.education).toEqual(seed.education);
-    expect(profile.employment).toEqual(
-      seed.employment.map(({ company, title, industry, from, to }) => ({ company, title, industry, from, to })),
-    );
-    expect(profile.leadership.has).toBe(seed.leadership.has);
-    expect(sorted(profile.certifications)).toEqual(sorted(seed.certifications));
-    expect(entry.pages).toBe(entry.text.length);
+  it("meets the accuracy thresholds", () => {
+    const report = accuracyReport(seeded, seeds);
+    expect(report.mismatches).toEqual([]);
+    expect(report.passes).toBe(true);
   });
 });

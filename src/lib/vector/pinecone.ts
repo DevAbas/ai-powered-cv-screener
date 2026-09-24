@@ -1,13 +1,14 @@
 import { Pinecone } from "@pinecone-database/pinecone";
 import { pineconeEnv } from "@/lib/env";
-import type { CvVectorMetadata, VectorMatch, VectorRecord, VectorStore } from "./vector-store";
+import type { ChunkMetadata, MetadataFilter, VectorMatch, VectorRecord, VectorStore } from "./vector-store";
 import { VectorStoreError } from "./vector-store";
 
-// The Pinecone implementation of VectorStore: the only module that imports the
-// Pinecone SDK. One client per store, the index addressed by name (the SDK
-// resolves and caches its host), CV vectors in one namespace.
+// The Pinecone implementation of VectorStore (PLAN, Vector store): the only
+// module that imports the Pinecone SDK. One client per store, the index
+// addressed by name (the SDK resolves and caches its host), chunk vectors
+// in one namespace.
 
-/** The namespace CV vectors live in. */
+/** The namespace the chunk vectors live in. */
 export const CV_NAMESPACE = "cvs";
 
 /** Records per upsert request; well under Pinecone's request size limit for 768-dimension vectors. */
@@ -38,7 +39,7 @@ async function call<T>(operation: string, run: () => Promise<T>): Promise<T> {
 
 export function createPineconeStore({ apiKey, indexName, dimensions, namespace = CV_NAMESPACE }: PineconeStoreOptions): PineconeStore {
   const client = new Pinecone({ apiKey });
-  const index = client.index<CvVectorMetadata>({ name: indexName, namespace });
+  const index = client.index<ChunkMetadata>({ name: indexName, namespace });
 
   return {
     async ensureIndex() {
@@ -62,20 +63,29 @@ export function createPineconeStore({ apiKey, indexName, dimensions, namespace =
     },
 
     // The SDK takes no abort signal for queries; a question that is stopped simply ignores the result.
-    async query(vector: readonly number[], topK: number): Promise<VectorMatch[]> {
-      const response = await call("query", () => index.query({ vector: [...vector], topK, includeMetadata: false }));
-      return response.matches.map((match) => ({ id: match.id, score: match.score ?? 0 }));
+    async query(vector: readonly number[], topK: number, filter?: MetadataFilter): Promise<VectorMatch[]> {
+      const response = await call("query", () => index.query({ vector: [...vector], topK, filter, includeMetadata: true }));
+      return response.matches.map((match) => ({ id: match.id, score: match.score ?? 0, metadata: match.metadata }));
     },
 
-    async listIds() {
+    async listIds(prefix?: string) {
       const ids: string[] = [];
       let paginationToken: string | undefined;
       do {
-        const page = await call("list", () => index.listPaginated({ paginationToken }));
+        const page = await call("list", () => index.listPaginated({ prefix, paginationToken }));
         for (const item of page.vectors ?? []) if (item.id) ids.push(item.id);
         paginationToken = page.pagination?.next;
       } while (paginationToken);
       return ids;
+    },
+
+    async deleteMany(ids: readonly string[]) {
+      if (ids.length === 0) return;
+      await call("delete", () => index.deleteMany({ ids: [...ids] }));
+    },
+
+    async deleteAll() {
+      await call("delete all", () => index.deleteAll());
     },
 
     async fetch(ids: readonly string[]) {
@@ -86,7 +96,7 @@ export function createPineconeStore({ apiKey, indexName, dimensions, namespace =
   };
 }
 
-/** The CV vector store from the environment (PINECONE_API_KEY, PINECONE_INDEX). */
+/** The chunk vector store from the environment (PINECONE_API_KEY, PINECONE_INDEX). */
 export function pineconeStoreFromEnv(dimensions: number): PineconeStore {
   const env = pineconeEnv();
   return createPineconeStore({ apiKey: env.PINECONE_API_KEY, indexName: env.PINECONE_INDEX, dimensions });

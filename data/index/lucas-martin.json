@@ -1,10 +1,55 @@
 {
   "id": "lucas-martin",
-  "file": "/cvs/lucas_martin_cv.pdf",
   "pages": 2,
-  "text": [
-    "Lucas Martin\nSenior Data Engineer\nlucas.martin@example.com · +1-555-013-1313 · Paris, France\nHybrid · Remote · European Union Citizen · Notice period: 30 days\nSUMMARY\nLucas Martin is a Senior Data Engineer based in Paris, France, with 7 years of total experience. Expertise\nspans Python, SQL, Spark, Airflow, AWS, and Docker across Data Analytics and Software Development\nindustries. Proven leadership background including mentoring and guiding technical projects. Holds a Master\ndegree in Computer Science from Sorbonne University.\nSKILLS\nPython (7 years) · SQL (7 years) · Apache Spark (5 years) · Airflow (4 years) · AWS (5 years) ·\nDocker (3 years)\nEXPERIENCE\nSenior Data Engineer — Seine Data Labs Mar 2021 – Present\nIndustry: Data Analytics\n• Worked as a Senior Data Engineer using Python, SQL, Spark, Airflow, AWS, and Docker.\n• Demonstrated leadership with technical mentoring and system design oversight.\nData Engineer — Lutetia Tech Jan 2019 – Feb 2021\nIndustry: Software Development\n• Worked as a Data Engineer utilizing Python, SQL, AWS, and Docker.\n• Delivered data ingestion pipelines and cloud storage solutions.\nEDUCATION\nMSc Computer Science 2017\nSorbonne University\nLANGUAGES\nFrench (native) · English (C1)\nLEADERSHIP\nMentored junior data engineers and led cloud migration initiatives.",
-    "CERTIFICATIONS\nAWS Certified Solutions Architect"
+  "chunks": [
+    {
+      "id": "lucas-martin:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Lucas Martin\nSenior Data Engineer\nlucas.martin@example.com · +1-555-013-1313 · Paris, France\nHybrid · Remote · European Union Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "lucas-martin:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nLucas Martin is a Senior Data Engineer based in Paris, France, with 7 years of total experience. Expertise\nspans Python, SQL, Spark, Airflow, AWS, and Docker across Data Analytics and Software Development\nindustries. Proven leadership background including mentoring and guiding technical projects. Holds a Master\ndegree in Computer Science from Sorbonne University."
+    },
+    {
+      "id": "lucas-martin:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (7 years) · SQL (7 years) · Apache Spark (5 years) · Airflow (4 years) · AWS (5 years) ·\nDocker (3 years)"
+    },
+    {
+      "id": "lucas-martin:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nSenior Data Engineer — Seine Data Labs Mar 2021 – Present\nIndustry: Data Analytics\n• Worked as a Senior Data Engineer using Python, SQL, Spark, Airflow, AWS, and Docker.\n• Demonstrated leadership with technical mentoring and system design oversight.\nData Engineer — Lutetia Tech Jan 2019 – Feb 2021\nIndustry: Software Development\n• Worked as a Data Engineer utilizing Python, SQL, AWS, and Docker.\n• Delivered data ingestion pipelines and cloud storage solutions."
+    },
+    {
+      "id": "lucas-martin:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nMSc Computer Science 2017\nSorbonne University"
+    },
+    {
+      "id": "lucas-martin:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nFrench (native) · English (C1)"
+    },
+    {
+      "id": "lucas-martin:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nMentored junior data engineers and led cloud migration initiatives."
+    },
+    {
+      "id": "lucas-martin:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nAWS Certified Solutions Architect"
+    }
   ],
   "profile": {
     "name": "Lucas Martin",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Mentored junior data engineers and led cloud migration initiatives."
+      "note": "Mentored junior data engineers and led cloud migration initiatives"
     },
     "certifications": [
       "AWS Certified Solutions Architect"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 46.5
 }

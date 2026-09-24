@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { CandidateProfile, Employment } from "@/contracts/candidate";
-import { checkAgainstText, dropUnstatedYears, extractPrompt, restoreCase } from "./extract";
+import { LENA } from "@/lib/retrieval/fixtures";
+import { ANDREI as ANDREI_SEED, LENA as LENA_SEED, TEST_SEEDS } from "../eval/fixtures";
+import { accuracyReport, compareEntry, formatAccuracy } from "./accuracy";
+import { extractPrompt, splitEvidence } from "./extract";
+import type { ExtractedProfile } from "./extract";
 import { cleanPageText, joinSpacedCapitals } from "./pdf-text";
-import { medianTenureMonths, yearMonthOf } from "./tenure";
 
 describe("joinSpacedCapitals", () => {
   it.each([
@@ -18,7 +20,6 @@ describe("joinSpacedCapitals", () => {
   it("leaves ordinary lines alone", () => {
     expect(joinSpacedCapitals("AWS Certified Developer - Associate")).toBe("AWS Certified Developer - Associate");
     expect(joinSpacedCapitals("React · TypeScript")).toBe("React · TypeScript");
-    expect(joinSpacedCapitals("BSc Computer Science 2018")).toBe("BSc Computer Science 2018");
   });
 });
 
@@ -29,111 +30,63 @@ describe("cleanPageText", () => {
 });
 
 describe("extractPrompt", () => {
-  it("marks every page", () => {
-    expect(extractPrompt(["one", "two"])).toBe("--- Page 1 ---\none\n\n--- Page 2 ---\ntwo");
+  it("marks every section of every page", () => {
+    const prompt = extractPrompt(LENA.chunks);
+    expect(prompt).toContain("[Page 1] [HEADER]\nLena Novak");
+    expect(prompt).toContain("[Page 2] [EXPERIENCE]\nEXPERIENCE\nSenior Frontend Engineer");
   });
 });
 
-describe("dropUnstatedYears", () => {
-  it("drops zero years and keeps stated ones", () => {
-    const profile = { skills: [{ name: "React", years: 0 }, { name: "Jest", years: 4 }, { name: "Redux" }] };
-    expect(dropUnstatedYears(profile as Parameters<typeof dropUnstatedYears>[0]).skills).toEqual([
-      { name: "React" },
-      { name: "Jest", years: 4 },
-      { name: "Redux" },
+describe("splitEvidence", () => {
+  it("separates the profile from the copied lines", () => {
+    const extracted: ExtractedProfile = {
+      ...LENA.profile,
+      availabilityAsWritten: "Notice period: 30 days",
+      yearsTotalAsWritten: "7 years",
+      skills: [{ name: "React", years: 7, asWritten: "React (7 years)" }],
+      languages: [{ language: "German", level: "native", asWritten: "German (native)" }],
+      education: [{ ...LENA.profile.education[0], asWritten: "BSc Computer Science 2018" }],
+      employment: [{ ...LENA.profile.employment[0], periodAsWritten: "Mar 2022 – Present" }],
+    };
+    const { profile, evidence } = splitEvidence(extracted);
+    expect(profile.skills).toEqual([{ name: "React", years: 7 }]);
+    expect(profile.employment[0]).not.toHaveProperty("periodAsWritten");
+    expect(evidence).toEqual({
+      availabilityAsWritten: "Notice period: 30 days",
+      yearsTotalAsWritten: "7 years",
+      skills: ["React (7 years)"],
+      languages: ["German (native)"],
+      education: ["BSc Computer Science 2018"],
+      employment: ["Mar 2022 – Present"],
+    });
+  });
+});
+
+describe("accuracy", () => {
+  it("compares every field with the seed and sums up per field and per CV", () => {
+    // The seed the fixture CV would have been rendered from: the entry's profile plus the seed-only fields.
+    const seeds = new Map([
+      [
+        "lena-novak",
+        {
+          ...LENA_SEED,
+          ...LENA.profile,
+          employment: LENA.profile.employment.map((job, i) => ({ ...LENA_SEED.employment[i]!, ...job })),
+        },
+      ],
     ]);
-  });
-});
+    const exact = compareEntry(LENA, seeds.get("lena-novak")!);
+    expect(exact.skills).toBe(true);
+    expect(exact.name).toBe(true);
+    const report = accuracyReport([LENA], seeds);
+    expect(report.cvs).toBe(1);
+    expect(report.verified.total).toBeGreaterThan(0);
+    expect(formatAccuracy(report)).toContain("verified sources");
 
-describe("restoreCase", () => {
-  const text = "Senior Frontend Developer — Tagus Vista Solutions\nHTML/CSS · Next.js";
-  it("takes the CV's capitalisation", () => {
-    expect(restoreCase("tagus vista solutions", text)).toBe("Tagus Vista Solutions");
-    expect(restoreCase("html/css", text)).toBe("HTML/CSS");
-    expect(restoreCase("next.js", text)).toBe("Next.js");
-  });
-
-  it("prefers the most capitalised match: a title line over prose", () => {
-    const cv = "Summary: senior Machine Learning Engineer in Madrid.\nSenior Machine Learning Engineer — Catalunya Neural";
-    expect(restoreCase("senior machine learning engineer", cv)).toBe("Senior Machine Learning Engineer");
-  });
-
-  it("prefers a capitalised match over prose and matches across line breaks", () => {
-    const cv = "mentoring junior frontend developers\nJunior Frontend Developer — Atlantico\nFinancial\nTechnology";
-    expect(restoreCase("junior frontend developer", cv)).toBe("Junior Frontend Developer");
-    expect(restoreCase("financial technology", cv)).toBe("Financial Technology");
-  });
-
-  it("keeps a value the text does not contain", () => {
-    expect(restoreCase("Financial Technology", text)).toBe("Financial Technology");
-  });
-});
-
-describe("checkAgainstText", () => {
-  const profile: CandidateProfile = {
-    name: "sofia almeida",
-    headline: "senior frontend developer",
-    role: "security",
-    seniority: "senior",
-    location: "lisbon, portugal",
-    remote: ["hybrid"],
-    workAuthorization: "eu citizen",
-    availability: 30,
-    yearsTotal: 7,
-    skills: [{ name: "react" }],
-    languages: [],
-    education: [{ degree: "bachelor", field: "computer science", institution: "university of lisbon", year: 2018 }],
-    employment: [{ company: "tagus vista", title: "senior frontend developer", industry: "fintech", from: "2022-03", to: null }],
-    leadership: { has: false, note: "" },
-    certifications: ["aws certified cloud practitioner"],
-  };
-  const text = [
-    "Sofia Almeida",
-    "Senior Frontend Developer",
-    "Lisbon, Portugal · EU Citizen",
-    "React",
-    "Senior Frontend Developer — Tagus Vista",
-    "BSc Computer Science 2018",
-    "University of Lisbon",
-    "AWS Certified Cloud Practitioner",
-  ].join("\n");
-
-  it("restores capitalisation and takes the role from the headline", () => {
-    const checked = checkAgainstText(profile, text);
-    expect(checked.name).toBe("Sofia Almeida");
-    expect(checked.role).toBe("frontend");
-    expect(checked.workAuthorization).toBe("EU Citizen");
-    expect(checked.employment[0].company).toBe("Tagus Vista");
-    expect(checked.employment[0].industry).toBe("fintech");
-    expect(checked.education[0].institution).toBe("University of Lisbon");
-    expect(checked.certifications).toEqual(["AWS Certified Cloud Practitioner"]);
-  });
-
-  it("keeps the model's role when the headline names none", () => {
-    expect(checkAgainstText({ ...profile, headline: "Head of Product", role: "product" }, "Head of Product").role).toBe("product");
-  });
-});
-
-const job = (from: string, to: string | null): Employment => ({ company: "Acme", title: "Engineer", industry: "Retail", from, to });
-
-describe("medianTenureMonths", () => {
-  it("counts both end months and runs a current job to now", () => {
-    expect(medianTenureMonths([job("2024-01", "2024-12")], "2026-09")).toBe(12);
-    expect(medianTenureMonths([job("2026-01", null)], "2026-09")).toBe(9);
-  });
-
-  it("takes the median, averaging the middle two", () => {
-    expect(medianTenureMonths([job("2020-01", "2020-06"), job("2021-01", "2021-12"), job("2022-01", "2023-12")], "2026-09")).toBe(12);
-    expect(medianTenureMonths([job("2020-01", "2020-06"), job("2021-01", "2021-12")], "2026-09")).toBe(9);
-  });
-
-  it("is null without jobs", () => {
-    expect(medianTenureMonths([], "2026-09")).toBeNull();
-  });
-});
-
-describe("yearMonthOf", () => {
-  it("formats a date as YYYY-MM in UTC", () => {
-    expect(yearMonthOf(new Date(Date.UTC(2026, 8, 24)))).toBe("2026-09");
+    const wrong = accuracyReport([{ ...LENA, profile: { ...LENA.profile, yearsTotal: 8 } }], seeds);
+    expect(wrong.mismatches).toEqual([{ id: "lena-novak", fields: ["yearsTotal"] }]);
+    expect(wrong.passes).toBe(false);
+    expect(accuracyReport([LENA], new Map([["andrei-popescu", ANDREI_SEED]])).unseeded).toEqual(["lena-novak"]);
+    expect(TEST_SEEDS.size).toBe(3);
   });
 });

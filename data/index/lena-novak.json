@@ -1,10 +1,55 @@
 {
   "id": "lena-novak",
-  "file": "/cvs/lena_novak_cv.pdf",
   "pages": 2,
-  "text": [
-    "Lena Novak\nSenior Frontend Engineer\nlena.novak@example.com · +1-555-001-0101 · Berlin, Germany\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nSenior Frontend Engineer based in Berlin, Germany, with 7 years of total software development experience\nacross the E-commerce and Digital Media industries. Skilled in React, TypeScript, JavaScript, HTML/CSS,\nNext.js, Redux, Webpack, and Jest. Currently employed at Kinetix Digital after previously working at AeroFlux\nMedia, with experience leading technical frontend initiatives and mentoring junior team members.\nSKILLS\nReact (7 years) · TypeScript (6 years) · JavaScript (7 years) · HTML/CSS (7 years) ·\nNext.js (4 years) · Redux (5 years) · Webpack (5 years) · Jest (4 years)\nEXPERIENCE\nSenior Frontend Engineer — Kinetix Digital Mar 2022 – Present\nIndustry: E-commerce\n• Developed scalable web application features using React, TypeScript, and Next.js.\n• Implemented automated unit tests with Jest and built responsive user interfaces using HTML/CSS.\nFrontend Developer — AeroFlux Media Mar 2019 – Feb 2022\nIndustry: Digital Media\n• Engineered interactive frontend components using React, JavaScript, and Redux.\n• Configured frontend asset bundling with Webpack and styled web pages with HTML/CSS.\nEDUCATION\nBSc Computer Science 2018\nTechnical University of Berlin\nLANGUAGES\nGerman (native) · English (C1)\nLEADERSHIP\nLed technical frontend initiatives and mentored junior team members.",
-    "CERTIFICATIONS\nAWS Certified Developer - Associate"
+  "chunks": [
+    {
+      "id": "lena-novak:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Lena Novak\nSenior Frontend Engineer\nlena.novak@example.com · +1-555-001-0101 · Berlin, Germany\nHybrid · Remote · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "lena-novak:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nSenior Frontend Engineer based in Berlin, Germany, with 7 years of total software development experience\nacross the E-commerce and Digital Media industries. Skilled in React, TypeScript, JavaScript, HTML/CSS,\nNext.js, Redux, Webpack, and Jest. Currently employed at Kinetix Digital after previously working at AeroFlux\nMedia, with experience leading technical frontend initiatives and mentoring junior team members."
+    },
+    {
+      "id": "lena-novak:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nReact (7 years) · TypeScript (6 years) · JavaScript (7 years) · HTML/CSS (7 years) ·\nNext.js (4 years) · Redux (5 years) · Webpack (5 years) · Jest (4 years)"
+    },
+    {
+      "id": "lena-novak:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nSenior Frontend Engineer — Kinetix Digital Mar 2022 – Present\nIndustry: E-commerce\n• Developed scalable web application features using React, TypeScript, and Next.js.\n• Implemented automated unit tests with Jest and built responsive user interfaces using HTML/CSS.\nFrontend Developer — AeroFlux Media Mar 2019 – Feb 2022\nIndustry: Digital Media\n• Engineered interactive frontend components using React, JavaScript, and Redux.\n• Configured frontend asset bundling with Webpack and styled web pages with HTML/CSS."
+    },
+    {
+      "id": "lena-novak:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2018\nTechnical University of Berlin"
+    },
+    {
+      "id": "lena-novak:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nGerman (native) · English (C1)"
+    },
+    {
+      "id": "lena-novak:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nLed technical frontend initiatives and mentored junior team members."
+    },
+    {
+      "id": "lena-novak:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nAWS Certified Developer - Associate"
+    }
   ],
   "profile": {
     "name": "Lena Novak",
@@ -89,11 +134,128 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led technical frontend initiatives and mentored junior team members."
+      "note": "Led technical frontend initiatives and mentored junior team members"
     },
     "certifications": [
       "AWS Certified Developer - Associate"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.6": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.7": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 45.5
 }

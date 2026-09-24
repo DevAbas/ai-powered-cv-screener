@@ -1,9 +1,49 @@
 {
   "id": "nikolett-szabo",
-  "file": "/cvs/nikolett_szabo_cv.pdf",
   "pages": 1,
-  "text": [
-    "Nikolett Szabó\nData Scientist\nnikolett.szabo@example.com · +1-555-014-1414 · Budapest, Hungary\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nNikolett Szabó is a mid Data Scientist based in Budapest, Hungary with 4 years of total experience. Expertise spans\nPython, SQL, Pandas, Scikit-Learn, Tableau, and Git within the Analytics and Technology industries. Education includes\na bachelor degree in Data Science from Corvinus University of Budapest.\nSKILLS\nPython (4 years) · SQL (4 years) · Pandas (3 years) · scikit-learn (3 years) · Tableau (3 years) · Git (4 years)\nEXPERIENCE\nData Scientist — Pannonia Analytics Jan 2023 – Present\nIndustry: Analytics\n• Apply Python and Scikit-Learn as a mid Data Scientist in the Analytics industry.\n• Utilize SQL and Git during daily development tasks.\nJunior Data Analyst — Budapest Data Corp Jan 2022 – Dec 2022\nIndustry: Technology\n• Developed reports in Tableau and Pandas for the Technology industry.\n• Wrote queries in SQL and scripts in Python.\nEDUCATION\nBSc Data Science 2021\nCorvinus University of Budapest\nLANGUAGES\nHungarian (native) · English (C1)\nCERTIFICATIONS\nCertified Data Scientist"
+  "chunks": [
+    {
+      "id": "nikolett-szabo:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Nikolett Szabó\nData Scientist\nnikolett.szabo@example.com · +1-555-014-1414 · Budapest, Hungary\nHybrid · Remote · Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "nikolett-szabo:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nNikolett Szabó is a mid Data Scientist based in Budapest, Hungary with 4 years of total experience. Expertise spans\nPython, SQL, Pandas, Scikit-Learn, Tableau, and Git within the Analytics and Technology industries. Education includes\na bachelor degree in Data Science from Corvinus University of Budapest."
+    },
+    {
+      "id": "nikolett-szabo:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (4 years) · SQL (4 years) · Pandas (3 years) · scikit-learn (3 years) · Tableau (3 years) · Git (4 years)"
+    },
+    {
+      "id": "nikolett-szabo:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nData Scientist — Pannonia Analytics Jan 2023 – Present\nIndustry: Analytics\n• Apply Python and Scikit-Learn as a mid Data Scientist in the Analytics industry.\n• Utilize SQL and Git during daily development tasks.\nJunior Data Analyst — Budapest Data Corp Jan 2022 – Dec 2022\nIndustry: Technology\n• Developed reports in Tableau and Pandas for the Technology industry.\n• Wrote queries in SQL and scripts in Python."
+    },
+    {
+      "id": "nikolett-szabo:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Data Science 2021\nCorvinus University of Budapest"
+    },
+    {
+      "id": "nikolett-szabo:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nHungarian (native) · English (C1)"
+    },
+    {
+      "id": "nikolett-szabo:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nCertified Data Scientist"
+    }
   ],
   "profile": {
     "name": "Nikolett Szabó",
@@ -85,6 +125,113 @@
     "certifications": [
       "Certified Data Scientist"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 28.5
 }

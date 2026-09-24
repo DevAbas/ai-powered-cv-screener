@@ -1,9 +1,49 @@
 {
   "id": "chloe-dubois",
-  "file": "/cvs/chloe_dubois_cv.pdf",
   "pages": 1,
-  "text": [
-    "Chloé Dubois\nQA Automation Engineer\nchloe.dubois@example.com · +1-555-022-2222 · Lyon, France\nHybrid · Remote · European Union Citizen · Notice period: 30 days\nSUMMARY\nChloé Dubois is a mid-level QA Automation Engineer based in Lyon, France with 3.5 years of experience.\nExpertise includes Python, Selenium, PyTest, Postman, Docker, and Git in the software testing industry.\nEducation includes a bachelor degree in Computer Science from University of Lyon.\nSKILLS\nPython (3.5 years) · Selenium (3 years) · PyTest (3 years) · Postman (2.5 years) · Docker (2 years) ·\nGit (3.5 years)\nEXPERIENCE\nQA Automation Engineer — Rhone Quality Systems Mar 2023 – Present\nIndustry: Software Testing\n• Engineered automated test cases using Python and Selenium.\n• Executed regression suites with PyTest inside Docker containers.\nJunior QA Engineer — Saone Tech Labs Sep 2021 – Feb 2023\nIndustry: Software Testing\n• Tested REST APIs using Postman.\n• Tracked source code versions and test scripts using Git.\nEDUCATION\nBSc Computer Science 2021\nUniversity of Lyon\nLANGUAGES\nFrench (native) · English (C1)\nCERTIFICATIONS\nCertified Tester Foundation Level"
+  "chunks": [
+    {
+      "id": "chloe-dubois:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Chloé Dubois\nQA Automation Engineer\nchloe.dubois@example.com · +1-555-022-2222 · Lyon, France\nHybrid · Remote · European Union Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "chloe-dubois:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nChloé Dubois is a mid-level QA Automation Engineer based in Lyon, France with 3.5 years of experience.\nExpertise includes Python, Selenium, PyTest, Postman, Docker, and Git in the software testing industry.\nEducation includes a bachelor degree in Computer Science from University of Lyon."
+    },
+    {
+      "id": "chloe-dubois:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (3.5 years) · Selenium (3 years) · PyTest (3 years) · Postman (2.5 years) · Docker (2 years) ·\nGit (3.5 years)"
+    },
+    {
+      "id": "chloe-dubois:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nQA Automation Engineer — Rhone Quality Systems Mar 2023 – Present\nIndustry: Software Testing\n• Engineered automated test cases using Python and Selenium.\n• Executed regression suites with PyTest inside Docker containers.\nJunior QA Engineer — Saone Tech Labs Sep 2021 – Feb 2023\nIndustry: Software Testing\n• Tested REST APIs using Postman.\n• Tracked source code versions and test scripts using Git."
+    },
+    {
+      "id": "chloe-dubois:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2021\nUniversity of Lyon"
+    },
+    {
+      "id": "chloe-dubois:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nFrench (native) · English (C1)"
+    },
+    {
+      "id": "chloe-dubois:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nCertified Tester Foundation Level"
+    }
   ],
   "profile": {
     "name": "Chloé Dubois",
@@ -85,6 +125,113 @@
     "certifications": [
       "Certified Tester Foundation Level"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 30.5
 }

@@ -1,10 +1,55 @@
 {
   "id": "jane-doe",
-  "file": "/cvs/jane_doe_cv.pdf",
   "pages": 2,
-  "text": [
-    "Jane Doe\nFrontend Lead\njane.doe@example.com · +1-555-002-0202 · Dublin, Ireland\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nJane Doe is a Frontend Lead based in Dublin, Ireland with 10 years of experience across Financial Technology, Cloud\nSoftware, and Digital Media. She holds a bachelor degree in Computer Science from Trinity College Dublin and\nspecializes in JavaScript, TypeScript, React, Vue.js, Redux, HTML5/CSS3, Webpack, and Jest. Her background includes\nleadership experience guiding frontend teams and mentoring junior developers.\nSKILLS\nJavaScript (10 years) · TypeScript (8 years) · React (7 years) · Vue.js (4 years) · Redux (6 years) ·\nHTML5/CSS3 (10 years) · Webpack (6 years) · Jest (5 years)\nEXPERIENCE\nFrontend Lead — Emerald Paytech Mar 2021 – Present\nIndustry: Financial Technology\n• Led frontend development using JavaScript, TypeScript, React, Redux, and Jest.\n• Guided technical vision and mentored junior developers within Financial Technology.\nSenior Frontend Engineer — Celtic Cloud Systems Jan 2018 – Feb 2021\nIndustry: Cloud Software\n• Built interactive monitoring dashboards using TypeScript, Vue.js, Webpack, and HTML5/CSS3.\n• Engineered web interface components for Cloud Software platforms.\nFrontend Developer — Liffey Media Mar 2016 – Dec 2017\nIndustry: Digital Media\n• Developed user interfaces for web applications utilizing JavaScript, HTML5/CSS3, and Webpack.\n• Created modern responsive layouts in the Digital Media sector.\nEDUCATION\nBSc Computer Science 2015\nTrinity College Dublin\nLANGUAGES\nEnglish (native) · Irish (B2)",
-    "LEADERSHIP\nLed a frontend team of 6 engineers and mentored junior developers.\nCERTIFICATIONS\nAWS Certified Developer - Associate"
+  "chunks": [
+    {
+      "id": "jane-doe:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Jane Doe\nFrontend Lead\njane.doe@example.com · +1-555-002-0202 · Dublin, Ireland\nHybrid · Remote · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "jane-doe:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nJane Doe is a Frontend Lead based in Dublin, Ireland with 10 years of experience across Financial Technology, Cloud\nSoftware, and Digital Media. She holds a bachelor degree in Computer Science from Trinity College Dublin and\nspecializes in JavaScript, TypeScript, React, Vue.js, Redux, HTML5/CSS3, Webpack, and Jest. Her background includes\nleadership experience guiding frontend teams and mentoring junior developers."
+    },
+    {
+      "id": "jane-doe:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nJavaScript (10 years) · TypeScript (8 years) · React (7 years) · Vue.js (4 years) · Redux (6 years) ·\nHTML5/CSS3 (10 years) · Webpack (6 years) · Jest (5 years)"
+    },
+    {
+      "id": "jane-doe:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nFrontend Lead — Emerald Paytech Mar 2021 – Present\nIndustry: Financial Technology\n• Led frontend development using JavaScript, TypeScript, React, Redux, and Jest.\n• Guided technical vision and mentored junior developers within Financial Technology.\nSenior Frontend Engineer — Celtic Cloud Systems Jan 2018 – Feb 2021\nIndustry: Cloud Software\n• Built interactive monitoring dashboards using TypeScript, Vue.js, Webpack, and HTML5/CSS3.\n• Engineered web interface components for Cloud Software platforms.\nFrontend Developer — Liffey Media Mar 2016 – Dec 2017\nIndustry: Digital Media\n• Developed user interfaces for web applications utilizing JavaScript, HTML5/CSS3, and Webpack.\n• Created modern responsive layouts in the Digital Media sector."
+    },
+    {
+      "id": "jane-doe:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2015\nTrinity College Dublin"
+    },
+    {
+      "id": "jane-doe:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nEnglish (native) · Irish (B2)"
+    },
+    {
+      "id": "jane-doe:leadership:2",
+      "section": "leadership",
+      "page": 2,
+      "text": "LEADERSHIP\nLed a frontend team of 6 engineers and mentored junior developers."
+    },
+    {
+      "id": "jane-doe:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nAWS Certified Developer - Associate"
+    }
   ],
   "profile": {
     "name": "Jane Doe",
@@ -96,11 +141,133 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led a frontend team of 6 engineers and mentored junior developers."
+      "note": "Led a frontend team of 6 engineers and mentored junior developers"
     },
     "certifications": [
       "AWS Certified Developer - Associate"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.6": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.7": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.2": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 2,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 38
 }

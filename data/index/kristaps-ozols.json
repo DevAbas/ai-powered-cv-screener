@@ -1,10 +1,55 @@
 {
   "id": "kristaps-ozols",
-  "file": "/cvs/kristaps_ozols_cv.pdf",
   "pages": 2,
-  "text": [
-    "Kristaps Ozols\nBackend Engineer\nkristaps.ozols@example.com · +1-555-011-1111 · Riga, Latvia\nHybrid · Remote · Citizen · Notice period: 14 days\nSUMMARY\nKristaps Ozols is a mid Backend Engineer based in Riga, Latvia with 4 years of total experience. Expertise covers Python,\nDjango, PostgreSQL, Docker, Redis, and Git across the Software Development and Information Technology industries.\nDemonstrates leadership experience by guiding team members.\nSKILLS\nPython (4 years) · Django (3 years) · PostgreSQL (4 years) · Docker (3 years) · Redis (2 years) · Git (4 years)\nEXPERIENCE\nBackend Engineer — Baltic Data Dynamics Jan 2023 – Present\nIndustry: Software Development\n• Worked as a mid Backend Engineer in the Software Development industry using Python, Django, PostgreSQL, Redis,\nDocker, and Git.\n• Applied Python, Django, and PostgreSQL to deliver backend solutions with leadership.\n• Utilized Docker, Redis, and Git for version control and containerization in Software Development.\nJunior Backend Developer — Riga Systems Lab Jan 2022 – Dec 2022\nIndustry: Information Technology\n• Worked as a Junior Backend Developer in the Information Technology industry using Python, PostgreSQL, and Git.\n• Built database modules with Python and PostgreSQL while practicing Git.\nEDUCATION\nBSc Computer Science 2021\nRiga Technical University\nLANGUAGES\nLatvian (native) · English (C1)\nLEADERSHIP\nGuided junior developers on backend best practices.",
-    "CERTIFICATIONS\nCertified Python Developer"
+  "chunks": [
+    {
+      "id": "kristaps-ozols:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Kristaps Ozols\nBackend Engineer\nkristaps.ozols@example.com · +1-555-011-1111 · Riga, Latvia\nHybrid · Remote · Citizen · Notice period: 14 days"
+    },
+    {
+      "id": "kristaps-ozols:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nKristaps Ozols is a mid Backend Engineer based in Riga, Latvia with 4 years of total experience. Expertise covers Python,\nDjango, PostgreSQL, Docker, Redis, and Git across the Software Development and Information Technology industries.\nDemonstrates leadership experience by guiding team members."
+    },
+    {
+      "id": "kristaps-ozols:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nPython (4 years) · Django (3 years) · PostgreSQL (4 years) · Docker (3 years) · Redis (2 years) · Git (4 years)"
+    },
+    {
+      "id": "kristaps-ozols:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nBackend Engineer — Baltic Data Dynamics Jan 2023 – Present\nIndustry: Software Development\n• Worked as a mid Backend Engineer in the Software Development industry using Python, Django, PostgreSQL, Redis,\nDocker, and Git.\n• Applied Python, Django, and PostgreSQL to deliver backend solutions with leadership.\n• Utilized Docker, Redis, and Git for version control and containerization in Software Development.\nJunior Backend Developer — Riga Systems Lab Jan 2022 – Dec 2022\nIndustry: Information Technology\n• Worked as a Junior Backend Developer in the Information Technology industry using Python, PostgreSQL, and Git.\n• Built database modules with Python and PostgreSQL while practicing Git."
+    },
+    {
+      "id": "kristaps-ozols:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2021\nRiga Technical University"
+    },
+    {
+      "id": "kristaps-ozols:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nLatvian (native) · English (C1)"
+    },
+    {
+      "id": "kristaps-ozols:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nGuided junior developers on backend best practices."
+    },
+    {
+      "id": "kristaps-ozols:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nCertified Python Developer"
+    }
   ],
   "profile": {
     "name": "Kristaps Ozols",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Guided junior developers on backend best practices."
+      "note": "Guided junior developers on backend best practices"
     },
     "certifications": [
       "Certified Python Developer"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 28.5
 }

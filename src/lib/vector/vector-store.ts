@@ -1,34 +1,48 @@
-// The vector store port (PLAN, Retrieval and answering). The answering
-// service and the indexer depend on this interface; `pinecone.ts` is the only
-// implementation that talks to a real service.
+import type { SectionName } from "@/contracts/candidate";
 
-/** What a CV vector carries besides its values; the CV text itself stays in the index. */
-export interface CvVectorMetadata {
-  [key: string]: string;
-  name: string;
-  file: string;
+// The vector store port (PLAN, Vector store): one record per section chunk.
+// The answering service and the indexer depend on this interface;
+// `pinecone.ts` is the only implementation that talks to a real service.
+
+/** What a chunk vector carries besides its values: enough to filter by without the index. */
+export interface ChunkMetadata {
+  [key: string]: string | number | string[];
+  candidateId: string;
+  section: SectionName;
+  page: number;
+  role: string;
+  seniority: string;
+  skills: string[];
+  languages: string[];
 }
 
 export interface VectorRecord {
-  /** The candidate id: deterministic, so upserts are idempotent. */
+  /** The chunk id, `<candidateId>:<section>:<page>`: deterministic, so upserts are idempotent. */
   id: string;
   values: number[];
-  metadata: CvVectorMetadata;
+  metadata: ChunkMetadata;
 }
 
 export interface VectorMatch {
   id: string;
   /** Cosine similarity, higher is closer. */
   score: number;
+  metadata?: ChunkMetadata;
 }
+
+/** A metadata filter in Pinecone's syntax, the subset the app uses: `$eq`, `$in` (any of, also on list fields) and `$and`. */
+export type MetadataFilter = { $and: MetadataFilter[] } | Record<string, { $eq: string | number } | { $in: (string | number)[] }>;
 
 export interface VectorStore {
   /** Inserts or replaces records by id. */
   upsert(records: readonly VectorRecord[]): Promise<void>;
-  /** The `topK` closest records, best first. */
-  query(vector: readonly number[], topK: number, signal?: AbortSignal): Promise<VectorMatch[]>;
-  /** Every stored id. */
-  listIds(): Promise<string[]>;
+  /** The `topK` closest records among those matching `filter`, best first, with their metadata. */
+  query(vector: readonly number[], topK: number, filter?: MetadataFilter, signal?: AbortSignal): Promise<VectorMatch[]>;
+  /** Every stored id, or those starting with `prefix`. */
+  listIds(prefix?: string): Promise<string[]>;
+  deleteMany(ids: readonly string[]): Promise<void>;
+  /** Empties the namespace. */
+  deleteAll(): Promise<void>;
   /** The stored vectors of these ids; an id without a record is left out. */
   fetch(ids: readonly string[]): Promise<Map<string, number[]>>;
 }

@@ -1,9 +1,49 @@
 {
   "id": "leon-fischer",
-  "file": "/cvs/leon_fischer_cv.pdf",
   "pages": 1,
-  "text": [
-    "Leon Fischer\nSenior Full-Stack Engineer\nleon.fischer@example.com · +1-555-028-2828 · Luxembourg, Luxembourg\nRemote · Hybrid · EU Citizen · Notice period: 30 days\nSUMMARY\nLeon Fischer is a senior full-stack engineer based in Luxembourg with 7 years of total experience. Their\nexpertise covers JavaScript, TypeScript, React, Node.js, PostgreSQL, and Docker. They hold a bachelor\ndegree in Computer Science and bring strong technical experience in cloud computing and financial\ntechnology.\nSKILLS\nJavaScript (7 years) · TypeScript (5 years) · React (6 years) · Node.js (5 years) ·\nPostgreSQL (4 years) · Docker (3 years)\nEXPERIENCE\nSenior Full-Stack Engineer — Vesper Cloud Solutions Mar 2022 – Present\nIndustry: Cloud Computing\n• Executed senior fullstack responsibilities in cloud computing using TypeScript, React, Node.js, and Docker.\n• Demonstrated leadership in technical tasks without direct staff management.\nFull-Stack Engineer — Valence Tech Mar 2019 – Feb 2022\nIndustry: Financial Technology\n• Applied fullstack skills in financial technology using JavaScript, React, and PostgreSQL.\n• Contributed to core product features as a fullstack engineer.\nEDUCATION\nBSc Computer Science 2018\nUniversity of Luxembourg\nLANGUAGES\nGerman (native) · English (C2)\nCERTIFICATIONS\nAWS Certified Developer"
+  "chunks": [
+    {
+      "id": "leon-fischer:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Leon Fischer\nSenior Full-Stack Engineer\nleon.fischer@example.com · +1-555-028-2828 · Luxembourg, Luxembourg\nRemote · Hybrid · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "leon-fischer:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nLeon Fischer is a senior full-stack engineer based in Luxembourg with 7 years of total experience. Their\nexpertise covers JavaScript, TypeScript, React, Node.js, PostgreSQL, and Docker. They hold a bachelor\ndegree in Computer Science and bring strong technical experience in cloud computing and financial\ntechnology."
+    },
+    {
+      "id": "leon-fischer:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nJavaScript (7 years) · TypeScript (5 years) · React (6 years) · Node.js (5 years) ·\nPostgreSQL (4 years) · Docker (3 years)"
+    },
+    {
+      "id": "leon-fischer:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nSenior Full-Stack Engineer — Vesper Cloud Solutions Mar 2022 – Present\nIndustry: Cloud Computing\n• Executed senior fullstack responsibilities in cloud computing using TypeScript, React, Node.js, and Docker.\n• Demonstrated leadership in technical tasks without direct staff management.\nFull-Stack Engineer — Valence Tech Mar 2019 – Feb 2022\nIndustry: Financial Technology\n• Applied fullstack skills in financial technology using JavaScript, React, and PostgreSQL.\n• Contributed to core product features as a fullstack engineer."
+    },
+    {
+      "id": "leon-fischer:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2018\nUniversity of Luxembourg"
+    },
+    {
+      "id": "leon-fischer:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nGerman (native) · English (C2)"
+    },
+    {
+      "id": "leon-fischer:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nAWS Certified Developer"
+    }
   ],
   "profile": {
     "name": "Leon Fischer",
@@ -85,6 +125,113 @@
     "certifications": [
       "AWS Certified Developer"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 45.5
 }

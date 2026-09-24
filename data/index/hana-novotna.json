@@ -1,9 +1,49 @@
 {
   "id": "hana-novotna",
-  "file": "/cvs/hana_novotna_cv.pdf",
   "pages": 1,
-  "text": [
-    "Hana Novotná\nJunior QA Engineer\nhana.novotna@example.com · +1-555-024-2424 · Prague, Czechia\nHybrid · Remote · Citizen · Notice period: 14 days\nSUMMARY\nHana Novotná is a Junior QA Engineer with 1.5 years of total experience based in Prague, Czechia. She\nspecializes in Selenium, Postman, Python, Jira, SQL, and Git within the software testing and IT industries.\nShe holds a bachelor degree in Informatics and is available in 14 days for hybrid or remote roles.\nSKILLS\nSelenium (1.5 years) · Postman (1.5 years) · Python (1 year) · Jira (1.5 years) · SQL (1 year) ·\nGit (1.5 years)\nEXPERIENCE\nJunior QA Engineer — Vltava QA Labs 07/2024 – Present\nIndustry: Software Testing\n– Tested financial applications using Selenium, Python, and Postman.\n– Tracked software issues using Jira and managed code versions with Git.\n– Queried databases using SQL for test verification.\nQA Intern — Morava Systems 01/2024 – 06/2024\nIndustry: Information Technology\n– Executed test scripts using Selenium for retail web applications.\n– Logged bugs and tasks in Jira and collaborated via Git.\nEDUCATION\nBSc Informatics 2024\nCzech Technical University in Prague\nLANGUAGES\nCzech (native) · English (C1)\nCERTIFICATIONS\nISTQB Certified Tester Foundation Level"
+  "chunks": [
+    {
+      "id": "hana-novotna:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Hana Novotná\nJunior QA Engineer\nhana.novotna@example.com · +1-555-024-2424 · Prague, Czechia\nHybrid · Remote · Citizen · Notice period: 14 days"
+    },
+    {
+      "id": "hana-novotna:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nHana Novotná is a Junior QA Engineer with 1.5 years of total experience based in Prague, Czechia. She\nspecializes in Selenium, Postman, Python, Jira, SQL, and Git within the software testing and IT industries.\nShe holds a bachelor degree in Informatics and is available in 14 days for hybrid or remote roles."
+    },
+    {
+      "id": "hana-novotna:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nSelenium (1.5 years) · Postman (1.5 years) · Python (1 year) · Jira (1.5 years) · SQL (1 year) ·\nGit (1.5 years)"
+    },
+    {
+      "id": "hana-novotna:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nJunior QA Engineer — Vltava QA Labs 07/2024 – Present\nIndustry: Software Testing\n– Tested financial applications using Selenium, Python, and Postman.\n– Tracked software issues using Jira and managed code versions with Git.\n– Queried databases using SQL for test verification.\nQA Intern — Morava Systems 01/2024 – 06/2024\nIndustry: Information Technology\n– Executed test scripts using Selenium for retail web applications.\n– Logged bugs and tasks in Jira and collaborated via Git."
+    },
+    {
+      "id": "hana-novotna:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Informatics 2024\nCzech Technical University in Prague"
+    },
+    {
+      "id": "hana-novotna:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nCzech (native) · English (C1)"
+    },
+    {
+      "id": "hana-novotna:certifications:1",
+      "section": "certifications",
+      "page": 1,
+      "text": "CERTIFICATIONS\nISTQB Certified Tester Foundation Level"
+    }
   ],
   "profile": {
     "name": "Hana Novotná",
@@ -85,6 +125,113 @@
     "certifications": [
       "ISTQB Certified Tester Foundation Level"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 1,
+      "verified": true
+    }
   },
   "medianTenureMonths": 16.5
 }

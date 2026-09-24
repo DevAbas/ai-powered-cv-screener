@@ -1,10 +1,55 @@
 {
   "id": "daan-de-vries",
-  "file": "/cvs/daan_de_vries_cv.pdf",
   "pages": 2,
-  "text": [
-    "Daan de Vries\nPrincipal UI Engineer\ndaan.vries@example.com · +1-555-006-0606 · Amsterdam, Netherlands\nRemote · Hybrid · EU Citizen · Notice period: 30 days\nSUMMARY\nDaan de Vries is a Principal UI Engineer with 12 years of experience specializing in frontend development.\nBased in Amsterdam, Netherlands, Daan has leadership experience guiding engineering teams and utilizing\nJavaScript, TypeScript, React, Vue, HTML, CSS, Jest, and Docker. Education includes a bachelor degree in\nComputer Science from University of Amsterdam.\nSKILLS\nJavaScript (12 years) · TypeScript (8 years) · React (10 years) · Vue.js (4 years) · HTML (12 years) ·\nCSS (12 years) · Jest (7 years) · Docker (5 years)\nEXPERIENCE\nPrincipal UI Engineer — Amstel Tech Solutions 03/2020 – Present\nIndustry: Software Development\n– Led engineering teams as Principal UI Engineer using JavaScript, TypeScript, React, CSS, and Docker.\n– Delivered frontend architecture improvements in the software development industry.\nSenior Frontend Developer — Zaan Web Works 01/2016 – 02/2020\nIndustry: Digital Media\n– Developed web applications as a Senior Frontend Developer utilizing JavaScript, React, Vue, HTML, CSS,\nand Jest.\n– Contributed to digital media projects across multiple teams.\nFrontend Developer — IJssel Media 06/2014 – 12/2015\nIndustry: Web Development\n– Implemented user interfaces as a Frontend Developer with JavaScript, HTML, CSS, and Jest.\n– Built responsive web pages in the web development industry.\nEDUCATION\nBSc Computer Science 2012\nUniversity of Amsterdam\nLANGUAGES\nDutch (native) · English (C2)",
-    "LEADERSHIP\nLed multiple engineering teams and frontend architects as Principal UI Engineer.\nCERTIFICATIONS\nCertified JavaScript Professional · Advanced React Patterns"
+  "chunks": [
+    {
+      "id": "daan-de-vries:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Daan de Vries\nPrincipal UI Engineer\ndaan.vries@example.com · +1-555-006-0606 · Amsterdam, Netherlands\nRemote · Hybrid · EU Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "daan-de-vries:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nDaan de Vries is a Principal UI Engineer with 12 years of experience specializing in frontend development.\nBased in Amsterdam, Netherlands, Daan has leadership experience guiding engineering teams and utilizing\nJavaScript, TypeScript, React, Vue, HTML, CSS, Jest, and Docker. Education includes a bachelor degree in\nComputer Science from University of Amsterdam."
+    },
+    {
+      "id": "daan-de-vries:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nJavaScript (12 years) · TypeScript (8 years) · React (10 years) · Vue.js (4 years) · HTML (12 years) ·\nCSS (12 years) · Jest (7 years) · Docker (5 years)"
+    },
+    {
+      "id": "daan-de-vries:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nPrincipal UI Engineer — Amstel Tech Solutions 03/2020 – Present\nIndustry: Software Development\n– Led engineering teams as Principal UI Engineer using JavaScript, TypeScript, React, CSS, and Docker.\n– Delivered frontend architecture improvements in the software development industry.\nSenior Frontend Developer — Zaan Web Works 01/2016 – 02/2020\nIndustry: Digital Media\n– Developed web applications as a Senior Frontend Developer utilizing JavaScript, React, Vue, HTML, CSS,\nand Jest.\n– Contributed to digital media projects across multiple teams.\nFrontend Developer — IJssel Media 06/2014 – 12/2015\nIndustry: Web Development\n– Implemented user interfaces as a Frontend Developer with JavaScript, HTML, CSS, and Jest.\n– Built responsive web pages in the web development industry."
+    },
+    {
+      "id": "daan-de-vries:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2012\nUniversity of Amsterdam"
+    },
+    {
+      "id": "daan-de-vries:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nDutch (native) · English (C2)"
+    },
+    {
+      "id": "daan-de-vries:leadership:2",
+      "section": "leadership",
+      "page": 2,
+      "text": "LEADERSHIP\nLed multiple engineering teams and frontend architects as Principal UI Engineer."
+    },
+    {
+      "id": "daan-de-vries:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nCertified JavaScript Professional · Advanced React Patterns"
+    }
   ],
   "profile": {
     "name": "Daan de Vries",
@@ -96,12 +141,139 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led multiple engineering teams and frontend architects as Principal UI Engineer."
+      "note": "Led multiple engineering teams and frontend architects as Principal UI Engineer"
     },
     "certifications": [
       "Certified JavaScript Professional",
       "Advanced React Patterns"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.6": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.7": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.2": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 2,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    },
+    "certifications.1": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 50
 }

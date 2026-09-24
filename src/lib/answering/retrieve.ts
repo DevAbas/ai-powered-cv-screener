@@ -2,6 +2,7 @@ import type { IndexEntry } from "@/contracts/candidate";
 import type { QueryPlan } from "@/contracts/query";
 import { cosineSimilarity } from "ai";
 import type { Embedder } from "@/lib/ai/embedder";
+import { pageTexts } from "@/lib/pool/chunks";
 import { filterByCandidateName } from "@/lib/retrieval/names";
 import type { VectorStore } from "@/lib/vector/vector-store";
 import type { RetrievalConfig } from "./config";
@@ -33,7 +34,7 @@ export interface RetrieveDeps {
   store: VectorStore;
 }
 
-const cvText = (cv: RetrievedCv) => cv.entry.text.join("\n");
+const cvText = (cv: RetrievedCv) => pageTexts(cv.entry).join("\n");
 const cvName = (cv: RetrievedCv) => cv.entry.profile.name;
 
 /** Off-topic or weak matches dropped: nothing when even the best is weak. */
@@ -68,7 +69,7 @@ export async function retrieve(
     return narrowed.length > 0 ? narrowed : ranked;
   }
 
-  const scored = (await deps.store.query(vector, config.topK, signal)).flatMap((match): RetrievedCv[] => {
+  const scored = (await deps.store.query(vector, config.topK, undefined, signal)).flatMap((match): RetrievedCv[] => {
     const entry = byId.get(match.id);
     return entry ? [{ entry, score: match.score }] : [];
   });

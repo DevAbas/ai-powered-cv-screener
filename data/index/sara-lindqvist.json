@@ -1,10 +1,55 @@
 {
   "id": "sara-lindqvist",
-  "file": "/cvs/sara_lindqvist_cv.pdf",
   "pages": 2,
-  "text": [
-    "Sara Lindqvist\nSenior Product Manager\nsara.lindqvist@example.com · +1-555-025-2525 · Stockholm, Sweden\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nSara Lindqvist is a Senior Product Manager with 8.0 years of experience in product strategy, roadmapping,\nand data analytics. Based in Stockholm, Sweden, Sara has applied agile methodologies and user testing\nacross cloud computing and digital media industries. Educational background includes a bachelor degree in\nbusiness administration from Stockholm University.\nSKILLS\nProduct Strategy (8 years) · Roadmapping (8 years) · Agile Methodologies (8 years) ·\nMarket Research (7 years) · Data Analytics (7 years) · User Testing (6 years)\nEXPERIENCE\nSenior Product Manager — Fjall Cloud Systems Jun 2021 – Present\nIndustry: Cloud Computing\n• Executed Product Strategy and Roadmapping for cloud infrastructure tools.\n• Applied Agile Methodologies and Data Analytics in the Cloud Computing industry.\nProduct Manager — Barken Media Sep 2018 – May 2021\nIndustry: Digital Media\n• Conducted Market Research and User Testing within Digital Media.\n• Leveraged Product Strategy and Agile Methodologies to deliver products.\nEDUCATION\nBSc Business Administration 2018\nStockholm University\nLANGUAGES\nSwedish (native) · English (C2)\nLEADERSHIP\nGuided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing\nindustry.",
-    "CERTIFICATIONS\nCertified Scrum Product Owner · Professional Scrum Master I"
+  "chunks": [
+    {
+      "id": "sara-lindqvist:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Sara Lindqvist\nSenior Product Manager\nsara.lindqvist@example.com · +1-555-025-2525 · Stockholm, Sweden\nHybrid · Remote · Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "sara-lindqvist:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nSara Lindqvist is a Senior Product Manager with 8.0 years of experience in product strategy, roadmapping,\nand data analytics. Based in Stockholm, Sweden, Sara has applied agile methodologies and user testing\nacross cloud computing and digital media industries. Educational background includes a bachelor degree in\nbusiness administration from Stockholm University."
+    },
+    {
+      "id": "sara-lindqvist:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nProduct Strategy (8 years) · Roadmapping (8 years) · Agile Methodologies (8 years) ·\nMarket Research (7 years) · Data Analytics (7 years) · User Testing (6 years)"
+    },
+    {
+      "id": "sara-lindqvist:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nSenior Product Manager — Fjall Cloud Systems Jun 2021 – Present\nIndustry: Cloud Computing\n• Executed Product Strategy and Roadmapping for cloud infrastructure tools.\n• Applied Agile Methodologies and Data Analytics in the Cloud Computing industry.\nProduct Manager — Barken Media Sep 2018 – May 2021\nIndustry: Digital Media\n• Conducted Market Research and User Testing within Digital Media.\n• Leveraged Product Strategy and Agile Methodologies to deliver products."
+    },
+    {
+      "id": "sara-lindqvist:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Business Administration 2018\nStockholm University"
+    },
+    {
+      "id": "sara-lindqvist:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nSwedish (native) · English (C2)"
+    },
+    {
+      "id": "sara-lindqvist:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nGuided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing\nindustry."
+    },
+    {
+      "id": "sara-lindqvist:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nCertified Scrum Product Owner · Professional Scrum Master I"
+    }
   ],
   "profile": {
     "name": "Sara Lindqvist",
@@ -81,12 +126,124 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Guided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing industry."
+      "note": "Guided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing\nindustry"
     },
     "certifications": [
       "Certified Scrum Product Owner",
       "Professional Scrum Master I"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    },
+    "certifications.1": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 48.5
 }

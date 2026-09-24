@@ -1,10 +1,55 @@
 {
   "id": "andrej-zupan",
-  "file": "/cvs/andrej_zupan_cv.pdf",
   "pages": 2,
-  "text": [
-    "Andrej Zupan\nSenior DevOps Engineer\nandrej.zupan@example.com · +1-555-017-1717 · Ljubljana, Slovenia\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nAndrej Zupan is a senior DevOps engineer based in Ljubljana with 7 years of professional experience. The candidate\nhas extensive expertise in Docker, Kubernetes, Terraform, AWS, Python, and Linux. Leadership experience includes\nmentoring and guiding infrastructure modernization.\nSKILLS\nDocker (7 years) · Kubernetes (6 years) · Terraform (5 years) · AWS (7 years) · Python (4 years) ·\nLinux (7 years)\nEXPERIENCE\nSenior DevOps Engineer — Triglav Cloud Labs Jun 2021 – Present\nIndustry: Cloud Infrastructure\n• Worked as Senior DevOps Engineer in Cloud Infrastructure\n• Managed infrastructure using Kubernetes, Terraform, AWS, and Linux\n• Applied senior leadership to cloud infrastructure projects\nDevOps Engineer — Socha Systems Mar 2019 – May 2021\nIndustry: Software Development\n• Worked as DevOps Engineer in Software Development\n• Developed automation scripts utilizing Docker, AWS, Python, and Linux\nEDUCATION\nBSc Computer Science 2017\nUniversity of Ljubljana\nLANGUAGES\nSlovene (native) · English (C1)\nLEADERSHIP\nLed infrastructure modernization initiatives and mentored junior engineers on cloud deployments.",
-    "CERTIFICATIONS\nAWS Certified Solutions Architect"
+  "chunks": [
+    {
+      "id": "andrej-zupan:header:1",
+      "section": "header",
+      "page": 1,
+      "text": "Andrej Zupan\nSenior DevOps Engineer\nandrej.zupan@example.com · +1-555-017-1717 · Ljubljana, Slovenia\nHybrid · Remote · Citizen · Notice period: 30 days"
+    },
+    {
+      "id": "andrej-zupan:summary:1",
+      "section": "summary",
+      "page": 1,
+      "text": "SUMMARY\nAndrej Zupan is a senior DevOps engineer based in Ljubljana with 7 years of professional experience. The candidate\nhas extensive expertise in Docker, Kubernetes, Terraform, AWS, Python, and Linux. Leadership experience includes\nmentoring and guiding infrastructure modernization."
+    },
+    {
+      "id": "andrej-zupan:skills:1",
+      "section": "skills",
+      "page": 1,
+      "text": "SKILLS\nDocker (7 years) · Kubernetes (6 years) · Terraform (5 years) · AWS (7 years) · Python (4 years) ·\nLinux (7 years)"
+    },
+    {
+      "id": "andrej-zupan:experience:1",
+      "section": "experience",
+      "page": 1,
+      "text": "EXPERIENCE\nSenior DevOps Engineer — Triglav Cloud Labs Jun 2021 – Present\nIndustry: Cloud Infrastructure\n• Worked as Senior DevOps Engineer in Cloud Infrastructure\n• Managed infrastructure using Kubernetes, Terraform, AWS, and Linux\n• Applied senior leadership to cloud infrastructure projects\nDevOps Engineer — Socha Systems Mar 2019 – May 2021\nIndustry: Software Development\n• Worked as DevOps Engineer in Software Development\n• Developed automation scripts utilizing Docker, AWS, Python, and Linux"
+    },
+    {
+      "id": "andrej-zupan:education:1",
+      "section": "education",
+      "page": 1,
+      "text": "EDUCATION\nBSc Computer Science 2017\nUniversity of Ljubljana"
+    },
+    {
+      "id": "andrej-zupan:languages:1",
+      "section": "languages",
+      "page": 1,
+      "text": "LANGUAGES\nSlovene (native) · English (C1)"
+    },
+    {
+      "id": "andrej-zupan:leadership:1",
+      "section": "leadership",
+      "page": 1,
+      "text": "LEADERSHIP\nLed infrastructure modernization initiatives and mentored junior engineers on cloud deployments."
+    },
+    {
+      "id": "andrej-zupan:certifications:2",
+      "section": "certifications",
+      "page": 2,
+      "text": "CERTIFICATIONS\nAWS Certified Solutions Architect"
+    }
   ],
   "profile": {
     "name": "Andrej Zupan",
@@ -81,11 +126,118 @@
     ],
     "leadership": {
       "has": true,
-      "note": "Led infrastructure modernization initiatives and mentored junior engineers on cloud deployments."
+      "note": "Led infrastructure modernization initiatives and mentored junior engineers on cloud deployments"
     },
     "certifications": [
       "AWS Certified Solutions Architect"
     ]
+  },
+  "sources": {
+    "headline": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "role": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "seniority": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "location": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "workAuthorization": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "remote": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "availability": {
+      "section": "header",
+      "page": 1,
+      "verified": true
+    },
+    "yearsTotal": {
+      "section": "summary",
+      "page": 1,
+      "verified": true
+    },
+    "skills.0": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.1": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.2": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.3": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.4": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "skills.5": {
+      "section": "skills",
+      "page": 1,
+      "verified": true
+    },
+    "languages.0": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "languages.1": {
+      "section": "languages",
+      "page": 1,
+      "verified": true
+    },
+    "education.0": {
+      "section": "education",
+      "page": 1,
+      "verified": true
+    },
+    "employment.0": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "employment.1": {
+      "section": "experience",
+      "page": 1,
+      "verified": true
+    },
+    "leadership": {
+      "section": "leadership",
+      "page": 1,
+      "verified": true
+    },
+    "certifications.0": {
+      "section": "certifications",
+      "page": 2,
+      "verified": true
+    }
   },
   "medianTenureMonths": 45.5
 }

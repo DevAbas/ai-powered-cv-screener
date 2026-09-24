@@ -5,6 +5,7 @@ import type { QueryPlan } from "@/contracts/query";
 import type { Embedder } from "@/lib/ai/embedder";
 import type { StreamedToolCall, StreamTextOptions, StreamTextResult } from "@/lib/ai/stream-text";
 import { ANDREI, ELENA, LENA, TEST_INDEX } from "@/lib/retrieval/fixtures";
+import { pageTexts } from "@/lib/pool/chunks";
 import { createInMemoryStore } from "@/lib/vector/in-memory";
 import { VectorStoreError } from "@/lib/vector/vector-store";
 import type { AnswerDeps } from "./answer-question";
@@ -27,7 +28,11 @@ const VECTORS: Record<string, number[]> = {
 };
 const store = () =>
   createInMemoryStore(
-    TEST_INDEX.map((entry) => ({ id: entry.id, values: VECTORS[entry.id], metadata: { name: entry.profile.name, file: entry.file } })),
+    TEST_INDEX.map((entry) => ({
+      id: entry.id,
+      values: VECTORS[entry.id],
+      metadata: { candidateId: entry.id, section: "header" as const, page: 1, role: entry.profile.role, seniority: entry.profile.seniority, skills: [], languages: [] },
+    })),
   );
 
 /** Embeds a query by keyword into the same three directions. */
@@ -56,7 +61,7 @@ describe("constraintTokens", () => {
 });
 
 describe("filterByConstraint and tryLexicalFilter", () => {
-  const text = (e: (typeof TEST_INDEX)[number]) => e.text.join("\n");
+  const text = (e: (typeof TEST_INDEX)[number]) => pageTexts(e).join("\n");
 
   it("keeps the CVs holding every word, accents aside", () => {
     expect(filterByConstraint(TEST_INDEX, text, "of these who know Python").map((e) => e.id)).toEqual([ANDREI.id, ELENA.id]);
@@ -150,7 +155,7 @@ describe("buildView", () => {
           { id: ANDREI.id, note: "", page: 9 },
           { id: ELENA.id, note: "again", page: 1 },
         ],
-        skills: ["python"],
+        skills: ["Python"],
         ranked: false,
       }),
       retrieved,

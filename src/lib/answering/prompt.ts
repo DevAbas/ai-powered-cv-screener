@@ -2,6 +2,7 @@ import type { ModelMessage } from "ai";
 import type { HistoryTurn } from "@/contracts/ask";
 import type { IndexEntry, Role } from "@/contracts/candidate";
 import type { QueryIntent } from "@/contracts/query";
+import { pageTexts } from "@/lib/pool/chunks";
 import type { RetrievedCv } from "./retrieve";
 
 // What the answer model is told: its mission, the facts about the pool, how
@@ -33,7 +34,7 @@ export function poolFacts(index: readonly IndexEntry[]): string {
 /** One CV: a heading with the name and id, then each page behind its marker. */
 function cvBlock({ entry }: RetrievedCv): string {
   const { name, headline, location } = entry.profile;
-  return [`### ${name} (id: ${entry.id}): ${headline}, ${location}`, ...entry.text.map((text, i) => `[Page ${i + 1}]\n${text}`)].join("\n");
+  return [`### ${name} (id: ${entry.id}): ${headline}, ${location}`, ...pageTexts(entry).map((text, i) => `[Page ${i + 1}]\n${text}`)].join("\n");
 }
 
 /** The reference repo's notes for a narrowing and a lookup. */
