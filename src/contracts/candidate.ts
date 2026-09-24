@@ -90,6 +90,14 @@ export const CandidateProfileSchema = z.object({
 });
 export type CandidateProfile = z.infer<typeof CandidateProfileSchema>;
 
+/**
+ * The sections a CV is split into (PLAN, Indexer): `header` is the text before
+ * the first heading on page 1, `other` a heading the list does not name.
+ */
+export const SECTION_NAMES = ["header", "summary", "skills", "experience", "education", "languages", "leadership", "certifications", "other"] as const;
+export const SectionNameSchema = z.enum(SECTION_NAMES);
+export type SectionName = z.infer<typeof SectionNameSchema>;
+
 export const CandidateIdSchema = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Expected a lowercase slug");
