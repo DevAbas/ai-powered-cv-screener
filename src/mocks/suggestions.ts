@@ -3,6 +3,6 @@
 export const SUGGESTED_QUESTIONS = [
   "Who has React and TypeScript?",
   "Top 3 for a Frontend Lead role",
-  "Compare Ali and Nigar on backend experience",
+  "Compare Andrei and Elena on backend experience",
   "How many candidates know Python?",
 ] as const;

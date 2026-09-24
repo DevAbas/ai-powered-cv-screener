@@ -58,6 +58,10 @@ describe("normalizeLanguage", () => {
     ["francais", "French"],
     ["Azeri", "Azerbaijani"],
     ["Mandarin", "Chinese"],
+    ["Magyar", "Hungarian"],
+    ["Slovenian", "Slovene"],
+    ["čeština", "Czech"],
+    ["Gaeilge", "Irish"],
   ])("%s → %s", (input, expected) => {
     expect(normalizeLanguage(input)).toBe(expected);
   });

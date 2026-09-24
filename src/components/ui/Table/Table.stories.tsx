@@ -12,12 +12,12 @@ const rows = [
 
 export const Basic = () => (
   <Table.Root>
-    <Table.Caption>Comparison of Ali Hasanov and Nigar Mammadova</Table.Caption>
+    <Table.Caption>Comparison of Andrei Popescu and Elena Georgiou</Table.Caption>
     <Table.Header>
       <Table.Row>
         <Table.ColumnHeader>Criterion</Table.ColumnHeader>
-        <Table.ColumnHeader>Ali Hasanov</Table.ColumnHeader>
-        <Table.ColumnHeader>Nigar Mammadova</Table.ColumnHeader>
+        <Table.ColumnHeader>Andrei Popescu</Table.ColumnHeader>
+        <Table.ColumnHeader>Elena Georgiou</Table.ColumnHeader>
       </Table.Row>
     </Table.Header>
     <Table.Body>

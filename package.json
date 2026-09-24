@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "check-models": "tsx scripts/check-models.ts",
+    "generate": "tsx scripts/generate/index.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "design:export": "design.md export --format css-tailwind DESIGN.md > src/styles/tokens.generated.css.tmp && mv src/styles/tokens.generated.css.tmp src/styles/tokens.generated.css",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@google/design.md": "^0.4.0",
     "@next/env": "16.3.6",
+    "@react-pdf/renderer": "^4.9.0",
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/addon-themes": "^10.6.0",

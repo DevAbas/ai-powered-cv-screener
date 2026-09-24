@@ -15,8 +15,8 @@ const exchange = (id: string, patch: Partial<ExchangeState>): ExchangeState => (
 
 describe("candidateIdsOf", () => {
   it("collects ids from every payload", () => {
-    expect(candidateIdsOf(ANSWERS.rank)).toEqual(["jane-doe", "aiko-tanaka", "lena-novak"]);
-    expect(candidateIdsOf(ANSWERS.compare)).toEqual(["ali-hasanov", "nigar-mammadova"]);
+    expect(candidateIdsOf(ANSWERS.rank)).toEqual(["jane-doe", "daan-de-vries", "lena-novak"]);
+    expect(candidateIdsOf(ANSWERS.compare)).toEqual(["andrei-popescu", "elena-georgiou"]);
     expect(candidateIdsOf(ANSWERS.fact)).toEqual(["lena-novak"]);
     expect(candidateIdsOf(ANSWERS.profile)).toEqual(["jane-doe"]);
     expect(candidateIdsOf(ANSWERS.empty)).toEqual([]);

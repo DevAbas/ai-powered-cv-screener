@@ -11,7 +11,7 @@ export type Provider = "openrouter" | "google";
 /** Model maker. UI logos resolve from `public/icons/providers/<vendor>.svg`. */
 export type Vendor = "google" | "nvidia";
 
-export type ModelId = AnswerModelId | "extract" | "embed";
+export type ModelId = AnswerModelId | "extract" | "generate" | "embed" | "image";
 
 export type Tier = "free" | "paid";
 
@@ -91,6 +91,32 @@ export const REGISTRY: Readonly<Record<ModelId, ModelEntry>> = {
     description: "Extracts candidate profiles from CV text in the indexer.",
     capabilities: { ...ANSWER_CAPABILITIES, tools: false, streaming: false },
     recommended: undefined,
+  },
+  // Its own entry, so the indexer's model can change without touching generation.
+  generate: {
+    ...primary,
+    id: "generate",
+    description: "Generates synthetic candidate seeds in the generation pipeline.",
+    capabilities: { ...ANSWER_CAPABILITIES, tools: false, streaming: false },
+    recommended: undefined,
+  },
+  // No free image model exists on any provider (PLAN, Open questions, resolved
+  // in 1.11). Paid, so it never runs by default: only when named.
+  image: {
+    id: "image",
+    displayName: "Gemini 3.1 Flash-Lite Image",
+    description: "Candidate photos in the generation pipeline. Paid: runs only when named.",
+    provider: "google",
+    vendor: "google",
+    model: "gemini-3.1-flash-lite-image",
+    capabilities: {
+      tools: false,
+      structuredOutput: false,
+      streaming: false,
+      image: true,
+      embedding: false,
+    },
+    tier: "paid",
   },
   embed: {
     id: "embed",

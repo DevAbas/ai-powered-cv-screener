@@ -1,7 +1,8 @@
 // Verifies every model registry entry against its declared capabilities
 // (PLAN, Model registry). Model ids are pinned in the registry only after this passes.
 //
-//   npm run check-models                              every entry, fallback and rebuild fallback
+//   npm run check-models                              every free entry, fallback and rebuild fallback
+//   npm run check-models -- --only image              a paid entry runs only when named
 //   npm run check-models -- --only primary --roles main
 //   npm run check-models -- --probe google:gemini-3.6-flash,openrouter:qwen/qwen3.8-27b:free
 //   npm run check-models -- --probe google:<image model> --capabilities image
@@ -18,10 +19,11 @@ import { ANSWER_KIND_RULES, AnswerSchema } from "@/contracts/answer";
 import { CandidateProfileSchema } from "@/contracts/candidate";
 import type { RoutedModel } from "@/lib/ai/providers";
 import { embeddingModel, embeddingProviderOptions, languageModel, missingApiKeys } from "@/lib/ai/providers";
-import type { ModelEntry, ModelTarget, Provider } from "@/lib/ai/registry";
+import type { ModelEntry, ModelId, ModelTarget, Provider } from "@/lib/ai/registry";
 import { REGISTRY } from "@/lib/ai/registry";
 import { errorStatus, withRetry } from "@/lib/ai/retry";
 import { generateWithRepair, isFirstOutputChunk, schemaIssues } from "@/lib/ai/structured";
+import { PHOTO_MEDIA_TYPE, photoPrompt, photoProviderOptions } from "./generate/photo-options";
 
 loadEnvConfig(process.cwd());
 
@@ -164,14 +166,18 @@ async function probe(check: Check, { onRepair, onFirstOutput }: Hooks): Promise<
       return JSON.stringify(text.trim().slice(0, 20));
     }
     case "image": {
+      // The exact request the photo step sends, so a pass means photos work.
       const result = await generateText({
         ...common,
         model,
-        prompt: "A neutral studio headshot of a fictional software engineer, plain grey background.",
-        providerOptions: { google: { responseModalities: ["TEXT", "IMAGE"] } },
+        prompt: photoPrompt("A fictional software engineer in their thirties, short dark hair, calm expression"),
+        providerOptions: photoProviderOptions(),
       });
-      const image = result.files.find((file) => file.mediaType.startsWith("image/"));
-      if (!image) throw new Error(`no image returned (finishReason=${result.finishReason})`);
+      const image = result.files.find((file) => file.mediaType === PHOTO_MEDIA_TYPE);
+      if (!image) {
+        const types = result.files.map((f) => f.mediaType).join(", ") || "none";
+        throw new Error(`no ${PHOTO_MEDIA_TYPE} returned (files: ${types}; finishReason=${result.finishReason})`);
+      }
       return `${image.mediaType}, ${Math.round(image.uint8Array.length / 1024)} KB`;
     }
   }
@@ -197,13 +203,17 @@ function describeSchemaFailure(check: Check, error: unknown): string | undefined
   ].join("\n");
 }
 
+/** Entries whose structured output is a candidate profile, not an answer. */
+const PROFILE_ENTRIES = new Set<ModelId>(["extract", "generate"]);
+
 function capabilitiesOf(entry: ModelEntry): Capability[] {
   const { capabilities } = entry;
   const list: Capability[] = [];
   if (capabilities.tools) list.push("tools");
-  if (capabilities.structuredOutput) list.push(entry.id === "extract" ? "extract" : "answer");
+  if (capabilities.structuredOutput) list.push(PROFILE_ENTRIES.has(entry.id) ? "extract" : "answer");
   if (capabilities.streaming) list.push("streaming");
   if (capabilities.embedding) list.push("embedding");
+  if (capabilities.image) list.push("image");
   return list;
 }
 
@@ -321,6 +331,12 @@ async function main() {
       )
     : Object.values(REGISTRY)
         .filter((e) => !args.only || args.only.includes(e.id))
+        // A paid entry costs money per check, so it runs only when named (PLAN, Environment).
+        .filter((e) => {
+          if (e.tier === "free" || args.only) return true;
+          console.log(`skipped paid entry ${e.id} (run with --only ${e.id})`);
+          return false;
+        })
         .flatMap(checksFor)
         .filter((c) => !args.roles || args.roles.includes(c.role))
         .filter((c) => !args.capabilities || args.capabilities.includes(c.capability));

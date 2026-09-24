@@ -7,10 +7,10 @@ export const filterAnswer: Answer = {
   kind: "filter",
   summary: "4 candidates list both React and TypeScript.",
   candidates: [
-    { candidateId: "lena-novak", name: "Lena Novak", reason: "React 6 years, TypeScript 5 years", page: 1 },
-    { candidateId: "jane-doe", name: "Jane Doe", reason: "React and TypeScript in her last two roles", page: 2 },
-    { candidateId: "sofia-almeida", name: "Sofia Almeida", reason: "React 4 years, TypeScript 3 years", page: 1 },
-    { candidateId: "leon-fischer", name: "Leon Fischer", reason: "React with TypeScript on the frontend of a Node stack", page: 1 },
+    { candidateId: "lena-novak", name: "Lena Novak", reason: "Experience with React for 6 years and with TypeScript for 5 years.", page: 1 },
+    { candidateId: "jane-doe", name: "Jane Doe", reason: "Worked with React and TypeScript in her last two roles.", page: 2 },
+    { candidateId: "sofia-almeida", name: "Sofia Almeida", reason: "Experience with React for 4 years and with TypeScript for 3 years.", page: 1 },
+    { candidateId: "leon-fischer", name: "Leon Fischer", reason: "Builds the frontend of a Node stack with React and TypeScript.", page: 1 },
   ],
 };
 
@@ -18,8 +18,8 @@ export const followUpAnswer: Answer = {
   kind: "filter",
   summary: "2 of those 4 speak German.",
   candidates: [
-    { candidateId: "lena-novak", name: "Lena Novak", reason: "German, native", page: 2 },
-    { candidateId: "leon-fischer", name: "Leon Fischer", reason: "German, C2", page: 2 },
+    { candidateId: "lena-novak", name: "Lena Novak", reason: "Native German speaker.", page: 2 },
+    { candidateId: "leon-fischer", name: "Leon Fischer", reason: "Speaks German at C2 level.", page: 2 },
   ],
 };
 
@@ -27,17 +27,17 @@ export const rankAnswer: Answer = {
   kind: "rank",
   summary: "Top 3 for a Frontend Lead role, best first.",
   candidates: [
-    { candidateId: "jane-doe", name: "Jane Doe", reason: "Leads a team of 6 frontend engineers; 9 years of React", page: 1 },
-    { candidateId: "aiko-tanaka", name: "Aiko Tanaka", reason: "Principal UI engineer; owns the design system; mentors 4", page: 1 },
-    { candidateId: "lena-novak", name: "Lena Novak", reason: "Senior, 8 years; led the migration to Next.js", page: 1 },
+    { candidateId: "jane-doe", name: "Jane Doe", reason: "Leads a team of 6 frontend engineers and has 9 years of React.", page: 1 },
+    { candidateId: "daan-de-vries", name: "Daan de Vries", reason: "Principal UI engineer who owns the design system and mentors 4 engineers.", page: 1 },
+    { candidateId: "lena-novak", name: "Lena Novak", reason: "Senior with 8 years of experience who led the migration to Next.js.", page: 1 },
   ],
 };
 
 export const compareAnswer: Answer = {
   kind: "compare",
-  summary: "Ali has more backend experience; Nigar has more event-streaming work.",
+  summary: "Andrei has more backend experience; Elena has more event-streaming work.",
   comparison: {
-    candidateIds: ["ali-hasanov", "nigar-mammadova"],
+    candidateIds: ["andrei-popescu", "elena-georgiou"],
     rows: [
       { criterion: "Backend experience", a: "6 years", b: "4 years" },
       { criterion: "Languages", a: "Go, Python", b: "Java, Kotlin" },
@@ -60,15 +60,15 @@ export const factAnswer: Answer = {
 
 export const profileAnswer: Answer = {
   kind: "profile",
-  summary: "Jane Doe: frontend lead with 9 years of React, based in London.",
+  summary: "Jane Doe: frontend lead with 9 years of React, based in Dublin.",
   profile: {
     candidateId: "jane-doe",
-    headline: "Frontend Lead · 11 years total · London, open to hybrid",
+    headline: "Frontend Lead · 11 years total · Dublin, open to hybrid",
     sections: [
-      { title: "Experience", items: ["Frontend Lead, Monzo (2021–present)", "Senior Frontend Engineer, Deliveroo (2017–2021)"] },
+      { title: "Experience", items: ["Frontend Lead, Fable Payments (2021–present)", "Senior Frontend Engineer, Greenline Logistics (2017–2021)"] },
       { title: "Skills", items: ["React (9 years)", "TypeScript (7 years)", "Next.js", "Accessibility"] },
       { title: "Languages", items: ["English, native", "French, B2"] },
-      { title: "Education", items: ["BSc Computer Science, University of Manchester, 2013"] },
+      { title: "Education", items: ["BSc Computer Science, Trinity College Dublin, 2013"] },
       { title: "Availability", items: ["Notice period: 30 days"] },
     ],
   },
@@ -79,11 +79,11 @@ export const countAnswer: Answer = {
   summary: "5 candidates know Python.",
   count: 5,
   candidates: [
-    { candidateId: "ali-hasanov", name: "Ali Hasanov", reason: "Python 3 years", page: 1 },
-    { candidateId: "lucas-martin", name: "Lucas Martin", reason: "Python 7 years", page: 1 },
-    { candidateId: "fatima-zahra", name: "Fatima Zahra", reason: "Python 5 years", page: 1 },
-    { candidateId: "jonas-weber", name: "Jonas Weber", reason: "Python 8 years", page: 1 },
-    { candidateId: "mei-lin", name: "Mei Lin", reason: "Python 6 years", page: 1 },
+    { candidateId: "andrei-popescu", name: "Andrei Popescu", reason: "Experience with Python for 3 years.", page: 1 },
+    { candidateId: "lucas-martin", name: "Lucas Martin", reason: "Experience with Python for 7 years.", page: 1 },
+    { candidateId: "nikolett-szabo", name: "Nikolett Szabó", reason: "Experience with Python for 5 years.", page: 1 },
+    { candidateId: "jonas-weber", name: "Jonas Weber", reason: "Experience with Python for 8 years.", page: 1 },
+    { candidateId: "ines-garcia", name: "Inés García", reason: "Experience with Python for 6 years.", page: 1 },
   ],
 };
 

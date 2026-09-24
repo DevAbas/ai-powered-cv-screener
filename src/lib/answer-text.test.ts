@@ -10,20 +10,20 @@ describe("answerToText", () => {
     expect(answerToText(ANSWERS.rank, nameOf).split("\n")).toEqual([
       "Top 3 for a Frontend Lead role, best first.",
       "",
-      "1. Jane Doe: Leads a team of 6 frontend engineers; 9 years of React (Jane Doe, p. 1)",
-      "2. Aiko Tanaka: Principal UI engineer; owns the design system; mentors 4 (Aiko Tanaka, p. 1)",
-      "3. Lena Novak: Senior, 8 years; led the migration to Next.js (Lena Novak, p. 1)",
+      "1. Jane Doe: Leads a team of 6 frontend engineers and has 9 years of React. (Jane Doe, CV p. 1)",
+      "2. Daan de Vries: Principal UI engineer who owns the design system and mentors 4 engineers. (Daan de Vries, CV p. 1)",
+      "3. Lena Novak: Senior with 8 years of experience who led the migration to Next.js. (Lena Novak, CV p. 1)",
     ]);
   });
 
   it("names both sides of a comparison", () => {
     expect(answerToText(ANSWERS.compare, nameOf)).toContain(
-      "Backend experience: Ali Hasanov: 6 years; Nigar Mammadova: 4 years",
+      "Backend experience: Andrei Popescu: 6 years; Elena Georgiou: 4 years",
     );
   });
 
   it("cites the source of a fact", () => {
-    expect(answerToText(ANSWERS.fact, nameOf)).toContain("(Lena Novak, p. 1)");
+    expect(answerToText(ANSWERS.fact, nameOf)).toContain("(Lena Novak, CV p. 1)");
   });
 
   it("lists profile sections", () => {

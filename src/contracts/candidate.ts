@@ -95,7 +95,29 @@ export const CandidateIdSchema = z
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Expected a lowercase slug");
 export type CandidateId = z.infer<typeof CandidateIdSchema>;
 
+export const EmploymentSeedSchema = EmploymentSchema.extend({
+  description: z.string().min(1).describe("One sentence on the employer's product or domain"),
+  stack: z.array(z.string().min(1)).min(1).max(10).describe("Skills used in this job; each is one of the profile's skills"),
+  highlights: z
+    .array(z.string().min(1))
+    .min(2)
+    .max(4)
+    .describe("2-4 bullet points restating facts from this job's fields; no new facts"),
+});
+export type EmploymentSeed = z.infer<typeof EmploymentSeedSchema>;
+
+// A seed is a profile plus what the CV shows and the generator needs. Its
+// prose only restates the structured fields, so eval rules stay exact.
+export const SkillGroupSchema = z.object({
+  label: z.string().min(1).describe("Category, e.g. Languages, Frameworks and Libraries, Build and Testing"),
+  skills: z.array(z.string().min(1)).min(1).describe("Skill names from the profile's skills"),
+});
+export type SkillGroup = z.infer<typeof SkillGroupSchema>;
+
 export const CandidateSeedSchema = CandidateProfileSchema.extend({
+  employment: z.array(EmploymentSeedSchema).describe("Most recent first"),
+  skillGroups: z.array(SkillGroupSchema).min(2).max(7).describe("Every skill of the profile, once, under a category"),
+  summary: z.string().min(1).describe("3-4 sentences restating the structured fields only"),
   contact: z.object({
     email: z.string().regex(/^[^\s@]+@example\.com$/, "Expected an example.com address"),
     phone: z.string().regex(/^\+1-555-\d{3}-\d{4}$/, "Expected +1-555-XXX-XXXX"),

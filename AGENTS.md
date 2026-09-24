@@ -50,7 +50,8 @@ Run `nvm use` first, in every shell: the Node version comes from `.nvmrc`
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript, no emit |
 | `npm test` | Unit tests (Vitest) |
-| `npm run check-models` | Check every model registry entry against its capabilities (makes API calls) |
+| `npm run check-models` | Check every free model registry entry against its capabilities; paid entries only with `--only` (makes API calls) |
+| `npm run generate` | Generate the pool into `data/` and `public/cvs`: `--step seeds,photos,pdfs` (default seeds and pdfs; `photos` is paid and runs only when named), `--only <id,…>`, `--force`, `--dry-run`; skips what exists (makes API calls) |
 | `npm run design:lint` | Lint `DESIGN.md` in light and dark (dark values from `src/styles/theme.css`) |
 | `npm run design:export` | Regenerate `src/styles/tokens.generated.css` from `DESIGN.md` |
 | `npm run storybook` | Component previews on port 6006 |

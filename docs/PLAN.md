@@ -2,11 +2,11 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.10                                     |
+| Version | 1.11                                     |
 | Date    | 2026-09-23                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
-| Goal    | Deliver the v1 pilot defined in PRD 1.6  |
+| Goal    | Deliver the v1 pilot defined in PRD 1.9  |
 
 If the code and this document disagree, change this document first, then
 the code. This plan is not extended with new features; a new feature gets
@@ -70,13 +70,21 @@ rebuild the whole index.
 ## Generation pipeline
 
 ~30 candidates: frontend 6, backend 6, data 4, DevOps 4, QA 4, product 3,
-fullstack 1, mobile 1, security 1. Three steps:
+fullstack 1, mobile 1, security 1. The roster (id, name, headline, role,
+seniority, location) is fixed in the generator, EU names in EU locations;
+the mock pool mirrors it and a test keeps them equal. Three steps:
 
-1. Seeds: one structured profile per candidate; names are unique.
-2. Photos: one AI-generated photo per candidate; a failed photo is
-   reported, never fatal.
-3. PDFs: three layout templates so formats differ (PRD, Problem), photo
-   embedded.
+1. Seeds: one structured profile per candidate, written by the `generate`
+   entry from the fixed fields; the prose (summary, per-job description
+   and highlights) restates the structured fields only, so eval rules stay
+   exact.
+2. Photos: one AI-generated photo per candidate from the `image` entry,
+   which is paid, so the step runs only when named; a failed photo is
+   reported, never fatal, and the CV simply has no photo.
+3. PDFs: one ATS-friendly single-column layout in three variants (font,
+   heading colour, date style), so formats differ (PRD, Problem) while
+   every CV parses; the photo is embedded when it exists. Files are
+   `public/cvs/<name>_<surname>_cv.pdf`.
 
 ## Indexer
 
@@ -127,8 +135,8 @@ both themes.
   longer than usual…" line appears. Schema repair and fallback are never
   shown.
 - Sources link to the CV's PDF at the cited page
-  (`/cvs/<id>.pdf#page=N`), opened by the browser; until the Generation
-  phase they are plain text. No in-app PDF viewer.
+  (`/cvs/<name>_<surname>_cv.pdf#page=N`), opened by the browser. No
+  in-app PDF viewer.
 
 ## Evaluation (built last)
 
@@ -175,7 +183,6 @@ Every phase also ends with build and tests clean.
 
 | # | Question | Blocks |
 |---|----------|--------|
-| 1 | No free image model exists. Use a paid model for the 30 photos (~$1)? | Generation |
 | 2 | Answer acceptance run (`--repeat 20`, 0 final failures after repair) is pending quota; 7/7 clean so far. If it fails, answer payload fields become required-nullable. | API |
 | 3 | `alternative` fails the latency criterion; choose a replacement. | API |
 | 4 | Set the first-output and total limits from measured P95. | API |
@@ -199,3 +206,4 @@ Every phase also ends with build and tests clean.
 | 1.8     | 2026-09-23 | Goal references PRD 1.5. User interface: CV preview is a placeholder until the Generation phase. |
 | 1.9     | 2026-09-23 | Goal references PRD 1.6. User interface: sources link to the PDF at the cited page; no in-app viewer, no pool panel. |
 | 1.10    | 2026-09-23 | Build order, phase 3: desktop and mobile widths (no stacked panels since 1.9). |
+| 1.11    | 2026-09-24 | Open question 1 resolved: photos from the paid `image` entry, run only by name (no free image model on any provider). Generation pipeline: fixed EU roster shared with the mocks; seed prose restates structured facts; one ATS layout in three variants; `<name>_<surname>_cv.pdf`. Goal references PRD 1.9. |
