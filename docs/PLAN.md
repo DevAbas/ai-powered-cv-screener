@@ -151,6 +151,9 @@ entry from the section text, each field verified against the text of its
 own section and recorded with its section and page (`sources`), the CV's
 own spelling taken from the located text, and the median job tenure. One
 file per CV, `data/index/<id>.json`, skipped when it exists unless forced.
+The `sources` step rebuilds the chunks and sources of indexed CVs from the
+PDF and the profile already indexed, without a model call, after a change
+to the section rules or the verification.
 
 `npm run index -- --check` compares every indexed profile with its seed,
 field by field, and reports the accuracy per field and the share of
@@ -234,7 +237,8 @@ place, so each is tested alone.
     arguments, result and error; repairs; fallback events; latency; the
     outcome; plus success and error counters per model.
 
-The stream carries progress, the final step's text as it is written, then
+The stream carries progress, then the final step's text once that step
+ends (only then is it known to be the answer, not a tool step), then
 exactly one answer (the text, its view, its sources, what was matched and
 which model answered) or one error.
 
@@ -261,8 +265,8 @@ both themes.
   search did (Retrieval and answering, 9); after ~10 s it reads a neutral
   "Taking longer than usual…". When the fallback answered, the settled
   line names the model.
-- The answer text appears as it is written, rendered from Markdown with
-  the design system's type; its view follows once it is complete.
+- The answer text appears once the final step ends, rendered from Markdown
+  with the design system's type; its view follows with it.
 - Sources open the CV through the CV route (`/api/cvs/<id>#page=N`) in a
   preview panel beside the conversation, its pages drawn with pdf.js
   (`pdfjs-dist`, loaded only when a preview opens); Download saves the PDF

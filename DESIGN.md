@@ -421,8 +421,8 @@ text and in `xs` buttons, 1.25rem in other buttons.
   `outline-variant` on hover and while dragging; it opens at 35% of the
 viewport, never under 30rem. Below `lg` it fills the
   screen instead, with the same header and no handle. Escape closes it.
-- **Answer text:** the answer as the model writes it, appearing as it
-  streams: paragraphs and bullet or numbered lists in `body-md`
+- **Answer text:** the answer as the model wrote it, appearing once it is
+  written: paragraphs and bullet or numbered lists in `body-md`
   `on-surface`, list markers in `on-surface-variant`, candidate names in
   bold at the label weight; no headings, tables or links. When the answer
   is about candidates, an answer view follows it once complete, and the

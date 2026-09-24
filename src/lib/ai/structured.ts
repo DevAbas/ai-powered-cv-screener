@@ -8,13 +8,13 @@ import type { ModelEntry, ModelTarget } from "./registry";
 import { isServerError, ModelTimeoutError, shouldFallBack } from "./retry";
 import { runRoute } from "./route";
 
-// Structured output for the query rewrite and extraction (PLAN, Model
-// registry: Reliability): streamed internally so a hung model is detected by
-// our own first-output timer; one schema repair per model; one quick retry
-// after a 5xx; the next model on the route (route.ts) on timeout, daily
-// quota, other failures or a failed repair; one total budget for all models;
-// the caller's signal (the UI Stop button) ends everything. The caller
-// receives the complete object once.
+// Structured output for the scripts that still use it, extraction and seed
+// generation (PLAN, Reliability: schema repair): streamed internally so a
+// hung model is detected by a first-output timer; one schema repair per
+// model; one quick retry after a 5xx; the next model on the route
+// (route.ts) on timeout, daily quota, other failures or a failed repair;
+// one total budget for all models; the caller's signal ends everything.
+// The caller receives the complete object once.
 
 export interface CallBudget {
   /** No content-bearing chunk within this time counts as a hung model. */
@@ -206,7 +206,7 @@ export interface RunResult<T> extends StructuredResult<T> {
 }
 
 /**
- * A rewrite or extract call for a registry entry, on its route (route.ts),
+ * An extract or seed call for a registry entry, on its route (route.ts),
  * within one total budget:
  * - timeout: no retry, straight to the next model;
  * - 5xx: one retry on the same model after at most `retryJitterMs`, then

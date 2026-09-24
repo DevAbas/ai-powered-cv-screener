@@ -87,12 +87,6 @@ export function createPineconeStore({ apiKey, indexName, dimensions, namespace =
     async deleteAll() {
       await call("delete all", () => index.deleteAll());
     },
-
-    async fetch(ids: readonly string[]) {
-      if (ids.length === 0) return new Map<string, number[]>();
-      const response = await call("fetch", () => index.fetch({ ids: [...ids] }));
-      return new Map(Object.entries(response.records).flatMap(([id, record]): [string, number[]][] => (record.values ? [[id, record.values]] : [])));
-    },
   };
 }
 

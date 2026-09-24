@@ -43,8 +43,6 @@ export interface VectorStore {
   deleteMany(ids: readonly string[]): Promise<void>;
   /** Empties the namespace. */
   deleteAll(): Promise<void>;
-  /** The stored vectors of these ids; an id without a record is left out. */
-  fetch(ids: readonly string[]): Promise<Map<string, number[]>>;
 }
 
 /** A vector store call failed; the message is for logs, never for the recruiter. */

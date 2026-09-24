@@ -3,10 +3,10 @@ import type { ModelEntry, ModelTarget } from "./registry";
 import { isDailyQuotaError, isServerError, ModelTimeoutError } from "./retry";
 
 // Which models a call tries, in what order, and what the circuit breaker
-// learns from each (PLAN, Model registry: Reliability). The breaker tracks
-// models rather than entries: the answer and the query rewrite share what
-// they learn about Flash-Lite, and a fallback that has spent its daily quota
-// is passed over by every entry that has it.
+// learns from each (PLAN, Reliability). The breaker tracks models rather
+// than entries: answers and extraction share what they learn about a
+// model, and a fallback that has spent its daily allowance is passed over
+// by every entry that has it.
 
 /** A model's key in the circuit breaker. */
 export function modelKey(target: ModelTarget): string {

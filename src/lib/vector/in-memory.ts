@@ -49,13 +49,5 @@ export function createInMemoryStore(initial: readonly VectorRecord[] = []): Vect
     async deleteAll() {
       records.clear();
     },
-    async fetch(ids) {
-      return new Map(
-        ids.flatMap((id): [string, number[]][] => {
-          const record = records.get(id);
-          return record ? [[id, record.values]] : [];
-        }),
-      );
-    },
   };
 }
