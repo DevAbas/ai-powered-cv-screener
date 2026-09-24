@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import type { AskEvent, AskRequest } from "@/contracts/ask";
-import { ask } from "@/lib/ask/client";
+import type { AskTransport } from "@/lib/ask/client";
+import { ask, httpAsk } from "@/lib/ask/client";
 
 /** After this long without an answer, a neutral notice appears (PLAN, User interface). */
 export const SLOW_NOTICE_MS = 10_000;
@@ -19,10 +20,11 @@ export interface AskStreamHandlers {
 }
 
 /**
- * Runs one `ask` request at a time. `stop()` aborts it without fallback
- * (PLAN, User interface); unmounting aborts it too.
+ * Runs one `ask` request at a time over the given transport: the API in
+ * the app, the mock in previews and tests. `stop()` aborts it without
+ * fallback (PLAN, User interface); unmounting aborts it too.
  */
-export function useAskStream() {
+export function useAskStream(transport: AskTransport = httpAsk) {
   const controller = useRef<AbortController | null>(null);
 
   useEffect(() => () => controller.current?.abort(), []);
@@ -32,7 +34,7 @@ export function useAskStream() {
     controller.current = current;
     const slowTimer = setTimeout(handlers.onSlow, SLOW_NOTICE_MS);
     try {
-      for await (const event of ask(request, current.signal)) handlers.onEvent(event);
+      for await (const event of ask(request, current.signal, transport)) handlers.onEvent(event);
     } catch {
       if (current.signal.aborted) handlers.onStopped();
       else handlers.onLost();

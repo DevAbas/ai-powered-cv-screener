@@ -4,7 +4,7 @@ import { initialChatState, isRunning, chatReducer } from "./state";
 import type { ChatAction, ChatState } from "./state";
 
 const run = (...actions: ChatAction[]): ChatState =>
-  actions.reduce(chatReducer, initialChatState("primary"));
+  actions.reduce(chatReducer, initialChatState());
 
 const asked: ChatAction = { type: "asked", exchangeId: "t1", question: "Who has React?" };
 
@@ -73,7 +73,4 @@ describe("chatReducer", () => {
     expect(state.exchanges[0]).toMatchObject({ status: "running", steps: [], text: "", error: undefined });
   });
 
-  it("changes the model", () => {
-    expect(run({ type: "modelChanged", model: "alternative" }).model).toBe("alternative");
-  });
 });

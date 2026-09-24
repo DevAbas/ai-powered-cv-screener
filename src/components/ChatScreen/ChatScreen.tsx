@@ -12,6 +12,7 @@ import { CursorGrid } from "@/components/ui/CursorGrid";
 import { useChatScreen } from "@/hooks/useChatScreen";
 import { useElementHeight } from "@/hooks/useElementHeight";
 import { useFollowScroll } from "@/hooks/useFollowScroll";
+import type { AskTransport } from "@/lib/ask/client";
 import type { PoolCandidate } from "@/lib/pool/candidate";
 import { AppHeader } from "@/components/AppHeader";
 import { cvSourceHref } from "@/lib/pool/source-href";
@@ -23,12 +24,15 @@ export interface ChatScreenProps {
   pool: readonly PoolCandidate[];
   /** Links sources to their PDF; left out until the PDFs exist (PLAN, User interface). */
   sourceHref?: SourceHref | undefined;
+  /** Where questions go: the API by default, the mock in previews and tests. */
+  transport?: AskTransport | undefined;
 }
 
 /** The chat: header, conversation and composer in one column (PRD, Information architecture). */
-export function ChatScreen({ pool, sourceHref = cvSourceHref }: ChatScreenProps) {
-  const chat = useChatScreen();
-  const { exchanges, model } = chat.state;
+export function ChatScreen({ pool, sourceHref = cvSourceHref, transport }: ChatScreenProps) {
+  const chat = useChatScreen({ transport });
+  const { exchanges } = chat.state;
+  const { model } = chat;
   const [draft, setDraft] = useState("");
   const lastExchange = useRef<HTMLLIElement>(null);
   // The empty state's headline and composer: the grid behind them keeps clear of both.

@@ -1,9 +1,10 @@
-import type { AnsweredBy, AnswerMatched, AnswerModelId, AnswerSource, ProgressStage } from "@/contracts/ask";
+import type { AnsweredBy, AnswerMatched, AnswerSource, ProgressStage } from "@/contracts/ask";
 import type { AnswerView } from "@/contracts/view";
 import type { ExchangeStatus } from "@/components/ChatExchange";
 
 // Session state of the screen (PRD, UX principles: context is not lost).
-// Pure, so every transition is unit-tested; nothing persists (PRD, Non-goals).
+// Pure, so every transition is unit-tested; the conversation never persists
+// (PRD, Non-goals). The selected model lives in `useStoredModel`.
 
 export interface ExchangeState {
   id: string;
@@ -27,7 +28,6 @@ export interface ExchangeState {
 
 export interface ChatState {
   exchanges: ExchangeState[];
-  model: AnswerModelId;
 }
 
 export type ChatAction =
@@ -38,11 +38,10 @@ export type ChatAction =
   | { type: "answered"; exchangeId: string; text: string; view?: AnswerView; sources: AnswerSource[]; matched: AnswerMatched | null; answeredBy: AnsweredBy }
   | { type: "failed"; exchangeId: string; message: string; retryable: boolean }
   | { type: "stopped"; exchangeId: string }
-  | { type: "slowNotice"; exchangeId: string }
-  | { type: "modelChanged"; model: AnswerModelId };
+  | { type: "slowNotice"; exchangeId: string };
 
-export function initialChatState(model: AnswerModelId): ChatState {
-  return { exchanges: [], model };
+export function initialChatState(): ChatState {
+  return { exchanges: [] };
 }
 
 export function isRunning(state: ChatState): boolean {
@@ -104,7 +103,5 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
       return updateRunning(state, action.exchangeId, (exchange) => ({ ...exchange, status: "stopped" }));
     case "slowNotice":
       return updateRunning(state, action.exchangeId, (exchange) => ({ ...exchange, slow: true }));
-    case "modelChanged":
-      return { ...state, model: action.model };
   }
 }

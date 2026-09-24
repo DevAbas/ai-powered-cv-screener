@@ -1,0 +1,1 @@
+export { useStoredModel } from "./useStoredModel";

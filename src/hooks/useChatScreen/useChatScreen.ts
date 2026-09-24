@@ -1,26 +1,29 @@
 "use client";
 
 import { useReducer } from "react";
-import type { AnswerModelId } from "@/contracts/ask";
-import { AnswerModelIdSchema } from "@/contracts/ask";
-import { recommendedEntry } from "@/lib/ai/registry";
+import type { AskTransport } from "@/lib/ask/client";
 import { historyFrom } from "@/lib/chat/history";
-import { initialChatState, isRunning, chatReducer } from "@/lib/chat/state";
+import { chatReducer, initialChatState, isRunning } from "@/lib/chat/state";
 import type { ExchangeState } from "@/lib/chat/state";
 import { useAskStream } from "@/hooks/useAskStream";
+import { useStoredModel } from "@/hooks/useStoredModel";
 
 const LOST_MESSAGE = "The request did not finish. Try again.";
 
+export interface ChatScreenOptions {
+  /** Where questions go: the API by default, the mock in previews and tests. */
+  transport?: AskTransport;
+}
+
 /** The screen's session state and the recruiter's actions on it. */
-export function useChatScreen() {
-  const [state, dispatch] = useReducer(chatReducer, undefined, () =>
-    initialChatState(AnswerModelIdSchema.parse(recommendedEntry().id)),
-  );
-  const stream = useAskStream();
+export function useChatScreen({ transport }: ChatScreenOptions = {}) {
+  const [state, dispatch] = useReducer(chatReducer, undefined, initialChatState);
+  const { model, setModel } = useStoredModel();
+  const stream = useAskStream(transport);
 
   function run(exchangeId: string, question: string, previous: readonly ExchangeState[]) {
     void stream.start(
-      { question, model: state.model, history: historyFrom(previous) },
+      { question, model, history: historyFrom(previous) },
       {
         onEvent(event) {
           switch (event.type) {
@@ -43,6 +46,7 @@ export function useChatScreen() {
 
   return {
     state,
+    model,
     running: isRunning(state),
 
     ask(question: string) {
@@ -62,9 +66,6 @@ export function useChatScreen() {
     },
 
     stop: stream.stop,
-
-    setModel(model: AnswerModelId) {
-      dispatch({ type: "modelChanged", model });
-    },
+    setModel,
   };
 }
