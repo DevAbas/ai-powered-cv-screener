@@ -1,4 +1,4 @@
-import { readingMessage, STAGE_MESSAGES } from "@/lib/ask/stages";
+import { STAGE_MESSAGES, toolMessage } from "@/lib/ask/stages";
 import type { MockAnswer } from "./answers";
 import { ANSWERS, malformedAnswer } from "./answers";
 
@@ -14,27 +14,27 @@ export interface MockStep {
 
 export type Scenario = readonly MockStep[];
 
-/** The answer text as a model streams it: a few words per delta. */
-function deltas(text: string, everyMs = 60): MockStep[] {
-  const words = text.match(/\S+\s*/g) ?? [];
-  const pieces: string[] = [];
-  for (let i = 0; i < words.length; i += 3) pieces.push(words.slice(i, i + 3).join(""));
-  return pieces.map((piece) => ({ after: everyMs, event: { type: "delta", text: piece } }));
-}
+const progress = (stage: string, message: string, after: number): MockStep => ({ after, event: { type: "progress", stage, message } });
 
 /**
- * Search, read and write, the text as it streams, then the answer with its
- * view. `writeMs` delays the first word (a slow or fallback model), or the
- * answer itself when the model wrote only a view.
+ * Understanding, the tool that ran, writing, then the answer with its view.
+ * `writeMs` delays the answer (a slow or fallback model).
  */
 function answered(answer: MockAnswer, writeMs = 600): Scenario {
-  const [first, ...rest] = deltas(answer.text);
+  const counted = answer.view?.kind === "list" && answer.view.count !== undefined;
+  const tool = !answer.matched
+    ? undefined
+    : answer.matched.kind === "read"
+      ? toolMessage("get_candidates", { ids: Array.from({ length: answer.matched.count }) })
+      : counted
+        ? toolMessage("count_candidates")
+        : toolMessage("find_candidates");
   return [
-    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
-    ...(answer.checked > 0 ? [{ after: 350, event: { type: "progress", stage: "read", message: readingMessage(answer.checked) } }] : []),
-    { after: 200, event: { type: "progress", stage: "write", message: STAGE_MESSAGES.write } },
-    ...(first ? [{ ...first, after: writeMs }, ...rest] : []),
-    { after: first ? 50 : writeMs, event: { type: "answer", ...answer } },
+    progress("understand", STAGE_MESSAGES.understand, 150),
+    ...(tool ? [progress("search", tool, 350)] : []),
+    progress("write", STAGE_MESSAGES.write, 200),
+    ...(answer.text ? [{ after: writeMs, event: { type: "delta", text: answer.text } }] : []),
+    { after: answer.text ? 50 : writeMs, event: { type: "answer", ...answer } },
   ];
 }
 
@@ -46,31 +46,21 @@ export const SCENARIOS = {
   fact: answered(ANSWERS.fact),
   profile: answered(ANSWERS.profile),
   count: answered(ANSWERS.count),
+  countOnly: answered(ANSWERS.countOnly),
   empty: answered(ANSWERS.empty),
   insufficient: answered(ANSWERS.insufficient),
   help: answered(ANSWERS.help),
   outOfScope: answered(ANSWERS.outOfScope),
-  /** ~6 s before the first word. */
+  /** ~6 s before the answer. */
   slow: answered(ANSWERS.filter, 5_000),
-  /** ~30 s before the first word: the fallback model answered. */
-  verySlow: answered(ANSWERS.filter, 29_000),
-  malformed: [
-    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
-    { after: 600, event: { type: "answer", ...malformedAnswer } },
-  ],
+  /** ~30 s before the answer: the fallback model answered, and the line says so. */
+  verySlow: answered(ANSWERS.fallback, 29_000),
+  fallback: answered(ANSWERS.fallback),
+  malformed: [progress("understand", STAGE_MESSAGES.understand, 150), { after: 600, event: { type: "answer", ...malformedAnswer } }],
   /** The stream ends with neither an answer nor an error. */
-  noAnswer: [
-    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
-    { after: 400, event: { type: "progress", stage: "write", message: STAGE_MESSAGES.write } },
-  ],
-  error: [
-    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
-    { after: 1_200, event: { type: "error", message: "That took too long. Try again.", retryable: true } },
-  ],
-  fatalError: [
-    { after: 150, event: { type: "progress", stage: "search", message: STAGE_MESSAGES.search } },
-    { after: 400, event: { type: "error", message: "The question could not be sent.", retryable: false } },
-  ],
+  noAnswer: [progress("understand", STAGE_MESSAGES.understand, 150), progress("write", STAGE_MESSAGES.write, 400)],
+  error: [progress("understand", STAGE_MESSAGES.understand, 150), { after: 1_200, event: { type: "error", message: "That took too long. Try again.", retryable: true } }],
+  fatalError: [progress("understand", STAGE_MESSAGES.understand, 150), { after: 400, event: { type: "error", message: "The question could not be sent.", retryable: false } }],
 } as const satisfies Record<string, Scenario>;
 
 export type ScenarioName = keyof typeof SCENARIOS;

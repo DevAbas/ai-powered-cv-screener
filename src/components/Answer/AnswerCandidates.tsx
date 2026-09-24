@@ -14,7 +14,8 @@ export interface AnswerCandidatesProps {
  * DESIGN.md, Answer views: Candidate list. Filter, rank, how many and one
  * fact: a caption with the count and the order, then one row per candidate
  * with their name, title and skill years from the CV, the compact file card,
- * and the model's note beneath.
+ * and the model's reason beneath. A count shown without its list is the
+ * caption alone.
  */
 export function AnswerCandidates({ view, sourceHref }: AnswerCandidatesProps) {
   const caption = listCaption(view);
@@ -22,6 +23,7 @@ export function AnswerCandidates({ view, sourceHref }: AnswerCandidatesProps) {
   return (
     <section aria-label={caption ?? "Candidate"} className="flex flex-col gap-3">
       {caption && <p className="text-body-sm leading-body-sm text-on-surface-variant">{caption}</p>}
+      {view.rows.length > 0 && (
       <Rows className="flex flex-col gap-5">
         {view.rows.map((row, i) => (
           <li key={row.candidateId} className="flex gap-3">
@@ -42,11 +44,12 @@ export function AnswerCandidates({ view, sourceHref }: AnswerCandidatesProps) {
                 )}
                 <CvSourceLink compact candidateId={row.candidateId} name={row.name} page={row.page} sourceHref={sourceHref} />
               </div>
-              {row.note && <p className="text-body-sm leading-body-sm text-on-surface-variant">{row.note}</p>}
+              {row.reason && <p className="text-body-sm leading-body-sm text-on-surface-variant">{row.reason}</p>}
             </div>
           </li>
         ))}
       </Rows>
+      )}
     </section>
   );
 }

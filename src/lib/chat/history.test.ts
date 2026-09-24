@@ -14,7 +14,8 @@ const exchange = (id: string, overrides: Partial<ExchangeState> = {}): ExchangeS
   text: ANSWERS.filter.text,
   view: ANSWERS.filter.view,
   sources: ANSWERS.filter.sources,
-  checked: ANSWERS.filter.checked,
+  matched: ANSWERS.filter.matched,
+  answeredBy: ANSWERS.filter.answeredBy,
   ...overrides,
 });
 
@@ -39,7 +40,7 @@ describe("historyFrom", () => {
 
   it("keeps an answer that is only a view, as its lines", () => {
     const [turn] = historyFrom([exchange("a", { text: "", view: ANSWERS.count.view, sources: ANSWERS.count.sources })]);
-    expect(turn?.answer.startsWith("6 candidates · most Python experience first\n- Jonas Weber")).toBe(true);
+    expect(turn?.answer.startsWith("6 of 30 candidates · most Python experience first\n- Jonas Weber")).toBe(true);
   });
 
   it("shortens a long answer to what the request allows", () => {

@@ -1,4 +1,4 @@
-import type { AnswerModelId, AnswerSource, ProgressStage } from "@/contracts/ask";
+import type { AnsweredBy, AnswerMatched, AnswerModelId, AnswerSource, ProgressStage } from "@/contracts/ask";
 import type { AnswerView } from "@/contracts/view";
 import type { ExchangeStatus } from "@/components/ChatExchange";
 
@@ -18,8 +18,10 @@ export interface ExchangeState {
   view?: AnswerView;
   /** The CVs the view shows; set when answered. */
   sources: AnswerSource[];
-  /** How many CVs the answer was written from; set when answered. */
-  checked?: number;
+  /** What the search did; set when answered, null when no tool ran. */
+  matched?: AnswerMatched | null;
+  /** Which model answered; set when answered. */
+  answeredBy?: AnsweredBy;
   error?: { message: string; retryable: boolean };
 }
 
@@ -33,7 +35,7 @@ export type ChatAction =
   | { type: "retried"; exchangeId: string }
   | { type: "progress"; exchangeId: string; stage: ProgressStage; message: string }
   | { type: "delta"; exchangeId: string; text: string }
-  | { type: "answered"; exchangeId: string; text: string; view?: AnswerView; sources: AnswerSource[]; checked: number }
+  | { type: "answered"; exchangeId: string; text: string; view?: AnswerView; sources: AnswerSource[]; matched: AnswerMatched | null; answeredBy: AnsweredBy }
   | { type: "failed"; exchangeId: string; message: string; retryable: boolean }
   | { type: "stopped"; exchangeId: string }
   | { type: "slowNotice"; exchangeId: string }
@@ -47,7 +49,7 @@ export function isRunning(state: ChatState): boolean {
   return state.exchanges.some((exchange) => exchange.status === "running");
 }
 
-const RUNNING = { status: "running", slow: false, text: "", view: undefined, checked: undefined, error: undefined } as const;
+const RUNNING = { status: "running", slow: false, text: "", view: undefined, matched: undefined, answeredBy: undefined, error: undefined } as const;
 
 /** Applies `update` to the running exchange with `exchangeId`; events for a finished exchange are ignored. */
 function updateRunning(state: ChatState, exchangeId: string, update: (exchange: ExchangeState) => ExchangeState): ChatState {
@@ -89,7 +91,8 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
         text: action.text,
         view: action.view,
         sources: action.sources,
-        checked: action.checked,
+        matched: action.matched,
+        answeredBy: action.answeredBy,
       }));
     case "failed":
       return updateRunning(state, action.exchangeId, (exchange) => ({

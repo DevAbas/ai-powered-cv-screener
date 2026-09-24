@@ -1,3 +1,4 @@
+import type { AnsweredBy, AnswerMatched } from "@/contracts/ask";
 import { ThoughtLine } from "@/components/ui/ThoughtLine";
 
 export interface AnswerProgressStep {
@@ -7,17 +8,19 @@ export interface AnswerProgressStep {
 
 export interface AnswerProgressProps {
   steps: readonly AnswerProgressStep[];
-  /** How many CVs the answer was written from, for the settled line. */
-  checked?: number;
+  /** What the search did, for the settled line; null when no CV was searched. */
+  matched?: AnswerMatched | null;
+  /** Which model answered; the settled line names a fallback. */
+  answeredBy?: AnsweredBy;
   /**
-   * The request is still running; false settles the line into "Checked 8 CVs".
+   * The request is still running; false settles the line into what the search did.
    * @default true
    */
   working?: boolean;
   /** Swaps in the neutral "Taking longer than usual…" line (PLAN, User interface). */
   slow?: boolean;
   /**
-   * How the request ended, for the settled line: only an answer claims the CVs were checked.
+   * How the request ended, for the settled line: only an answer says what the search did.
    * @default "answered"
    */
   outcome?: AnswerProgressOutcome;
@@ -25,13 +28,14 @@ export interface AnswerProgressProps {
 
 export type AnswerProgressOutcome = "answered" | "stopped" | "failed";
 
-const STARTING = "Searching the CVs…";
+const STARTING = "Understanding the question…";
 const SLOW = "Taking longer than usual…";
 
 /** The settled line, in plain words for a non-technical reader (DESIGN.md, Progress line). */
-export function checkedLabel(checked = 0): string {
-  if (checked === 0) return "Answered";
-  return `Checked ${checked} ${checked === 1 ? "CV" : "CVs"}`;
+export function settledLabel(matched: AnswerMatched | null | undefined, answeredBy?: AnsweredBy): string {
+  const cvs = (n: number) => `${n} ${n === 1 ? "CV" : "CVs"}`;
+  const what = !matched ? "Answered" : matched.kind === "read" ? `Read ${cvs(matched.count)}` : `Matched ${matched.count} of ${cvs(matched.total)}`;
+  return answeredBy?.fellBack ? `${what} · answered by ${answeredBy.name}` : what;
 }
 
 const SETTLED: Record<Exclude<AnswerProgressOutcome, "answered">, string> = {
@@ -39,9 +43,9 @@ const SETTLED: Record<Exclude<AnswerProgressOutcome, "answered">, string> = {
   failed: "The search didn't finish",
 };
 
-/** One line that reads the current stage of the request and settles into how many CVs were checked. */
-export function AnswerProgress({ steps, checked, working = true, slow = false, outcome = "answered" }: AnswerProgressProps) {
+/** One line that reads the current stage of the request and settles into what the search did. */
+export function AnswerProgress({ steps, matched, answeredBy, working = true, slow = false, outcome = "answered" }: AnswerProgressProps) {
   const current = steps[steps.length - 1]?.message ?? STARTING;
-  const done = outcome === "answered" ? checkedLabel(checked) : SETTLED[outcome];
+  const done = outcome === "answered" ? settledLabel(matched, answeredBy) : SETTLED[outcome];
   return <ThoughtLine working={working} label={slow ? SLOW : current} doneLabel={done} showTimer={false} />;
 }

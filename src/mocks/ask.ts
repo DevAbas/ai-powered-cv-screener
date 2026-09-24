@@ -1,33 +1,39 @@
 import type { AskRequest } from "@/contracts/ask";
+import { EXAMPLE_QUESTION } from "@/lib/chat/suggestions";
 import type { ScenarioName } from "./scenarios";
 import { SCENARIOS } from "./scenarios";
 
-// Mock transport for the `ask` client module during the UI phase (PLAN, User
-// interface). Yields raw events: validating them is the client's job.
+// Mock transport for the `ask` client module (PLAN, User interface): the
+// component previews and the tests. Yields raw events: validating them is
+// the client's job. A question is matched exactly against the example
+// questions below; any other question replays the filter answer.
 
-/** First match wins. Dev paths first, so "slow" never reads as a filter question. */
-const ROUTES: readonly (readonly [RegExp, ScenarioName])[] = [
-  [/very slow/, "verySlow"],
-  [/\bslow\b/, "slow"],
-  [/malformed/, "malformed"],
-  [/no answer/, "noAnswer"],
-  [/unavailable/, "fatalError"],
-  [/\berror\b/, "error"],
-  [/weather|joke|news/, "outOfScope"],
-  [/rust\b/, "empty"],
-  [/salary/, "insufficient"],
-  [/help|what can you/, "help"],
-  [/of those|of them/, "followUp"],
-  [/compare/, "compare"],
-  [/\btop\b|best|rank/, "rank"],
-  [/how many/, "count"],
-  [/summari[sz]e|profile/, "profile"],
-  [/where did|last work|work last/, "fact"],
-];
+/** The example questions the previews and tests ask, and what each replays. */
+export const EXAMPLE_QUESTIONS: Readonly<Record<string, ScenarioName>> = {
+  [EXAMPLE_QUESTION]: "filter",
+  "Who has React and TypeScript?": "filter",
+  "Of those, who speaks German?": "followUp",
+  "Top 3 for a Frontend Lead role": "rank",
+  "Compare Andrei and Elena on backend experience": "compare",
+  "Where did Lena work last?": "fact",
+  "Summarize Jane Doe's profile": "profile",
+  "How many candidates know Python?": "count",
+  "How many know Python? Just the number.": "countOnly",
+  "Who knows Rust?": "empty",
+  "What salary does Lena expect?": "insufficient",
+  "What can you do?": "help",
+  "What's the weather today?": "outOfScope",
+  "slow": "slow",
+  "very slow": "verySlow",
+  "fallback": "fallback",
+  "malformed": "malformed",
+  "no answer": "noAnswer",
+  "error": "error",
+  "unavailable": "fatalError",
+};
 
 export function scenarioFor(question: string): ScenarioName {
-  const q = question.toLowerCase();
-  return ROUTES.find(([pattern]) => pattern.test(q))?.[1] ?? "filter";
+  return EXAMPLE_QUESTIONS[question.trim()] ?? "filter";
 }
 
 function wait(ms: number, signal: AbortSignal): Promise<void> {

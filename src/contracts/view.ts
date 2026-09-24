@@ -1,62 +1,20 @@
 import { z } from "zod";
 import { CandidateIdSchema, CandidateProfileSchema } from "./candidate";
+import { MAX_PRESENT_SKILLS } from "./tools";
 
-// Answer views (PRD §5; DESIGN.md, Answer views). The model calls at most one
-// "show" tool naming the view and its candidates; the server checks the call,
-// fills every fact from the index, and sends the browser an `AnswerView`.
-//
-// Tool inputs are model output, validated against these schemas before use.
-// They use only objects, arrays, strings, numbers, booleans and enums, which
-// every provider's function schema accepts, and every field is required:
-// strict providers reject optional ones.
+// Answer views (PRD §5; DESIGN.md, Answer views): what the browser renders,
+// built by the server from the tool results after the model's presentation
+// call (contracts/tools.ts). Every fact comes from the index, never from
+// the model; the model contributes the view, the order of a ranking and a
+// reason per row.
 
 /** Most skills a list or comparison shows years for. */
-export const MAX_VIEW_SKILLS = 3;
-
-const ToolSkillsSchema = z
-  .array(z.string())
-  .max(MAX_VIEW_SKILLS)
-  .describe("The skills the question is about, so their years are shown; empty when none");
-
-export const ShowCandidatesInputSchema = z.object({
-  candidates: z
-    .array(
-      z.object({
-        id: z.string().describe("The candidate's id, as written in the CV heading"),
-        note: z.string().describe("Why they fit, in a few words from their CV; empty when the skill years say it all"),
-        page: z.number().int().describe("The page of their CV that supports it"),
-      }),
-    )
-    .min(1),
-  skills: ToolSkillsSchema,
-  ranked: z.boolean().describe("True when the order is your ranking; false lets the app sort"),
-});
-export type ShowCandidatesInput = z.infer<typeof ShowCandidatesInputSchema>;
-
-export const ShowComparisonInputSchema = z.object({
-  ids: z.array(z.string()).length(2).describe("The two candidates' ids"),
-  skills: ToolSkillsSchema,
-});
-export type ShowComparisonInput = z.infer<typeof ShowComparisonInputSchema>;
-
-export const ShowProfileInputSchema = z.object({
-  id: z.string().describe("The candidate's id"),
-});
-export type ShowProfileInput = z.infer<typeof ShowProfileInputSchema>;
+export const MAX_VIEW_SKILLS = MAX_PRESENT_SKILLS;
 
 /** PRD §7.4: uncertainty is visible, as three distinct states. */
 export const ANSWER_STATUSES = ["no-match", "insufficient", "out-of-scope"] as const;
 export const AnswerStatusSchema = z.enum(ANSWER_STATUSES);
 export type AnswerStatus = z.infer<typeof AnswerStatusSchema>;
-
-export const ReportStatusInputSchema = z.object({
-  status: AnswerStatusSchema.describe(
-    "no-match: no candidate fits; insufficient: the CVs don't say enough to answer; out-of-scope: the question is not about the candidates",
-  ),
-});
-export type ReportStatusInput = z.infer<typeof ReportStatusInputSchema>;
-
-// What the browser renders: facts from the index, never from the model.
 
 /** A skill asked about, with its years on this CV; null when the CV doesn't list it or states no years. */
 export const SkillYearsSchema = z.object({
@@ -70,7 +28,8 @@ export const CandidateRowSchema = z.object({
   name: z.string().min(1),
   headline: z.string().min(1),
   skills: z.array(SkillYearsSchema),
-  note: z.string(),
+  /** The model's reason, in a few words; empty when the view says it all. */
+  reason: z.string(),
   /** The CV page the file card opens. */
   page: z.number().int().min(1),
 });
@@ -88,10 +47,13 @@ export type ViewCandidate = z.infer<typeof ViewCandidateSchema>;
 export const AnswerViewSchema = z.discriminatedUnion("kind", [
   z.object({
     kind: z.literal("list"),
-    /** In the model's order when ranked; otherwise sorted by the first skill's years. */
+    /** In the model's order when ranked; otherwise in the app's order. */
     ranked: z.boolean(),
     skills: z.array(z.string().min(1)).max(MAX_VIEW_SKILLS),
-    rows: z.array(CandidateRowSchema).min(1),
+    /** Empty for a count shown without its list. */
+    rows: z.array(CandidateRowSchema),
+    /** The exact count, from `count_candidates`. */
+    count: z.object({ matched: z.number().int().min(0), total: z.number().int().min(0) }).optional(),
   }),
   z.object({
     kind: z.literal("comparison"),

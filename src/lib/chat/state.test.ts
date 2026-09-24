@@ -12,7 +12,7 @@ describe("chatReducer", () => {
   it("starts a running exchange", () => {
     const state = run(asked);
     expect(state.exchanges).toEqual([
-      { id: "t1", question: "Who has React?", status: "running", steps: [], slow: false, text: "", sources: [], checked: undefined, error: undefined },
+      { id: "t1", question: "Who has React?", status: "running", steps: [], slow: false, text: "", sources: [], matched: undefined, answeredBy: undefined, error: undefined },
     ]);
     expect(isRunning(state)).toBe(true);
   });

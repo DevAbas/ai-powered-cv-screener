@@ -128,7 +128,8 @@ export function ChatScreen({ pool, sourceHref = cvSourceHref }: ChatScreenProps)
                         slow={exchange.slow}
                         text={exchange.text}
                         view={exchange.view}
-                        checked={exchange.checked}
+                        matched={exchange.matched}
+                        answeredBy={exchange.answeredBy}
                         error={exchange.error}
                         sourceHref={sourceHref}
                         onRetry={() => retry(exchange.id)}

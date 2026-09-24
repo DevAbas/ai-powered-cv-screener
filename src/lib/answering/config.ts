@@ -1,18 +1,10 @@
-import type { CallBudget } from "@/lib/ai/structured";
+// Every tunable of the answering service in one place (PLAN, Reliability).
 
-// Every tunable of the answering service in one place. The retrieval values
-// are the reference repo's (Minacava/cv-screener, app/api/chat/route.ts).
+/** Model steps per question: tool steps, then the step with the answer and `present`; one more for a correction. */
+export const STEP_LIMIT = 3;
 
-export interface RetrievalConfig {
-  /** Vectors asked for per question: the whole pool. */
-  topK: number;
-  /** The best match must reach this for any CV to be kept (it filters off-topic messages). */
-  minTopScore: number;
-  /** Then every match at this score or above is kept. */
-  minScore: number;
-}
-
-export const RETRIEVAL: RetrievalConfig = { topK: 30, minTopScore: 0.5, minScore: 0.45 };
-
-/** Planning a question is a short call; if it fails, the question is searched as typed. */
-export const PLAN_BUDGET: CallBudget = { firstOutputMs: 8_000, totalMs: 20_000 };
+/**
+ * The AI SDK's timeouts (stream-text reference: `timeout`). Generous until
+ * the evaluation measures the P95 per step; PLAN sets them at P95 × 2.
+ */
+export const TIMEOUTS = { totalMs: 120_000, stepMs: 60_000, firstChunkMs: 30_000, toolMs: 15_000 } as const;

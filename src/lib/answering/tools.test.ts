@@ -67,7 +67,7 @@ describe("createTools", () => {
     const tools = createTools(deps(), (result) => results.push(result));
     expect(Object.keys(tools)).toEqual(["find_candidates", "count_candidates", "get_candidates", "search_cv_text", "present"]);
     expect(tools.present.execute).toBeUndefined();
-    const options: ToolExecutionOptions<undefined> = { toolCallId: "call-1", messages: [], context: undefined };
+    const options: ToolExecutionOptions<Record<string, unknown>> = { toolCallId: "call-1", messages: [], context: {} };
     await tools.find_candidates.execute!({ filters: { skills: [{ skill: "Go" }] }, scope: "whole_pool" }, options);
     await tools.count_candidates.execute!({ filters: {}, scope: "whole_pool" }, options);
     await tools.get_candidates.execute!({ ids: ["elena-georgiou"] }, options);

@@ -1,107 +1,109 @@
 import type { AnswerSource } from "@/contracts/ask";
 import type { CandidateProfile, IndexEntry } from "@/contracts/candidate";
-import type { AnswerView, CandidateRow, SkillYears, ViewCandidate } from "@/contracts/view";
-import {
-  MAX_VIEW_SKILLS,
-  ReportStatusInputSchema,
-  ShowCandidatesInputSchema,
-  ShowComparisonInputSchema,
-  ShowProfileInputSchema,
-} from "@/contracts/view";
-import type { StreamedToolCall } from "@/lib/ai/stream-text";
-import { aliasKey, normalizeSkill } from "@/lib/pool/normalize";
-import type { RetrievedCv } from "./retrieve";
+import type { PresentInput } from "@/contracts/tools";
+import type { AnswerStatus, AnswerView, CandidateRow, SkillYears, ViewCandidate } from "@/contracts/view";
+import type { ResultStore } from "./results";
 
-// From the model's "show" call to the view the browser renders (DESIGN.md,
-// Answer views). The model picks the view and the candidates; everything
-// shown comes from the index: names, titles, skill years, the order and the
-// count. Only retrieved candidates can appear, and a call that names none of
-// them gives no view.
+// From the model's presentation call to the view the browser renders (PLAN,
+// Retrieval and answering: presentation and views). The call is checked
+// against the tool results: a candidate no tool returned fails the answer,
+// a page the tools did not cite for that candidate is corrected to one they
+// did. Every fact shown comes from the index; the sources come only from
+// the call.
 
-/** The skills asked about, in their canonical names, without repeats. */
-function viewSkills(skills: readonly string[]): string[] {
-  const names = skills.map((skill) => normalizeSkill(skill)).filter(Boolean);
-  return [...new Map(names.map((name) => [aliasKey(name), name])).values()].slice(0, MAX_VIEW_SKILLS);
+export interface BuiltView {
+  view: AnswerView;
+  sources: AnswerSource[];
+  /** What was corrected, for the log. */
+  corrections: string[];
 }
+
+/** The presentation named candidates the tools never returned: the one way left to invent one. */
+export class UnverifiedAnswerError extends Error {
+  constructor(readonly ids: readonly string[]) {
+    super(`The answer named candidates no tool returned: ${ids.join(", ")}`);
+    this.name = "UnverifiedAnswerError";
+  }
+}
+
+/** The presentation asked for a view its results cannot fill. */
+export class PresentationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PresentationError";
+  }
+}
+
+const STATUS_OF: Record<"no_match" | "not_enough_information" | "out_of_scope", AnswerStatus> = {
+  no_match: "no-match",
+  not_enough_information: "insufficient",
+  out_of_scope: "out-of-scope",
+};
 
 /** Each asked skill with its years on this CV; null when the CV doesn't list it or gives no years. */
 export function skillYears(profile: CandidateProfile, skills: readonly string[]): SkillYears[] {
-  return skills.map((skill) => {
-    const found = profile.skills.find((s) => aliasKey(normalizeSkill(s.name)) === aliasKey(skill));
-    return { skill, years: found?.years ?? null };
+  return skills.map((skill) => ({ skill, years: profile.skills.find((s) => s.name === skill)?.years ?? null }));
+}
+
+export function buildView(present: PresentInput, store: ResultStore, byId: ReadonlyMap<string, IndexEntry>): BuiltView {
+  const corrections: string[] = [];
+  const isState = present.view === "no_match" || present.view === "not_enough_information" || present.view === "out_of_scope";
+
+  // Candidates: known to the tools, once each; a state carries none (except what it lacks information about).
+  const named = present.view === "no_match" || present.view === "out_of_scope" ? [] : present.candidates;
+  if (named.length < present.candidates.length) corrections.push(`${present.candidates.length - named.length} candidate(s) dropped from a ${present.view} state`);
+  const unknown = named.filter((c) => !store.knows(c.id) || !byId.has(c.id)).map((c) => c.id);
+  if (unknown.length) throw new UnverifiedAnswerError([...new Set(unknown)]);
+  const seen = new Set<string>();
+  const candidates = named
+    .filter((c) => (seen.has(c.id) ? false : (seen.add(c.id), true)))
+    .map((c) => {
+      const cited = store.citedPages(c.id);
+      const page = cited.includes(c.page) ? c.page : (cited[0] ?? 1);
+      if (page !== c.page) corrections.push(`${c.id}: page ${c.page} corrected to ${page}`);
+      return { id: c.id, page, reason: c.reason.trim(), entry: byId.get(c.id)! };
+    });
+  const skills = [...new Set(present.skills)];
+  const asRow = (c: (typeof candidates)[number]): CandidateRow => ({
+    candidateId: c.id,
+    name: c.entry.profile.name,
+    headline: c.entry.profile.headline,
+    skills: skillYears(c.entry.profile, skills),
+    reason: c.reason,
+    page: c.page,
   });
-}
+  const asCandidate = (c: (typeof candidates)[number]): ViewCandidate => ({ candidateId: c.id, profile: c.entry.profile, skills: skillYears(c.entry.profile, skills), page: c.page });
+  const sources = candidates.map((c) => ({ candidateId: c.id, name: c.entry.profile.name, page: c.page }));
+  // The app's order: the order the tools returned the candidates in.
+  const toolOrder = [...candidates].sort((a, b) => store.knownIds.indexOf(a.id) - store.knownIds.indexOf(b.id));
 
-/** A cited page that exists on the CV, otherwise the first. */
-function validPage(page: number, entry: IndexEntry): number {
-  return Number.isInteger(page) && page >= 1 && page <= entry.pages ? page : 1;
-}
+  if (isState) return { view: { kind: "status", status: STATUS_OF[present.view as keyof typeof STATUS_OF] }, sources, corrections };
 
-/** Unsorted rows keep the model's order; otherwise the most years of the first skill come first, unknown years last. */
-function byFirstSkill(a: CandidateRow, b: CandidateRow): number {
-  const ya = a.skills[0]?.years ?? -1;
-  const yb = b.skills[0]?.years ?? -1;
-  return yb - ya;
-}
-
-/** The view a "show" call asks for; its input is checked again against the contract. */
-export function buildView(call: StreamedToolCall, retrieved: readonly RetrievedCv[]): AnswerView | undefined {
-  const byId = new Map(retrieved.map((cv) => [cv.entry.id, cv.entry]));
-  const candidate = (id: string, skills: readonly string[] = []): ViewCandidate | undefined => {
-    const entry = byId.get(id);
-    return entry ? { candidateId: entry.id, profile: entry.profile, skills: skillYears(entry.profile, skills), page: 1 } : undefined;
-  };
-
-  switch (call.toolName) {
-    case "show_candidates": {
-      const input = ShowCandidatesInputSchema.safeParse(call.input);
-      if (!input.success) return undefined;
-      const skills = viewSkills(input.data.skills);
-      const seen = new Set<string>();
-      const rows = input.data.candidates.flatMap((c): CandidateRow[] => {
-        const entry = byId.get(c.id);
-        if (!entry || seen.has(entry.id)) return [];
-        seen.add(entry.id);
-        const { name, headline } = entry.profile;
-        return [{ candidateId: entry.id, name, headline, skills: skillYears(entry.profile, skills), note: c.note.trim(), page: validPage(c.page, entry) }];
-      });
-      if (rows.length === 0) return undefined;
-      const ranked = input.data.ranked;
-      return { kind: "list", ranked, skills, rows: ranked || skills.length === 0 ? rows : [...rows].sort(byFirstSkill) };
-    }
-    case "show_comparison": {
-      const input = ShowComparisonInputSchema.safeParse(call.input);
-      if (!input.success) return undefined;
-      const skills = viewSkills(input.data.skills);
-      const [a, b] = input.data.ids.map((id) => candidate(id, skills));
-      if (!a || !b || a.candidateId === b.candidateId) return undefined;
-      return { kind: "comparison", skills, candidates: [a, b] };
-    }
-    case "show_profile": {
-      const input = ShowProfileInputSchema.safeParse(call.input);
-      const one = input.success ? candidate(input.data.id) : undefined;
-      return one ? { kind: "profile", candidate: one } : undefined;
-    }
-    case "report_status": {
-      const input = ReportStatusInputSchema.safeParse(call.input);
-      return input.success ? { kind: "status", status: input.data.status } : undefined;
-    }
-    default:
-      return undefined;
-  }
-}
-
-/** The CVs a view shows, as the answer's sources. */
-export function viewSources(view: AnswerView | undefined): AnswerSource[] {
-  if (!view) return [];
-  switch (view.kind) {
+  switch (present.view) {
     case "list":
-      return view.rows.map((row) => ({ candidateId: row.candidateId, name: row.name, page: row.page }));
-    case "comparison":
-      return view.candidates.map((c) => ({ candidateId: c.candidateId, name: c.profile.name, page: c.page }));
-    case "profile":
-      return [{ candidateId: view.candidate.candidateId, name: view.candidate.profile.name, page: view.candidate.page }];
-    case "status":
-      return [];
+      if (candidates.length === 0) throw new PresentationError("A list needs at least one candidate from the tool results");
+      return { view: { kind: "list", ranked: false, skills, rows: toolOrder.map(asRow) }, sources: toolOrder.map((c) => sources.find((s) => s.candidateId === c.id)!), corrections };
+    case "ranked":
+      if (candidates.length === 0) throw new PresentationError("A ranking needs at least one candidate from the tool results");
+      return { view: { kind: "list", ranked: true, skills, rows: candidates.map(asRow) }, sources, corrections };
+    case "count": {
+      const count = store.exactCount;
+      if (!count) throw new PresentationError("A count needs count_candidates to have run");
+      return {
+        view: { kind: "list", ranked: false, skills, rows: toolOrder.map(asRow), count: { matched: count.count, total: count.total } },
+        sources: toolOrder.map((c) => sources.find((s) => s.candidateId === c.id)!),
+        corrections,
+      };
+    }
+    case "comparison": {
+      if (candidates.length !== 2) throw new PresentationError(`A comparison needs exactly two candidates, not ${candidates.length}`);
+      const [a, b] = candidates;
+      return { view: { kind: "comparison", skills, candidates: [asCandidate(a!), asCandidate(b!)] }, sources, corrections };
+    }
+    case "profile": {
+      if (candidates.length !== 1) throw new PresentationError(`A profile needs exactly one candidate, not ${candidates.length}`);
+      return { view: { kind: "profile", candidate: asCandidate(candidates[0]!) }, sources, corrections };
+    }
   }
+  throw new PresentationError(`Unknown view ${present.view}`);
 }

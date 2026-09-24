@@ -29,7 +29,7 @@ export function useChatScreen() {
             case "delta":
               return dispatch({ type: "delta", exchangeId, text: event.text });
             case "answer":
-              return dispatch({ type: "answered", exchangeId, text: event.text, view: event.view, sources: event.sources, checked: event.checked });
+              return dispatch({ type: "answered", exchangeId, text: event.text, view: event.view, sources: event.sources, matched: event.matched, answeredBy: event.answeredBy });
             case "error":
               return dispatch({ type: "failed", exchangeId, message: event.message, retryable: event.retryable });
           }

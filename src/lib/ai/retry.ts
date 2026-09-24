@@ -1,10 +1,9 @@
 import { APICallError, NoObjectGeneratedError, RetryError, StreamProviderError } from "ai";
-import type { ModelEntry, ModelTarget } from "./registry";
 
-// Failure classification, backoff and fallback around model calls. Calls
-// wrapped here pass `maxRetries: 0` to the AI SDK so retries do not
-// compound. The interactive calls (stream-text.ts, structured.ts) try a
-// model at most twice; backoff is for scripts.
+// Failure classification and backoff around model calls. Calls wrapped
+// here pass `maxRetries: 0` to the AI SDK so retries do not compound. The
+// interactive calls (answering/loop.ts, structured.ts) try a model at most
+// twice; backoff is for scripts.
 
 /** A model produced no output in time (`first-output`), or the whole call ran out of budget (`total`). */
 export class ModelTimeoutError extends Error {
@@ -131,29 +130,4 @@ export function shouldFallBack(error: unknown): boolean {
   if (NoObjectGeneratedError.isInstance(innermost(error))) return true;
   const status = errorStatus(error);
   return status === 402 || status === 404;
-}
-
-export interface FallbackOptions extends RetryOptions {
-  onFallback?: (error: unknown, fallback: ModelTarget) => void;
-}
-
-/**
- * Runs `run` on the entry's model with retries, then on its `fallback` if
- * the primary is unavailable. Entries without `fallback` (such as `image`)
- * never switch models.
- */
-export async function withFallback<T>(
-  entry: ModelEntry,
-  run: (target: ModelTarget) => Promise<T>,
-  options: FallbackOptions = {},
-): Promise<T> {
-  const { onFallback, ...retry } = options;
-  try {
-    return await withRetry(() => run(entry), retry);
-  } catch (error) {
-    const fallback = entry.fallback;
-    if (!fallback || !shouldFallBack(error)) throw error;
-    onFallback?.(error, fallback);
-    return withRetry(() => run(fallback), retry);
-  }
 }

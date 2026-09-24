@@ -1,83 +1,155 @@
-import type { AskEvent, AskRequest, ProgressStage } from "@/contracts/ask";
+import type { LanguageModel } from "ai";
+import type { AskEvent, AskRequest } from "@/contracts/ask";
 import type { IndexEntry } from "@/contracts/candidate";
+import type { Vocabulary } from "@/contracts/tools";
+import type { CircuitBreaker } from "@/lib/ai/breaker";
+import { modelBreaker } from "@/lib/ai/breaker";
+import { counterSnapshot, recordOutcome } from "@/lib/ai/counters";
 import type { Embedder } from "@/lib/ai/embedder";
-import { getEntry } from "@/lib/ai/registry";
-import type { ModelEntry } from "@/lib/ai/registry";
-import type { StreamTextOptions, StreamTextRequest, StreamTextResult } from "@/lib/ai/stream-text";
-import { EmptyAnswerError } from "@/lib/ai/stream-text";
-import { readingMessage, STAGE_MESSAGES } from "@/lib/ask/stages";
+import { languageModel } from "@/lib/ai/providers";
+import type { ModelEntry, ModelTarget } from "@/lib/ai/registry";
+import { answerEntry } from "@/lib/ai/registry";
+import { shouldFallBack } from "@/lib/ai/retry";
+import { runRoute } from "@/lib/ai/route";
+import { toolMessage, STAGE_MESSAGES } from "@/lib/ask/stages";
+import type { Bm25Index } from "@/lib/retrieval/bm25";
 import type { VectorStore } from "@/lib/vector/vector-store";
-import type { RetrievalConfig } from "./config";
-import { RETRIEVAL } from "./config";
 import { errorEvent } from "./errors";
-import type { QueryPlanner } from "./plan";
-import { priorCandidateIds, promoteLookupPlan, resolveQueryPlan } from "./plan";
+import type { RequestLog } from "./log";
+import { brief, modelLabel } from "./log";
+import { EmptyAnswerError, runLoop } from "./loop";
 import { buildInstructions, buildMessages } from "./prompt";
-import { retrieve } from "./retrieve";
-import { VIEW_TOOLS } from "./view-tools";
-import { buildView, viewSources } from "./views";
+import { ResultStore } from "./results";
+import { createTools } from "./tools";
+import { buildView } from "./views";
 
-// One question, end to end: plan it (rules, else the model) → retrieve its
-// CVs as the reference repo does → stream the answer, with at most one view
-// tool call → build the view from the index. Emits progress, the text as it
-// is written, then exactly one `answer` or `error`. Every collaborator is
-// injected, so this composes and the parts are tested on their own.
+// One question, end to end (PLAN, Retrieval and answering): the model
+// chooses tools, the tools run over the index, the presentation call is
+// checked against their results, the view is built from them, and one
+// structured log line records what happened. The primary's fallback takes
+// over only while nothing has reached the recruiter but progress.
 
-export interface AnswerDeps {
-  index: readonly IndexEntry[];
-  embedder: Embedder;
-  store: VectorStore;
-  planQuery: QueryPlanner;
-  streamAnswer: (entry: ModelEntry, request: StreamTextRequest, options: StreamTextOptions) => Promise<StreamTextResult>;
-  retrieval?: RetrievalConfig;
-  /** Diagnostics for the server log; never shown to the recruiter. */
-  log?: (message: string) => void;
+export interface AnswerPool {
+  entries: readonly IndexEntry[];
+  vocabulary: Vocabulary;
+  bm25: Bm25Index;
 }
 
-/** An error on one line, for the server log. Whole: Google's quota errors name the limit and when to retry after the first line. */
-function brief(error: unknown): string {
-  return error instanceof Error ? `${error.name}: ${error.message.replace(/\s+/g, " ").slice(0, 500)}` : String(error);
+export interface AnswerDeps {
+  pool: AnswerPool;
+  embedder: Embedder;
+  store: VectorStore;
+  /** Builds the SDK model for a target; tests pass mocks. */
+  modelFor?: (target: ModelTarget) => LanguageModel;
+  breaker?: CircuitBreaker;
+  log: (record: RequestLog) => void;
+  requestId?: () => string;
+}
+
+/** The candidates of the last answer that showed any: what "of those" refers to. */
+export function previousCandidateIds(history: AskRequest["history"]): string[] {
+  for (let i = history.length - 1; i >= 0; i--) {
+    const ids = history[i]?.candidateIds ?? [];
+    if (ids.length > 0) return [...ids];
+  }
+  return [];
 }
 
 export async function answerQuestion(request: AskRequest, emit: (event: AskEvent) => void, deps: AnswerDeps, signal: AbortSignal): Promise<void> {
-  const { index, log = () => {} } = deps;
+  const { pool, modelFor = languageModel, breaker = modelBreaker } = deps;
   const started = performance.now();
-  const at = () => `${Math.round(performance.now() - started)} ms`;
-  const stage = (s: ProgressStage, message = STAGE_MESSAGES[s]) => emit({ type: "progress", stage: s, message });
-  const byId = new Map(index.map((entry) => [entry.id, entry]));
+  const byId = new Map(pool.entries.map((entry) => [entry.id, entry]));
+  const previousIds = previousCandidateIds(request.history).filter((id) => byId.has(id));
+  const record: RequestLog = {
+    event: "ask",
+    requestId: deps.requestId?.() ?? crypto.randomUUID(),
+    question: request.question,
+    model: { requested: request.model, used: null, fellBack: false },
+    steps: [],
+    toolCalls: [],
+    repairs: 0,
+    fallbacks: [],
+    outcome: "error",
+    latencyMs: 0,
+    counters: {},
+  };
+  const finish = (outcome: RequestLog["outcome"], error?: unknown) => {
+    record.outcome = outcome;
+    if (error !== undefined) record.error = brief(error);
+    record.latencyMs = Math.round(performance.now() - started);
+    record.counters = counterSnapshot();
+    deps.log(record);
+  };
+
+  const entry: ModelEntry | undefined = answerEntry(request.model);
+  if (!entry) {
+    finish("error", new Error(`Model ${request.model} is not offered`));
+    emit({ type: "error", message: "That model isn't available. Choose another one.", retryable: false });
+    return;
+  }
 
   try {
-    stage("search");
-    const priorIds = priorCandidateIds(request.history).filter((id) => byId.has(id));
-    const priorNames = priorIds.flatMap((id) => byId.get(id)?.profile.name ?? []);
-    const planned = await resolveQueryPlan(request.question, request.history, { ids: priorIds, names: priorNames }, deps.planQuery, signal);
-    const plan = promoteLookupPlan(planned, request.question);
-    log(`plan: ${plan.intent} "${plan.searchQuery}"${plan.candidateName ? ` for ${plan.candidateName}` : ""} at ${at()}`);
-
-    const retrieved = await retrieve(plan, request.question, priorIds, deps, deps.retrieval ?? RETRIEVAL, signal);
-    log(`${plan.intent}: ${retrieved.length} CVs (${retrieved.map((r) => `${r.entry.id} ${r.score.toFixed(2)}`).join(", ")}) at ${at()}`);
-    if (retrieved.length > 0) stage("read", readingMessage(retrieved.length));
-
-    stage("write");
-    const result = await deps.streamAnswer(
-      getEntry(request.model),
-      { instructions: buildInstructions(index, retrieved, plan.intent), messages: buildMessages(request.history, request.question), tools: VIEW_TOOLS },
-      {
+    emit({ type: "progress", stage: "understand", message: STAGE_MESSAGES.understand });
+    const run = async (target: ModelTarget) => {
+      const store = new ResultStore();
+      const tools = createTools({ ...pool, embedder: deps.embedder, store: deps.store, previousIds, signal }, (result) => store.add(result));
+      const outcome = await runLoop(modelFor(target), {
+        instructions: buildInstructions(pool.entries, previousIds),
+        messages: buildMessages(request.history, request.question),
+        tools,
         signal,
-        onDelta: (text) => emit({ type: "delta", text }),
-        onRetry: (error, target) => log(`${target.model}: trying again at ${at()} (${brief(error)})`),
-        onFailure: (error, target, next) => log(`${target.model} failed at ${at()} (${brief(error)})${next ? `; ${next.model} takes over` : ""}`),
+        onTool: (toolName, input) => emit({ type: "progress", stage: "search", message: toolMessage(toolName, input) }),
+        onStep: (step) => record.steps.push(step),
+        onToolCall: (call) => record.toolCalls.push(call),
+        onRepair: () => {
+          record.repairs += 1;
+        },
+      });
+      return { outcome, store };
+    };
+    const { value, target, fellBack } = await runRoute(entry, {
+      breaker,
+      signal,
+      run,
+      // A model that is down, silent or empty may not be the next one's problem; a bad answer is not retried elsewhere.
+      canSwitch: (error) => error instanceof EmptyAnswerError || shouldFallBack(error),
+      onFailure: (error, from, next) => {
+        if (next) record.fallbacks.push({ from: modelLabel(from), to: modelLabel(next), reason: brief(error) });
       },
-    );
-    const view = result.toolCall ? buildView(result.toolCall, retrieved) : undefined;
-    const shown = view ? `a ${view.kind} view` : result.toolCall ? `text; ${result.toolCall.toolName} dropped` : "text";
-    log(`answered by ${result.target.model} at ${at()}${result.fellBack ? ", fallback" : ""}, with ${shown}`);
-    // A call whose candidates were all unknown leaves nothing to show.
-    if (!result.text.trim() && !view) throw new EmptyAnswerError();
-    emit({ type: "answer", text: result.text, view, sources: viewSources(view), checked: retrieved.length });
+    });
+    const { outcome, store } = value;
+    record.model = { requested: request.model, used: outcome.modelId ?? target.model, provider: outcome.provider, fellBack };
+
+    emit({ type: "progress", stage: "write", message: STAGE_MESSAGES.write });
+    const built = outcome.present ? buildView(outcome.present, store, byId) : undefined;
+    if (built) record.presentation = { view: built.view.kind === "status" ? built.view.status : built.view.kind, candidates: built.sources.length, corrections: built.corrections };
+    if (outcome.text) emit({ type: "delta", text: outcome.text });
+    const answeredBy = { model: request.model, name: fellBack ? (entry.fallback ? fallbackName(entry) : target.model) : entry.displayName, fellBack };
+    recordOutcome(modelLabel(target), true);
+    finish("answer");
+    emit({
+      type: "answer",
+      text: outcome.text,
+      view: built?.view,
+      sources: built?.sources ?? [],
+      matched: store.summary,
+      answeredBy,
+    });
   } catch (error) {
-    if (signal.aborted) return;
-    log(`failed at ${at()}: ${brief(error)}`);
+    if (signal.aborted) {
+      finish("aborted");
+      return;
+    }
+    recordOutcome(modelLabel(entry), false);
+    finish("error", error);
     emit(errorEvent(error));
   }
+}
+
+/** The display name of the entry's fallback: the registry entry that pins the same model, if any. */
+function fallbackName(entry: ModelEntry): string {
+  const fallback = entry.fallback;
+  if (!fallback) return entry.displayName;
+  const named = answerEntry("alternative");
+  return named && named.model === fallback.model ? named.displayName : fallback.model;
 }

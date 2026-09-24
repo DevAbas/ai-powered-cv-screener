@@ -15,10 +15,15 @@ export function skillLabel({ skill, years }: SkillYears): string {
   return years === null ? `${skill} —` : `${skill} ${years} ${years === 1 ? "yr" : "yrs"}`;
 }
 
-/** "16 candidates · most Python experience first"; none for a single row, which needs no caption. */
+/**
+ * "16 candidates · most Python experience first", or "19 of 30 candidates"
+ * for an exact count; none for a single row without a count, which needs no
+ * caption.
+ */
 export function listCaption(view: ListView): string | undefined {
-  if (view.rows.length < 2) return undefined;
-  const count = plural(view.rows.length, "candidate");
+  if (!view.count && view.rows.length < 2) return undefined;
+  const count = view.count ? `${view.count.matched} of ${view.count.total} candidates` : plural(view.rows.length, "candidate");
+  if (view.rows.length < 2) return count;
   if (view.ranked) return `${count} · best fit first`;
   const first = view.skills[0];
   return first ? `${count} · most ${first} experience first` : count;
@@ -77,7 +82,7 @@ export function viewLines(view: AnswerView): string[] {
     case "list": {
       const caption = listCaption(view);
       const rows = view.rows.map((row, i) => {
-        const parts = [row.name, row.headline, ...row.skills.map(skillLabel), row.note].filter(Boolean);
+        const parts = [row.name, row.headline, ...row.skills.map(skillLabel), row.reason].filter(Boolean);
         return `${view.ranked ? `${i + 1}.` : "-"} ${parts.join(" — ")} (CV p. ${row.page})`;
       });
       return caption ? [caption, ...rows] : rows;

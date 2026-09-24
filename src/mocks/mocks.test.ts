@@ -51,7 +51,7 @@ describe("scenarios", () => {
     }
   });
 
-  it("routes the example question and the PRD examples", () => {
+  it("routes the example question and the PRD examples by exact match, and anything else to the filter answer", () => {
     expect(scenarioFor(EXAMPLE_QUESTION)).toBe("filter");
     expect(scenarioFor("Top 3 for a Frontend Lead role")).toBe("rank");
     expect(scenarioFor("Compare Andrei and Elena on backend experience")).toBe("compare");
@@ -61,8 +61,9 @@ describe("scenarios", () => {
     expect(scenarioFor("Who knows Rust?")).toBe("empty");
     expect(scenarioFor("What's the weather today?")).toBe("outOfScope");
     expect(scenarioFor("Of those, who speaks German?")).toBe("followUp");
-    expect(scenarioFor("How could you help me")).toBe("help");
-    expect(scenarioFor("very slow question")).toBe("verySlow");
+    expect(scenarioFor("What can you do?")).toBe("help");
+    expect(scenarioFor(" very slow ")).toBe("verySlow");
+    expect(scenarioFor("How could you help me")).toBe("filter");
   });
 });
 

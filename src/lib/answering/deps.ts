@@ -1,33 +1,27 @@
 import type { IndexEntry } from "@/contracts/candidate";
-import { QueryPlanSchema } from "@/contracts/query";
 import { createEmbedder } from "@/lib/ai/embedder";
 import { getEntry } from "@/lib/ai/registry";
-import { streamAnswerText } from "@/lib/ai/stream-text";
-import { runStructured } from "@/lib/ai/structured";
+import { vocabularyOf } from "@/lib/pool/vocabulary";
+import { createBm25Index } from "@/lib/retrieval/bm25";
 import { pineconeStoreFromEnv } from "@/lib/vector/pinecone";
 import type { PineconeStore } from "@/lib/vector/pinecone";
-import type { AnswerDeps } from "./answer-question";
-import { PLAN_BUDGET } from "./config";
-import type { QueryPlanner } from "./plan";
+import type { AnswerDeps, AnswerPool } from "./answer-question";
+import type { RequestLog } from "./log";
 
 // The composition root: the one place real adapters are wired to the
-// answering service. Everything else receives them as AnswerDeps.
+// answering service. Everything else receives them as AnswerDeps. The
+// vocabulary and the BM25 index are built once per process from the pool.
 
 let store: PineconeStore | undefined;
+let pool: AnswerPool | undefined;
 
-/** Plans a question with the `primary` entry at temperature 0, as the reference repo does. */
-const planQuery: QueryPlanner = async (prompt, signal) => {
-  const { output } = await runStructured(
-    getEntry("primary"),
-    { schema: QueryPlanSchema, name: "query_plan", prompt, temperature: 0 },
-    { signal, budget: PLAN_BUDGET },
-  );
-  return output;
-};
+/** One JSON line per request on stdout (PLAN, Retrieval and answering: logging). */
+export const logRequest = (record: RequestLog): void => console.info(JSON.stringify(record));
 
-/** The production collaborators; the vector store is created once per process. Throws when Pinecone is not configured. */
-export function answerDeps(index: readonly IndexEntry[], log: (message: string) => void): AnswerDeps {
+/** The production collaborators. Throws when Pinecone is not configured. */
+export function answerDeps(entries: readonly IndexEntry[]): AnswerDeps {
   const embedder = createEmbedder(getEntry("embed"));
   store ??= pineconeStoreFromEnv(embedder.dimensions);
-  return { index, embedder, store, planQuery, streamAnswer: streamAnswerText, log };
+  if (!pool || pool.entries !== entries) pool = { entries, vocabulary: vocabularyOf(entries), bm25: createBm25Index(entries) };
+  return { pool, embedder, store, log: logRequest };
 }

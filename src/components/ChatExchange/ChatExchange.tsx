@@ -1,5 +1,6 @@
 "use client";
 
+import type { AnsweredBy, AnswerMatched } from "@/contracts/ask";
 import type { AnswerStatus, AnswerView as View } from "@/contracts/view";
 import { StatusMessage } from "@/components/ui/StatusMessage";
 import type { StatusMessageProps } from "@/components/ui/StatusMessage";
@@ -22,8 +23,10 @@ export interface ChatExchangeProps {
   text: string;
   /** The data under the answer, drawn from the CVs; shown once it is complete. */
   view?: View | undefined;
-  /** How many CVs the answer was written from. */
-  checked?: number;
+  /** What the search did; null when no CV was searched. */
+  matched?: AnswerMatched | null;
+  /** Which model answered. */
+  answeredBy?: AnsweredBy;
   error?: { message: string; retryable: boolean };
   sourceHref?: SourceHref | undefined;
   onRetry: () => void;
@@ -37,7 +40,7 @@ const STATE_LINE: Record<AnswerStatus, NonNullable<StatusMessageProps["status"]>
 };
 
 /** One question and what came back for it: progress, the answer as it is written, its view, or an error. */
-export function ChatExchange({ question, status, steps, slow, text, view, checked, error, sourceHref, onRetry }: ChatExchangeProps) {
+export function ChatExchange({ question, status, steps, slow, text, view, matched, answeredBy, error, sourceHref, onRetry }: ChatExchangeProps) {
   const answered = status === "answered";
   const state = answered && view?.kind === "status" ? view.status : undefined;
 
@@ -47,12 +50,13 @@ export function ChatExchange({ question, status, steps, slow, text, view, checke
       {/*
         The progress line sits between the question and the answer: one
         instance from start to finish, the current step while running, then
-        the CVs checked.
+        what the search did.
       */}
       {(status === "running" || steps.length > 0) && (
         <AnswerProgress
           steps={steps}
-          checked={checked}
+          matched={matched}
+          answeredBy={answeredBy}
           working={status === "running"}
           slow={slow}
           outcome={status === "error" ? "failed" : status === "stopped" ? "stopped" : "answered"}

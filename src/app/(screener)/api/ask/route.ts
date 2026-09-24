@@ -7,7 +7,7 @@ import { loadPool } from "@/lib/pool/pool";
 
 // POST /api/ask (PLAN, Retrieval and answering): HTTP only. Validates the
 // request, wires the answering service, and streams its events as NDJSON:
-// progress, the answer text as it is written, then one answer or error.
+// progress, the answer text, then one answer or error.
 
 export const runtime = "nodejs";
 
@@ -20,8 +20,6 @@ function rejected(message: string, status: number, retryable: boolean): Response
   return new Response(line({ type: "error", message, retryable }), { status, headers: NDJSON });
 }
 
-const log = (message: string) => console.info(`ask: ${message}`);
-
 export async function POST(request: Request): Promise<Response> {
   const body: unknown = await request.json().catch(() => undefined);
   const parsed = AskRequestSchema.safeParse(body);
@@ -32,7 +30,7 @@ export async function POST(request: Request): Promise<Response> {
 
   let deps: AnswerDeps;
   try {
-    deps = answerDeps(loadPool().entries, log);
+    deps = answerDeps(loadPool().entries);
   } catch (error) {
     console.error("ask: not ready:", error);
     return rejected("The CV search isn't set up yet. Index the CVs and reload.", 503, false);

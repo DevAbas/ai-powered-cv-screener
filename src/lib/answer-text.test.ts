@@ -12,7 +12,7 @@ const list = (ranked: boolean, skills: string[], rows: number): Extract<AnswerVi
     name: `Candidate ${i}`,
     headline: "Data Engineer",
     skills: skills.map((skill) => ({ skill, years: 10 - i })),
-    note: i === 0 ? "Leads the data platform" : "",
+    reason: i === 0 ? "Leads the data platform" : "",
     page: 1,
   })),
 });
@@ -31,6 +31,12 @@ describe("listCaption", () => {
     expect(listCaption(list(true, [], 3))).toBe("3 candidates · best fit first");
     expect(listCaption(list(false, [], 2))).toBe("2 candidates");
     expect(listCaption(list(false, ["Python"], 1))).toBeUndefined();
+  });
+
+  it("says the exact count when there is one, with or without rows", () => {
+    expect(listCaption({ ...list(false, ["Python"], 2), count: { matched: 19, total: 30 } })).toBe("19 of 30 candidates · most Python experience first");
+    expect(listCaption({ ...list(false, [], 0), count: { matched: 19, total: 30 } })).toBe("19 of 30 candidates");
+    expect(listCaption({ ...list(false, [], 1), count: { matched: 1, total: 30 } })).toBe("1 of 30 candidates");
   });
 });
 
