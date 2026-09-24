@@ -6,7 +6,7 @@ import { getEntry } from "./registry";
 import { ModelTimeoutError } from "./retry";
 import { modelKey, modelRoute, runRoute } from "./route";
 
-const fallback: ModelTarget = { provider: "openrouter", vendor: "openrouter", model: "vendor/fallback:free" };
+const fallback: ModelTarget = { provider: "openrouter", vendor: "qwen", model: "vendor/fallback:free" };
 const entry: ModelEntry = { ...getEntry("primary"), fallback };
 
 const stall = new ModelTimeoutError("first-output", 10_000);

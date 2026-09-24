@@ -1,14 +1,16 @@
 import { createGoogle } from "@ai-sdk/google";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { defaultSettingsMiddleware, wrapLanguageModel } from "ai";
 import type { EmbeddingModel, LanguageModel } from "ai";
 import type { ModelTarget, Provider } from "./registry";
 
 // Builds SDK models from registry entries. Server and scripts only: reads
-// API keys from the environment at call time.
+// API keys from the environment at call time. Model parameters follow each
+// vendor's documentation: none are set here, so every model runs at its
+// documented defaults (Gemini 3 keeps its default temperature; PLAN, Model
+// registry).
 
 /** What the SDK needs to build a model; `vendor` is for display only. */
-export type RoutedModel = Pick<ModelTarget, "provider" | "model" | "thinkingLevel">;
+export type RoutedModel = Pick<ModelTarget, "provider" | "model">;
 
 const KEY_ENV: Record<Provider, string> = {
   openrouter: "OPENROUTER_API_KEY",
@@ -30,20 +32,11 @@ function apiKey(provider: Provider): string {
 export function languageModel(target: RoutedModel): LanguageModel {
   switch (target.provider) {
     case "openrouter":
-      return createOpenRouter({ apiKey: apiKey("openrouter") }).chat(target.model);
-    case "google": {
-      const model = createGoogle({ apiKey: apiKey("google") })(target.model);
-      return target.thinkingLevel ? withThinkingLevel(model, target.thinkingLevel) : model;
-    }
+      // Usage accounting puts the upstream provider and the cost in providerMetadata.openrouter (provider README).
+      return createOpenRouter({ apiKey: apiKey("openrouter") }).chat(target.model, { usage: { include: true } });
+    case "google":
+      return createGoogle({ apiKey: apiKey("google") })(target.model);
   }
-}
-
-type ThinkingLevel = NonNullable<ModelTarget["thinkingLevel"]>;
-
-/** The model with a Google thinking level on every call, so call sites stay model-agnostic. */
-export function withThinkingLevel(model: Parameters<typeof wrapLanguageModel>[0]["model"], thinkingLevel: ThinkingLevel): LanguageModel {
-  const settings = { providerOptions: { google: { thinkingConfig: { thinkingLevel } } } };
-  return wrapLanguageModel({ model, middleware: defaultSettingsMiddleware({ settings }) });
 }
 
 /** An embedding model for a registry target; only Google serves one here. */

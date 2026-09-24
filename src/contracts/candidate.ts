@@ -98,6 +98,24 @@ export const SECTION_NAMES = ["header", "summary", "skills", "experience", "educ
 export const SectionNameSchema = z.enum(SECTION_NAMES);
 export type SectionName = z.infer<typeof SectionNameSchema>;
 
+/** One section of one page of a CV: the unit of retrieval (PLAN, Indexer). */
+export const ChunkSchema = z.object({
+  /** `<candidateId>:<section>:<page>`, the vector's id too. */
+  id: z.string().min(1),
+  section: SectionNameSchema,
+  page: z.number().int().min(1),
+  text: z.string(),
+});
+export type Chunk = z.infer<typeof ChunkSchema>;
+
+/** Where a profile field was read: its section and page, and whether its value was found there. */
+export const FieldSourceSchema = z.object({
+  section: SectionNameSchema,
+  page: z.number().int().min(1),
+  verified: z.boolean(),
+});
+export type FieldSource = z.infer<typeof FieldSourceSchema>;
+
 export const CandidateIdSchema = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Expected a lowercase slug");

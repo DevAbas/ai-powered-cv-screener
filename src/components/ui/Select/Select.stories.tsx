@@ -43,7 +43,7 @@ export const Basic = () => {
 const models = [
   { value: "primary", label: "Gemini Flash-Lite", vendor: "google" },
   { value: "alternative", label: "Gemini 3.6 Flash", vendor: "google" },
-  { value: "openrouter-free", label: "OpenRouter Free", vendor: "openrouter" },
+  { value: "qwen", label: "Qwen3.8 27B", vendor: "qwen" },
 ] as const;
 
 /** Options with a leading logo, as in the composer's model select. */

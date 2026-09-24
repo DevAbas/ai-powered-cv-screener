@@ -5,10 +5,11 @@ export default {
   title: "UI / VendorLogo",
 } satisfies Meta;
 
-/** Placeholders until the official vendor SVGs replace the files. */
+/** Every maker in the registry; nvidia and qwen are placeholder marks until the official SVGs replace the files. */
 export const Vendors = () => (
   <div className="flex items-center gap-3">
     <VendorLogo vendor="google" />
-    <VendorLogo vendor="openrouter" />
+    <VendorLogo vendor="nvidia" />
+    <VendorLogo vendor="qwen" />
   </div>
 );

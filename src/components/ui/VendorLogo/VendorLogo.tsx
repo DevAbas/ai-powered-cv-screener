@@ -9,7 +9,7 @@ export interface VendorLogoProps {
 }
 
 /** Makers whose logo is a single black mark. */
-const MONO_MARKS: ReadonlySet<Vendor> = new Set<Vendor>(["openrouter"]);
+const MONO_MARKS: ReadonlySet<Vendor> = new Set<Vendor>(["nvidia", "qwen"]);
 
 /** The model maker's logo at the 1rem icon size. Decorative: the model name is always shown next to it. */
 export function VendorLogo({ vendor, className }: VendorLogoProps) {

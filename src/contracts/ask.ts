@@ -7,7 +7,7 @@ import { AnswerViewSchema } from "./view";
 // written, then exactly one `answer` (the whole text, its view and sources)
 // or one `error`.
 
-export const ANSWER_MODEL_IDS = ["primary", "alternative", "openrouter-free"] as const;
+export const ANSWER_MODEL_IDS = ["primary", "alternative"] as const;
 export const AnswerModelIdSchema = z.enum(ANSWER_MODEL_IDS);
 export type AnswerModelId = z.infer<typeof AnswerModelIdSchema>;
 
