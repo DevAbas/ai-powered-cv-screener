@@ -14,7 +14,7 @@ import type { QueryPlanner } from "./plan";
 import { priorCandidateIds, promoteLookupPlan, resolveQueryPlan } from "./plan";
 import { buildInstructions, buildMessages } from "./prompt";
 import { retrieve } from "./retrieve";
-import { VIEW_TOOLS } from "./tools";
+import { VIEW_TOOLS } from "./view-tools";
 import { buildView, viewSources } from "./views";
 
 // One question, end to end: plan it (rules, else the model) → retrieve its
