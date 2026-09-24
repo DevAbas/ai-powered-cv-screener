@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { MOCK_POOL } from "@/mocks/pool";
+import { storySourceHref } from "@/mocks/story";
 import { ChatScreen } from "./ChatScreen";
 
 const meta = {
   title: "Chat / ChatScreen",
   component: ChatScreen,
   parameters: { layout: "fullscreen" },
-  args: { pool: MOCK_POOL },
+  args: { pool: MOCK_POOL, sourceHref: storySourceHref },
 } satisfies Meta<typeof ChatScreen>;
 
 export default meta;

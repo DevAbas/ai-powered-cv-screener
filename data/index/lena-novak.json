@@ -1,0 +1,99 @@
+{
+  "id": "lena-novak",
+  "file": "/cvs/lena_novak_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Lena Novak\nSenior Frontend Engineer\nlena.novak@example.com · +1-555-001-0101 · Berlin, Germany\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nSenior Frontend Engineer based in Berlin, Germany, with 7 years of total software development experience\nacross the E-commerce and Digital Media industries. Skilled in React, TypeScript, JavaScript, HTML/CSS,\nNext.js, Redux, Webpack, and Jest. Currently employed at Kinetix Digital after previously working at AeroFlux\nMedia, with experience leading technical frontend initiatives and mentoring junior team members.\nSKILLS\nReact (7 years) · TypeScript (6 years) · JavaScript (7 years) · HTML/CSS (7 years) ·\nNext.js (4 years) · Redux (5 years) · Webpack (5 years) · Jest (4 years)\nEXPERIENCE\nSenior Frontend Engineer — Kinetix Digital Mar 2022 – Present\nIndustry: E-commerce\n• Developed scalable web application features using React, TypeScript, and Next.js.\n• Implemented automated unit tests with Jest and built responsive user interfaces using HTML/CSS.\nFrontend Developer — AeroFlux Media Mar 2019 – Feb 2022\nIndustry: Digital Media\n• Engineered interactive frontend components using React, JavaScript, and Redux.\n• Configured frontend asset bundling with Webpack and styled web pages with HTML/CSS.\nEDUCATION\nBSc Computer Science 2018\nTechnical University of Berlin\nLANGUAGES\nGerman (native) · English (C1)\nLEADERSHIP\nLed technical frontend initiatives and mentored junior team members.",
+    "CERTIFICATIONS\nAWS Certified Developer - Associate"
+  ],
+  "profile": {
+    "name": "Lena Novak",
+    "headline": "Senior Frontend Engineer",
+    "role": "frontend",
+    "seniority": "senior",
+    "location": "Berlin, Germany",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "React",
+        "years": 7
+      },
+      {
+        "name": "TypeScript",
+        "years": 6
+      },
+      {
+        "name": "JavaScript",
+        "years": 7
+      },
+      {
+        "name": "HTML/CSS",
+        "years": 7
+      },
+      {
+        "name": "Next.js",
+        "years": 4
+      },
+      {
+        "name": "Redux",
+        "years": 5
+      },
+      {
+        "name": "Webpack",
+        "years": 5
+      },
+      {
+        "name": "Jest",
+        "years": 4
+      }
+    ],
+    "languages": [
+      {
+        "language": "German",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Technical University of Berlin",
+        "year": 2018
+      }
+    ],
+    "employment": [
+      {
+        "company": "Kinetix Digital",
+        "title": "Senior Frontend Engineer",
+        "industry": "E-commerce",
+        "from": "2022-03",
+        "to": null
+      },
+      {
+        "company": "AeroFlux Media",
+        "title": "Frontend Developer",
+        "industry": "Digital Media",
+        "from": "2019-03",
+        "to": "2022-02"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led technical frontend initiatives and mentored junior team members."
+    },
+    "certifications": [
+      "AWS Certified Developer - Associate"
+    ]
+  },
+  "medianTenureMonths": 45.5
+}

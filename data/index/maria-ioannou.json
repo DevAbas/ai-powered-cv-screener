@@ -1,0 +1,99 @@
+{
+  "id": "maria-ioannou",
+  "file": "/cvs/maria_ioannou_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Maria Ioannou\nHead of Product\nmaria.ioannou@example.com · +1-555-027-2727 · Nicosia, Cyprus\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nMaria Ioannou is a principal Head of Product based in Nicosia, Cyprus, with 14 years of total experience. Her\nexpertise encompasses product strategy, roadmapping, agile methodologies, team leadership, data analytics,\nand user research. She has held leadership roles across technology, software, and information technology\nindustries.\nSKILLS\nProduct Strategy (14 years) · Roadmapping (12 years) · Agile Methodologies (14 years) ·\nTeam Leadership (10 years) · Data Analytics (10 years) · User Research (11 years)\nEXPERIENCE\nHead of Product — Troodos Tech 03/2021 – Present\nIndustry: Technology\n– Led product strategy and roadmapping initiatives as Head of Product.\n– Exercised team leadership using agile methodologies within the technology industry.\nSenior Product Manager — Levant Software 02/2016 – 02/2021\nIndustry: Software\n– Managed roadmapping and user research projects as a senior product manager.\n– Applied data analytics and agile methodologies in the software industry.\nProduct Manager — Kyrenia Systems 09/2012 – 01/2016\nIndustry: Information Technology\n– Contributed to product strategy and user research as a product manager.\n– Utilized data analytics within the information technology industry.\nEDUCATION\nBSc Business Administration 2011\nUniversity of Cyprus\nLANGUAGES\nGreek (native) · English (C2)",
+    "LEADERSHIP\nManaged cross-functional product and engineering teams over 10 years.\nCERTIFICATIONS\nCertified Scrum Product Owner · Pragmatic Institute Certified"
+  ],
+  "profile": {
+    "name": "Maria Ioannou",
+    "headline": "Head of Product",
+    "role": "product",
+    "seniority": "principal",
+    "location": "Nicosia, Cyprus",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 14,
+    "skills": [
+      {
+        "name": "Product Strategy",
+        "years": 14
+      },
+      {
+        "name": "Roadmapping",
+        "years": 12
+      },
+      {
+        "name": "Agile Methodologies",
+        "years": 14
+      },
+      {
+        "name": "Team Leadership",
+        "years": 10
+      },
+      {
+        "name": "Data Analytics",
+        "years": 10
+      },
+      {
+        "name": "User Research",
+        "years": 11
+      }
+    ],
+    "languages": [
+      {
+        "language": "Greek",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C2"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Business Administration",
+        "institution": "University of Cyprus",
+        "year": 2011
+      }
+    ],
+    "employment": [
+      {
+        "company": "Troodos Tech",
+        "title": "Head of Product",
+        "industry": "Technology",
+        "from": "2021-03",
+        "to": null
+      },
+      {
+        "company": "Levant Software",
+        "title": "Senior Product Manager",
+        "industry": "Software",
+        "from": "2016-02",
+        "to": "2021-02"
+      },
+      {
+        "company": "Kyrenia Systems",
+        "title": "Product Manager",
+        "industry": "Information Technology",
+        "from": "2012-09",
+        "to": "2016-01"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Managed cross-functional product and engineering teams over 10 years."
+    },
+    "certifications": [
+      "Certified Scrum Product Owner",
+      "Pragmatic Institute Certified"
+    ]
+  },
+  "medianTenureMonths": 61
+}

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { AnswerView } from "@/contracts/view";
-import { cvSourceHref } from "@/lib/pool/source-href";
+import { storySourceHref } from "@/mocks/story";
 import { ANSWERS } from "@/mocks/answers";
 import { AnswerCandidates } from "./AnswerCandidates";
 
@@ -15,7 +15,7 @@ const list = (view: AnswerView | undefined): ListView => {
 const meta = {
   title: "Chat / Answer / AnswerCandidates",
   component: AnswerCandidates,
-  args: { view: list(ANSWERS.filter.view), sourceHref: cvSourceHref },
+  args: { view: list(ANSWERS.filter.view), sourceHref: storySourceHref },
 } satisfies Meta<typeof AnswerCandidates>;
 
 export default meta;

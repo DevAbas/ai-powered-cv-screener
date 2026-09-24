@@ -1,0 +1,91 @@
+{
+  "id": "bram-peeters",
+  "file": "/cvs/bram_peeters_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Bram Peeters\nQA Lead\nbram.peeters@example.com · +1-555-023-2323 · Antwerp, Belgium\nHybrid · Remote · Citizenship Belgium · Notice period: 30 days\nSUMMARY\nBram Peeters is a QA Lead with 10 years of experience based in Antwerp, Belgium. Expertise includes Selenium,\nCypress, Java, Python, SQL, and Jira. Has leadership experience managing testing teams in Software and FinTech\nindustries. Fluent in Dutch and English.\nSKILLS\nSelenium (10 years) · Cypress (5 years) · Java (10 years) · Python (6 years) · SQL (8 years) · Jira (10 years)\nEXPERIENCE\nQA Lead — Schelde Software Labs Mar 2021 – Present\nIndustry: Software\n• Worked as QA Lead in Software industry using Selenium, Cypress, Java, Python, and Jira.\n• Demonstrated leadership capabilities as QA Lead.\nSenior QA Engineer — Brabo Tech Solutions Mar 2016 – Feb 2021\nIndustry: FinTech\n• Worked as Senior QA Engineer in FinTech industry using Selenium, Java, SQL, and Jira.\n• Delivered testing projects for payment systems.\nEDUCATION\nBSc Computer Science 2014\nUniversity of Antwerp\nLANGUAGES\nDutch (native) · English (C1)\nLEADERSHIP\nManaged QA teams and testing strategies across multiple projects.\nCERTIFICATIONS",
+    "ISTQB Advanced Level Test Manager"
+  ],
+  "profile": {
+    "name": "Bram Peeters",
+    "headline": "QA Lead",
+    "role": "qa",
+    "seniority": "lead",
+    "location": "Antwerp, Belgium",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizenship Belgium",
+    "availability": 30,
+    "yearsTotal": 10,
+    "skills": [
+      {
+        "name": "Selenium",
+        "years": 10
+      },
+      {
+        "name": "Cypress",
+        "years": 5
+      },
+      {
+        "name": "Java",
+        "years": 10
+      },
+      {
+        "name": "Python",
+        "years": 6
+      },
+      {
+        "name": "SQL",
+        "years": 8
+      },
+      {
+        "name": "Jira",
+        "years": 10
+      }
+    ],
+    "languages": [
+      {
+        "language": "Dutch",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Antwerp",
+        "year": 2014
+      }
+    ],
+    "employment": [
+      {
+        "company": "Schelde Software Labs",
+        "title": "QA Lead",
+        "industry": "Software",
+        "from": "2021-03",
+        "to": null
+      },
+      {
+        "company": "Brabo Tech Solutions",
+        "title": "Senior QA Engineer",
+        "industry": "FinTech",
+        "from": "2016-03",
+        "to": "2021-02"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Managed QA teams and testing strategies across multiple projects."
+    },
+    "certifications": [
+      "ISTQB Advanced Level Test Manager"
+    ]
+  },
+  "medianTenureMonths": 63.5
+}

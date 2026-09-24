@@ -1,0 +1,91 @@
+{
+  "id": "viktor-ivanov",
+  "file": "/cvs/viktor_ivanov_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Viktor Ivanov\nApplication Security Engineer\nviktor.ivanov@example.com · +1-555-030-3030 · Sofia, Bulgaria\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nViktor Ivanov is a senior application security engineer based in Sofia, Bulgaria, with 7 years of total experience\nin the information security industry. They specialize in Python, Docker, Kubernetes, AWS, Terraform, and\nLinux, and hold leadership experience in security reviews. They possess a bachelor degree in Computer\nScience and are proficient in Bulgarian and English.\nSKILLS\nPython (7 years) · Docker (5 years) · Kubernetes (4 years) · AWS (6 years) · Terraform (4 years) ·\nLinux (7 years)\nEXPERIENCE\nApplication Security Engineer — Balkan Cyber Systems 03/2021 – Present\nIndustry: Information Security\n– Applied Python and Linux to secure Kubernetes clusters in AWS.\n– Demonstrated leadership in information security across seven years of total experience.\nSecurity Analyst — Rhodope Tech Labs 01/2019 – 02/2021\nIndustry: Information Security\n– Built compliance monitors using Python, Docker, and Terraform on Linux.\n– Exercised senior technical leadership within the information security industry.\nEDUCATION\nBSc Computer Science 2018\nSofia University\nLANGUAGES\nBulgarian (native) · English (C1)\nLEADERSHIP\nLed security reviews and mentored junior engineers across multiple teams.",
+    "CERTIFICATIONS\nCertified Information Systems Security Professional"
+  ],
+  "profile": {
+    "name": "Viktor Ivanov",
+    "headline": "Application Security Engineer",
+    "role": "security",
+    "seniority": "senior",
+    "location": "Sofia, Bulgaria",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 7
+      },
+      {
+        "name": "Docker",
+        "years": 5
+      },
+      {
+        "name": "Kubernetes",
+        "years": 4
+      },
+      {
+        "name": "AWS",
+        "years": 6
+      },
+      {
+        "name": "Terraform",
+        "years": 4
+      },
+      {
+        "name": "Linux",
+        "years": 7
+      }
+    ],
+    "languages": [
+      {
+        "language": "Bulgarian",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Sofia University",
+        "year": 2018
+      }
+    ],
+    "employment": [
+      {
+        "company": "Balkan Cyber Systems",
+        "title": "Application Security Engineer",
+        "industry": "Information Security",
+        "from": "2021-03",
+        "to": null
+      },
+      {
+        "company": "Rhodope Tech Labs",
+        "title": "Security Analyst",
+        "industry": "Information Security",
+        "from": "2019-01",
+        "to": "2021-02"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led security reviews and mentored junior engineers across multiple teams."
+    },
+    "certifications": [
+      "Certified Information Systems Security Professional"
+    ]
+  },
+  "medianTenureMonths": 46.5
+}

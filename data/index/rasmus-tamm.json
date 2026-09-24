@@ -1,0 +1,90 @@
+{
+  "id": "rasmus-tamm",
+  "file": "/cvs/rasmus_tamm_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Rasmus Tamm\nSenior QA Engineer\nrasmus.tamm@example.com · +1-555-021-2121 · Tallinn, Estonia\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nRasmus Tamm is a Senior QA Engineer based in Tallinn, Estonia with 7 years of total experience. As a senior\nQA professional, Rasmus specializes in Python, Selenium, PyTest, Postman, Docker, and Git. Rasmus holds\na bachelor degree in Computer Science and works in hybrid or remote environments.\nSKILLS\nPython (7 years) · Selenium (6 years) · PyTest (5 years) · Postman (7 years) · Docker (4 years) ·\nGit (7 years)\nEXPERIENCE\nSenior QA Engineer — Tallinn QA Corp 03/2021 – Present\nIndustry: Software Testing\n– Worked as Senior QA Engineer using Python, PyTest, Docker, and Git.\n– Delivered software testing solutions in the Software Testing industry.\nQA Engineer — Eesti Software Labs 03/2019 – 02/2021\nIndustry: Information Technology\n– Worked as QA Engineer using Python, Selenium, Postman, and Git.\n– Built test automation features in the Information Technology industry.\nEDUCATION\nBSc Computer Science 2018\nTallinn University of Technology\nLANGUAGES\nEstonian (native) · English (C1)\nCERTIFICATIONS\nISTQB Certified Tester"
+  ],
+  "profile": {
+    "name": "Rasmus Tamm",
+    "headline": "Senior QA Engineer",
+    "role": "qa",
+    "seniority": "senior",
+    "location": "Tallinn, Estonia",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 7
+      },
+      {
+        "name": "Selenium",
+        "years": 6
+      },
+      {
+        "name": "PyTest",
+        "years": 5
+      },
+      {
+        "name": "Postman",
+        "years": 7
+      },
+      {
+        "name": "Docker",
+        "years": 4
+      },
+      {
+        "name": "Git",
+        "years": 7
+      }
+    ],
+    "languages": [
+      {
+        "language": "Estonian",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Tallinn University of Technology",
+        "year": 2018
+      }
+    ],
+    "employment": [
+      {
+        "company": "Tallinn QA Corp",
+        "title": "Senior QA Engineer",
+        "industry": "Software Testing",
+        "from": "2021-03",
+        "to": null
+      },
+      {
+        "company": "Eesti Software Labs",
+        "title": "QA Engineer",
+        "industry": "Information Technology",
+        "from": "2019-03",
+        "to": "2021-02"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "ISTQB Certified Tester"
+    ]
+  },
+  "medianTenureMonths": 45.5
+}

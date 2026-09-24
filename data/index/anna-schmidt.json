@@ -1,0 +1,90 @@
+{
+  "id": "anna-schmidt",
+  "file": "/cvs/anna_schmidt_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Anna Schmidt\nPlatform Engineer\nanna.schmidt@example.com · +1-555-020-2020 · Vienna, Austria\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nAnna Schmidt is a mid-level Platform Engineer based in Vienna, Austria, with 4 years of total experience. She specializes\nin Python, Docker, Kubernetes, Terraform, AWS, and Linux. Her background spans the Cloud Infrastructure and Cyber\nSecurity industries with a focus on DevOps practices.\nSKILLS\nPython (4 years) · Docker (4 years) · Kubernetes (3 years) · Terraform (3 years) · AWS (4 years) ·\nLinux (4 years)\nEXPERIENCE\nPlatform Engineer — Semmering Cloud Tech Jan 2023 – Present\nIndustry: Cloud Infrastructure\n• Performed Platform Engineer duties at Semmering Cloud Tech in the Cloud Infrastructure industry.\n• Utilized Python, Kubernetes, Terraform, AWS, and Linux to manage infrastructure platforms.\nJunior DevOps Engineer — Alps Cyber Systems Jan 2022 – Dec 2022\nIndustry: Cyber Security\n• Served as Junior DevOps Engineer in the Cyber Security industry at Alps Cyber Systems.\n• Applied Docker, Linux, and Python to support secure system operations.\nEDUCATION\nBSc Computer Science 2021\nTechnical University of Vienna\nLANGUAGES\nGerman (native) · English (C1)\nCERTIFICATIONS\nAWS Certified Solutions Architect"
+  ],
+  "profile": {
+    "name": "Anna Schmidt",
+    "headline": "Platform Engineer",
+    "role": "devops",
+    "seniority": "mid",
+    "location": "Vienna, Austria",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 30,
+    "yearsTotal": 4,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 4
+      },
+      {
+        "name": "Docker",
+        "years": 4
+      },
+      {
+        "name": "Kubernetes",
+        "years": 3
+      },
+      {
+        "name": "Terraform",
+        "years": 3
+      },
+      {
+        "name": "AWS",
+        "years": 4
+      },
+      {
+        "name": "Linux",
+        "years": 4
+      }
+    ],
+    "languages": [
+      {
+        "language": "German",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Technical University of Vienna",
+        "year": 2021
+      }
+    ],
+    "employment": [
+      {
+        "company": "Semmering Cloud Tech",
+        "title": "Platform Engineer",
+        "industry": "Cloud Infrastructure",
+        "from": "2023-01",
+        "to": null
+      },
+      {
+        "company": "Alps Cyber Systems",
+        "title": "Junior DevOps Engineer",
+        "industry": "Cyber Security",
+        "from": "2022-01",
+        "to": "2022-12"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "AWS Certified Solutions Architect"
+    ]
+  },
+  "medianTenureMonths": 28.5
+}

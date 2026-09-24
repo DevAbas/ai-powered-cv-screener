@@ -1,27 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { cvFileName, cvIdFromFileName, cvSourceHref } from "./source-href";
+import { cvFileName, cvSourceHref } from "./source-href";
 
 describe("cvFileName", () => {
-  it("names the file name_surname_cv.pdf", () => {
+  it("names the download name_surname_cv.pdf", () => {
     expect(cvFileName("daan-de-vries")).toBe("daan_de_vries_cv.pdf");
   });
 });
 
-describe("cvIdFromFileName", () => {
-  it("inverts cvFileName", () => {
-    expect(cvIdFromFileName(cvFileName("daan-de-vries"))).toBe("daan-de-vries");
-  });
-
-  it("ignores other files", () => {
-    expect(cvIdFromFileName("notes.pdf")).toBeUndefined();
-    expect(cvIdFromFileName("Lena_Novak_cv.pdf")).toBeUndefined();
-    expect(cvIdFromFileName("lena_novak_cv.pdf.tmp")).toBeUndefined();
-  });
-});
-
 describe("cvSourceHref", () => {
-  it("links to the PDF at the cited page", () => {
-    expect(cvSourceHref("lena-novak", 2)).toBe("/cvs/lena_novak_cv.pdf#page=2");
+  it("links to the CV route at the cited page", () => {
+    expect(cvSourceHref("lena-novak", 2)).toBe("/api/cvs/lena-novak#page=2");
   });
 
   it("returns undefined for an invalid id or page", () => {

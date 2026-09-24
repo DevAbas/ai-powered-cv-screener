@@ -1,0 +1,90 @@
+{
+  "id": "elena-georgiou",
+  "file": "/cvs/elena_georgiou_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Elena Georgiou\nBackend Engineer\nelena.georgiou@example.com · +1-555-008-0808 · Athens, Greece\nRemote · Hybrid · EU Citizen · Notice period: 30 days\nSUMMARY\nElena Georgiou is a mid Backend Engineer based in Athens, Greece, with 4 years of total experience. She specializes in\nPython, Django, PostgreSQL, Docker, AWS, and Git. She holds a bachelor in Computer Science and has worked in the\nCloud Computing and Software Development industries.\nSKILLS\nPython (4 years) · Django (3 years) · PostgreSQL (4 years) · Docker (3 years) · AWS (3 years) · Git (4 years)\nEXPERIENCE\nBackend Engineer — Aegean Cloud Systems Jan 2023 – Present\nIndustry: Cloud Computing\n• Develop backend applications using Python, Django, and PostgreSQL.\n• Deploy cloud infrastructure via AWS and manage source code with Git.\nJunior Backend Engineer — Hellas Digital Sep 2021 – Dec 2022\nIndustry: Software Development\n• Write Python and PostgreSQL queries for web software.\n• Containerize services using Docker and track changes with Git.\nEDUCATION\nBSc Computer Science 2021\nNational and Kapodistrian University of Athens\nLANGUAGES\nGreek (native) · English (C1)\nCERTIFICATIONS\nAWS Certified Developer"
+  ],
+  "profile": {
+    "name": "Elena Georgiou",
+    "headline": "Backend Engineer",
+    "role": "backend",
+    "seniority": "mid",
+    "location": "Athens, Greece",
+    "remote": [
+      "remote",
+      "hybrid"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 4,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 4
+      },
+      {
+        "name": "Django",
+        "years": 3
+      },
+      {
+        "name": "PostgreSQL",
+        "years": 4
+      },
+      {
+        "name": "Docker",
+        "years": 3
+      },
+      {
+        "name": "AWS",
+        "years": 3
+      },
+      {
+        "name": "Git",
+        "years": 4
+      }
+    ],
+    "languages": [
+      {
+        "language": "Greek",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "National and Kapodistrian University of Athens",
+        "year": 2021
+      }
+    ],
+    "employment": [
+      {
+        "company": "Aegean Cloud Systems",
+        "title": "Backend Engineer",
+        "industry": "Cloud Computing",
+        "from": "2023-01",
+        "to": null
+      },
+      {
+        "company": "Hellas Digital",
+        "title": "Junior Backend Engineer",
+        "industry": "Software Development",
+        "from": "2021-09",
+        "to": "2022-12"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  "medianTenureMonths": 30.5
+}

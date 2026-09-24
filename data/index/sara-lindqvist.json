@@ -1,0 +1,92 @@
+{
+  "id": "sara-lindqvist",
+  "file": "/cvs/sara_lindqvist_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Sara Lindqvist\nSenior Product Manager\nsara.lindqvist@example.com · +1-555-025-2525 · Stockholm, Sweden\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nSara Lindqvist is a Senior Product Manager with 8.0 years of experience in product strategy, roadmapping,\nand data analytics. Based in Stockholm, Sweden, Sara has applied agile methodologies and user testing\nacross cloud computing and digital media industries. Educational background includes a bachelor degree in\nbusiness administration from Stockholm University.\nSKILLS\nProduct Strategy (8 years) · Roadmapping (8 years) · Agile Methodologies (8 years) ·\nMarket Research (7 years) · Data Analytics (7 years) · User Testing (6 years)\nEXPERIENCE\nSenior Product Manager — Fjall Cloud Systems Jun 2021 – Present\nIndustry: Cloud Computing\n• Executed Product Strategy and Roadmapping for cloud infrastructure tools.\n• Applied Agile Methodologies and Data Analytics in the Cloud Computing industry.\nProduct Manager — Barken Media Sep 2018 – May 2021\nIndustry: Digital Media\n• Conducted Market Research and User Testing within Digital Media.\n• Leveraged Product Strategy and Agile Methodologies to deliver products.\nEDUCATION\nBSc Business Administration 2018\nStockholm University\nLANGUAGES\nSwedish (native) · English (C2)\nLEADERSHIP\nGuided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing\nindustry.",
+    "CERTIFICATIONS\nCertified Scrum Product Owner · Professional Scrum Master I"
+  ],
+  "profile": {
+    "name": "Sara Lindqvist",
+    "headline": "Senior Product Manager",
+    "role": "product",
+    "seniority": "senior",
+    "location": "Stockholm, Sweden",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 30,
+    "yearsTotal": 8,
+    "skills": [
+      {
+        "name": "Product Strategy",
+        "years": 8
+      },
+      {
+        "name": "Roadmapping",
+        "years": 8
+      },
+      {
+        "name": "Agile Methodologies",
+        "years": 8
+      },
+      {
+        "name": "Market Research",
+        "years": 7
+      },
+      {
+        "name": "Data Analytics",
+        "years": 7
+      },
+      {
+        "name": "User Testing",
+        "years": 6
+      }
+    ],
+    "languages": [
+      {
+        "language": "Swedish",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C2"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Business Administration",
+        "institution": "Stockholm University",
+        "year": 2018
+      }
+    ],
+    "employment": [
+      {
+        "company": "Fjall Cloud Systems",
+        "title": "Senior Product Manager",
+        "industry": "Cloud Computing",
+        "from": "2021-06",
+        "to": null
+      },
+      {
+        "company": "Barken Media",
+        "title": "Product Manager",
+        "industry": "Digital Media",
+        "from": "2018-09",
+        "to": "2021-05"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Guided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing industry."
+    },
+    "certifications": [
+      "Certified Scrum Product Owner",
+      "Professional Scrum Master I"
+    ]
+  },
+  "medianTenureMonths": 48.5
+}

@@ -1,0 +1,106 @@
+{
+  "id": "jane-doe",
+  "file": "/cvs/jane_doe_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Jane Doe\nFrontend Lead\njane.doe@example.com · +1-555-002-0202 · Dublin, Ireland\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nJane Doe is a Frontend Lead based in Dublin, Ireland with 10 years of experience across Financial Technology, Cloud\nSoftware, and Digital Media. She holds a bachelor degree in Computer Science from Trinity College Dublin and\nspecializes in JavaScript, TypeScript, React, Vue.js, Redux, HTML5/CSS3, Webpack, and Jest. Her background includes\nleadership experience guiding frontend teams and mentoring junior developers.\nSKILLS\nJavaScript (10 years) · TypeScript (8 years) · React (7 years) · Vue.js (4 years) · Redux (6 years) ·\nHTML5/CSS3 (10 years) · Webpack (6 years) · Jest (5 years)\nEXPERIENCE\nFrontend Lead — Emerald Paytech Mar 2021 – Present\nIndustry: Financial Technology\n• Led frontend development using JavaScript, TypeScript, React, Redux, and Jest.\n• Guided technical vision and mentored junior developers within Financial Technology.\nSenior Frontend Engineer — Celtic Cloud Systems Jan 2018 – Feb 2021\nIndustry: Cloud Software\n• Built interactive monitoring dashboards using TypeScript, Vue.js, Webpack, and HTML5/CSS3.\n• Engineered web interface components for Cloud Software platforms.\nFrontend Developer — Liffey Media Mar 2016 – Dec 2017\nIndustry: Digital Media\n• Developed user interfaces for web applications utilizing JavaScript, HTML5/CSS3, and Webpack.\n• Created modern responsive layouts in the Digital Media sector.\nEDUCATION\nBSc Computer Science 2015\nTrinity College Dublin\nLANGUAGES\nEnglish (native) · Irish (B2)",
+    "LEADERSHIP\nLed a frontend team of 6 engineers and mentored junior developers.\nCERTIFICATIONS\nAWS Certified Developer - Associate"
+  ],
+  "profile": {
+    "name": "Jane Doe",
+    "headline": "Frontend Lead",
+    "role": "frontend",
+    "seniority": "lead",
+    "location": "Dublin, Ireland",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 10,
+    "skills": [
+      {
+        "name": "JavaScript",
+        "years": 10
+      },
+      {
+        "name": "TypeScript",
+        "years": 8
+      },
+      {
+        "name": "React",
+        "years": 7
+      },
+      {
+        "name": "Vue.js",
+        "years": 4
+      },
+      {
+        "name": "Redux",
+        "years": 6
+      },
+      {
+        "name": "HTML5/CSS3",
+        "years": 10
+      },
+      {
+        "name": "Webpack",
+        "years": 6
+      },
+      {
+        "name": "Jest",
+        "years": 5
+      }
+    ],
+    "languages": [
+      {
+        "language": "English",
+        "level": "native"
+      },
+      {
+        "language": "Irish",
+        "level": "B2"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Trinity College Dublin",
+        "year": 2015
+      }
+    ],
+    "employment": [
+      {
+        "company": "Emerald Paytech",
+        "title": "Frontend Lead",
+        "industry": "Financial Technology",
+        "from": "2021-03",
+        "to": null
+      },
+      {
+        "company": "Celtic Cloud Systems",
+        "title": "Senior Frontend Engineer",
+        "industry": "Cloud Software",
+        "from": "2018-01",
+        "to": "2021-02"
+      },
+      {
+        "company": "Liffey Media",
+        "title": "Frontend Developer",
+        "industry": "Digital Media",
+        "from": "2016-03",
+        "to": "2017-12"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led a frontend team of 6 engineers and mentored junior developers."
+    },
+    "certifications": [
+      "AWS Certified Developer - Associate"
+    ]
+  },
+  "medianTenureMonths": 38
+}

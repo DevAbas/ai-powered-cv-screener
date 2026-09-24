@@ -1,8 +1,8 @@
 import { ChatScreen } from "@/components/ChatScreen";
-import { loadIndex, toPoolCandidate } from "@/lib/pool/index-file";
+import { loadPool, toPoolCandidate } from "@/lib/pool/pool";
 
 // The pool comes from the index, read on the server (PLAN, Data access);
 // only names and page counts reach the client.
 export default function ChatPage() {
-  return <ChatScreen pool={loadIndex().map(toPoolCandidate)} />;
+  return <ChatScreen pool={loadPool().entries.map(toPoolCandidate)} />;
 }

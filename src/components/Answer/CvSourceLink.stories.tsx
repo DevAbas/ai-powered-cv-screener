@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { cvSourceHref } from "@/lib/pool/source-href";
+import { storySourceHref } from "@/mocks/story";
 import { CvSourceLink } from "./CvSourceLink";
 
 const meta = {
@@ -16,10 +16,10 @@ export const WithoutPdf: Story = {};
 
 /** With a PDF, the card opens the CV at the cited page in a new tab; the tooltip says so. */
 export const WithPdf: Story = {
-  args: { sourceHref: cvSourceHref },
+  args: { sourceHref: storySourceHref },
 };
 
 /** Inside an answer view, beside the name: the icon and "CV" only; the name stays in its accessible name. */
 export const Compact: Story = {
-  args: { sourceHref: cvSourceHref, compact: true },
+  args: { sourceHref: storySourceHref, compact: true },
 };

@@ -1,0 +1,90 @@
+{
+  "id": "zuzana-holubova",
+  "file": "/cvs/zuzana_holubova_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Zuzana Holubová\nMobile Engineer\nzuzana.holubova@example.com · +1-555-029-2929 · Bratislava, Slovakia\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nZuzana Holubova is a mid-level Mobile Engineer based in Bratislava, Slovakia, with 3.5 years of total professional\nexperience. Expertise includes Swift, Kotlin, Flutter, Git, CI/CD, and REST API across the Software Development\nand Information Technology industries. Education includes a bachelor degree in Computer Science from Comenius\nUniversity.\nSKILLS\nSwift (3.5 years) · Kotlin (3 years) · Flutter (2 years) · Git (3.5 years) · CI/CD (2.5 years) · REST (3.5 years)\nEXPERIENCE\nMobile Engineer — Tatras Tech Mar 2024 – Present\nIndustry: Software Development\n• Worked as Mobile Engineer at Tatras Tech in the Software Development industry using Swift and Kotlin.\n• Built mobile features using REST API and managed code via Git and CI/CD.\nJunior Mobile Developer — Danubia Systems Jan 2023 – Feb 2024\nIndustry: Information Technology\n• Worked as Junior Mobile Developer at Danubia Systems in the Information Technology industry.\n• Developed cross-platform mobile apps using Flutter and Swift integrated with REST API and Git.\nEDUCATION\nBSc Computer Science 2022\nComenius University\nLANGUAGES\nSlovak (native) · English (C1)\nCERTIFICATIONS\nCertified Mobile Application Developer"
+  ],
+  "profile": {
+    "name": "Zuzana Holubová",
+    "headline": "Mobile Engineer",
+    "role": "mobile",
+    "seniority": "mid",
+    "location": "Bratislava, Slovakia",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 30,
+    "yearsTotal": 3.5,
+    "skills": [
+      {
+        "name": "Swift",
+        "years": 3.5
+      },
+      {
+        "name": "Kotlin",
+        "years": 3
+      },
+      {
+        "name": "Flutter",
+        "years": 2
+      },
+      {
+        "name": "Git",
+        "years": 3.5
+      },
+      {
+        "name": "CI/CD",
+        "years": 2.5
+      },
+      {
+        "name": "REST",
+        "years": 3.5
+      }
+    ],
+    "languages": [
+      {
+        "language": "Slovak",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Comenius University",
+        "year": 2022
+      }
+    ],
+    "employment": [
+      {
+        "company": "Tatras Tech",
+        "title": "Mobile Engineer",
+        "industry": "Software Development",
+        "from": "2024-03",
+        "to": null
+      },
+      {
+        "company": "Danubia Systems",
+        "title": "Junior Mobile Developer",
+        "industry": "Information Technology",
+        "from": "2023-01",
+        "to": "2024-02"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "Certified Mobile Application Developer"
+    ]
+  },
+  "medianTenureMonths": 22.5
+}

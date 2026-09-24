@@ -2,8 +2,8 @@ import type { PoolCandidate } from "@/lib/pool/candidate";
 
 // Mock pool for component previews and tests: the 30 candidates of the
 // generator's roster (`scripts/generate/roster.ts`, kept equal by its test),
-// with the page count of each generated PDF (`data/pdfs.json`). The app reads
-// the pool from the index.
+// with the page count of each generated PDF. The app reads the pool from the
+// index (PLAN, Data access).
 
 export const MOCK_POOL: readonly PoolCandidate[] = [
   { id: "lena-novak", pages: 2, profile: { name: "Lena Novak", headline: "Senior Frontend Engineer", role: "frontend", seniority: "senior", location: "Berlin, Germany" } },

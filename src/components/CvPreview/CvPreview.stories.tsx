@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
-import { cvSourceHref } from "@/lib/pool/source-href";
+import { storySourceHref } from "@/mocks/story";
 import { CvPreview } from "./CvPreview";
 
 export default {
@@ -8,7 +8,7 @@ export default {
   parameters: { layout: "fullscreen" },
 } satisfies Meta;
 
-const href = cvSourceHref("lena-novak", 1)?.split("#")[0] ?? "";
+const href = storySourceHref("lena-novak", 1)?.split("#")[0] ?? "";
 
 /** The panel docked to the right; drag its left edge to resize. */
 export const Basic = () => (

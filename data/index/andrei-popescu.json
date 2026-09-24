@@ -1,0 +1,91 @@
+{
+  "id": "andrei-popescu",
+  "file": "/cvs/andrei_popescu_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Andrei Popescu\nSenior Backend Engineer\nandrei.popescu@example.com · +1-555-007-0707 · Bucharest, Romania\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nAndrei Popescu is a senior backend engineer based in Bucharest, Romania, with 7 years of total experience.\nExpertise spans Python, Django, PostgreSQL, Docker, Redis, and AWS within the Cloud Computing and\nFinancial Technology industries. Holds a bachelor degree in Computer Science and demonstrates leadership\nexperience in backend development. Communicates in Romanian and English, and is available on a 30 day\nnotice period for hybrid or remote roles.\nSKILLS\nPython (7 years) · Django (5 years) · PostgreSQL (7 years) · Docker (4 years) · Redis (3 years) ·\nAWS (4 years)\nEXPERIENCE\nSenior Backend Engineer — Danube Cloud Tech Mar 2021 – Present\nIndustry: Cloud Computing\n• Worked as a Senior Backend Engineer in the Cloud Computing industry using Python, Django,\nPostgreSQL, and AWS.\n• Provided backend engineering leadership across various cloud projects.\nBackend Developer — Carpathian Software Jun 2019 – Feb 2021\nIndustry: Financial Technology\n• Served as a Backend Developer within the Financial Technology industry utilizing Python, Docker, and\nRedis.\n• Delivered backend solutions without holding a leadership role during this period.\nEDUCATION\nBSc Computer Science 2017\nUniversitatea Politehnica din Bucuresti\nLANGUAGES\nRomanian (native) · English (C1)\nLEADERSHIP",
+    "Provided leadership as a Senior Backend Engineer by mentoring junior developers and guiding architectural\ndecisions.\nCERTIFICATIONS\nAWS Certified Developer"
+  ],
+  "profile": {
+    "name": "Andrei Popescu",
+    "headline": "Senior Backend Engineer",
+    "role": "backend",
+    "seniority": "senior",
+    "location": "Bucharest, Romania",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 7
+      },
+      {
+        "name": "Django",
+        "years": 5
+      },
+      {
+        "name": "PostgreSQL",
+        "years": 7
+      },
+      {
+        "name": "Docker",
+        "years": 4
+      },
+      {
+        "name": "Redis",
+        "years": 3
+      },
+      {
+        "name": "AWS",
+        "years": 4
+      }
+    ],
+    "languages": [
+      {
+        "language": "Romanian",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Universitatea Politehnica din Bucuresti",
+        "year": 2017
+      }
+    ],
+    "employment": [
+      {
+        "company": "Danube Cloud Tech",
+        "title": "Senior Backend Engineer",
+        "industry": "Cloud Computing",
+        "from": "2021-03",
+        "to": null
+      },
+      {
+        "company": "Carpathian Software",
+        "title": "Backend Developer",
+        "industry": "Financial Technology",
+        "from": "2019-06",
+        "to": "2021-02"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Provided leadership as a Senior Backend Engineer by mentoring junior developers and guiding architectural decisions."
+    },
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  "medianTenureMonths": 44
+}

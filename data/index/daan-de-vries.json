@@ -1,0 +1,107 @@
+{
+  "id": "daan-de-vries",
+  "file": "/cvs/daan_de_vries_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Daan de Vries\nPrincipal UI Engineer\ndaan.vries@example.com · +1-555-006-0606 · Amsterdam, Netherlands\nRemote · Hybrid · EU Citizen · Notice period: 30 days\nSUMMARY\nDaan de Vries is a Principal UI Engineer with 12 years of experience specializing in frontend development.\nBased in Amsterdam, Netherlands, Daan has leadership experience guiding engineering teams and utilizing\nJavaScript, TypeScript, React, Vue, HTML, CSS, Jest, and Docker. Education includes a bachelor degree in\nComputer Science from University of Amsterdam.\nSKILLS\nJavaScript (12 years) · TypeScript (8 years) · React (10 years) · Vue.js (4 years) · HTML (12 years) ·\nCSS (12 years) · Jest (7 years) · Docker (5 years)\nEXPERIENCE\nPrincipal UI Engineer — Amstel Tech Solutions 03/2020 – Present\nIndustry: Software Development\n– Led engineering teams as Principal UI Engineer using JavaScript, TypeScript, React, CSS, and Docker.\n– Delivered frontend architecture improvements in the software development industry.\nSenior Frontend Developer — Zaan Web Works 01/2016 – 02/2020\nIndustry: Digital Media\n– Developed web applications as a Senior Frontend Developer utilizing JavaScript, React, Vue, HTML, CSS,\nand Jest.\n– Contributed to digital media projects across multiple teams.\nFrontend Developer — IJssel Media 06/2014 – 12/2015\nIndustry: Web Development\n– Implemented user interfaces as a Frontend Developer with JavaScript, HTML, CSS, and Jest.\n– Built responsive web pages in the web development industry.\nEDUCATION\nBSc Computer Science 2012\nUniversity of Amsterdam\nLANGUAGES\nDutch (native) · English (C2)",
+    "LEADERSHIP\nLed multiple engineering teams and frontend architects as Principal UI Engineer.\nCERTIFICATIONS\nCertified JavaScript Professional · Advanced React Patterns"
+  ],
+  "profile": {
+    "name": "Daan de Vries",
+    "headline": "Principal UI Engineer",
+    "role": "frontend",
+    "seniority": "principal",
+    "location": "Amsterdam, Netherlands",
+    "remote": [
+      "remote",
+      "hybrid"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 12,
+    "skills": [
+      {
+        "name": "JavaScript",
+        "years": 12
+      },
+      {
+        "name": "TypeScript",
+        "years": 8
+      },
+      {
+        "name": "React",
+        "years": 10
+      },
+      {
+        "name": "Vue.js",
+        "years": 4
+      },
+      {
+        "name": "HTML",
+        "years": 12
+      },
+      {
+        "name": "CSS",
+        "years": 12
+      },
+      {
+        "name": "Jest",
+        "years": 7
+      },
+      {
+        "name": "Docker",
+        "years": 5
+      }
+    ],
+    "languages": [
+      {
+        "language": "Dutch",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C2"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Amsterdam",
+        "year": 2012
+      }
+    ],
+    "employment": [
+      {
+        "company": "Amstel Tech Solutions",
+        "title": "Principal UI Engineer",
+        "industry": "Software Development",
+        "from": "2020-03",
+        "to": null
+      },
+      {
+        "company": "Zaan Web Works",
+        "title": "Senior Frontend Developer",
+        "industry": "Digital Media",
+        "from": "2016-01",
+        "to": "2020-02"
+      },
+      {
+        "company": "IJssel Media",
+        "title": "Frontend Developer",
+        "industry": "Web Development",
+        "from": "2014-06",
+        "to": "2015-12"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led multiple engineering teams and frontend architects as Principal UI Engineer."
+    },
+    "certifications": [
+      "Certified JavaScript Professional",
+      "Advanced React Patterns"
+    ]
+  },
+  "medianTenureMonths": 50
+}

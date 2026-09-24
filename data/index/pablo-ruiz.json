@@ -1,0 +1,91 @@
+{
+  "id": "pablo-ruiz",
+  "file": "/cvs/pablo_ruiz_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Pablo Ruiz\nDevOps Lead\npablo.ruiz@example.com · +1-555-019-1919 · Madrid, Spain\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nPablo Ruiz is a DevOps Lead with 10 years of total experience based in Madrid, Spain. Expertise includes\nDocker, Kubernetes, Terraform, AWS, Python, and Linux across cloud computing and software infrastructure\nindustries. Demonstrated leadership in managing technical teams and scalable systems.\nSKILLS\nDocker (10 years) · Kubernetes (8 years) · Terraform (7 years) · AWS (9 years) · Python (6 years) ·\nLinux (10 years)\nEXPERIENCE\nDevOps Lead — Solana Cloud Labs Mar 2020 – Present\nIndustry: Cloud Computing\n• Worked as DevOps Lead with Kubernetes, Terraform, AWS, Linux, and Python.\n• Delivered cloud computing industry leadership and operations with Kubernetes and Terraform.\nDevOps Engineer — Sierra Systems Apr 2016 – Feb 2020\nIndustry: Software Infrastructure\n• Worked as DevOps Engineer with Docker, Linux, AWS, and Python.\n• Maintained software infrastructure systems using Docker and Linux.\nEDUCATION\nBSc Computer Science 2014\nUniversidad Politecnica de Madrid\nLANGUAGES\nSpanish (native) · English (C1)\nLEADERSHIP\nLed infrastructure and DevOps engineering teams in cloud computing.\nCERTIFICATIONS",
+    "AWS Certified Solutions Architect"
+  ],
+  "profile": {
+    "name": "Pablo Ruiz",
+    "headline": "DevOps Lead",
+    "role": "devops",
+    "seniority": "lead",
+    "location": "Madrid, Spain",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 30,
+    "yearsTotal": 10,
+    "skills": [
+      {
+        "name": "Docker",
+        "years": 10
+      },
+      {
+        "name": "Kubernetes",
+        "years": 8
+      },
+      {
+        "name": "Terraform",
+        "years": 7
+      },
+      {
+        "name": "AWS",
+        "years": 9
+      },
+      {
+        "name": "Python",
+        "years": 6
+      },
+      {
+        "name": "Linux",
+        "years": 10
+      }
+    ],
+    "languages": [
+      {
+        "language": "Spanish",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Universidad Politecnica de Madrid",
+        "year": 2014
+      }
+    ],
+    "employment": [
+      {
+        "company": "Solana Cloud Labs",
+        "title": "DevOps Lead",
+        "industry": "Cloud Computing",
+        "from": "2020-03",
+        "to": null
+      },
+      {
+        "company": "Sierra Systems",
+        "title": "DevOps Engineer",
+        "industry": "Software Infrastructure",
+        "from": "2016-04",
+        "to": "2020-02"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led infrastructure and DevOps engineering teams in cloud computing."
+    },
+    "certifications": [
+      "AWS Certified Solutions Architect"
+    ]
+  },
+  "medianTenureMonths": 63
+}

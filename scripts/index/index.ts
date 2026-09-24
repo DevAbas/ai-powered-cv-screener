@@ -1,7 +1,7 @@
 // Builds the CV index (PLAN, Indexer) in two steps:
-//   profiles: for every PDF in `public/cvs`, text per page, one profile from
+//   profiles: for every PDF in `data/cvs`, text per page, one profile from
 //             the `extract` entry, normalised, and the median job tenure,
-//             written to data/index.json after every CV;
+//             written to data/index/<id>.json after every CV;
 //   vectors:  one vector per indexed CV from the `embed` entry, in Pinecone.
 // Both are resumable: what exists is kept unless forced.
 //
@@ -17,11 +17,11 @@ import { readdir, readFile } from "node:fs/promises";
 import type { IndexEntry } from "@/contracts/candidate";
 import { missingApiKeys } from "@/lib/ai/providers";
 import { getEntry } from "@/lib/ai/registry";
-import { INDEX_FILE, IndexSchema } from "@/lib/pool/index-file";
-import { cvFileName, cvIdFromFileName } from "@/lib/pool/source-href";
+import { CandidateIdSchema } from "@/contracts/candidate";
+import { indexEntryPath, readIndexEntries } from "@/lib/pool/index-files";
 import { createEmbedder } from "@/lib/ai/embedder";
 import { pineconeStoreFromEnv } from "@/lib/vector/pinecone";
-import { exists, PDFS_DIR, pdfPath, readJson, writeJsonAtomic } from "../generate/fs";
+import { PDFS_DIR, pdfPath, writeJsonAtomic } from "../generate/fs";
 import { shortError, sleep } from "../generate/options";
 import { extractProfile } from "./extract";
 import { pdfPageTexts } from "./pdf-text";
@@ -58,13 +58,18 @@ function parseArgs(argv: string[]) {
 
 const log = (id: string, message: string) => console.log(`index ${id}: ${message}`);
 
-async function readIndex(): Promise<Map<string, IndexEntry>> {
-  const entries = (await exists(INDEX_FILE)) ? IndexSchema.parse(await readJson(INDEX_FILE)) : [];
+function readIndex(): Map<string, IndexEntry> {
+  let entries: IndexEntry[] = [];
+  try {
+    entries = readIndexEntries();
+  } catch {
+    // No index folder yet: the first run creates it.
+  }
   return new Map(entries.map((e) => [e.id, e]));
 }
 
-async function writeIndex(index: Map<string, IndexEntry>): Promise<void> {
-  await writeJsonAtomic(INDEX_FILE, [...index.values()].sort((a, b) => a.id.localeCompare(b.id)));
+async function writeEntry(entry: IndexEntry): Promise<void> {
+  await writeJsonAtomic(indexEntryPath(entry.id), entry);
 }
 
 type Args = ReturnType<typeof parseArgs>;
@@ -81,7 +86,7 @@ function summary(step: Step, report: Report, dryRun: boolean): string {
   return `${step}: ${verb} ${report.done.length}, skipped ${report.skipped.length}, failed ${report.failed.length}${failed}`;
 }
 
-/** Text per page and one extracted profile per CV, into data/index.json. */
+/** Text per page and one extracted profile per CV, into data/index/<id>.json. */
 async function runProfiles(args: Args, ids: readonly string[], index: Map<string, IndexEntry>): Promise<Report> {
   if (!args.dryRun) {
     const entry = getEntry("extract");
@@ -106,15 +111,16 @@ async function runProfiles(args: Args, ids: readonly string[], index: Map<string
     try {
       const text = await pdfPageTexts(new Uint8Array(await readFile(pdfPath(id))));
       const { profile, target, repaired } = await extractProfile(text, (message) => log(id, message));
-      index.set(id, {
+      const entry: IndexEntry = {
         id,
-        file: `/cvs/${cvFileName(id)}`,
+        file: `/api/cvs/${id}`,
         pages: text.length,
         text,
         profile,
         medianTenureMonths: medianTenureMonths(profile.employment, yearMonthOf(new Date())),
-      });
-      await writeIndex(index);
+      };
+      index.set(id, entry);
+      await writeEntry(entry);
       report.done.push(id);
       log(id, `indexed by ${target.model} (${text.length} page(s), ${profile.skills.length} skills, ${profile.employment.length} jobs${repaired ? ", repaired" : ""})`);
     } catch (error) {
@@ -146,11 +152,14 @@ async function runVectors(args: Args, index: Map<string, IndexEntry>): Promise<R
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const ids = (await readdir(PDFS_DIR)).flatMap((file) => cvIdFromFileName(file) ?? []).sort();
+  const ids = (await readdir(PDFS_DIR))
+    .flatMap((file) => (file.endsWith(".pdf") ? [file.slice(0, -4)] : []))
+    .filter((id) => CandidateIdSchema.safeParse(id).success)
+    .sort();
   const unknown = args.only?.filter((id) => !ids.includes(id)) ?? [];
   if (unknown.length) throw new Error(`No CV for: ${unknown.join(", ")}`);
 
-  const index = await readIndex();
+  const index = readIndex();
   const summaries: string[] = [];
   let failed = false;
 

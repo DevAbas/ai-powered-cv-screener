@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { AnswerView } from "@/contracts/view";
-import { cvSourceHref } from "@/lib/pool/source-href";
+import { storySourceHref } from "@/mocks/story";
 import { ANSWERS } from "@/mocks/answers";
 import { AnswerComparison } from "./AnswerComparison";
 
@@ -11,7 +11,7 @@ const comparison = ANSWERS.compare.view as ComparisonView;
 const meta = {
   title: "Chat / Answer / AnswerComparison",
   component: AnswerComparison,
-  args: { view: comparison, sourceHref: cvSourceHref },
+  args: { view: comparison, sourceHref: storySourceHref },
 } satisfies Meta<typeof AnswerComparison>;
 
 export default meta;

@@ -1,0 +1,91 @@
+{
+  "id": "luca-borg",
+  "file": "/cvs/luca_borg_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Luca Borg\nProduct Owner\nluca.borg@example.com · +1-555-026-2626 · Valletta, Malta\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nLuca Borg is a mid Product Owner based in Valletta, Malta, with 4 years of total experience. Expertise spans Jira, Agile,\nScrum, Figma, SQL, and Product Strategy within the Software and Technology industries. Holds a bachelor degree in\nBusiness Administration from University of Malta.\nSKILLS\nJira (4 years) · Agile (4 years) · Scrum (4 years) · Figma (3 years) · SQL (3 years) · Product Strategy (4 years)\nEXPERIENCE\nProduct Owner — Melita Software Solutions Jan 2023 – Present\nIndustry: Software\n• Worked as Product Owner in Software utilizing Jira and Agile.\n• Applied Scrum and Figma for Product Strategy initiatives.\nJunior Product Owner — Mediterra Tech Jul 2021 – Dec 2022\nIndustry: Technology\n• Served as Junior Product Owner in Technology using Jira and Agile.\n• Utilized SQL and Product Strategy within the Technology sector.\nEDUCATION\nBSc Business Administration 2021\nUniversity of Malta\nLANGUAGES\nEnglish (native) · Italian (C1)\nLEADERSHIP\nLed Scrum ceremonies and guided cross-functional teams in mid seniority product roles.\nCERTIFICATIONS",
+    "Certified Scrum Product Owner"
+  ],
+  "profile": {
+    "name": "Luca Borg",
+    "headline": "Product Owner",
+    "role": "product",
+    "seniority": "mid",
+    "location": "Valletta, Malta",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 4,
+    "skills": [
+      {
+        "name": "Jira",
+        "years": 4
+      },
+      {
+        "name": "Agile",
+        "years": 4
+      },
+      {
+        "name": "Scrum",
+        "years": 4
+      },
+      {
+        "name": "Figma",
+        "years": 3
+      },
+      {
+        "name": "SQL",
+        "years": 3
+      },
+      {
+        "name": "Product Strategy",
+        "years": 4
+      }
+    ],
+    "languages": [
+      {
+        "language": "English",
+        "level": "native"
+      },
+      {
+        "language": "Italian",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Business Administration",
+        "institution": "University of Malta",
+        "year": 2021
+      }
+    ],
+    "employment": [
+      {
+        "company": "Melita Software Solutions",
+        "title": "Product Owner",
+        "industry": "Software",
+        "from": "2023-01",
+        "to": null
+      },
+      {
+        "company": "Mediterra Tech",
+        "title": "Junior Product Owner",
+        "industry": "Technology",
+        "from": "2021-07",
+        "to": "2022-12"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led Scrum ceremonies and guided cross-functional teams in mid seniority product roles."
+    },
+    "certifications": [
+      "Certified Scrum Product Owner"
+    ]
+  },
+  "medianTenureMonths": 31.5
+}

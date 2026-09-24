@@ -1,0 +1,91 @@
+{
+  "id": "andrej-zupan",
+  "file": "/cvs/andrej_zupan_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Andrej Zupan\nSenior DevOps Engineer\nandrej.zupan@example.com · +1-555-017-1717 · Ljubljana, Slovenia\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nAndrej Zupan is a senior DevOps engineer based in Ljubljana with 7 years of professional experience. The candidate\nhas extensive expertise in Docker, Kubernetes, Terraform, AWS, Python, and Linux. Leadership experience includes\nmentoring and guiding infrastructure modernization.\nSKILLS\nDocker (7 years) · Kubernetes (6 years) · Terraform (5 years) · AWS (7 years) · Python (4 years) ·\nLinux (7 years)\nEXPERIENCE\nSenior DevOps Engineer — Triglav Cloud Labs Jun 2021 – Present\nIndustry: Cloud Infrastructure\n• Worked as Senior DevOps Engineer in Cloud Infrastructure\n• Managed infrastructure using Kubernetes, Terraform, AWS, and Linux\n• Applied senior leadership to cloud infrastructure projects\nDevOps Engineer — Socha Systems Mar 2019 – May 2021\nIndustry: Software Development\n• Worked as DevOps Engineer in Software Development\n• Developed automation scripts utilizing Docker, AWS, Python, and Linux\nEDUCATION\nBSc Computer Science 2017\nUniversity of Ljubljana\nLANGUAGES\nSlovene (native) · English (C1)\nLEADERSHIP\nLed infrastructure modernization initiatives and mentored junior engineers on cloud deployments.",
+    "CERTIFICATIONS\nAWS Certified Solutions Architect"
+  ],
+  "profile": {
+    "name": "Andrej Zupan",
+    "headline": "Senior DevOps Engineer",
+    "role": "devops",
+    "seniority": "senior",
+    "location": "Ljubljana, Slovenia",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "Docker",
+        "years": 7
+      },
+      {
+        "name": "Kubernetes",
+        "years": 6
+      },
+      {
+        "name": "Terraform",
+        "years": 5
+      },
+      {
+        "name": "AWS",
+        "years": 7
+      },
+      {
+        "name": "Python",
+        "years": 4
+      },
+      {
+        "name": "Linux",
+        "years": 7
+      }
+    ],
+    "languages": [
+      {
+        "language": "Slovene",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Ljubljana",
+        "year": 2017
+      }
+    ],
+    "employment": [
+      {
+        "company": "Triglav Cloud Labs",
+        "title": "Senior DevOps Engineer",
+        "industry": "Cloud Infrastructure",
+        "from": "2021-06",
+        "to": null
+      },
+      {
+        "company": "Socha Systems",
+        "title": "DevOps Engineer",
+        "industry": "Software Development",
+        "from": "2019-03",
+        "to": "2021-05"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led infrastructure modernization initiatives and mentored junior engineers on cloud deployments."
+    },
+    "certifications": [
+      "AWS Certified Solutions Architect"
+    ]
+  },
+  "medianTenureMonths": 45.5
+}

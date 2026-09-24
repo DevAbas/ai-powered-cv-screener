@@ -1,0 +1,91 @@
+{
+  "id": "lucas-martin",
+  "file": "/cvs/lucas_martin_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Lucas Martin\nSenior Data Engineer\nlucas.martin@example.com · +1-555-013-1313 · Paris, France\nHybrid · Remote · European Union Citizen · Notice period: 30 days\nSUMMARY\nLucas Martin is a Senior Data Engineer based in Paris, France, with 7 years of total experience. Expertise\nspans Python, SQL, Spark, Airflow, AWS, and Docker across Data Analytics and Software Development\nindustries. Proven leadership background including mentoring and guiding technical projects. Holds a Master\ndegree in Computer Science from Sorbonne University.\nSKILLS\nPython (7 years) · SQL (7 years) · Apache Spark (5 years) · Airflow (4 years) · AWS (5 years) ·\nDocker (3 years)\nEXPERIENCE\nSenior Data Engineer — Seine Data Labs Mar 2021 – Present\nIndustry: Data Analytics\n• Worked as a Senior Data Engineer using Python, SQL, Spark, Airflow, AWS, and Docker.\n• Demonstrated leadership with technical mentoring and system design oversight.\nData Engineer — Lutetia Tech Jan 2019 – Feb 2021\nIndustry: Software Development\n• Worked as a Data Engineer utilizing Python, SQL, AWS, and Docker.\n• Delivered data ingestion pipelines and cloud storage solutions.\nEDUCATION\nMSc Computer Science 2017\nSorbonne University\nLANGUAGES\nFrench (native) · English (C1)\nLEADERSHIP\nMentored junior data engineers and led cloud migration initiatives.",
+    "CERTIFICATIONS\nAWS Certified Solutions Architect"
+  ],
+  "profile": {
+    "name": "Lucas Martin",
+    "headline": "Senior Data Engineer",
+    "role": "data",
+    "seniority": "senior",
+    "location": "Paris, France",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "European Union Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 7
+      },
+      {
+        "name": "SQL",
+        "years": 7
+      },
+      {
+        "name": "Apache Spark",
+        "years": 5
+      },
+      {
+        "name": "Airflow",
+        "years": 4
+      },
+      {
+        "name": "AWS",
+        "years": 5
+      },
+      {
+        "name": "Docker",
+        "years": 3
+      }
+    ],
+    "languages": [
+      {
+        "language": "French",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "master",
+        "field": "Computer Science",
+        "institution": "Sorbonne University",
+        "year": 2017
+      }
+    ],
+    "employment": [
+      {
+        "company": "Seine Data Labs",
+        "title": "Senior Data Engineer",
+        "industry": "Data Analytics",
+        "from": "2021-03",
+        "to": null
+      },
+      {
+        "company": "Lutetia Tech",
+        "title": "Data Engineer",
+        "industry": "Software Development",
+        "from": "2019-01",
+        "to": "2021-02"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Mentored junior data engineers and led cloud migration initiatives."
+    },
+    "certifications": [
+      "AWS Certified Solutions Architect"
+    ]
+  },
+  "medianTenureMonths": 46.5
+}

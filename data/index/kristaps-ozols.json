@@ -1,0 +1,91 @@
+{
+  "id": "kristaps-ozols",
+  "file": "/cvs/kristaps_ozols_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Kristaps Ozols\nBackend Engineer\nkristaps.ozols@example.com · +1-555-011-1111 · Riga, Latvia\nHybrid · Remote · Citizen · Notice period: 14 days\nSUMMARY\nKristaps Ozols is a mid Backend Engineer based in Riga, Latvia with 4 years of total experience. Expertise covers Python,\nDjango, PostgreSQL, Docker, Redis, and Git across the Software Development and Information Technology industries.\nDemonstrates leadership experience by guiding team members.\nSKILLS\nPython (4 years) · Django (3 years) · PostgreSQL (4 years) · Docker (3 years) · Redis (2 years) · Git (4 years)\nEXPERIENCE\nBackend Engineer — Baltic Data Dynamics Jan 2023 – Present\nIndustry: Software Development\n• Worked as a mid Backend Engineer in the Software Development industry using Python, Django, PostgreSQL, Redis,\nDocker, and Git.\n• Applied Python, Django, and PostgreSQL to deliver backend solutions with leadership.\n• Utilized Docker, Redis, and Git for version control and containerization in Software Development.\nJunior Backend Developer — Riga Systems Lab Jan 2022 – Dec 2022\nIndustry: Information Technology\n• Worked as a Junior Backend Developer in the Information Technology industry using Python, PostgreSQL, and Git.\n• Built database modules with Python and PostgreSQL while practicing Git.\nEDUCATION\nBSc Computer Science 2021\nRiga Technical University\nLANGUAGES\nLatvian (native) · English (C1)\nLEADERSHIP\nGuided junior developers on backend best practices.",
+    "CERTIFICATIONS\nCertified Python Developer"
+  ],
+  "profile": {
+    "name": "Kristaps Ozols",
+    "headline": "Backend Engineer",
+    "role": "backend",
+    "seniority": "mid",
+    "location": "Riga, Latvia",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 14,
+    "yearsTotal": 4,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 4
+      },
+      {
+        "name": "Django",
+        "years": 3
+      },
+      {
+        "name": "PostgreSQL",
+        "years": 4
+      },
+      {
+        "name": "Docker",
+        "years": 3
+      },
+      {
+        "name": "Redis",
+        "years": 2
+      },
+      {
+        "name": "Git",
+        "years": 4
+      }
+    ],
+    "languages": [
+      {
+        "language": "Latvian",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Riga Technical University",
+        "year": 2021
+      }
+    ],
+    "employment": [
+      {
+        "company": "Baltic Data Dynamics",
+        "title": "Backend Engineer",
+        "industry": "Software Development",
+        "from": "2023-01",
+        "to": null
+      },
+      {
+        "company": "Riga Systems Lab",
+        "title": "Junior Backend Developer",
+        "industry": "Information Technology",
+        "from": "2022-01",
+        "to": "2022-12"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Guided junior developers on backend best practices."
+    },
+    "certifications": [
+      "Certified Python Developer"
+    ]
+  },
+  "medianTenureMonths": 28.5
+}

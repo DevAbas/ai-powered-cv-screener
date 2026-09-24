@@ -1,0 +1,98 @@
+{
+  "id": "petra-horvat",
+  "file": "/cvs/petra_horvat_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Petra Horvat\nBackend Lead\npetra.horvat@example.com · +1-555-009-0909 · Zagreb, Croatia\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nPetra Horvat is a Backend Lead based in Zagreb, Croatia with 10 years of total experience. The candidate\nspecializes in Python, Django, PostgreSQL, Docker, AWS, and Redis within cloud computing, data analytics,\nand software solutions industries. Leadership experience includes guiding backend teams as a Backend Lead.\nSKILLS\nPython (10 years) · Django (8 years) · PostgreSQL (9 years) · Docker (7 years) · AWS (6 years) ·\nRedis (5 years)\nEXPERIENCE\nBackend Lead — Sava Cloud Systems 06/2021 – Present\nIndustry: Cloud Computing\n– Lead backend engineering efforts using Python, Django, PostgreSQL, AWS, Docker, and Redis.\n– Demonstrated leadership capabilities as a Backend Lead in the cloud computing industry.\nSenior Backend Developer — Bora Data Corp 01/2018 – 05/2021\nIndustry: Data Analytics\n– Built data analytics services as a Senior Backend Developer using Python, Django, PostgreSQL, and\nDocker.\n– Delivered backend solutions in the data analytics industry.\nBackend Developer — Adria Soft 06/2017 – 12/2017\nIndustry: Software Solutions\n– Developed software as a Backend Developer utilizing Python and PostgreSQL.\n– Contributed to projects in the software solutions industry.\nEDUCATION\nBSc Computer Science 2017\nUniversity of Zagreb\nLANGUAGES\nCroatian (native) · English (C1)",
+    "LEADERSHIP\nManaged backend engineering teams and guided technical architecture decisions.\nCERTIFICATIONS\nAWS Certified Solutions Architect"
+  ],
+  "profile": {
+    "name": "Petra Horvat",
+    "headline": "Backend Lead",
+    "role": "backend",
+    "seniority": "lead",
+    "location": "Zagreb, Croatia",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 10,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 10
+      },
+      {
+        "name": "Django",
+        "years": 8
+      },
+      {
+        "name": "PostgreSQL",
+        "years": 9
+      },
+      {
+        "name": "Docker",
+        "years": 7
+      },
+      {
+        "name": "AWS",
+        "years": 6
+      },
+      {
+        "name": "Redis",
+        "years": 5
+      }
+    ],
+    "languages": [
+      {
+        "language": "Croatian",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Zagreb",
+        "year": 2017
+      }
+    ],
+    "employment": [
+      {
+        "company": "Sava Cloud Systems",
+        "title": "Backend Lead",
+        "industry": "Cloud Computing",
+        "from": "2021-06",
+        "to": null
+      },
+      {
+        "company": "Bora Data Corp",
+        "title": "Senior Backend Developer",
+        "industry": "Data Analytics",
+        "from": "2018-01",
+        "to": "2021-05"
+      },
+      {
+        "company": "Adria Soft",
+        "title": "Backend Developer",
+        "industry": "Software Solutions",
+        "from": "2017-06",
+        "to": "2017-12"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Managed backend engineering teams and guided technical architecture decisions."
+    },
+    "certifications": [
+      "AWS Certified Solutions Architect"
+    ]
+  },
+  "medianTenureMonths": 41
+}

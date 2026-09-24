@@ -1,0 +1,91 @@
+{
+  "id": "tomasz-kowalski",
+  "file": "/cvs/tomasz_kowalski_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Tomasz Kowalski\nJunior Frontend Developer\ntomasz.kowalski@example.com · +1-555-005-0505 · Warsaw, Poland\nHybrid · Remote · Citizen · Notice period: 14 days\nSUMMARY\nTomasz Kowalski is a Junior Frontend Developer based in Warsaw, Poland with 1.5 years of total experience in\nthe frontend role. Skills include JavaScript, TypeScript, React, HTML, CSS, and Git applied across the Software\nDevelopment and Information Technology industries. Education includes a bachelor degree in Computer Science from\nWarsaw University of Technology.\nSKILLS\nJavaScript (1.5 years) · TypeScript (1 year) · React (1.5 years) · HTML (1.5 years) · CSS (1.5 years) ·\nGit (1.5 years)\nEXPERIENCE\nJunior Frontend Developer — Vistula Byte Labs Mar 2025 – Present\nIndustry: Software Development\n• Developed frontend features as a Junior Frontend Developer using JavaScript, TypeScript, React, HTML, CSS, and\nGit in the Software Development industry.\n• Contributed to software development tasks utilizing JavaScript, TypeScript, React, HTML, CSS, and Git.\nFrontend Intern — Mazovia Digital Jul 2024 – Feb 2025\nIndustry: Information Technology\n• Assisted in frontend tasks as a Frontend Intern using JavaScript, React, HTML, CSS, and Git in the Information\nTechnology industry.\n• Maintained codebase repositories with JavaScript, React, HTML, CSS, and Git.\nEDUCATION\nBSc Computer Science 2024\nWarsaw University of Technology\nLANGUAGES\nPolish (native) · English (B2)\nCERTIFICATIONS",
+    "Frontend Web Developer Certificate"
+  ],
+  "profile": {
+    "name": "Tomasz Kowalski",
+    "headline": "Junior Frontend Developer",
+    "role": "frontend",
+    "seniority": "junior",
+    "location": "Warsaw, Poland",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 14,
+    "yearsTotal": 1.5,
+    "skills": [
+      {
+        "name": "JavaScript",
+        "years": 1.5
+      },
+      {
+        "name": "TypeScript",
+        "years": 1
+      },
+      {
+        "name": "React",
+        "years": 1.5
+      },
+      {
+        "name": "HTML",
+        "years": 1.5
+      },
+      {
+        "name": "CSS",
+        "years": 1.5
+      },
+      {
+        "name": "Git",
+        "years": 1.5
+      }
+    ],
+    "languages": [
+      {
+        "language": "Polish",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "B2"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "Warsaw University of Technology",
+        "year": 2024
+      }
+    ],
+    "employment": [
+      {
+        "company": "Vistula Byte Labs",
+        "title": "Junior Frontend Developer",
+        "industry": "Software Development",
+        "from": "2025-03",
+        "to": null
+      },
+      {
+        "company": "Mazovia Digital",
+        "title": "Frontend Intern",
+        "industry": "Information Technology",
+        "from": "2024-07",
+        "to": "2025-02"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "Frontend Web Developer Certificate"
+    ]
+  },
+  "medianTenureMonths": 13.5
+}

@@ -3,7 +3,7 @@ import { AskRequestSchema } from "@/contracts/ask";
 import type { AnswerDeps } from "@/lib/answering/answer-question";
 import { answerQuestion } from "@/lib/answering/answer-question";
 import { answerDeps } from "@/lib/answering/deps";
-import { loadIndex } from "@/lib/pool/index-file";
+import { loadPool } from "@/lib/pool/pool";
 
 // POST /api/ask (PLAN, Retrieval and answering): HTTP only. Validates the
 // request, wires the answering service, and streams its events as NDJSON:
@@ -32,7 +32,7 @@ export async function POST(request: Request): Promise<Response> {
 
   let deps: AnswerDeps;
   try {
-    deps = answerDeps(loadIndex(), log);
+    deps = answerDeps(loadPool().entries, log);
   } catch (error) {
     console.error("ask: not ready:", error);
     return rejected("The CV search isn't set up yet. Index the CVs and reload.", 503, false);

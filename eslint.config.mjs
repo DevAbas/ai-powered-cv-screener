@@ -17,7 +17,17 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "storybook-static/**",
   ]),
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs["flat/recommended"],
+  // App code never reads the generation data (PLAN, Data layout; AGENTS.md, Boundaries).
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        { patterns: [{ group: ["**/data/generation", "**/data/generation/**"], message: "App code never reads data/generation (AGENTS.md, Boundaries)." }] },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;

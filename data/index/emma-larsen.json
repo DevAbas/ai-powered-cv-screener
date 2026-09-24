@@ -1,0 +1,91 @@
+{
+  "id": "emma-larsen",
+  "file": "/cvs/emma_larsen_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Emma Larsen\nSenior Backend Developer\nemma.larsen@example.com · +1-555-010-1010 · Copenhagen, Denmark\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nEmma Larsen is a senior backend developer with 7 years of total experience based in Copenhagen, Denmark.\nExpertise spans Python, Django, PostgreSQL, Docker, AWS, and Redis within the software development and\ncloud computing industries. Proven leadership experience includes guiding backend engineering squads.\nSKILLS\nPython (7 years) · Django (6 years) · PostgreSQL (7 years) · Docker (5 years) · AWS (4 years) ·\nRedis (4 years)\nEXPERIENCE\nSenior Backend Developer — Nordic Byte Works Mar 2021 – Present\nIndustry: Software Development\n• Worked as a Senior Backend Developer utilizing Python, Django, PostgreSQL, Docker, AWS, and Redis.\n• Delivered backend solutions in the Software Development industry.\nBackend Developer — Viking Cloud Tech Feb 2018 – Feb 2021\nIndustry: Cloud Computing\n• Worked as a Backend Developer utilizing Python, PostgreSQL, and Docker.\n• Built data processing pipelines in the Cloud Computing industry.\nEDUCATION\nBSc Computer Science 2017\nUniversity of Copenhagen\nLANGUAGES\nDanish (native) · English (C2)\nLEADERSHIP\nLed small backend engineering squads in software development and cloud computing projects.\nCERTIFICATIONS",
+    "AWS Certified Developer"
+  ],
+  "profile": {
+    "name": "Emma Larsen",
+    "headline": "Senior Backend Developer",
+    "role": "backend",
+    "seniority": "senior",
+    "location": "Copenhagen, Denmark",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 7
+      },
+      {
+        "name": "Django",
+        "years": 6
+      },
+      {
+        "name": "PostgreSQL",
+        "years": 7
+      },
+      {
+        "name": "Docker",
+        "years": 5
+      },
+      {
+        "name": "AWS",
+        "years": 4
+      },
+      {
+        "name": "Redis",
+        "years": 4
+      }
+    ],
+    "languages": [
+      {
+        "language": "Danish",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C2"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Copenhagen",
+        "year": 2017
+      }
+    ],
+    "employment": [
+      {
+        "company": "Nordic Byte Works",
+        "title": "Senior Backend Developer",
+        "industry": "Software Development",
+        "from": "2021-03",
+        "to": null
+      },
+      {
+        "company": "Viking Cloud Tech",
+        "title": "Backend Developer",
+        "industry": "Cloud Computing",
+        "from": "2018-02",
+        "to": "2021-02"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led small backend engineering squads in software development and cloud computing projects."
+    },
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  "medianTenureMonths": 52
+}

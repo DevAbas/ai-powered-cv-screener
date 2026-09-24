@@ -1,0 +1,90 @@
+{
+  "id": "marco-bianchi",
+  "file": "/cvs/marco_bianchi_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Marco Bianchi\nFrontend Engineer\nmarco.bianchi@example.com · +1-555-003-0303 · Milan, Italy\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nMarco Bianchi is a mid Frontend Engineer based in Milan, Italy with 5.0 years of total experience. Their core\nexpertise includes JavaScript, TypeScript, React, HTML, CSS, and Git. They have worked in the software\ndevelopment and digital agency industries. They hold a bachelor degree in Computer Science from University\nof Milan.\nSKILLS\nJavaScript (5 years) · TypeScript (4.5 years) · React (4.5 years) · HTML (5 years) · CSS (5 years) ·\nGit (5 years)\nEXPERIENCE\nFrontend Engineer — Vetra Tech 01/2023 – Present\nIndustry: Software Development\n– Developed frontend features as a mid Frontend Engineer using JavaScript, TypeScript, React, HTML, CSS,\nand Git.\n– Contributed to software development projects in the retail industry.\nFrontend Engineer — Navigli Web 06/2021 – 12/2022\nIndustry: Digital Agency\n– Built responsive web interfaces as a mid Frontend Engineer using JavaScript, React, HTML, CSS, and Git.\n– Delivered digital agency projects within the software development domain.\nEDUCATION\nBSc Computer Science 2021\nUniversity of Milan\nLANGUAGES\nItalian (native) · English (C1)\nCERTIFICATIONS\nJavaScript Developer Certificate"
+  ],
+  "profile": {
+    "name": "Marco Bianchi",
+    "headline": "Frontend Engineer",
+    "role": "frontend",
+    "seniority": "mid",
+    "location": "Milan, Italy",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 5,
+    "skills": [
+      {
+        "name": "JavaScript",
+        "years": 5
+      },
+      {
+        "name": "TypeScript",
+        "years": 4.5
+      },
+      {
+        "name": "React",
+        "years": 4.5
+      },
+      {
+        "name": "HTML",
+        "years": 5
+      },
+      {
+        "name": "CSS",
+        "years": 5
+      },
+      {
+        "name": "Git",
+        "years": 5
+      }
+    ],
+    "languages": [
+      {
+        "language": "Italian",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Milan",
+        "year": 2021
+      }
+    ],
+    "employment": [
+      {
+        "company": "Vetra Tech",
+        "title": "Frontend Engineer",
+        "industry": "Software Development",
+        "from": "2023-01",
+        "to": null
+      },
+      {
+        "company": "Navigli Web",
+        "title": "Frontend Engineer",
+        "industry": "Digital Agency",
+        "from": "2021-06",
+        "to": "2022-12"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "JavaScript Developer Certificate"
+    ]
+  },
+  "medianTenureMonths": 32
+}

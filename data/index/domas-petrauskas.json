@@ -1,0 +1,90 @@
+{
+  "id": "domas-petrauskas",
+  "file": "/cvs/domas_petrauskas_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Domas Petrauskas\nJunior Backend Developer\ndomas.petrauskas@example.com · +1-555-012-1212 · Vilnius, Lithuania\nHybrid · Remote · EU Citizen · Notice period: 14 days\nSUMMARY\nDomas Petrauskas is a junior backend developer based in Vilnius, Lithuania with 1.5 years of total experience.\nThey hold a bachelor degree in Software Engineering from Vilnius University and specialize in Python,\nFastAPI, and PostgreSQL. They are available in 14 days and accept hybrid and remote work.\nSKILLS\nPython (1.5 years) · FastAPI (1 year) · PostgreSQL (1.5 years) · Docker (1 year) · Git (1.5 years) ·\nLinux (1 year)\nEXPERIENCE\nJunior Backend Developer — Vilnius Cloud Systems 01/2025 – Present\nIndustry: Cloud Computing\n– Develop backend microservices using Python and FastAPI in the cloud computing industry.\n– Manage PostgreSQL databases and containerize applications with Docker as a Junior Backend Developer.\nJunior Software Developer — Baltic Tech Labs 03/2024 – 12/2024\nIndustry: Information Technology\n– Write Python scripts and manage version control with Git in the information technology industry.\n– Maintain Linux servers and query PostgreSQL data as a Junior Software Developer.\nEDUCATION\nBSc Software Engineering 2024\nVilnius University\nLANGUAGES\nLithuanian (native) · English (C1)\nCERTIFICATIONS\nPython Institute Certified Associate"
+  ],
+  "profile": {
+    "name": "Domas Petrauskas",
+    "headline": "Junior Backend Developer",
+    "role": "backend",
+    "seniority": "junior",
+    "location": "Vilnius, Lithuania",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 14,
+    "yearsTotal": 1.5,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 1.5
+      },
+      {
+        "name": "FastAPI",
+        "years": 1
+      },
+      {
+        "name": "PostgreSQL",
+        "years": 1.5
+      },
+      {
+        "name": "Docker",
+        "years": 1
+      },
+      {
+        "name": "Git",
+        "years": 1.5
+      },
+      {
+        "name": "Linux",
+        "years": 1
+      }
+    ],
+    "languages": [
+      {
+        "language": "Lithuanian",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Software Engineering",
+        "institution": "Vilnius University",
+        "year": 2024
+      }
+    ],
+    "employment": [
+      {
+        "company": "Vilnius Cloud Systems",
+        "title": "Junior Backend Developer",
+        "industry": "Cloud Computing",
+        "from": "2025-01",
+        "to": null
+      },
+      {
+        "company": "Baltic Tech Labs",
+        "title": "Junior Software Developer",
+        "industry": "Information Technology",
+        "from": "2024-03",
+        "to": "2024-12"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "Python Institute Certified Associate"
+    ]
+  },
+  "medianTenureMonths": 15.5
+}

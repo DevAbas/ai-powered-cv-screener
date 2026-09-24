@@ -1,0 +1,90 @@
+{
+  "id": "chloe-dubois",
+  "file": "/cvs/chloe_dubois_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Chloé Dubois\nQA Automation Engineer\nchloe.dubois@example.com · +1-555-022-2222 · Lyon, France\nHybrid · Remote · European Union Citizen · Notice period: 30 days\nSUMMARY\nChloé Dubois is a mid-level QA Automation Engineer based in Lyon, France with 3.5 years of experience.\nExpertise includes Python, Selenium, PyTest, Postman, Docker, and Git in the software testing industry.\nEducation includes a bachelor degree in Computer Science from University of Lyon.\nSKILLS\nPython (3.5 years) · Selenium (3 years) · PyTest (3 years) · Postman (2.5 years) · Docker (2 years) ·\nGit (3.5 years)\nEXPERIENCE\nQA Automation Engineer — Rhone Quality Systems Mar 2023 – Present\nIndustry: Software Testing\n• Engineered automated test cases using Python and Selenium.\n• Executed regression suites with PyTest inside Docker containers.\nJunior QA Engineer — Saone Tech Labs Sep 2021 – Feb 2023\nIndustry: Software Testing\n• Tested REST APIs using Postman.\n• Tracked source code versions and test scripts using Git.\nEDUCATION\nBSc Computer Science 2021\nUniversity of Lyon\nLANGUAGES\nFrench (native) · English (C1)\nCERTIFICATIONS\nCertified Tester Foundation Level"
+  ],
+  "profile": {
+    "name": "Chloé Dubois",
+    "headline": "QA Automation Engineer",
+    "role": "qa",
+    "seniority": "mid",
+    "location": "Lyon, France",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "European Union Citizen",
+    "availability": 30,
+    "yearsTotal": 3.5,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 3.5
+      },
+      {
+        "name": "Selenium",
+        "years": 3
+      },
+      {
+        "name": "PyTest",
+        "years": 3
+      },
+      {
+        "name": "Postman",
+        "years": 2.5
+      },
+      {
+        "name": "Docker",
+        "years": 2
+      },
+      {
+        "name": "Git",
+        "years": 3.5
+      }
+    ],
+    "languages": [
+      {
+        "language": "French",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Lyon",
+        "year": 2021
+      }
+    ],
+    "employment": [
+      {
+        "company": "Rhone Quality Systems",
+        "title": "QA Automation Engineer",
+        "industry": "Software Testing",
+        "from": "2023-03",
+        "to": null
+      },
+      {
+        "company": "Saone Tech Labs",
+        "title": "Junior QA Engineer",
+        "industry": "Software Testing",
+        "from": "2021-09",
+        "to": "2023-02"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "Certified Tester Foundation Level"
+    ]
+  },
+  "medianTenureMonths": 30.5
+}

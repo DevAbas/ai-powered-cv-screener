@@ -1,0 +1,90 @@
+{
+  "id": "nikolett-szabo",
+  "file": "/cvs/nikolett_szabo_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Nikolett Szabó\nData Scientist\nnikolett.szabo@example.com · +1-555-014-1414 · Budapest, Hungary\nHybrid · Remote · Citizen · Notice period: 30 days\nSUMMARY\nNikolett Szabó is a mid Data Scientist based in Budapest, Hungary with 4 years of total experience. Expertise spans\nPython, SQL, Pandas, Scikit-Learn, Tableau, and Git within the Analytics and Technology industries. Education includes\na bachelor degree in Data Science from Corvinus University of Budapest.\nSKILLS\nPython (4 years) · SQL (4 years) · Pandas (3 years) · scikit-learn (3 years) · Tableau (3 years) · Git (4 years)\nEXPERIENCE\nData Scientist — Pannonia Analytics Jan 2023 – Present\nIndustry: Analytics\n• Apply Python and Scikit-Learn as a mid Data Scientist in the Analytics industry.\n• Utilize SQL and Git during daily development tasks.\nJunior Data Analyst — Budapest Data Corp Jan 2022 – Dec 2022\nIndustry: Technology\n• Developed reports in Tableau and Pandas for the Technology industry.\n• Wrote queries in SQL and scripts in Python.\nEDUCATION\nBSc Data Science 2021\nCorvinus University of Budapest\nLANGUAGES\nHungarian (native) · English (C1)\nCERTIFICATIONS\nCertified Data Scientist"
+  ],
+  "profile": {
+    "name": "Nikolett Szabó",
+    "headline": "Data Scientist",
+    "role": "data",
+    "seniority": "mid",
+    "location": "Budapest, Hungary",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 30,
+    "yearsTotal": 4,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 4
+      },
+      {
+        "name": "SQL",
+        "years": 4
+      },
+      {
+        "name": "Pandas",
+        "years": 3
+      },
+      {
+        "name": "scikit-learn",
+        "years": 3
+      },
+      {
+        "name": "Tableau",
+        "years": 3
+      },
+      {
+        "name": "Git",
+        "years": 4
+      }
+    ],
+    "languages": [
+      {
+        "language": "Hungarian",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Data Science",
+        "institution": "Corvinus University of Budapest",
+        "year": 2021
+      }
+    ],
+    "employment": [
+      {
+        "company": "Pannonia Analytics",
+        "title": "Data Scientist",
+        "industry": "Analytics",
+        "from": "2023-01",
+        "to": null
+      },
+      {
+        "company": "Budapest Data Corp",
+        "title": "Junior Data Analyst",
+        "industry": "Technology",
+        "from": "2022-01",
+        "to": "2022-12"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "Certified Data Scientist"
+    ]
+  },
+  "medianTenureMonths": 28.5
+}

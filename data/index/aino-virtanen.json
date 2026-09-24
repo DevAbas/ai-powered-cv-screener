@@ -1,0 +1,90 @@
+{
+  "id": "aino-virtanen",
+  "file": "/cvs/aino_virtanen_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Aino Virtanen\nSite Reliability Engineer\naino.virtanen@example.com · +1-555-018-1818 · Helsinki, Finland\nHybrid · Remote · Citizen · Notice period: 14 days\nSUMMARY\nAino Virtanen is a mid Site Reliability Engineer based in Helsinki, Finland, with 5 years of total experience.\nShe holds a bachelor degree in Computer Science and has worked with Kubernetes, Terraform, Python, AWS,\nDocker, and Linux. Her employment history includes roles as Site Reliability Engineer and Junior DevOps\nEngineer in cloud infrastructure and software development industries.\nSKILLS\nPython (5 years) · Docker (5 years) · Kubernetes (4 years) · Terraform (4 years) · Linux (5 years) ·\nAWS (5 years)\nEXPERIENCE\nSite Reliability Engineer — Saimaa Cloud Solutions 01/2023 – Present\nIndustry: Cloud Infrastructure\n– Applied Kubernetes and Terraform for infrastructure management.\n– Utilized Python and AWS to scale cloud infrastructure operations.\nJunior DevOps Engineer — Suomi Tech Labs 01/2021 – 12/2022\nIndustry: Software Development\n– Managed Docker and Linux environments for development teams.\n– Built deployment scripts using Python.\nEDUCATION\nBSc Computer Science 2020\nUniversity of Helsinki\nLANGUAGES\nFinnish (native) · English (C1)\nCERTIFICATIONS\nAWS Certified Solutions Architect"
+  ],
+  "profile": {
+    "name": "Aino Virtanen",
+    "headline": "Site Reliability Engineer",
+    "role": "devops",
+    "seniority": "mid",
+    "location": "Helsinki, Finland",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "Citizen",
+    "availability": 14,
+    "yearsTotal": 5,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 5
+      },
+      {
+        "name": "Docker",
+        "years": 5
+      },
+      {
+        "name": "Kubernetes",
+        "years": 4
+      },
+      {
+        "name": "Terraform",
+        "years": 4
+      },
+      {
+        "name": "Linux",
+        "years": 5
+      },
+      {
+        "name": "AWS",
+        "years": 5
+      }
+    ],
+    "languages": [
+      {
+        "language": "Finnish",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Helsinki",
+        "year": 2020
+      }
+    ],
+    "employment": [
+      {
+        "company": "Saimaa Cloud Solutions",
+        "title": "Site Reliability Engineer",
+        "industry": "Cloud Infrastructure",
+        "from": "2023-01",
+        "to": null
+      },
+      {
+        "company": "Suomi Tech Labs",
+        "title": "Junior DevOps Engineer",
+        "industry": "Software Development",
+        "from": "2021-01",
+        "to": "2022-12"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "AWS Certified Solutions Architect"
+    ]
+  },
+  "medianTenureMonths": 34.5
+}

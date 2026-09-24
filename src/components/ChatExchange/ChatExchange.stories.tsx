@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
 import { readingMessage, STAGE_MESSAGES } from "@/lib/ask/stages";
-import { cvSourceHref } from "@/lib/pool/source-href";
+import { storySourceHref } from "@/mocks/story";
 import { ANSWERS } from "@/mocks/answers";
 import type { MockAnswer } from "@/mocks/answers";
 import { ChatExchange } from "./ChatExchange";
@@ -23,7 +23,7 @@ const meta = {
     status: "answered",
     steps,
     ...shown(ANSWERS.filter),
-    sourceHref: cvSourceHref,
+    sourceHref: storySourceHref,
     onRetry: fn(),
   },
 } satisfies Meta<typeof ChatExchange>;

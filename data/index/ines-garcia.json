@@ -1,0 +1,95 @@
+{
+  "id": "ines-garcia",
+  "file": "/cvs/ines_garcia_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Inés García\nMachine Learning Engineer\nines.garcia@example.com · +1-555-016-1616 · Barcelona, Spain\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nInés García is a senior Machine Learning Engineer based in Barcelona, Spain with 7 years of professional\nexperience. Her core stack includes Python, PyTorch, TensorFlow, Docker, Kubernetes, AWS, and SQL. She\nhas demonstrated leadership by guiding junior team members in AI and data analytics projects. She holds a\nmaster degree in Artificial Intelligence and is available on a 30 day notice.\nSKILLS\nPython (7 years) · PyTorch (5 years) · TensorFlow (4 years) · Docker (6 years) ·\nKubernetes (3 years) · AWS (5 years) · SQL (7 years)\nEXPERIENCE\nSenior Machine Learning Engineer — Catalunya Neural Corp Jun 2021 – Present\nIndustry: Artificial Intelligence\n• Architected AI models as a Senior Machine Learning Engineer using Python and PyTorch.\n• Deployed services on AWS with Docker and Kubernetes in the Artificial Intelligence industry.\nMachine Learning Engineer — Iberia Data Systems Jan 2019 – May 2021\nIndustry: Data Analytics\n• Engineered data pipelines using Python, SQL, and TensorFlow.\n• Maintained cloud infrastructure on AWS for the Data Analytics industry.\nEDUCATION\nMSc Artificial Intelligence 2018\nUniversitat Politècnica de Catalunya\nLANGUAGES\nSpanish (native) · English (C1)\nLEADERSHIP\nLed junior engineers and mentored interns in machine learning practices.",
+    "CERTIFICATIONS\nAWS Certified Machine Learning"
+  ],
+  "profile": {
+    "name": "Inés García",
+    "headline": "Machine Learning Engineer",
+    "role": "data",
+    "seniority": "senior",
+    "location": "Barcelona, Spain",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "Python",
+        "years": 7
+      },
+      {
+        "name": "PyTorch",
+        "years": 5
+      },
+      {
+        "name": "TensorFlow",
+        "years": 4
+      },
+      {
+        "name": "Docker",
+        "years": 6
+      },
+      {
+        "name": "Kubernetes",
+        "years": 3
+      },
+      {
+        "name": "AWS",
+        "years": 5
+      },
+      {
+        "name": "SQL",
+        "years": 7
+      }
+    ],
+    "languages": [
+      {
+        "language": "Spanish",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "master",
+        "field": "Artificial Intelligence",
+        "institution": "Universitat Politècnica de Catalunya",
+        "year": 2018
+      }
+    ],
+    "employment": [
+      {
+        "company": "Catalunya Neural Corp",
+        "title": "Senior Machine Learning Engineer",
+        "industry": "Artificial Intelligence",
+        "from": "2021-06",
+        "to": null
+      },
+      {
+        "company": "Iberia Data Systems",
+        "title": "Machine Learning Engineer",
+        "industry": "Data Analytics",
+        "from": "2019-01",
+        "to": "2021-05"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Led junior engineers and mentored interns in machine learning practices."
+    },
+    "certifications": [
+      "AWS Certified Machine Learning"
+    ]
+  },
+  "medianTenureMonths": 46.5
+}

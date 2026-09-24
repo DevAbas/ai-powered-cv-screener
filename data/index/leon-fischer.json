@@ -1,0 +1,90 @@
+{
+  "id": "leon-fischer",
+  "file": "/cvs/leon_fischer_cv.pdf",
+  "pages": 1,
+  "text": [
+    "Leon Fischer\nSenior Full-Stack Engineer\nleon.fischer@example.com · +1-555-028-2828 · Luxembourg, Luxembourg\nRemote · Hybrid · EU Citizen · Notice period: 30 days\nSUMMARY\nLeon Fischer is a senior full-stack engineer based in Luxembourg with 7 years of total experience. Their\nexpertise covers JavaScript, TypeScript, React, Node.js, PostgreSQL, and Docker. They hold a bachelor\ndegree in Computer Science and bring strong technical experience in cloud computing and financial\ntechnology.\nSKILLS\nJavaScript (7 years) · TypeScript (5 years) · React (6 years) · Node.js (5 years) ·\nPostgreSQL (4 years) · Docker (3 years)\nEXPERIENCE\nSenior Full-Stack Engineer — Vesper Cloud Solutions Mar 2022 – Present\nIndustry: Cloud Computing\n• Executed senior fullstack responsibilities in cloud computing using TypeScript, React, Node.js, and Docker.\n• Demonstrated leadership in technical tasks without direct staff management.\nFull-Stack Engineer — Valence Tech Mar 2019 – Feb 2022\nIndustry: Financial Technology\n• Applied fullstack skills in financial technology using JavaScript, React, and PostgreSQL.\n• Contributed to core product features as a fullstack engineer.\nEDUCATION\nBSc Computer Science 2018\nUniversity of Luxembourg\nLANGUAGES\nGerman (native) · English (C2)\nCERTIFICATIONS\nAWS Certified Developer"
+  ],
+  "profile": {
+    "name": "Leon Fischer",
+    "headline": "Senior Full-Stack Engineer",
+    "role": "fullstack",
+    "seniority": "senior",
+    "location": "Luxembourg, Luxembourg",
+    "remote": [
+      "remote",
+      "hybrid"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "JavaScript",
+        "years": 7
+      },
+      {
+        "name": "TypeScript",
+        "years": 5
+      },
+      {
+        "name": "React",
+        "years": 6
+      },
+      {
+        "name": "Node.js",
+        "years": 5
+      },
+      {
+        "name": "PostgreSQL",
+        "years": 4
+      },
+      {
+        "name": "Docker",
+        "years": 3
+      }
+    ],
+    "languages": [
+      {
+        "language": "German",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C2"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Luxembourg",
+        "year": 2018
+      }
+    ],
+    "employment": [
+      {
+        "company": "Vesper Cloud Solutions",
+        "title": "Senior Full-Stack Engineer",
+        "industry": "Cloud Computing",
+        "from": "2022-03",
+        "to": null
+      },
+      {
+        "company": "Valence Tech",
+        "title": "Full-Stack Engineer",
+        "industry": "Financial Technology",
+        "from": "2019-03",
+        "to": "2022-02"
+      }
+    ],
+    "leadership": {
+      "has": false,
+      "note": ""
+    },
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  "medianTenureMonths": 45.5
+}

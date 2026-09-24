@@ -1,0 +1,106 @@
+{
+  "id": "sofia-almeida",
+  "file": "/cvs/sofia_almeida_cv.pdf",
+  "pages": 2,
+  "text": [
+    "Sofia Almeida\nSenior Frontend Developer\nsofia.almeida@example.com · +1-555-004-0404 · Lisbon, Portugal\nHybrid · Remote · EU Citizen · Notice period: 30 days\nSUMMARY\nSenior Frontend Developer based in Lisbon, Portugal, with 7 years of total experience across Financial\nTechnology, E-commerce, and Digital Publishing. Skilled in React, TypeScript, JavaScript, HTML/CSS, Next.js,\nRedux, Jest, and Webpack. Holds a bachelor degree in Computer Science and has leadership experience\nmentoring junior frontend developers.\nSKILLS\nJavaScript (7 years) · React (7 years) · HTML/CSS (7 years) · TypeScript (6 years) ·\nRedux (5 years) · Next.js (4 years) · Jest (4 years) · Webpack (3 years)\nEXPERIENCE\nSenior Frontend Developer — Tagus Vista Solutions Mar 2022 – Present\nIndustry: Financial Technology\n• Architected web application interfaces using React, TypeScript, and Next.js.\n• Managed application state using Redux and implemented automated test suites with Jest.\nFrontend Developer — Lusitania Web Labs Sep 2019 – Feb 2022\nIndustry: E-commerce\n• Developed interactive user interfaces using React, JavaScript, and HTML/CSS.\n• Configured application build pipelines with Webpack and managed state with Redux.\nJunior Frontend Developer — Atlantico Interactive Sep 2018 – Aug 2019\nIndustry: Digital Publishing\n• Built responsive web pages using JavaScript and HTML/CSS.\n• Optimized asset bundling scripts using Webpack.\nEDUCATION\nBSc Computer Science 2018\nUniversity of Lisbon\nLANGUAGES\nPortuguese (native) · English (C1)",
+    "LEADERSHIP\nMentored junior frontend developers at Tagus Vista Solutions.\nCERTIFICATIONS\nAWS Certified Cloud Practitioner"
+  ],
+  "profile": {
+    "name": "Sofia Almeida",
+    "headline": "Senior Frontend Developer",
+    "role": "frontend",
+    "seniority": "senior",
+    "location": "Lisbon, Portugal",
+    "remote": [
+      "hybrid",
+      "remote"
+    ],
+    "workAuthorization": "EU Citizen",
+    "availability": 30,
+    "yearsTotal": 7,
+    "skills": [
+      {
+        "name": "JavaScript",
+        "years": 7
+      },
+      {
+        "name": "React",
+        "years": 7
+      },
+      {
+        "name": "HTML/CSS",
+        "years": 7
+      },
+      {
+        "name": "TypeScript",
+        "years": 6
+      },
+      {
+        "name": "Redux",
+        "years": 5
+      },
+      {
+        "name": "Next.js",
+        "years": 4
+      },
+      {
+        "name": "Jest",
+        "years": 4
+      },
+      {
+        "name": "Webpack",
+        "years": 3
+      }
+    ],
+    "languages": [
+      {
+        "language": "Portuguese",
+        "level": "native"
+      },
+      {
+        "language": "English",
+        "level": "C1"
+      }
+    ],
+    "education": [
+      {
+        "degree": "bachelor",
+        "field": "Computer Science",
+        "institution": "University of Lisbon",
+        "year": 2018
+      }
+    ],
+    "employment": [
+      {
+        "company": "Tagus Vista Solutions",
+        "title": "Senior Frontend Developer",
+        "industry": "Financial Technology",
+        "from": "2022-03",
+        "to": null
+      },
+      {
+        "company": "Lusitania Web Labs",
+        "title": "Frontend Developer",
+        "industry": "E-commerce",
+        "from": "2019-09",
+        "to": "2022-02"
+      },
+      {
+        "company": "Atlantico Interactive",
+        "title": "Junior Frontend Developer",
+        "industry": "Digital Publishing",
+        "from": "2018-09",
+        "to": "2019-08"
+      }
+    ],
+    "leadership": {
+      "has": true,
+      "note": "Mentored junior frontend developers at Tagus Vista Solutions."
+    },
+    "certifications": [
+      "AWS Certified Cloud Practitioner"
+    ]
+  },
+  "medianTenureMonths": 30
+}

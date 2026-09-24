@@ -1,14 +1,14 @@
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { CandidateSeedSchema } from "@/contracts/candidate";
-import { INDEX_FILE, IndexSchema } from "@/lib/pool/index-file";
+import { INDEX_DIR, readIndexEntries } from "@/lib/pool/index-files";
 import { normalizeLanguages, normalizeSkills } from "@/lib/pool/normalize";
 import { seedPath } from "../generate/fs";
 
 // The committed index checked against the seeds its PDFs were rendered from
 // (PLAN, Build order: Indexer): every fact the PDF prints.
 
-const index = existsSync(INDEX_FILE) ? IndexSchema.parse(JSON.parse(readFileSync(INDEX_FILE, "utf8"))) : [];
+const index = existsSync(INDEX_DIR) ? readIndexEntries() : [];
 const seeded = index.filter((entry) => existsSync(seedPath(entry.id)));
 
 const sorted = (values: readonly string[]) => [...values].sort();

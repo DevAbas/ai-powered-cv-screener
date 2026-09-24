@@ -9,14 +9,11 @@ import { ROSTER } from "./roster";
 import { readSeeds } from "./seeds";
 import { renderTemplate } from "./templates";
 
-// Step 3: one PDF per seed in `public/cvs`, photo embedded when it exists
-// (PLAN, Generation pipeline). `data/pdfs.json` records each PDF's page
-// count and whether it carries a photo.
+// Step 3: one PDF per seed in `data/cvs`, photo embedded when it exists
+// (PLAN, Generation pipeline). The manifest records whether each PDF
+// carries a photo; the page count belongs to the index.
 
-export const PdfManifestSchema = z.record(
-  z.string(),
-  z.object({ pages: z.number().int().min(1).max(MAX_PAGES), photo: z.boolean() }),
-);
+export const PdfManifestSchema = z.record(z.string(), z.object({ photo: z.boolean() }));
 export type PdfManifest = z.infer<typeof PdfManifestSchema>;
 
 export async function readManifest(): Promise<PdfManifest> {
@@ -52,7 +49,7 @@ export async function runPdfs(options: StepOptions): Promise<StepReport> {
       const pages = countPdfPages(pdf);
       if (pages < 1 || pages > MAX_PAGES) throw new Error(`rendered ${pages} pages; expected 1-${MAX_PAGES}`);
       await writeFileAtomic(pdfPath(id), pdf);
-      manifest[id] = { pages, photo: hasPhoto };
+      manifest[id] = { photo: hasPhoto };
       report.done.push(id);
       log("pdfs", id, `written (template ${seed.template}, ${pages} page(s)${hasPhoto ? ", photo" : ", no photo"})`);
     } catch (error) {

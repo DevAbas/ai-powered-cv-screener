@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { AnswerView } from "@/contracts/view";
-import { cvSourceHref } from "@/lib/pool/source-href";
+import { storySourceHref } from "@/mocks/story";
 import { ANDREI } from "@/lib/retrieval/fixtures";
 import { ANSWERS } from "@/mocks/answers";
 import { AnswerProfile } from "./AnswerProfile";
@@ -10,7 +10,7 @@ type ProfileView = Extract<AnswerView, { kind: "profile" }>;
 const meta = {
   title: "Chat / Answer / AnswerProfile",
   component: AnswerProfile,
-  args: { view: ANSWERS.profile.view as ProfileView, sourceHref: cvSourceHref },
+  args: { view: ANSWERS.profile.view as ProfileView, sourceHref: storySourceHref },
 } satisfies Meta<typeof AnswerProfile>;
 
 export default meta;
