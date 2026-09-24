@@ -2,7 +2,7 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.14         |
+| Version | 1.15         |
 | Date    | 2026-09-24   |
 | Status  | Approved     |
 | Owner   | Product      |
@@ -41,7 +41,8 @@ Today the recruiter either reads every CV (slow) or keyword-searches
 ## 3. Product promise
 
 The recruiter asks questions about a candidate pool in plain language and
-gets fast answers with visible, clickable evidence.
+gets correct answers, each with visible, clickable evidence. Accuracy comes
+before speed: a slower right answer beats a fast wrong one.
 
 The product does not make the hiring decision. It makes the decision
 faster and better-supported.
@@ -87,10 +88,18 @@ different answer shape.
 | 6 | Aggregate | "How many candidates know Python?" | Exact count, optionally the list |
 | 7 | Empty result | "Who knows Rust?" (nobody) | Explicit "no candidate matches" |
 | 8 | Out of scope | "What's the weather today?" | Polite refusal, redirect to CV questions |
+| 9 | List all | "Show all CVs" | Every candidate, each with a source |
+| 10 | Lookup by role | "The security engineer's CV" | The candidate(s) in that role |
+| 11 | Follow-up | "Of those, who speaks German?" | The previous answer's candidates, narrowed; explicit "no candidate matches" when none |
+| 12 | Greeting, help | "hey", "What can you do?" | A short reply, without sources |
 
-Use cases 1, 2 and 6 are the core of screening. 3, 4 and 5 support the
-decision. 7 and 8 are trust cases: the product must never invent a
-candidate or answer from outside the pool.
+Use cases 1, 2 and 6 are the core of screening. 3, 4, 5, 9, 10 and 11
+support the decision. 7 and 8 are trust cases: the product must never
+invent a candidate or answer from outside the pool.
+
+An answer that names candidates carries one source per candidate, linking
+to the page of the CV that supports it. Greetings and out-of-scope answers
+carry none. A count is exact, never an estimate.
 
 ## 6. What the recruiter evaluates on
 
@@ -115,7 +124,7 @@ answer questions about all of them, so candidate data must capture them.
 
 ## 7. UX principles
 
-Every interface decision is checked against these five.
+Every interface decision is checked against these six.
 
 1. **Evidence, not answers.** Every answer shows which CVs it came from.
    One click opens the CV at the relevant page, beside the conversation.
@@ -128,8 +137,12 @@ Every interface decision is checked against these five.
 4. **Uncertainty is visible.** "No match", "not enough information" and
    "outside the pool" are explicit, distinct states. Never a confident
    guess.
-5. **Speed is felt.** The value of the product is speed. Long or empty
-   waiting states destroy it; progress must be visible.
+5. **Accuracy first, progress visible.** A wrong answer costs more than a
+   slow one. While the answer is computed, progress is visible; afterwards
+   the line says what was searched.
+6. **Plain, warm, brief.** Answers read like a helpful colleague. After a
+   no match or an out-of-scope question they offer a next question. The
+   tone never adds a candidate or a fact the data does not contain.
 
 ## 8. Core flow
 
@@ -137,7 +150,8 @@ Every interface decision is checked against these five.
    review and an example question in the input. Never a blank screen.
 2. **Ask.** Types a question in natural language.
 3. **Wait.** Sees which step of the search is running until the answer
-   arrives, and afterwards how many CVs it checked, in plain words.
+   arrives, and afterwards what it did, in plain words ("Matched 7 of 30
+   CVs"), or nothing about CVs when none were searched.
 4. **Answer.** Sees the answer in the shape that fits the question type,
    with sources.
 5. **Verify.** Clicks a source; the original CV opens in a preview beside
@@ -162,7 +176,11 @@ Every interface decision is checked against these five.
 - Answers are based only on the content of the CVs in the pool.
 - The screener reads only the CV documents; any structured data it uses
   is derived from them.
-- Every answer carries its sources (one or more CVs).
+- An answer that names candidates carries one source per candidate;
+  greetings and out-of-scope answers carry none.
+- Counts come from an exact count over the pool.
+- The model's text frames the data; it never restates counts or facts,
+  and never adds a candidate or fact the data does not contain.
 - Each use case in §5 renders in its own shape.
 - Empty result and out-of-scope are distinct, explicit states.
 
@@ -170,8 +188,8 @@ Every interface decision is checked against these five.
 - A source is shown in the answer as the candidate's name and the word
   "CV" with a link mark; the cited page is not displayed.
 - It opens the original PDF at the cited page in a preview panel beside
-  the conversation, with a download; outside the app (previews, copied
-  text) it is a link to the PDF.
+  the conversation, with a download; outside the app (previews) it is a
+  link to the PDF.
 
 ### 10.3 Conversation
 - Follow-up questions use the context of previous answers.
@@ -194,8 +212,10 @@ Removed in 1.6: the pool is reached through answers and their sources.
 
 ## 11. Success criteria
 
-- A filter question over the pool returns a correct, sourced list in under
-  ~10 seconds on the recommended mode.
+- Filter, count, compare and profile questions return correct, sourced
+  answers on the recommended model, measured by the evaluation
+  (`docs/PLAN.md`, Evaluation) before a model is offered.
+- Response time is reported by the evaluation, not a pass/fail criterion.
 - Every answer can be traced to a CV in at most one click.
 - Empty-result and out-of-scope questions never produce an invented
   candidate or fact.
@@ -218,11 +238,11 @@ Stated explicitly so nothing is inferred from omission.
 
 ## 13. Open questions
 
-None open. Resolved in v1.2:
+None open. Resolved:
 
-- "Note candidates for follow-up" is deferred. Copying an answer is
-  dropped: it doesn't help the recruiter screen (§8).
-- Sources open the original PDF at the cited page (§10.2).
+- "Note candidates for follow-up" is deferred (1.2).
+- Sources open the original PDF at the cited page (1.2, §10.2).
+- Copying an answer is dropped: it doesn't help the recruiter screen (1.14, §8).
 
 ## 14. Changelog
 
@@ -243,3 +263,4 @@ None open. Resolved in v1.2:
 | 1.12    | 2026-09-24 | §8 step 3: once answered, the progress line says how many CVs were checked instead of the time it took. |
 | 1.13    | 2026-09-24 | §8 step 1, §10.6: the empty state shows the number of CVs and one example question in the input, instead of suggested-question buttons. |
 | 1.14    | 2026-09-24 | §8, §13: copying an answer is dropped; the core flow ends with a follow-up or a new search. |
+| 1.15    | 2026-09-24 | Accuracy before speed (§3, §7.5, §11). §5: list all, lookup by role, follow-up and greeting use cases; one source per named candidate, none on greetings and out-of-scope answers, exact counts. §7.6: plain, warm, brief, with a next question after no match or out of scope. §8 step 3: the progress line says what was searched. §10.1: the text frames the data. §10.2: copied text removed. §11: correctness measured by the evaluation; response time reported. §13: resolutions dated. |
