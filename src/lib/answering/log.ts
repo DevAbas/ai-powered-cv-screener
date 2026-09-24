@@ -32,6 +32,10 @@ export interface RequestLog {
   repairs: number;
   fallbacks: { from: string; to: string; reason: string }[];
   presentation?: { view: string; candidates: number; corrections: string[] };
+  /** Every candidate id any tool returned, in order. */
+  candidatesReturned: string[];
+  /** Ids the presentation named that no tool returned; the answer failed on them. */
+  rejectedCandidates?: string[];
   outcome: "answer" | "error" | "aborted";
   error?: string;
   latencyMs: number;

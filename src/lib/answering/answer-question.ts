@@ -21,7 +21,7 @@ import { EmptyAnswerError, runLoop } from "./loop";
 import { buildInstructions, buildMessages } from "./prompt";
 import { ResultStore } from "./results";
 import { createTools } from "./tools";
-import { buildView } from "./views";
+import { buildView, UnverifiedAnswerError } from "./views";
 
 // One question, end to end (PLAN, Retrieval and answering): the model
 // chooses tools, the tools run over the index, the presentation call is
@@ -69,6 +69,7 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
     toolCalls: [],
     repairs: 0,
     fallbacks: [],
+    candidatesReturned: [],
     outcome: "error",
     latencyMs: 0,
     counters: {},
@@ -119,6 +120,7 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
     });
     const { outcome, store } = value;
     record.model = { requested: request.model, used: outcome.modelId ?? target.model, provider: outcome.provider, fellBack };
+    record.candidatesReturned = [...store.knownIds];
 
     emit({ type: "progress", stage: "write", message: STAGE_MESSAGES.write });
     const built = outcome.present ? buildView(outcome.present, store, byId) : undefined;
@@ -140,6 +142,7 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
       finish("aborted");
       return;
     }
+    if (error instanceof UnverifiedAnswerError) record.rejectedCandidates = [...error.ids];
     recordOutcome(modelLabel(entry), false);
     finish("error", error);
     emit(errorEvent(error));

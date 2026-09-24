@@ -21,6 +21,8 @@ export interface ObservedAnswer {
   sources: readonly { candidateId: string; page: number }[];
   /** Every candidate id any tool returned during the request. */
   toolCandidateIds: readonly string[];
+  /** Ids the presentation named that no tool returned: the pipeline refused the answer over them. */
+  rejected?: readonly string[];
   latencyMs: number;
   error?: string;
 }
@@ -80,6 +82,7 @@ export function scoreQuestion(question: GoldenQuestion, observed: ObservedAnswer
   const stateQuestion = accepted.every((view) => STATE_VIEWS.includes(view));
 
   if (observed.outcome === "error") {
+    const rejected = observed.rejected ?? [];
     return {
       id: question.id,
       kind: question.kind,
@@ -87,10 +90,10 @@ export function scoreQuestion(question: GoldenQuestion, observed: ObservedAnswer
       withinBounds: expect.atLeast || expect.atMost ? false : undefined,
       composition: false,
       candidateCitations: false,
-      invented: 0,
+      invented: rejected.length,
       noSourceState: stateQuestion ? false : undefined,
       latencyMs: observed.latencyMs,
-      problems: [`error: ${observed.error ?? "unknown"}`],
+      problems: [`error: ${observed.error ?? "unknown"}`, ...(rejected.length ? [`invented: ${rejected.join(", ")}`] : [])],
     };
   }
 
