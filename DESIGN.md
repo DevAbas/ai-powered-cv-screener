@@ -384,6 +384,13 @@ text and in `xs` buttons, 1.25rem in other buttons.
   `surface-container-low` circle on hover and `surface-container-high` while
   pressed. Sizes: `xs` 1.875rem, `sm` 2rem, `md` 2.25rem tall.
 - **Icons:** `on-surface-variant` at rest, `on-surface` on hover, `outline-variant` when disabled; 1.25rem beside a headline (a candidate's name).
+- **Colour mode toggle:** a ghost icon button in the header, Moon in light
+  and Sun in dark. A press plays a short light-switch click: synthesized,
+  under 60 ms, quiet, a snap of band-limited noise over a low thock; the
+  click for "on" (to light) sits above the one for "off" (to dark), so the
+  direction is audible. It is the interface's only sound; nothing plays on
+  load, on hover or on focus. The frequencies and durations live in the code
+  beside this rule (`switchClick.ts`).
 - **Inputs:** no border at rest when placed on `surface`; the background
   step separates them. Focus: 2px `primary-outline` ring.
 - **Composer:** the largest floating container: `surface-container-lowest`,

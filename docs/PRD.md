@@ -2,7 +2,7 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.19         |
+| Version | 1.20         |
 | Date    | 2026-09-25   |
 | Status  | Approved     |
 | Owner   | Product      |
@@ -165,8 +165,10 @@ Every interface decision is checked against these six.
 **One column: the conversation.**
 - Messages with their sources, empty state, loading state and input.
 - Header: logo, product name and a light/dark toggle; the default follows
-  the system setting and the toggle overrides it. The pool size is shown in
-  the empty state (§8 step 1), not in the header.
+  the system setting and the toggle overrides it. Pressing the toggle plays
+  a short switch click, so the change of mode is heard as well as seen; it
+  is the interface's only sound. The pool size is shown in the empty state
+  (§8 step 1), not in the header.
 
 **Mobile (secondary):** the same column at full width.
 
@@ -271,3 +273,4 @@ None open. Resolved:
 | 1.17    | 2026-09-25 | §5 row 5 and §10.1: an answer about one candidate is prose plus the name, title and CV. §10.5: the selector appears only when more than one model is offered. |
 | 1.18    | 2026-09-25 | Header and §11: the plan is retired; how it is built lives in `README.md`, the evaluation thresholds in `scripts/evaluation/score.ts`. |
 | 1.19    | 2026-09-25 | §10.5 Model selection removed: one model answers and the recruiter does not choose it; §10.6 States becomes §10.5. §11: the offered model. |
+| 1.20    | 2026-09-25 | §9: the light/dark toggle plays a short switch click, the interface's only sound. |
