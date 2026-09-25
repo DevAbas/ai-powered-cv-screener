@@ -22,7 +22,7 @@ import { cx } from "@/lib/recipe";
 export interface ChatScreenProps {
   /** Every CV in the pool: its size is shown in the empty state. */
   pool: readonly PoolCandidate[];
-  /** Links sources to their PDF; left out until the PDFs exist (PLAN, User interface). */
+  /** Links sources to their PDF: the CV route in the app, the static copy in previews (PLAN, User interface). */
   sourceHref?: SourceHref | undefined;
   /** Where questions go: the API by default, the mock in previews and tests. */
   transport?: AskTransport | undefined;

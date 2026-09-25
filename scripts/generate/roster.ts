@@ -103,7 +103,3 @@ export const ROSTER: readonly RosterCandidate[] = RAW.map(([name, headline, role
   seniority,
   location,
 }));
-
-export function rosterEntry(id: string): RosterCandidate | undefined {
-  return ROSTER.find((c) => c.id === id);
-}

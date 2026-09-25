@@ -37,7 +37,7 @@ import { syncVectors } from "./vectors";
 
 nextEnv.loadEnvConfig(process.cwd());
 
-/** Pause between calls: OpenRouter's free tier allows 20 requests a minute. */
+/** Pause between calls, kept from the OpenRouter phase (20 requests a minute there); the Gemini API free tier allows about 15 (PLAN, Environment). */
 const PAUSE_MS = 3_500;
 
 const STEPS = ["profiles", "sources", "vectors"] as const;

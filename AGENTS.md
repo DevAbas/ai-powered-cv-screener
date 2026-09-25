@@ -57,7 +57,6 @@ Run `nvm use` first, in every shell: the Node version comes from `.nvmrc`
 | `npm run design:export` | Regenerate `src/styles/tokens.generated.css` from `DESIGN.md` |
 | `npm run storybook` | Component previews on port 6006 |
 | `npm run build-storybook` | Static build of the component previews |
-| `python3 scripts/logo-mark.py` | Retrace the logo mark and favicon from the font (needs `fontTools` and `brotli`); rerun when the font or the `mark` token changes |
 
 Add each new script here when its phase is implemented and verified, not
 before.

@@ -2,7 +2,7 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.23                                     |
+| Version | 1.24                                     |
 | Date    | 2026-09-25                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
@@ -62,7 +62,8 @@ The app reads the index folder, the CVs and the chunk vectors in Pinecone.
 
 ## Vector store
 
-Pinecone is a fixed decision: index `ai-cv-screener` on AWS us-east-1
+Pinecone is a fixed decision: one index (named in `.env.local`,
+`PINECONE_INDEX`) on AWS us-east-1
 (serverless, free Starter plan), dense, 768 dimensions, cosine, namespace
 `cvs`, one record per section chunk with metadata (candidate id, section,
 page, role, seniority, skills, languages). Putting every CV in every prompt
@@ -429,3 +430,4 @@ floor to tune.
 | 1.21    | 2026-09-24 | Goal references PRD 1.15, which completes the revision the 1.19 entry announced. Zero cost with pinned OpenRouter free models; Gemini answer entries disabled. Data layout by owner, `data/index/<id>.json`, the CV route. Pinecone recorded as a fixed decision. Indexer: sections, chunks, verified sources per field, the accuracy check. Retrieval and answering rebuilt: typed tools over the index, pool vocabularies, filter semantics, hybrid search with RRF, the presentation check, views from tool results, progress and logging. Reliability: SDK timeouts, tool-call repair, bounded steps; schema repair for extraction only. Evaluation: thresholds per metric, done when met. Removals, fresh clone; open questions 3, 5 and 9 closed. |
 | 1.22    | 2026-09-25 | Goal references PRD 1.16. Views: a filter, count, list or no match opens with a sentence the app composes from the last filter call and its result; a plain list drops the model's reasons. Reliability: an answer that ends in text after a tool returned candidates gets its presentation from one forced call. This phase runs one model, Gemini 3.5 Flash-Lite, without a fallback; the OpenRouter entries move to pay-as-you-go and stay disabled; the evaluation's dry run states the cost or quota and the remaining credits. |
 | 1.23    | 2026-09-25 | Goal references PRD 1.17. Views: a list after an exact filter is complete; one candidate is a profile of sentences plus name, title and CV, re-asked when wordless; a count's answer is the app's sentence alone. Reliability: tool schemas without length or range keywords; one retry after a 5xx; every model failure logged; an entry without a fallback is always tried; Gemini offered provisionally until its evaluation run. Build order: generation, data layout, indexer and answering done. Fresh clone on the Google key. |
+| 1.24    | 2026-09-25 | Vector store: the index name is an environment value and lives only in `.env.local` (placeholder in `.env.example`), not here. |

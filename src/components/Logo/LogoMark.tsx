@@ -5,8 +5,8 @@ export type LogoMarkProps = ComponentProps<"svg">;
 
 /**
  * "CV" as outlines: Google Sans at `typography.mark` (600, 0.875rem of a
- * 1.75rem square, 0.02em tracking), traced by scripts/logo-mark.py and
- * centred on its bounding box. No font loads, so it sits the same
+ * 1.75rem square, 0.02em tracking), traced from the font and centred on
+ * its bounding box. No font loads, so it sits the same
  * everywhere; `app/icon.svg` is the same drawing.
  */
 export const LOGO_MARK_PATH =

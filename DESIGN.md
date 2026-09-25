@@ -371,7 +371,7 @@ text and in `xs` buttons, 1.25rem in other buttons.
 
 - **Logo:** the mark is "CV" in `mark` on a `primary` square of 1.75rem,
   `rounded.sm`: the letters are traced from the font as outlines and centred
-  on their bounding box (`scripts/logo-mark.py`), so no font has to load and
+  on their bounding box, so no font has to load and
   they sit the same in every browser; the wordmark "SCREENER" follows in
   `wordmark` (`logo-wordmark`). The same drawing, at the same colours, is
   the favicon.

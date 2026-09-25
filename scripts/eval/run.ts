@@ -34,7 +34,7 @@ nextEnv.loadEnvConfig(process.cwd());
 
 /** Model requests a question takes on average: tool steps, then the answer (PLAN, Retrieval and answering: steps). */
 export const REQUESTS_PER_QUESTION = 2.5;
-/** Pause between questions, well under OpenRouter's rate limits. */
+/** Pause between questions, kept from the OpenRouter phase; the Gemini API free tier allows about 15 requests a minute (PLAN, Environment). */
 const PAUSE_MS = 3_500;
 export const REPORT_DIR = path.join("data", "eval");
 

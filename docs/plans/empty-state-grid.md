@@ -26,5 +26,5 @@ motion). This plan records only how it is built.
   the empty state when the first question is asked.
 
 Done when the grid lights up under the pointer in both themes, a click
-sends a ring, the suggestions and composer stay usable, and nothing moves
+sends a ring, the composer stays usable, and nothing moves
 under reduced motion.

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Degree, LanguageLevel, Role, Seniority, WorkMode } from "./candidate";
-import { CandidateIdSchema, DEGREES, LANGUAGE_LEVELS, ROLES, SENIORITIES, WORK_MODES } from "./candidate";
+import { DEGREES, LANGUAGE_LEVELS, ROLES, SENIORITIES, WORK_MODES } from "./candidate";
 
 // The tools the answer model calls (PLAN, Retrieval and answering). Their
 // arguments are enums built from the pool's own values, so a question's
@@ -47,13 +47,12 @@ export type Scope = z.infer<typeof ScopeSchema>;
 /** The views the model can present, and the three states (PRD, Use cases). */
 export const PRESENT_VIEWS = ["list", "ranked", "comparison", "profile", "count", "no_match", "not_enough_information", "out_of_scope"] as const;
 export const PresentViewSchema = z.enum(PRESENT_VIEWS);
-export type PresentView = z.infer<typeof PresentViewSchema>;
 
 /** Most skills a list or comparison shows years for. */
 export const MAX_PRESENT_SKILLS = 3;
 
 // The static shapes: every enum field is a string here, and the factories
-// narrow it to the pool's values at run time. Mocks and tests use the shapes.
+// narrow it to the pool's values at run time. The shapes exist for the types.
 
 export const FiltersShape = z.object({
   roles: z.array(z.string()).optional().describe("Any of these role families"),
@@ -182,9 +181,6 @@ export function presentInput(v: Vocabulary): z.ZodType<PresentInput> {
     skills: z.array(enumOf(v.skills)).max(MAX_PRESENT_SKILLS).describe("The skills the question is about, so their years are shown; empty when none"),
   });
 }
-
-/** Ids the presentation names must be candidate ids. */
-export const PresentedIdSchema = CandidateIdSchema;
 
 /** The static vocabulary lists the contract enumerates itself. */
 export const STATIC_VOCABULARY = { roles: ROLES, seniorities: SENIORITIES, levels: LANGUAGE_LEVELS, degrees: DEGREES, workModes: WORK_MODES } as const;

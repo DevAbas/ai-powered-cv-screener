@@ -7,7 +7,7 @@ import { z } from "zod";
 // the model sees is the same contract as JSON Schema without the
 // keywords some providers' grammar compilers reject when they constrain
 // decoding: lengths, ranges and patterns (PLAN, Reliability; the provider
-// serving qwen/qwen3.8-27b:free on OpenRouter refuses `minLength`). What
+// serving Qwen on OpenRouter refused `minLength`). What
 // those keywords enforced is checked by the contract on the way in.
 
 /** Keywords dropped from the schema the model sees; the contract still enforces them. */
