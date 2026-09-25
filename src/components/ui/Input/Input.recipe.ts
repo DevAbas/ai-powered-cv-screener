@@ -4,7 +4,7 @@ import { defineRecipe, focusVisibleRing } from "@/lib/recipe";
 export const inputRecipe = defineRecipe({
   base: [
     "w-full min-w-0 text-body-lg leading-body-lg text-on-surface",
-    "placeholder:text-on-surface-variant disabled:cursor-not-allowed",
+    "placeholder:text-outline-variant disabled:cursor-not-allowed",
   ],
   variants: {
     variant: {

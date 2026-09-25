@@ -15,22 +15,16 @@ export function skillLabel({ skill, years }: SkillYears): string {
   return years === null ? `${skill} —` : `${skill} ${years} ${years === 1 ? "yr" : "yrs"}`;
 }
 
-/**
- * "16 candidates · most Python experience first", or "19 of 30 candidates"
- * for an exact count; none for a single row without a count, which needs no
- * caption.
- */
+/** The opening line of a list: the app's sentence, or the count of rows for a ranking. */
 export function listCaption(view: ListView): string | undefined {
-  if (!view.count && view.rows.length < 2) return undefined;
-  const count = view.count ? `${view.count.matched} of ${view.count.total} candidates` : plural(view.rows.length, "candidate");
-  if (view.rows.length < 2) return count;
-  if (view.ranked) return `${count} · best fit first`;
-  const first = view.skills[0];
-  return first ? `${count} · most ${first} experience first` : count;
+  if (view.lead) return view.lead;
+  if (view.ranked && view.rows.length > 1) return `${plural(view.rows.length, "candidate")} · best fit first`;
+  return undefined;
 }
 
 /** What a state says when the model wrote nothing. */
-export function statusText(status: AnswerStatus): string {
+export function statusText(status: AnswerStatus, lead = ""): string {
+  if (lead) return lead;
   switch (status) {
     case "no-match":
       return "No candidate matches this.";
@@ -91,23 +85,23 @@ export function viewLines(view: AnswerView): string[] {
       return view.candidates.map(({ profile, skills, page }) => `- ${[profile.name, profile.headline, profile.location, ...skills.map(skillLabel)].join(" — ")} (CV p. ${page})`);
     case "profile": {
       const { profile, page } = view.candidate;
-      return [
-        `${profile.name} — ${profileFacts.summary(profile)} (CV p. ${page})`,
-        `Skills: ${profileFacts.skills(profile)}`,
-        `Languages: ${profileFacts.languages(profile)}`,
-        `Education: ${profileFacts.education(profile)}`,
-        `Experience: ${profileFacts.experience(profile)}`,
-        `Notice: ${profileFacts.notice(profile)} · ${profileFacts.work(profile)}`,
-      ];
+      return [`${profile.name} — ${profileFacts.summary(profile)} (CV p. ${page})`];
     }
     case "status":
-      return [];
+      return view.lead ? [view.lead] : [];
   }
 }
 
-/** The whole answer as plain text: what the model wrote, then its view. */
+/** The app's words when the model wrote none: a state's line, or the sentence that opens a profile. */
+function fallbackText(view: AnswerView | undefined): string {
+  if (view?.kind === "status" && !view.lead) return statusText(view.status);
+  if (view?.kind === "profile") return view.lead;
+  return "";
+}
+
+/** The whole answer as plain text: what the model wrote (or the app's words), then its view (whose first line is the app's sentence). */
 export function answerAsText(text: string, view?: AnswerView): string {
-  const written = text.trim() || (view?.kind === "status" ? statusText(view.status) : "");
+  const written = text.trim() || fallbackText(view);
   const lines = view ? viewLines(view) : [];
   return [written, lines.join("\n")].filter(Boolean).join("\n\n");
 }

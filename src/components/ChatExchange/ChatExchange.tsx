@@ -43,6 +43,8 @@ const STATE_LINE: Record<AnswerStatus, NonNullable<StatusMessageProps["status"]>
 export function ChatExchange({ question, status, steps, slow, text, view, matched, answeredBy, error, sourceHref, onRetry }: ChatExchangeProps) {
   const answered = status === "answered";
   const state = answered && view?.kind === "status" ? view.status : undefined;
+  // A profile the model did not open in words is opened by the app's sentence.
+  const written = text.trim() ? text : answered && view?.kind === "profile" ? view.lead : "";
 
   return (
     <article className="flex min-w-0 flex-col gap-5 wrap-anywhere">
@@ -67,7 +69,11 @@ export function ChatExchange({ question, status, steps, slow, text, view, matche
         or fails part-way. A state, once the answer is complete, is its words
         behind the state's icon.
       */}
-      {state ? <StatusMessage status={STATE_LINE[state]}>{text.trim() || statusText(state)}</StatusMessage> : text && <AnswerText text={text} />}
+      {state && view?.kind === "status" ? (
+        <StatusMessage status={STATE_LINE[state]}>{[view.lead, text.trim()].filter(Boolean).join(" ") || statusText(state)}</StatusMessage>
+      ) : (
+        written && <AnswerText text={written} />
+      )}
       {answered && view && <AnswerView view={view} sourceHref={sourceHref} />}
       {status === "stopped" && <p className="text-body-sm leading-body-sm text-on-surface-variant">Stopped.</p>}
       {status === "error" && error && <AnswerError message={error.message} retryable={error.retryable} onRetry={onRetry} />}

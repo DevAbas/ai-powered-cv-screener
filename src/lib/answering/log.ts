@@ -3,7 +3,8 @@ import type { ModelTarget } from "@/lib/ai/registry";
 
 // One structured log line per request (PLAN, Retrieval and answering:
 // logging): the model actually used, every tool call with its arguments,
-// result and error, repairs, fallback events, latency and the outcome.
+// result and error, repairs, every model failure and what followed it,
+// latency and the outcome.
 
 export interface ToolCallLog {
   step: number;
@@ -30,7 +31,12 @@ export interface RequestLog {
   steps: StepLog[];
   toolCalls: ToolCallLog[];
   repairs: number;
-  fallbacks: { from: string; to: string; reason: string }[];
+  /** The model ended in text after tools ran; one forced call produced the presentation. */
+  presentForced?: true;
+  /** The text of that failed step was replaced by a re-asked sentence. */
+  textRewritten?: true;
+  /** Every model failure, in order, and what followed: a retry on the same model, the fallback, or the end of the request. */
+  modelFailures: { model: string; reason: string; then: "retried" | "fell back" | "gave up"; to?: string }[];
   presentation?: { view: string; candidates: number; corrections: string[] };
   /** Every candidate id any tool returned, in order. */
   candidatesReturned: string[];

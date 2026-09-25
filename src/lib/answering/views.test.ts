@@ -11,6 +11,7 @@ function store() {
   const s = new ResultStore();
   s.add({
     tool: "find_candidates",
+    input: { filters: { skills: [{ skill: "Python" }] }, scope: "whole_pool" },
     result: {
       matched: 2,
       total: 3,
@@ -20,22 +21,23 @@ function store() {
       ],
     },
   });
-  s.add({ tool: "get_candidates", result: [{ id: LENA.id, profile: LENA.profile, sources: LENA.sources, pages: LENA.pages }] });
+  s.add({ tool: "get_candidates", input: { ids: [LENA.id] }, result: [{ id: LENA.id, profile: LENA.profile, sources: LENA.sources, pages: LENA.pages }] });
   return s;
 }
 
 const present = (overrides: Partial<PresentInput>): PresentInput => ({ view: "list", candidates: [], skills: [], ...overrides });
 
 describe("buildView", () => {
-  it("builds a list in the tools' order with facts from the index and sources from the call", () => {
+  it("builds a list in the tools' order with the app's sentence, facts from the index and sources from the call, dropping reasons", () => {
     const built = buildView(present({ candidates: [{ id: ELENA.id, page: 1, reason: " Python at Aegean Pay " }, { id: ANDREI.id, page: 1, reason: "" }], skills: ["Python"] }), store(), byId);
     expect(built.view).toEqual({
       kind: "list",
+      lead: "There are 2 candidates with Python experience. Here are their details.",
       ranked: false,
       skills: ["Python"],
       rows: [
         { candidateId: ANDREI.id, name: "Andrei Popescu", headline: "Senior Backend Engineer", skills: [{ skill: "Python", years: 8 }], reason: "", page: 1 },
-        { candidateId: ELENA.id, name: "Elena Georgiou", headline: "Backend Engineer", skills: [{ skill: "Python", years: 3 }], reason: "Python at Aegean Pay", page: 1 },
+        { candidateId: ELENA.id, name: "Elena Georgiou", headline: "Backend Engineer", skills: [{ skill: "Python", years: 3 }], reason: "", page: 1 },
       ],
     });
     expect(built.sources).toEqual([
@@ -48,6 +50,8 @@ describe("buildView", () => {
   it("keeps the model's order for a ranking and corrects a page the tools did not cite", () => {
     const built = buildView(present({ view: "ranked", candidates: [{ id: ELENA.id, page: 9, reason: "a" }, { id: ANDREI.id, page: 1, reason: "b" }] }), store(), byId);
     expect(built.view.kind === "list" && built.view.ranked).toBe(true);
+    expect(built.view.kind === "list" && built.view.rows.map((r) => r.reason)).toEqual(["a", "b"]);
+    expect(built.view.kind === "list" && built.view.lead).toBe("");
     expect(built.view.kind === "list" && built.view.rows.map((r) => [r.candidateId, r.page])).toEqual([
       [ELENA.id, 1],
       [ANDREI.id, 1],
@@ -65,13 +69,36 @@ describe("buildView", () => {
 
   it("builds a count from count_candidates, with or without the list", () => {
     const s = store();
-    s.add({ tool: "count_candidates", result: { count: 2, total: 3 } });
+    s.add({ tool: "count_candidates", input: { filters: { skills: [{ skill: "Python" }] }, scope: "whole_pool" }, result: { count: 2, total: 3 } });
     const withList = buildView(present({ view: "count", candidates: [{ id: ANDREI.id, page: 1, reason: "" }, { id: ELENA.id, page: 1, reason: "" }], skills: ["Python"] }), s, byId);
-    expect(withList.view).toMatchObject({ kind: "list", count: { matched: 2, total: 3 } });
+    expect(withList.view).toMatchObject({ kind: "list", count: { matched: 2, total: 3 }, lead: "Out of 3 candidates, there are 2 with Python experience. Here are their details." });
     expect(withList.sources).toHaveLength(2);
     const alone = buildView(present({ view: "count", candidates: [] }), s, byId);
-    expect(alone.view).toMatchObject({ kind: "list", rows: [], count: { matched: 2, total: 3 } });
+    expect(alone.view).toMatchObject({ kind: "list", rows: [], count: { matched: 2, total: 3 }, lead: "Out of 3 candidates, there are 2 with Python experience." });
     expect(alone.sources).toEqual([]);
+  });
+
+  it("completes a filter list with every match the tool returned, and shows one candidate as a profile", () => {
+    // The model presented one of the two Python matches: the list holds both, in the tool's order.
+    const partial = buildView(present({ candidates: [{ id: ELENA.id, page: 1, reason: "" }], skills: ["Python"] }), store(), byId);
+    expect(partial.view).toMatchObject({ kind: "list", rows: [{ candidateId: ANDREI.id }, { candidateId: ELENA.id }] });
+    expect(partial.sources.map((s) => s.candidateId)).toEqual([ANDREI.id, ELENA.id]);
+    expect(partial.corrections).toContain("1 matched candidate(s) the presentation left out were added to the list");
+    // Only a lookup ran: the text answers, the view shows who and their CV, with no sentence of the app's.
+    const lookup = new ResultStore();
+    lookup.add({ tool: "get_candidates", input: { ids: [LENA.id] }, result: [{ id: LENA.id, profile: LENA.profile, sources: LENA.sources, pages: LENA.pages }] });
+    const looked = buildView(present({ candidates: [{ id: LENA.id, page: 1, reason: "" }] }), lookup, byId);
+    expect(looked.view).toMatchObject({ kind: "profile", candidate: { candidateId: LENA.id }, lead: "" });
+    expect(looked.sources).toHaveLength(1);
+    // A filter matched one: the same profile, opened by the app's sentence.
+    const one = new ResultStore();
+    one.add({
+      tool: "find_candidates",
+      input: { filters: { languages: [{ language: "German" }] }, scope: "whole_pool" },
+      result: { matched: 1, total: 3, candidates: [{ id: LENA.id, name: "Lena Novak", headline: "y", evidence: [{ field: "language", value: "German (native)", page: 2, section: "languages" }] }] },
+    });
+    const single = buildView(present({ candidates: [{ id: LENA.id, page: 2, reason: "" }] }), one, byId);
+    expect(single.view).toMatchObject({ kind: "profile", candidate: { candidateId: LENA.id, page: 2 }, lead: "There is 1 candidate who speaks German. Here is their CV." });
   });
 
   it("builds a comparison, a profile and the states", () => {
@@ -79,10 +106,13 @@ describe("buildView", () => {
     expect(comparison.view.kind).toBe("comparison");
     const profile = buildView(present({ view: "profile", candidates: [{ id: LENA.id, page: 2, reason: "" }] }), store(), byId);
     expect(profile.view).toMatchObject({ kind: "profile", candidate: { candidateId: LENA.id, page: 2 } });
-    expect(buildView(present({ view: "no_match" }), store(), byId).view).toEqual({ kind: "status", status: "no-match" });
+    expect(buildView(present({ view: "no_match" }), store(), byId).view).toEqual({ kind: "status", status: "no-match", lead: "" });
+    const none = new ResultStore(7);
+    none.add({ tool: "find_candidates", input: { filters: { languages: [{ language: "Japanese" }] }, scope: "previous_answer" }, result: { matched: 0, total: 3, candidates: [] } });
+    expect(buildView(present({ view: "no_match" }), none, byId).view).toEqual({ kind: "status", status: "no-match", lead: "Of the previous 7 candidates, there are none who speak Japanese." });
     expect(buildView(present({ view: "out_of_scope", candidates: [{ id: LENA.id, page: 1, reason: "" }] }), store(), byId)).toMatchObject({ sources: [], corrections: ["1 candidate(s) dropped from a out_of_scope state"] });
     const insufficient = buildView(present({ view: "not_enough_information", candidates: [{ id: LENA.id, page: 1, reason: "" }] }), store(), byId);
-    expect(insufficient.view).toEqual({ kind: "status", status: "insufficient" });
+    expect(insufficient.view).toEqual({ kind: "status", status: "insufficient", lead: "" });
     expect(insufficient.sources).toEqual([{ candidateId: LENA.id, name: "Lena Novak", page: 1 }]);
   });
 });

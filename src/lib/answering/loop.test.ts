@@ -8,7 +8,7 @@ import { createBm25Index } from "@/lib/retrieval/bm25";
 import { TEST_INDEX } from "@/lib/retrieval/fixtures";
 import { createInMemoryStore } from "@/lib/vector/in-memory";
 import type { LoopRequest } from "./loop";
-import { EmptyAnswerError, runLoop, StepLimitError } from "./loop";
+import { EmptyAnswerError, runLoop, StepLimitError, stripTemplateTags } from "./loop";
 import { buildInstructions } from "./prompt";
 import type { ToolResult } from "./tools";
 import { createTools } from "./tools";
@@ -52,6 +52,7 @@ function request(overrides: Partial<LoopRequest> = {}) {
     onStep: (s) => events.push(`step:${s.step}:${s.finishReason}`),
     onToolCall: (c) => events.push(`call:${c.tool}:${c.ok ? "ok" : "error"}`),
     onRepair: () => events.push("repair"),
+    wantsText: () => false,
     ...overrides,
   };
   return { req, results, events };
@@ -81,6 +82,66 @@ describe("runLoop", () => {
     expect(result).toMatchObject({ text: "Hi! Ask me about your candidates.", steps: 1 });
     expect(result.present).toBeUndefined();
     expect(results).toEqual([]);
+  });
+
+  it("asks for the presentation when the model ends in text after a tool returned candidates", async () => {
+    const { req, events } = request();
+    const m = model(step("", [FIND]), step("Andrei Popescu and Elena Georgiou know Python."));
+    // The forced call goes through generateText with present as the tool choice.
+    let choice: unknown;
+    m.doGenerate = async (options) => {
+      choice = options.toolChoice;
+      return { content: [{ type: "tool-call", toolCallId: "p", toolName: "present", input: PRESENT.input }], finishReason: { unified: "tool-calls", raw: "x" }, usage: USAGE, warnings: [] };
+    };
+    const result = await runLoop(m, req);
+    // The app opens a list itself: the failed step's text is dropped.
+    expect(result).toMatchObject({ text: "", present: { view: "list" }, presentForced: true, steps: 3 });
+    expect(result.textRewritten).toBeUndefined();
+    expect(choice).toEqual({ type: "tool", toolName: "present" });
+    expect(events).toEqual(["tool:find_candidates", "call:find_candidates:ok", "step:0:tool-calls", "step:1:stop", "step:2:tool-calls"]);
+  });
+
+  it("re-asks the text in a sentence after a forced presentation when the answer needs words", async () => {
+    const { req, events } = request({ wantsText: () => true });
+    const m = model(step("", [FIND]), step('Lena Novak — Senior Frontend Engineer · Skills: React 7 yrs … Presenting: { "view": "list" }'));
+    m.doGenerate = async (options) =>
+      options.toolChoice?.type === "tool"
+        ? { content: [{ type: "tool-call", toolCallId: "p", toolName: "present", input: PRESENT.input }], finishReason: { unified: "tool-calls", raw: "x" }, usage: USAGE, warnings: [] }
+        : { content: [{ type: "text", text: "Lena Novak works at Kinetix Digital.\n</tool_call>" }], finishReason: { unified: "stop", raw: "x" }, usage: USAGE, warnings: [] };
+    const result = await runLoop(m, req);
+    expect(result).toMatchObject({ text: "Lena Novak works at Kinetix Digital.", present: { view: "list" }, presentForced: true, textRewritten: true, steps: 4 });
+    expect(events.filter((e) => e.startsWith("step:"))).toEqual(["step:0:tool-calls", "step:1:stop", "step:2:tool-calls", "step:3:stop"]);
+  });
+
+  it("asks for the words when the model presents a profile without any", async () => {
+    const { req, events } = request({ wantsText: () => true });
+    const get = { name: "get_candidates", input: JSON.stringify({ ids: ["lena-novak"] }) };
+    const profile = { name: "present", input: JSON.stringify({ view: "profile", candidates: [{ id: "lena-novak", page: 1, reason: "" }], skills: [] }) };
+    const m = model(step("", [get]), step("", [profile]));
+    m.doGenerate = async () => ({ content: [{ type: "text", text: "Lena Novak is a senior frontend engineer in Berlin." }], finishReason: { unified: "stop", raw: "x" }, usage: USAGE, warnings: [] });
+    const result = await runLoop(m, req);
+    expect(result).toMatchObject({ text: "Lena Novak is a senior frontend engineer in Berlin.", present: { view: "profile" }, textRewritten: true, steps: 3 });
+    expect(result.presentForced).toBeUndefined();
+    expect(events.filter((e) => e.startsWith("step:"))).toEqual(["step:0:tool-calls", "step:1:tool-calls", "step:2:stop"]);
+  });
+
+  it("strips the chat template's tool-call tags from the text", async () => {
+    const { req } = request();
+    const result = await runLoop(model(step("", [FIND]), step("Both know Python.\n\n</tool_call>", [PRESENT])), req);
+    expect(result.text).toBe("Both know Python.");
+    expect(stripTemplateTags("<tool_call>\n{}\n</tool_call>")).toBe("{}");
+  });
+
+  it("keeps the text when the forced presentation fails, and logs it", async () => {
+    const { req, events } = request();
+    const m = model(step("", [FIND]), step("Two know Python."));
+    m.doGenerate = async () => {
+      throw new Error("no tool support");
+    };
+    const result = await runLoop(m, req);
+    expect(result).toMatchObject({ text: "Two know Python.", steps: 2 });
+    expect(result.present).toBeUndefined();
+    expect(events).toContain("call:present:error");
   });
 
   it("stops at the step limit with a clear error, and reports an empty answer", async () => {

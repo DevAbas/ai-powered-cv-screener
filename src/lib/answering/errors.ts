@@ -15,7 +15,8 @@ export function errorEvent(error: unknown): AskEvent {
   else if (error instanceof StepLimitError) message = "I couldn't finish that search. Try again, or ask it another way.";
   else if (error instanceof EmptyAnswerError) message = "The model gave no answer. Try again.";
   else if (error instanceof ModelTimeoutError || (error instanceof Error && /timeout|timed out/i.test(error.name + error.message))) message = "That took too long. Try again.";
-  else if (errorStatus(error) === 429) message = "I'm getting too many requests right now. Try again in a minute, or choose another model.";
+  else if (errorStatus(error) === 402) message = "The model account has run out of credits.";
+  else if (errorStatus(error) === 429) message = "I'm getting too many requests right now. Try again in a minute.";
   else if ((errorStatus(error) ?? 0) >= 500) message = "The model is busy right now. Try again in a moment.";
   return { type: "error", message, retryable: true };
 }

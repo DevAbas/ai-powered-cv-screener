@@ -49,7 +49,18 @@ const FIND = { name: "find_candidates", input: JSON.stringify({ filters: { skill
 const PRESENT = { name: "present", input: JSON.stringify({ view: "list", candidates: [{ id: "andrei-popescu", page: 1, reason: "" }, { id: "elena-georgiou", page: 1, reason: "" }], skills: ["Python"] }) };
 const request = (question: string, history: AskRequest["history"] = []): AskRequest => ({ question, model: "primary", history });
 
-async function run(primary: MockLanguageModelV4, fallback: MockLanguageModelV4 = model(step("unused")), req = request("Who knows Python?"), controller = new AbortController()) {
+/** This phase's primary has no fallback; the fallback tests hand it the alternative's model as one. */
+const ALTERNATIVE = { ...getEntry("alternative"), enabled: true };
+const WITH_FALLBACK = { ...getEntry("primary"), fallback: { provider: ALTERNATIVE.provider, vendor: ALTERNATIVE.vendor, model: ALTERNATIVE.model } };
+const withFallback: AnswerDeps["entries"] = (id) => (id === "primary" ? WITH_FALLBACK : ALTERNATIVE);
+
+async function run(
+  primary: MockLanguageModelV4,
+  fallback: MockLanguageModelV4 = model(step("unused")),
+  req = request("Who knows Python?"),
+  controller = new AbortController(),
+  entries?: AnswerDeps["entries"],
+) {
   const events: AskEvent[] = [];
   const logs: RequestLog[] = [];
   const deps: AnswerDeps = {
@@ -60,6 +71,8 @@ async function run(primary: MockLanguageModelV4, fallback: MockLanguageModelV4 =
     breaker: new CircuitBreaker(),
     log: (record) => logs.push(record),
     requestId: () => "req-1",
+    retryJitterMs: 0,
+    ...(entries ? { entries } : {}),
   };
   await answerQuestion(req, (e) => events.push(e), deps, controller.signal);
   return { events, log: logs[0]! };
@@ -83,7 +96,7 @@ describe("answerQuestion", () => {
       text: "Both know Python.",
       view: { kind: "list", rows: [{ candidateId: "andrei-popescu" }, { candidateId: "elena-georgiou" }] },
       matched: { kind: "matched", count: 2, total: 3 },
-      answeredBy: { model: "primary", name: "Nemotron 3 Super", fellBack: false },
+      answeredBy: { model: "primary", name: "Gemini Flash-Lite", fellBack: false },
     });
     expect(answer?.type === "answer" && answer.sources.map((s) => s.candidateId)).toEqual(["andrei-popescu", "elena-georgiou"]);
     expect(AskEventSchema.safeParse(answer).success).toBe(true);
@@ -97,7 +110,16 @@ describe("answerQuestion", () => {
     });
     expect(log.toolCalls).toEqual([{ step: 0, tool: "find_candidates", input: { filters: { skills: [{ skill: "Python" }] }, scope: "whole_pool" }, ok: true, detail: "2 of 3 matched", ms: expect.any(Number) }]);
     expect(log.steps).toHaveLength(2);
-    expect(log.counters["openrouter:nvidia/nemotron-3-super-120b-a12b:free"]).toEqual({ success: 1, error: 0 });
+    expect(log.counters["google:gemini-3.5-flash-lite"]).toEqual({ success: 1, error: 0 });
+  });
+
+  it("drops the model's words on a count: the app's sentence is the answer", async () => {
+    const count = { name: "count_candidates", input: JSON.stringify({ filters: { skills: [{ skill: "Python" }] }, scope: "whole_pool" }) };
+    const presentCount = { name: "present", input: JSON.stringify({ view: "count", candidates: [], skills: ["Python"] }) };
+    const { events, log } = await run(model(step("", [count]), step("Two candidates know Python.", [presentCount])));
+    expect(events.some((e) => e.type === "delta")).toBe(false);
+    expect(events.at(-1)).toMatchObject({ type: "answer", text: "", view: { kind: "list", count: { matched: 2, total: 3 }, lead: "Out of 3 candidates, there are 2 with Python experience." } });
+    expect(log.presentation?.corrections).toContain("The model's text was dropped: a count is the app's sentence");
   });
 
   it("answers a greeting in text alone: no tool, no sources, nothing matched", async () => {
@@ -116,10 +138,35 @@ describe("answerQuestion", () => {
 
   it("hands over to the fallback when the primary is down, and says which model answered", async () => {
     const down = failing(new APICallError({ message: "HTTP 503", url: "https://example.com", requestBodyValues: {}, statusCode: 503 }));
-    const { events, log } = await run(down, model(step("", [FIND]), step("From the fallback.", [PRESENT])));
-    expect(events.at(-1)).toMatchObject({ type: "answer", text: "From the fallback.", answeredBy: { model: "primary", name: "Qwen3.8 27B", fellBack: true } });
-    expect(log.fallbacks).toHaveLength(1);
+    const { events, log } = await run(down, model(step("", [FIND]), step("From the fallback.", [PRESENT])), undefined, undefined, withFallback);
+    expect(events.at(-1)).toMatchObject({ type: "answer", text: "From the fallback.", answeredBy: { model: "primary", name: "Nemotron 3 Super", fellBack: true } });
+    // The 503 was retried once on the primary, then the fallback took over.
+    expect(log.modelFailures.map((f) => f.then)).toEqual(["retried", "fell back"]);
+    expect(log.modelFailures[1]).toMatchObject({ reason: expect.stringContaining("503"), to: expect.stringContaining("nemotron") });
     expect(log.model.fellBack).toBe(true);
+  });
+
+  it("retries the same model once after a 5xx, and logs a fallback that fails too", async () => {
+    const flaky = model(step("", [FIND]), step("Second try.", [PRESENT]));
+    const stream = flaky.doStream;
+    let calls = 0;
+    flaky.doStream = async (options) => {
+      if (calls++ === 0) throw new APICallError({ message: "HTTP 503", url: "https://example.com", requestBodyValues: {}, statusCode: 503 });
+      return stream(options);
+    };
+    const { events, log } = await run(flaky);
+    expect(events.at(-1)).toMatchObject({ type: "answer", text: "Second try.", answeredBy: { fellBack: false } });
+    expect(log.modelFailures).toMatchObject([{ then: "retried" }]);
+
+    const down = failing(new APICallError({ message: "HTTP 503", url: "https://example.com", requestBodyValues: {}, statusCode: 503 }));
+    const limited = failing(new APICallError({ message: "HTTP 429", url: "https://example.com", requestBodyValues: {}, statusCode: 429 }));
+    const failed = await run(down, limited, undefined, undefined, withFallback);
+    expect(failed.events.at(-1)).toMatchObject({ type: "error" });
+    expect(failed.log.modelFailures.map((f) => f.then)).toEqual(["retried", "fell back", "gave up"]);
+    // Without a fallback, this phase's primary ends the request after its retry.
+    const alone = await run(failing(new APICallError({ message: "HTTP 503", url: "https://example.com", requestBodyValues: {}, statusCode: 503 })));
+    expect(alone.events.at(-1)).toMatchObject({ type: "error", message: "The model is busy right now. Try again in a moment." });
+    expect(alone.log.modelFailures.map((f) => f.then)).toEqual(["retried", "gave up"]);
   });
 
   it("ends without an event when the request is aborted, and rejects a model that is not offered", async () => {

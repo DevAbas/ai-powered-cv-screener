@@ -21,13 +21,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Two skills asked about: their years from each CV, most React first. */
+/** Two skills asked about: the app's sentence, then three rows and "Show all 4". */
 export const Skills: Story = {};
 /** The model's order, numbered, with its reason for each. */
 export const Ranked: Story = { args: { view: list(ANSWERS.rank.view) } };
-/** One skill, the notes only where they add something. */
+/** A count with its list: the sentence carries the count. */
 export const Count: Story = { args: { view: list(ANSWERS.count.view) } };
-/** A single fact: one row, no caption. */
+/** A count without its list: the sentence alone. */
+export const CountOnly: Story = { args: { view: list(ANSWERS.countOnly.view) } };
+/** A single fact: one row, no sentence. */
 export const OneRow: Story = { args: { view: list(ANSWERS.fact.view) } };
 /** Without PDFs, each card says the CV is not available. */
 export const WithoutPdfs: Story = { args: { sourceHref: undefined } };

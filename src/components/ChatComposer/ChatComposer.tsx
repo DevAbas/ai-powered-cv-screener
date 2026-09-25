@@ -1,8 +1,11 @@
-import { ArrowUp, AudioLines, Ellipsis, Globe, Square } from "lucide-react";
+import { ArrowUp, AudioLines, Square } from "lucide-react";
 import type { FormEvent, KeyboardEvent } from "react";
 import type { AnswerModelId } from "@/contracts/ask";
+import type { ModelEntry } from "@/lib/ai/registry";
+import { answerEntries } from "@/lib/ai/registry";
 import { IconButton } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
+import { Tooltip } from "@/components/ui/Tooltip";
 import { cx } from "@/lib/recipe";
 import { ModelSelect } from "./ModelSelect";
 
@@ -15,6 +18,11 @@ export interface ChatComposerProps {
   onStop: () => void;
   model: AnswerModelId;
   onModelChange: (id: AnswerModelId) => void;
+  /**
+   * The answer models offered; the model chip appears only when there is a choice.
+   * @default answerEntries()
+   */
+  models?: readonly ModelEntry[];
   autoFocus?: boolean;
   /**
    * The field's placeholder; the empty state passes an example question.
@@ -24,7 +32,9 @@ export interface ChatComposerProps {
 }
 
 /**
- * DESIGN.md, ChatComposer (`composer` token): one text field above a row of
+ * DESIGN.md, ChatComposer (`composer` token). With one model offered, one
+ * row: the field with the actions at its right end, aligned to its last
+ * line; with a choice, the field above a row of the model chip and the
  * actions. The field grows with the question up to `max-h-48`, then scrolls.
  */
 export function ChatComposer({
@@ -35,10 +45,12 @@ export function ChatComposer({
   onStop,
   model,
   onModelChange,
+  models = answerEntries(),
   autoFocus,
   placeholder = "Ask about the candidate pool",
 }: ChatComposerProps) {
   const question = value.trim();
+  const choice = models.length > 1;
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -53,6 +65,44 @@ export function ChatComposer({
     }
   }
 
+  const field = (
+    <Textarea
+      variant="plain"
+      autoResize
+      // One line with `py-1` is exactly the actions' height (1rem × 1.5 + 0.5rem = 2rem), so text and placeholder sit centred on them.
+      className={cx("max-h-48", choice ? "mb-2.5" : "min-w-0 flex-1 py-1")}
+      onKeyDown={handleKeyDown}
+      aria-label="Question"
+      placeholder={placeholder}
+      autoComplete="off"
+      autoFocus={autoFocus}
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
+    />
+  );
+
+  const actions = (
+    <div className="flex shrink-0 items-center gap-1">
+      {/* A disabled button gets no pointer events: `pointer-events-none` lets the tooltip's wrapper see the hover. */}
+      <Tooltip content="Voice mode coming soon…">
+        {(trigger) => (
+          <IconButton {...trigger} aria-label="Voice input" variant="ghost" size="sm" disabled className="pointer-events-none">
+            <AudioLines aria-hidden />
+          </IconButton>
+        )}
+      </Tooltip>
+      {running ? (
+        <IconButton key="stop" variant="primary" size="sm" aria-label="Stop" onClick={onStop}>
+          <Square aria-hidden className="size-4 fill-current" />
+        </IconButton>
+      ) : (
+        <IconButton key="send" type="submit" variant="primary" size="sm" aria-label="Send" disabled={!question}>
+          <ArrowUp aria-hidden />
+        </IconButton>
+      )}
+    </div>
+  );
+
   return (
     <form
       onSubmit={submit}
@@ -61,43 +111,24 @@ export function ChatComposer({
         "has-[textarea:focus-visible]:ring-2 has-[textarea:focus-visible]:ring-primary-outline",
       )}
     >
-      <Textarea
-        variant="plain"
-        autoResize
-        className="mb-2.5 max-h-48"
-        onKeyDown={handleKeyDown}
-        aria-label="Question"
-        placeholder={placeholder}
-        autoComplete="off"
-        autoFocus={autoFocus}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-      />
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-1">
-          <ModelSelect value={model} onChange={onModelChange} />
-          <IconButton aria-label="Search the web" variant="ghost" size="sm" disabled>
-            <Globe aria-hidden />
-          </IconButton>
-          <IconButton aria-label="More options" variant="ghost" size="sm" disabled>
-            <Ellipsis aria-hidden />
-          </IconButton>
+      {choice ? (
+        <>
+          {field}
+          <div className="flex items-center justify-between gap-2">
+            {/* `min-w-0`: the chip may shrink and cut its name on narrow screens */}
+            <div className="flex min-w-0 items-center">
+              <ModelSelect value={model} onChange={onModelChange} entries={models} />
+            </div>
+            {actions}
+          </div>
+        </>
+      ) : (
+        // The actions stay on the field's last line as it grows.
+        <div className="flex items-end gap-2">
+          {field}
+          {actions}
         </div>
-        <div className="flex items-center gap-1">
-          <IconButton aria-label="Voice input" variant="ghost" size="sm" disabled>
-            <AudioLines aria-hidden />
-          </IconButton>
-          {running ? (
-            <IconButton key="stop" variant="primary" size="sm" aria-label="Stop" onClick={onStop}>
-              <Square aria-hidden className="size-4 fill-current" />
-            </IconButton>
-          ) : (
-            <IconButton key="send" type="submit" variant="primary" size="sm" aria-label="Send" disabled={!question}>
-              <ArrowUp aria-hidden />
-            </IconButton>
-          )}
-        </div>
-      </div>
+      )}
     </form>
   );
 }

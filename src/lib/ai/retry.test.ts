@@ -57,7 +57,7 @@ describe("isRetryable", () => {
 });
 
 describe("isDailyQuotaError", () => {
-  it("recognises OpenRouter's free-models-per-day 429 only", () => {
+  it("recognises OpenRouter's free-models-per-day 429 and a Gemini per-day quota, not a per-minute one", () => {
     const daily = new APICallError({
       message: "Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day",
       url: "https://openrouter.ai/api/v1/chat/completions",
@@ -65,6 +65,16 @@ describe("isDailyQuotaError", () => {
       statusCode: 429,
     });
     expect(isDailyQuotaError(daily)).toBe(true);
+    const gemini = (quotaId: string) =>
+      new APICallError({
+        message: "You exceeded your current quota, please check your plan and billing details.",
+        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:streamGenerateContent",
+        requestBodyValues: {},
+        statusCode: 429,
+        responseBody: JSON.stringify({ error: { code: 429, status: "RESOURCE_EXHAUSTED", details: [{ violations: [{ quotaId }] }] } }),
+      });
+    expect(isDailyQuotaError(gemini("GenerateRequestsPerDayPerProjectPerModel-FreeTier"))).toBe(true);
+    expect(isDailyQuotaError(gemini("GenerateRequestsPerMinutePerProjectPerModel-FreeTier"))).toBe(false);
     expect(isDailyQuotaError(apiError(429))).toBe(false);
     expect(isDailyQuotaError(apiError(503))).toBe(false);
   });

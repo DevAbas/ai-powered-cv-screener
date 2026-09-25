@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { AnswerView } from "@/contracts/view";
 import { storySourceHref } from "@/mocks/story";
-import { ANDREI } from "@/lib/retrieval/fixtures";
 import { ANSWERS } from "@/mocks/answers";
 import { AnswerProfile } from "./AnswerProfile";
 
@@ -16,9 +15,5 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** With leadership and a certification, each in its own section. */
+/** The name, the CV and one line; the sentences above it come from the answer. */
 export const Basic: Story = {};
-/** Without them, those sections are left out. */
-export const Short: Story = {
-  args: { view: { kind: "profile", candidate: { candidateId: ANDREI.id, profile: ANDREI.profile, skills: [], page: 1 } } },
-};

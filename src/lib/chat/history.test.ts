@@ -33,14 +33,14 @@ describe("historyFrom", () => {
         answer: answerAsText(ANSWERS.filter.text, ANSWERS.filter.view),
         candidateIds: ["jane-doe", "lena-novak", "sofia-almeida", "leon-fischer"],
       },
-      { question: "Question d", answer: ANSWERS.empty.text, candidateIds: [] },
+      { question: "Question d", answer: `${ANSWERS.empty.text}\n\n${ANSWERS.empty.view?.kind === "status" ? ANSWERS.empty.view.lead : ""}`, candidateIds: [] },
     ]);
-    expect(history[0]?.answer).toContain("- Jane Doe — Frontend Lead — React 8 yrs — TypeScript 8 yrs — Frontend Lead at Emerald Paytech (CV p. 1)");
+    expect(history[0]?.answer).toContain("There are 4 candidates with React and TypeScript experience. Here are their details.\n- Jane Doe — Frontend Lead — React 8 yrs — TypeScript 8 yrs (CV p. 1)");
   });
 
   it("keeps an answer that is only a view, as its lines", () => {
     const [turn] = historyFrom([exchange("a", { text: "", view: ANSWERS.count.view, sources: ANSWERS.count.sources })]);
-    expect(turn?.answer.startsWith("6 of 30 candidates · most Python experience first\n- Jonas Weber")).toBe(true);
+    expect(turn?.answer.startsWith("Out of 30 candidates, there are 6 with Python experience. Here are their details.\n- Jonas Weber")).toBe(true);
   });
 
   it("shortens a long answer to what the request allows", () => {

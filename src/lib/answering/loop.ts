@@ -12,7 +12,13 @@ import type { AnswerTools } from "./tools";
 // fails its schema is repaired once by re-asking the same model
 // (`repairToolCall`, AI SDK docs); if that fails, the SDK returns the error
 // to the model as a tool result in the next step. Text is kept per step and
-// only the final step's text is the answer.
+// only the final step's text is the answer, with the chat template's
+// tool-call tags stripped. Ending in text after a tool returned candidates
+// is not finished: one more call, with `present` as the tool choice, asks
+// for the presentation. When the view needs words (a profile, a
+// comparison) and the model gave none, or gave them only in that failed
+// step, one call asks for them; a list or count is opened by the app
+// itself (PLAN, Reliability).
 
 export interface LoopRequest {
   instructions: string;
@@ -25,11 +31,17 @@ export interface LoopRequest {
   onStep: (step: StepLog) => void;
   onToolCall: (call: ToolCallLog) => void;
   onRepair: () => void;
+  /** After a forced presentation: whether the answer still needs the model's text (a profile, a comparison) or the app opens the view (a list, a count). */
+  wantsText: () => boolean;
 }
 
 export interface LoopResult {
   text: string;
   present?: PresentInput;
+  /** The model ended in text after tools ran; the presentation came from the forced call. */
+  presentForced?: true;
+  /** The text written in that failed step was replaced by a re-asked one. */
+  textRewritten?: true;
   modelId?: string;
   /** The upstream provider OpenRouter routed to, from its usage accounting. */
   provider?: string;
@@ -54,11 +66,31 @@ export class StepLimitError extends Error {
 
 const DATA_TOOLS = new Set(["find_candidates", "count_candidates", "get_candidates", "search_cv_text"]);
 
+/** Sent when the model ended in text after tools ran: the answer is about candidates and needs its presentation. */
+const PRESENT_NUDGE =
+  "Your answer is about candidates, so it needs its presentation. Call present now: the view, the candidates you named by id with the pages the tool results cite, and the skills the question is about. Write no text.";
+
+/** Sent when the view needs words the model did not give: after a forced presentation, or a wordless profile or comparison. */
+const REWRITE_NUDGE =
+  "The presentation is done. Now write only the answer for the recruiter: two or three plain sentences on what was asked, a summary if a summary was asked, otherwise the fact, experience or difference the question is about. No lists, no profile dump, no JSON, no tool calls.";
+
+/**
+ * The tool-call markers of the pinned models' chat templates (Nemotron 3
+ * and Qwen3 wrap a call in `<tool_call>…</tool_call>`, per their model
+ * cards). A provider that extracts the call can leak the tags into the text.
+ */
+const TEMPLATE_TAGS = ["<tool_call>", "</tool_call>"];
+
+export function stripTemplateTags(text: string): string {
+  return TEMPLATE_TAGS.reduce((cleaned, tag) => cleaned.replaceAll(tag, ""), text).trim();
+}
+
 export async function runLoop(model: LanguageModel, request: LoopRequest): Promise<LoopResult> {
   const { tools, signal } = request;
   let streamError: unknown;
   const toolStarts = new Map<string, number>();
   let stepNumber = 0;
+  let dataResults = 0;
 
   const result = streamText({
     model,
@@ -99,11 +131,13 @@ export async function runLoop(model: LanguageModel, request: LoopRequest): Promi
     onToolExecutionEnd: ({ toolCall, toolOutput }) => {
       const started = toolStarts.get(toolCall.toolCallId);
       const ms = started === undefined ? undefined : Math.round(performance.now() - started);
+      const ok = toolOutput.type === "tool-result";
+      if (ok && DATA_TOOLS.has(toolCall.toolName)) dataResults += 1;
       request.onToolCall({
         step: stepNumber,
         tool: toolCall.toolName,
         input: toolCall.input,
-        ok: toolOutput.type === "tool-result",
+        ok,
         detail: toolOutput.type === "tool-result" ? summarize(toolCall.toolName, toolOutput.output) : brief(toolOutput.error),
         ms,
       });
@@ -122,6 +156,7 @@ export async function runLoop(model: LanguageModel, request: LoopRequest): Promi
   let stepHadDataTool = false;
   let finalText: string | undefined;
   let present: PresentInput | undefined;
+  let presentCallId = "";
   let steps = 0;
 
   for await (const part of result.stream) {
@@ -138,7 +173,10 @@ export async function runLoop(model: LanguageModel, request: LoopRequest): Promi
         break;
       case "tool-call":
         if (part.toolName === "present") {
-          if (!part.invalid) present = part.input as PresentInput;
+          if (!part.invalid) {
+            present = part.input as PresentInput;
+            presentCallId = part.toolCallId;
+          }
         } else {
           stepHadDataTool = true;
           if (!part.invalid) request.onTool(part.toolName, part.input);
@@ -164,8 +202,93 @@ export async function runLoop(model: LanguageModel, request: LoopRequest): Promi
   const provider = finalStep.providerMetadata?.openrouter as { provider?: unknown } | undefined;
   const outcome = { modelId: finalStep.response.modelId, provider: typeof provider?.provider === "string" ? provider.provider : undefined, steps };
 
-  if (present) return { text: finalText ?? "", present, ...outcome };
+  if (present) {
+    const text = stripTemplateTags(finalText ?? "");
+    // The view needs words and the model gave none: one call asks for them.
+    if (!text && request.wantsText()) {
+      const rewritten = await rewriteText(model, request, [...(await result.responseMessages), presentDone(presentCallId)], stepNumber);
+      if (rewritten !== undefined) return { text: rewritten, present, textRewritten: true, ...outcome, steps: steps + 1 };
+    }
+    return { text, present, ...outcome };
+  }
   if (finalText === undefined) throw new StepLimitError(steps);
+  if (dataResults > 0) {
+    // Tools returned candidates and the model ended in text: the CVs and their
+    // sources come only with a presentation, so one call asks for it, after
+    // the loop's accumulated response messages (`responseMessages`, AI SDK 7).
+    const prior = await result.responseMessages;
+    const forced = await forcePresent(model, request, prior, stepNumber);
+    if (forced) {
+      // The text of the failed step is not the answer: a profile's is re-asked in a few sentences; a list is opened by the app.
+      const rewritten = request.wantsText() ? await rewriteText(model, request, [...prior, ...forced.messages], stepNumber + 1) : undefined;
+      const text = rewritten ?? (request.wantsText() ? stripTemplateTags(finalText) : "");
+      return {
+        text,
+        present: forced.present,
+        presentForced: true,
+        ...(rewritten === undefined ? {} : { textRewritten: true as const }),
+        ...outcome,
+        modelId: forced.modelId ?? outcome.modelId,
+        steps: steps + 1 + (rewritten === undefined ? 0 : 1),
+      };
+    }
+  }
   if (!finalText.trim()) throw new EmptyAnswerError();
-  return { text: finalText, ...outcome };
+  return { text: stripTemplateTags(finalText), ...outcome };
+}
+
+/**
+ * One call with `present` as the tool choice, after the conversation so far
+ * and the model's own text. Undefined when the model does not comply or the
+ * call fails; the log records it and the text stands as the answer.
+ */
+async function forcePresent(model: LanguageModel, request: LoopRequest, priorMessages: ModelMessage[], step: number): Promise<{ present: PresentInput; modelId?: string; messages: ModelMessage[] } | undefined> {
+  try {
+    const forced = await generateText({
+      model,
+      instructions: request.instructions,
+      messages: [...request.messages, ...priorMessages, { role: "user", content: PRESENT_NUDGE }],
+      tools: request.tools,
+      toolChoice: { type: "tool", toolName: "present" },
+      maxRetries: 0,
+      abortSignal: request.signal,
+    });
+    request.onStep({ step, finishReason: forced.finishReason, modelId: forced.response.modelId, usage: { inputTokens: forced.usage.inputTokens, outputTokens: forced.usage.outputTokens } });
+    const call = forced.toolCalls.find((candidate) => candidate.toolName === "present");
+    if (!call) {
+      request.onToolCall({ step, tool: "present", input: undefined, ok: false, detail: "The forced step made no present call" });
+      return undefined;
+    }
+    return { present: call.input as PresentInput, modelId: forced.response.modelId, messages: [...forced.responseMessages, presentDone(call.toolCallId)] };
+  } catch (error) {
+    if (request.signal.aborted) throw error;
+    request.onToolCall({ step, tool: "present", input: undefined, ok: false, detail: brief(error) });
+    return undefined;
+  }
+}
+
+/** `present` has no execute: the conversation gets its result here, or a later call is refused for the missing result. */
+function presentDone(toolCallId: string): ModelMessage {
+  return { role: "tool", content: [{ type: "tool-result", toolCallId, toolName: "present", output: { type: "text", value: "The presentation is done." } }] };
+}
+
+/** One call with no tools allowed, for the answer text alone; undefined when it fails or says nothing, which the log records. */
+async function rewriteText(model: LanguageModel, request: LoopRequest, priorMessages: ModelMessage[], step: number): Promise<string | undefined> {
+  try {
+    const rewritten = await generateText({
+      model,
+      instructions: request.instructions,
+      messages: [...request.messages, ...priorMessages, { role: "user", content: REWRITE_NUDGE }],
+      tools: request.tools,
+      toolChoice: "none",
+      maxRetries: 0,
+      abortSignal: request.signal,
+    });
+    request.onStep({ step, finishReason: rewritten.finishReason, modelId: rewritten.response.modelId, usage: { inputTokens: rewritten.usage.inputTokens, outputTokens: rewritten.usage.outputTokens } });
+    return stripTemplateTags(rewritten.text) || undefined;
+  } catch (error) {
+    if (request.signal.aborted) throw error;
+    request.onToolCall({ step, tool: "present", input: undefined, ok: false, detail: `Text rewrite: ${brief(error)}` });
+    return undefined;
+  }
 }

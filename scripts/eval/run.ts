@@ -2,7 +2,7 @@
 // per model, and scores them against the thresholds. Every run makes model
 // calls: state the estimate first (`--dry-run`) and get it approved.
 //
-//   npm run eval -- --dry-run                       the estimate and the remaining daily allowance
+//   npm run eval -- --dry-run                       the estimate, its cost and the remaining credits
 //   npm run eval                                    every offered model, every question
 //   npm run eval -- --model primary --only q01,q19  one model, a few questions
 //   npm run eval -- --repeat 2                      each question twice
@@ -34,7 +34,7 @@ nextEnv.loadEnvConfig(process.cwd());
 
 /** Model requests a question takes on average: tool steps, then the answer (PLAN, Retrieval and answering: steps). */
 export const REQUESTS_PER_QUESTION = 2.5;
-/** Pause between questions: OpenRouter's free tier allows 20 requests a minute. */
+/** Pause between questions, well under OpenRouter's rate limits. */
 const PAUSE_MS = 3_500;
 export const REPORT_DIR = path.join("data", "eval");
 
@@ -129,19 +129,46 @@ function parseArgs(argv: string[]) {
   return { models, questions, repeat, dryRun: argv.includes("--dry-run") };
 }
 
-/** The account's key status from OpenRouter (API reference, limits), for the remaining daily allowance. */
-async function keyStatus(): Promise<string> {
+/** Tokens per model request on the answer loop, from the request log (2026-09-25): the mission with the directory, and a short answer. */
+const INPUT_TOKENS_PER_REQUEST = 12_000;
+const OUTPUT_TOKENS_PER_REQUEST = 150;
+
+/** The account's credits (OpenRouter API reference: GET /api/v1/credits), for the remaining balance. */
+async function creditStatus(): Promise<string> {
   const key = process.env.OPENROUTER_API_KEY;
-  if (!key) return "OPENROUTER_API_KEY is not set; cannot read the remaining allowance.";
+  if (!key) return "OPENROUTER_API_KEY is not set; cannot read the remaining credits.";
   try {
-    const response = await fetch("https://openrouter.ai/api/v1/key", { headers: { Authorization: `Bearer ${key}` } });
-    if (!response.ok) return `OpenRouter key status: HTTP ${response.status}`;
-    const json = (await response.json()) as { data?: Record<string, unknown> };
-    const data = json.data ?? {};
-    const picked = Object.fromEntries(Object.entries(data).filter(([k]) => /usage|limit|free|rate/i.test(k)));
-    return `OpenRouter key status: ${JSON.stringify(picked)}`;
+    const response = await fetch("https://openrouter.ai/api/v1/credits", { headers: { Authorization: `Bearer ${key}` } });
+    if (!response.ok) return `OpenRouter credits: HTTP ${response.status}`;
+    const { data } = (await response.json()) as { data?: { total_credits?: unknown; total_usage?: unknown } };
+    const credits = data?.total_credits;
+    const usage = data?.total_usage;
+    if (typeof credits !== "number" || typeof usage !== "number") return `OpenRouter credits: ${JSON.stringify(data)}`;
+    return `OpenRouter credits: $${(credits - usage).toFixed(2)} remaining of $${credits.toFixed(2)} bought`;
   } catch (error) {
-    return `OpenRouter key status unavailable: ${shortError(error)}`;
+    return `OpenRouter credits unavailable: ${shortError(error)}`;
+  }
+}
+
+/** The run's cost per model, from OpenRouter's public prices (GET /api/v1/models) and the tokens a request takes. */
+async function estimatedCost(models: readonly AnswerModelId[], requestsPerModel: number): Promise<string> {
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/models");
+    if (!response.ok) return `prices unavailable (HTTP ${response.status})`;
+    const { data } = (await response.json()) as { data: { id: string; pricing?: { prompt?: string; completion?: string } }[] };
+    const lines = models.map((id) => {
+      const entry = answerEntry(id);
+      const model = entry?.model ?? id;
+      // The Gemini API is a quota, not a price list: free tier about 1,000 requests a day per model (Gemini API rate limits), or billed per token.
+      if (entry?.provider === "google") return `${model}: Gemini API quota (free tier about 1,000 requests a day per model, or billed per token)`;
+      const pricing = data.find((listed) => listed.id === model)?.pricing;
+      if (!pricing) return `${model}: no price listed`;
+      const perRequest = INPUT_TOKENS_PER_REQUEST * Number(pricing.prompt ?? 0) + OUTPUT_TOKENS_PER_REQUEST * Number(pricing.completion ?? 0);
+      return `${model} ≈ $${(perRequest * requestsPerModel).toFixed(2)}`;
+    });
+    return `estimated cost: ${lines.join("; ")}`;
+  } catch (error) {
+    return `prices unavailable: ${shortError(error)}`;
   }
 }
 
@@ -149,7 +176,8 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   const requests = Math.ceil(args.questions.length * args.repeat * REQUESTS_PER_QUESTION);
   console.log(`eval: ${args.questions.length} question(s) × ${args.repeat} × ${args.models.length} model(s) ≈ ${requests * args.models.length} model requests (${REQUESTS_PER_QUESTION} per question)`);
-  console.log(await keyStatus());
+  console.log(await estimatedCost(args.models, requests));
+  if (args.models.some((id) => answerEntry(id)?.provider === "openrouter")) console.log(await creditStatus());
   if (args.dryRun) return;
 
   const entries = readIndexEntries();

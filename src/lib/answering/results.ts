@@ -13,6 +13,14 @@ export class ResultStore {
   private count: { count: number; total: number } | undefined;
   private matched: { matched: number; total: number } | undefined;
   private read = 0;
+  /** The last filter or count call, the one an opening sentence describes. */
+  lastFilter: Extract<ToolResult, { tool: "find_candidates" | "count_candidates" }> | undefined;
+  /** The last filter call: a plain list holds every candidate it matched. */
+  lastFind: Extract<ToolResult, { tool: "find_candidates" }> | undefined;
+  lastSearch: Extract<ToolResult, { tool: "search_cv_text" }> | undefined;
+
+  /** @param previousCount the candidates of the previous answer, the size a follow-up narrows. */
+  constructor(readonly previousCount = 0) {}
 
   add(result: ToolResult): void {
     this.results.push(result);
@@ -24,14 +32,17 @@ export class ResultStore {
     };
     switch (result.tool) {
       case "find_candidates":
-        this.matched = { matched: result.result.matched, total: result.result.total };
+        this.lastFilter = result;
+        this.lastFind = result;
+        this.matched = { matched: result.result.matched, total: this.scopeSize(result.input.scope, result.result.total) };
         for (const candidate of result.result.candidates) {
           if (candidate.evidence.length === 0) cite(candidate.id, 1);
           for (const evidence of candidate.evidence) cite(candidate.id, evidence.page);
         }
         break;
       case "count_candidates":
-        this.count = result.result;
+        this.lastFilter = result;
+        this.count = { count: result.result.count, total: this.scopeSize(result.input.scope, result.result.total) };
         break;
       case "get_candidates":
         this.read += result.result.length;
@@ -41,9 +52,15 @@ export class ResultStore {
         }
         break;
       case "search_cv_text":
+        this.lastSearch = result;
         for (const hit of result.result) cite(hit.id, hit.page);
         break;
     }
+  }
+
+  /** What a filter searched: the pool, or the previous answer for a follow-up. */
+  private scopeSize(scope: "whole_pool" | "previous_answer", poolSize: number): number {
+    return scope === "previous_answer" ? this.previousCount : poolSize;
   }
 
   /** The candidates any tool returned, in order. */

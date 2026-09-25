@@ -78,13 +78,13 @@ export const GOLDEN_QUESTIONS: readonly GoldenQuestion[] = [
     id: "q11",
     kind: "exact",
     question: "Which candidate graduated from UPC?",
-    expect: { view: "list", candidates: (seeds) => ids(seeds, (s) => institutions(s).includes("Universitat Politècnica de Catalunya")), section: "education" },
+    expect: { view: "profile", candidates: (seeds) => ids(seeds, (s) => institutions(s).includes("Universitat Politècnica de Catalunya")), section: "education" },
   },
   {
     id: "q12",
     kind: "exact",
     question: "Who studied at Trinity College Dublin?",
-    expect: { view: "list", candidates: (seeds) => ids(seeds, (s) => institutions(s).includes("Trinity College Dublin")), section: "education" },
+    expect: { view: "profile", candidates: (seeds) => ids(seeds, (s) => institutions(s).includes("Trinity College Dublin")), section: "education" },
   },
   {
     id: "q13",
@@ -123,7 +123,7 @@ export const GOLDEN_QUESTIONS: readonly GoldenQuestion[] = [
     kind: "exact",
     question: "Where did Lena work last?",
     expect: {
-      view: ["list", "profile"],
+      view: "profile",
       candidates: () => ["lena-novak"],
       section: "experience",
       textIncludes: (seeds) => [companies(seeds.get("lena-novak")!)[0] ?? ""],
@@ -153,8 +153,8 @@ export const GOLDEN_QUESTIONS: readonly GoldenQuestion[] = [
   { id: "q24", kind: "exact", question: "Show all CVs", expect: { view: "list", candidates: allIds } },
   { id: "q25", kind: "exact", question: "show my all cvs", expect: { view: "list", candidates: allIds } },
   // Lookup by role (10)
-  { id: "q26", kind: "exact", question: "Get the CV of the security role", expect: { view: ["list", "profile"], candidates: (seeds) => ids(seeds, (s) => s.role === "security") } },
-  { id: "q27", kind: "exact", question: "Who is the mobile engineer?", expect: { view: ["list", "profile"], candidates: (seeds) => ids(seeds, (s) => s.role === "mobile") } },
+  { id: "q26", kind: "exact", question: "Get the CV of the security role", expect: { view: "profile", candidates: (seeds) => ids(seeds, (s) => s.role === "security") } },
+  { id: "q27", kind: "exact", question: "Who is the mobile engineer?", expect: { view: "profile", candidates: (seeds) => ids(seeds, (s) => s.role === "mobile") } },
   // Greeting and help (12)
   { id: "q28", kind: "text", question: "hey", expect: { view: "text" } },
   { id: "q29", kind: "text", question: "What can you do?", expect: { view: "text" } },
@@ -213,7 +213,7 @@ export const GOLDEN_QUESTIONS: readonly GoldenQuestion[] = [
     id: "q37",
     kind: "exact",
     question: "Who worked at Kinetix Digital?",
-    expect: { view: "list", candidates: (seeds) => ids(seeds, (s) => companies(s).includes("Kinetix Digital")), section: "experience" },
+    expect: { view: "profile", candidates: (seeds) => ids(seeds, (s) => companies(s).includes("Kinetix Digital")), section: "experience" },
   },
   {
     id: "q38",

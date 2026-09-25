@@ -3,8 +3,9 @@ import type { AnswerView } from "@/contracts/view";
 import { ANDREI, ELENA } from "@/lib/retrieval/fixtures";
 import { answerAsText, listCaption, profileFacts, skillLabel, statusText, viewLines } from "./answer-text";
 
-const list = (ranked: boolean, skills: string[], rows: number): Extract<AnswerView, { kind: "list" }> => ({
+const list = (ranked: boolean, skills: string[], rows: number, lead = ""): Extract<AnswerView, { kind: "list" }> => ({
   kind: "list",
+  lead,
   ranked,
   skills,
   rows: Array.from({ length: rows }, (_, i) => ({
@@ -26,17 +27,11 @@ describe("skillLabel", () => {
 });
 
 describe("listCaption", () => {
-  it("counts the rows and says their order", () => {
-    expect(listCaption(list(false, ["Python"], 16))).toBe("16 candidates · most Python experience first");
+  it("is the app's sentence when there is one, the row count for a ranking, and nothing otherwise", () => {
+    expect(listCaption(list(false, ["Python"], 16, "There are 16 candidates with Python experience. Here are their details."))).toBe("There are 16 candidates with Python experience. Here are their details.");
     expect(listCaption(list(true, [], 3))).toBe("3 candidates · best fit first");
-    expect(listCaption(list(false, [], 2))).toBe("2 candidates");
-    expect(listCaption(list(false, ["Python"], 1))).toBeUndefined();
-  });
-
-  it("says the exact count when there is one, with or without rows", () => {
-    expect(listCaption({ ...list(false, ["Python"], 2), count: { matched: 19, total: 30 } })).toBe("19 of 30 candidates · most Python experience first");
-    expect(listCaption({ ...list(false, [], 0), count: { matched: 19, total: 30 } })).toBe("19 of 30 candidates");
-    expect(listCaption({ ...list(false, [], 1), count: { matched: 1, total: 30 } })).toBe("1 of 30 candidates");
+    expect(listCaption(list(false, [], 2))).toBeUndefined();
+    expect(listCaption(list(true, ["Python"], 1))).toBeUndefined();
   });
 });
 
@@ -51,15 +46,22 @@ describe("profileFacts", () => {
 });
 
 describe("answerAsText", () => {
-  it("copies the text, then the view as lines with each CV's page", () => {
-    expect(answerAsText("Two stand out.", list(false, ["Python"], 2))).toBe(
-      "Two stand out.\n\n2 candidates · most Python experience first\n- Candidate 0 — Data Engineer — Python 10 yrs — Leads the data platform (CV p. 1)\n- Candidate 1 — Data Engineer — Python 9 yrs (CV p. 1)",
+  it("copies the text, then the view as lines led by the app's sentence, with each CV's page", () => {
+    expect(answerAsText("Two stand out.", list(false, ["Python"], 2, "There are 2 candidates with Python experience."))).toBe(
+      "Two stand out.\n\nThere are 2 candidates with Python experience.\n- Candidate 0 — Data Engineer — Python 10 yrs — Leads the data platform (CV p. 1)\n- Candidate 1 — Data Engineer — Python 9 yrs (CV p. 1)",
     );
+  });
+
+  it("opens a profile with the app's sentence when the model wrote none, then its line", () => {
+    const view = { kind: "profile" as const, candidate: { candidateId: ANDREI.id, profile: ANDREI.profile, skills: [], page: 1 }, lead: "There is 1 candidate in a backend role. Here is their CV." };
+    expect(answerAsText("", view)).toBe(`There is 1 candidate in a backend role. Here is their CV.\n\nAndrei Popescu — ${profileFacts.summary(ANDREI.profile)} (CV p. 1)`);
+    expect(answerAsText("Andrei leads the backend.", view)).toBe(`Andrei leads the backend.\n\nAndrei Popescu — ${profileFacts.summary(ANDREI.profile)} (CV p. 1)`);
   });
 
   it("numbers a ranking, and copies a view-only answer or a state without text", () => {
     expect(viewLines(list(true, [], 2))).toEqual(["2 candidates · best fit first", "1. Candidate 0 — Data Engineer — Leads the data platform (CV p. 1)", "2. Candidate 1 — Data Engineer (CV p. 1)"]);
-    expect(answerAsText("", { kind: "status", status: "no-match" })).toBe(statusText("no-match"));
+    expect(answerAsText("", { kind: "status", status: "no-match", lead: "" })).toBe(statusText("no-match"));
+    expect(answerAsText("Try Go?", { kind: "status", status: "no-match", lead: "There are no candidates with Rust experience." })).toBe("Try Go?\n\nThere are no candidates with Rust experience.");
     expect(answerAsText("Hello!")).toBe("Hello!");
   });
 });

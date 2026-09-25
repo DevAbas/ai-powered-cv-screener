@@ -22,16 +22,16 @@ const log = (candidatesReturned: string[]): RequestLog => ({
   steps: [],
   toolCalls: [],
   repairs: 0,
-  fallbacks: [],
+  modelFailures: [],
   candidatesReturned,
   outcome: "answer",
   latencyMs: 1,
   counters: {},
 });
 
-const answeredBy = { model: "primary" as const, name: "Nemotron 3 Super", fellBack: false };
+const answeredBy = { model: "primary" as const, name: "Gemini Flash-Lite", fellBack: false };
 const listOf = (ids: string[]): AskEvent => {
-  const view = { kind: "list" as const, ranked: false, skills: [], rows: ids.map((id) => ({ candidateId: id, name: id, headline: "x", skills: [], reason: "", page: 1 })) };
+  const view = { kind: "list" as const, lead: "", ranked: false, skills: [], rows: ids.map((id) => ({ candidateId: id, name: id, headline: "x", skills: [], reason: "", page: 1 })) };
   return { type: "answer", text: "Here.", view, sources: sourcesOf(view), matched: { kind: "matched", count: ids.length, total: 3 }, answeredBy };
 };
 
@@ -56,7 +56,7 @@ describe("runEvaluation", () => {
     expect(runs[0]?.questions.map((q) => q.score.problems)).toEqual([[], [], []]);
     const report = reportOf(runs[0]!);
     expect(report.summary.passes).toBe(true);
-    expect(report.displayName).toBe("Nemotron 3 Super");
+    expect(report.displayName).toBe("Gemini Flash-Lite");
   });
 
   it("repeats, runs several models, and reports a failing question", async () => {

@@ -61,8 +61,11 @@ export function isServerError(error: unknown): boolean {
 }
 
 /**
- * OpenRouter's daily cap on free-model requests. Retrying cannot succeed
- * until the next day, so the model's breaker opens at once.
+ * A daily cap: OpenRouter's on free-model requests (`free-models-per-day`),
+ * or a Gemini API per-day quota (its 429 names the quota it exhausted, e.g.
+ * `GenerateRequestsPerDayPerProjectPerModel-FreeTier`; a per-minute one
+ * names `PerMinute` and clears by itself). Retrying cannot succeed until
+ * the next day, so the model's breaker opens at once.
  */
 export function isDailyQuotaError(error: unknown): boolean {
   if (errorStatus(error) !== 429) return false;
@@ -73,7 +76,7 @@ export function isDailyQuotaError(error: unknown): boolean {
     api?.responseBody,
     api?.data === undefined ? "" : JSON.stringify(api.data),
   ].join(" ");
-  return /free-models-per-day/i.test(text);
+  return /free-models-per-day|PerDay/.test(text);
 }
 
 /** Same classification as the AI SDK: 408, 409, 429 and 5xx. */
@@ -130,4 +133,20 @@ export function shouldFallBack(error: unknown): boolean {
   if (NoObjectGeneratedError.isInstance(innermost(error))) return true;
   const status = errorStatus(error);
   return status === 402 || status === 404;
+}
+
+/** Waits `ms`, or rejects with the signal's reason when it aborts first. */
+export function delay(ms: number, signal: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (signal.aborted) return reject(signal.reason);
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(signal.reason);
+    };
+    const timer = setTimeout(() => {
+      signal.removeEventListener("abort", onAbort);
+      resolve();
+    }, ms);
+    signal.addEventListener("abort", onAbort, { once: true });
+  });
 }

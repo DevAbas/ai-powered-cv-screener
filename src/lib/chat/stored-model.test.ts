@@ -9,7 +9,9 @@ const memory = (initial: Record<string, string> = {}) => {
 
 describe("stored model", () => {
   it("reads a stored, offered model, and the recommended one otherwise", () => {
-    expect(readStoredModel(memory({ [STORED_MODEL_KEY]: "alternative" }))).toBe("alternative");
+    expect(readStoredModel(memory({ [STORED_MODEL_KEY]: "primary" }))).toBe("primary");
+    // A stored model that is no longer offered (the alternative is disabled in this phase) gives way to the recommended one.
+    expect(readStoredModel(memory({ [STORED_MODEL_KEY]: "alternative" }))).toBe(recommendedEntry().id);
     expect(readStoredModel(memory({ [STORED_MODEL_KEY]: "openrouter-free" }))).toBe(recommendedEntry().id);
     expect(readStoredModel(memory())).toBe(recommendedEntry().id);
     expect(readStoredModel(undefined)).toBe(recommendedEntry().id);

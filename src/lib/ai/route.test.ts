@@ -50,9 +50,12 @@ describe("modelRoute", () => {
     expect(modelRoute(entry, breaker)).toEqual([entry]);
   });
 
-  it("has only the model for an entry without a fallback", () => {
-    const alternative = getEntry("alternative");
-    expect(modelRoute(alternative, new CircuitBreaker())).toEqual([alternative]);
+  it("has only the model for an entry without a fallback, whatever its breaker says", () => {
+    const primary = getEntry("primary");
+    const breaker = new CircuitBreaker();
+    expect(modelRoute(primary, breaker)).toEqual([primary]);
+    breaker.trip(`${primary.provider}:${primary.model}`);
+    expect(modelRoute(primary, breaker)).toEqual([primary]);
   });
 });
 

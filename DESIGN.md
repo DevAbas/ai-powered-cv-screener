@@ -41,7 +41,7 @@ typography:
     fontFamily: Google Sans
     fontSize: 1rem
     fontWeight: 400
-    lineHeight: "1.55"
+    lineHeight: "1.5"
   body-md:
     fontFamily: Google Sans
     fontSize: 1rem
@@ -68,6 +68,11 @@ typography:
     fontWeight: 500
     lineHeight: "1.2"
     letterSpacing: 0.01em
+  name:
+    fontFamily: Google Sans
+    fontSize: 0.9375rem
+    fontWeight: 600
+    lineHeight: "1.2"
   display:
     fontFamily: Google Sans
     fontSize: 2.75rem
@@ -166,7 +171,7 @@ components:
     typography: "{typography.body-lg}"
     rounded: "{rounded.md}"
   input-placeholder:
-    textColor: "{colors.on-surface-variant}"
+    textColor: "{colors.outline-variant}"
   focus-ring:
     backgroundColor: "{colors.primary-outline}"
   menu:
@@ -198,6 +203,9 @@ components:
     backgroundColor: "{colors.surface-container-low}"
   file-card-pressed:
     backgroundColor: "{colors.surface-container}"
+  candidate-list:
+    backgroundColor: "{colors.surface-container-low}"
+    rounded: "{rounded.md}"
   preview:
     backgroundColor: "{colors.surface-container-lowest}"
     textColor: "{colors.on-surface}"
@@ -277,8 +285,8 @@ the tint. Hover and pressed are derived from step 9 (below).
 ## Typography
 
 One family, Google Sans (SIL OFL), self-hosted. Two working weights, 400 and
-500; 600 only when a single element must dominate: the logo and the
-empty-state headline. No italics.
+500; 600 only when a single element must dominate: the logo, the
+empty-state headline and a candidate's name in an answer row. No italics.
 
 - **display:** the empty-state headline only; the one large, 600-weight line
   a recruiter sees before the first question.
@@ -288,6 +296,8 @@ empty-state headline. No italics.
 - **body-sm:** secondary lines, metadata and menu rows.
 - **label-lg / label-md / label-sm:** buttons, tooltips, section headers
   (label-sm uppercase, letter-spaced).
+- **name:** a candidate's name in an answer row: one step above label-lg
+  and 600, so the name leads the row.
 - **wordmark / mark:** the logo only: the product name uppercase, 600 and
   widely letter-spaced; the "CV" letters of the mark, 600.
 
@@ -377,20 +387,24 @@ text and in `xs` buttons, 1.25rem in other buttons.
 - **Inputs:** no border at rest when placed on `surface`; the background
   step separates them. Focus: 2px `primary-outline` ring.
 - **Composer:** the largest floating container: `surface-container-lowest`,
-  `rounded.xl`, raised shadow. One text input with a 0.625rem bottom margin,
-  then a 0.625rem gap to a bottom row. Left: model chip, globe, ellipsis;
-  right: audio-lines and a circular primary send button that becomes Stop
-  while a request runs. Globe, ellipsis and audio-lines are disabled. The
-  input grows with the question up to a maximum height, then scrolls.
+  `rounded.xl`, raised shadow. With one model offered (this phase), one
+  row: the text input, then audio-lines and a circular primary send button
+  that becomes Stop while a request runs, aligned to the input's last
+  line. With a choice of models, the input has its own row with a 0.625rem
+  bottom margin, then a 0.625rem gap to a bottom row: the model chip on
+  the left, the same actions on the right. Audio-lines is disabled, with
+  the tooltip "Voice mode coming soon…" above it. The input grows with the
+  question up to a maximum height, then scrolls.
   Centred in the empty state; after the first question it sits at the bottom
   of the conversation, 1rem wider on each side than the message column.
 - **Question:** the recruiter's question sits right-aligned on
   `primary-container`, `rounded.xl` (half the one-line height, so a single
   line has fully round ends and a single character is a circle), at least
   as wide as it is tall and at most 33.75rem (540px) wide.
-  Answers stay unboxed.
+  Answer text stays unboxed; a candidate list sits on a panel (Answer views).
 - **Model menu:** the model chip (`surface-container`, `rounded.full`) shows
-  the vendor logo, the model name and a chevron. Its menu lists the answer
+  the vendor logo, the model name and a chevron, with the tooltip "Change
+  model". Its menu lists the answer
   models, each with vendor logo and name, and follows the menu rules.
 - **Menus:** white panel with the overlay shadow and a little more inner
   padding than a row's own; rows in `body-sm`, `rounded.sm`; hover is
@@ -400,14 +414,15 @@ text and in `xs` buttons, 1.25rem in other buttons.
 - **File card:** the one card in the interface, for a CV that opens: one
   line with the 1.25rem PDF icon (its document in `on-surface`, its download
   badge in solid `primary` with an `on-primary` arrow, like the logo mark, a
-  thing, not a text block), the candidate's name in `label-lg` and "CV" in
-  `body-sm` `on-surface-variant`; `surface-container-lowest` with an
-  `outline` border, the soft shadow, `rounded.md`, as wide as its label (a
-  long name cut with an ellipsis). A tooltip reads "Preview CV". Hover is
-  `surface-container-low`; pressed goes one tone further,
+  thing, not a text block), the candidate's name in `label-lg` and
+  "Resume" in `body-sm` `on-surface-variant`; `surface-container-lowest`
+  with an `outline` border, the soft shadow, `rounded.md`, as wide as its
+  label (a long name cut with an ellipsis). A tooltip reads "Preview
+  resume". Hover is `surface-container-low`; pressed goes one tone further,
   `surface-container`, without the shadow; both transition. Inside an
   answer view, where the name is already shown beside it, the card is
-  compact: the icon and "CV" only.
+  compact: the icon at 1rem and "Resume" only, with the padding of a text
+  line, so it sits at the height of the row's text.
 - **CV preview:** a file card opens the CV in a panel docked to the right
   edge, full height, `surface-container-lowest` with an `outline` left edge
   and no shadow: the CV's pages drawn one under another on
@@ -428,25 +443,46 @@ viewport, never under 30rem. Below `lg` it fills the
   is about candidates, an answer view follows it once complete, and the
   CVs appear as file cards inside the view, never in a separate row.
 - **Answer views:** the data under an answer, drawn from the CVs rather
-  than written by the model; unboxed like the text, one per answer.
-  - **Candidate list:** a caption in `body-sm` `on-surface-variant` with
-    the count and the order ("16 candidates · most Python experience
-    first"), then one row per candidate: the name in `label-lg` and the
-    title in `body-sm` `on-surface-variant`, the years of the skills
-    asked about in `body-sm` with tabular figures, and the compact file
-    card at the end of the line; the model's note under it in `body-sm`
-    `on-surface-variant`. A ranked list leads each row with its number in
-    `label-md` `on-surface-variant`. On narrow screens the years and the
-    card wrap under the name.
+  than written by the model; one per answer. The comparison and the
+  profile are unboxed like the text; the candidate list sits on a panel.
+  - **Candidate list:** a panel (`candidate-list`: `surface-container-low`
+    at 60% over the page, a shade lighter than the low surface itself;
+    `rounded.md`, padded `spacing.base` × 4) that holds the whole answer,
+    so its rows read as one group apart from the conversation and the
+    white file cards read as files on it: an opening sentence in `body-md`
+    `on-surface` composed by the app from the search ("There are 7
+    candidates with React experience. Here are their details."), then one
+    compact row per candidate on four lines, the lower three indented to
+    the name: a 1rem person icon and the name in `name`; the title from
+    the CV in `body-sm` `on-surface-variant`; the years of the skills
+    asked about in `body-sm` with tabular figures; the compact file card,
+    shifted left by its own padding and border so its icon sits on the
+    text column, not its edge. Rows fill two columns from `sm` and one
+    below it, each with `spacing.base` × 2.5 above and below it (rows
+    `spacing.base` × 5 apart, as in Lists), so the panel's width is used.
+    Four rows, a full pair of columns, show by default; a control centred
+    under them inside the panel, in the compact file card's style (white
+    on the grey, `label-md`), "Show all 7" with a chevron down, reveals
+    the rest and becomes "Show fewer" with a chevron up. The rest unfold
+    over 200ms (decelerate) and fold over 150ms (accelerate), fading with
+    the height, and are clipped only until they have unfolded, so a file
+    card's tooltip on the last row is not cut off; never under reduced
+    motion. A ranked list leads each row with its number in `label-md`
+    `on-surface-variant`, has no opening sentence, and keeps the model's
+    reason under each row in `body-sm` `on-surface-variant`.
   - **Comparison:** a table with one column per candidate, the name in
     `label-lg` over its compact file card as the column header, and the
     criteria in the first column in `label-sm` uppercase
     `on-surface-variant`.
-  - **Profile:** the candidate's name in `headline-md` behind a person
-    icon, with the compact file card; the title, location and total years
-    in `body-md` `on-surface-variant`; then labelled sections, a
-    `label-sm` uppercase `on-surface-variant` label over its facts in
-    `body-md`, spaced like list rows.
+  - **Profile:** the answer to a question about one candidate, whether
+    named ("Summarize Jane Doe's profile", "Where did Lena work last?") or
+    the one their criteria match ("Who is the mobile engineer?"): the
+    model's two or three sentences on what was asked, then only the name
+    in `headline-md` behind a person icon with the compact file card, and
+    one `body-md` `on-surface-variant` line with title, location and
+    total years. Nothing more: the details are in the CV. When the model
+    wrote no sentence, the app's ("There is 1 candidate in a mobile role.
+    Here is their CV.") opens it.
 - **Lists:** rows separated by whitespace (`spacing.base` × 5), never by a
   rule or a coloured background.
 - **Scrollbars:** thin, with a transparent track and an `outline` thumb:
@@ -455,7 +491,8 @@ viewport, never under 30rem. Below `lg` it fills the
   horizontal rules only, no vertical rules, no zebra striping.
 - **Tooltips:** a short label on `inverse-surface` with `inverse-on-surface`
   text, `label-md`, `rounded.md`. Fades in on hover after 150ms and at once on
-  keyboard focus; Escape closes it.
+  keyboard focus; Escape closes it, and so does pressing the control. A
+  control whose own menu is open shows none.
 - **Empty state:** the headline "Find The Right Candidates" in `display`,
   title case, "Candidates" on the highlight (Layout: motion); below it one `body-lg`
   line in `on-surface-variant` with the CV count, "You currently have 30 CVs
@@ -485,8 +522,9 @@ viewport, never under 30rem. Below `lg` it fills the
   only.
 - Do use a tonal step before a border, and a border before a shadow.
 - Don't render states as filled or bordered boxes.
-- Don't box answers; only the question sits on a tint. No gradients, emoji
-  or decorative illustration.
+- Don't box answer text; only the question sits on a tint, and only a
+  candidate list sits on a grey panel. No gradients, emoji or decorative
+  illustration.
 - Don't wrap content in cards; whitespace is the container. The file card
   is the exception: it is the file, not a container for content.
 - Every colour, size and radius on screen traces to a token in this file.

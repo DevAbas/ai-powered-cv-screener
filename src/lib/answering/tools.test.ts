@@ -73,7 +73,7 @@ describe("createTools", () => {
     await tools.get_candidates.execute!({ ids: ["elena-georgiou"] }, options);
     await tools.search_cv_text.execute!({ query: "payments", scope: "whole_pool" }, options);
     expect(results.map((r) => r.tool)).toEqual(["find_candidates", "count_candidates", "get_candidates", "search_cv_text"]);
-    expect(results[1]).toEqual({ tool: "count_candidates", result: { count: 3, total: 3 } });
+    expect(results[1]).toEqual({ tool: "count_candidates", input: { filters: {}, scope: "whole_pool" }, result: { count: 3, total: 3 } });
   });
 
   it("rejects an input outside the vocabulary before execute", async () => {

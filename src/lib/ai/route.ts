@@ -1,6 +1,6 @@
 import type { CircuitBreaker } from "./breaker";
 import type { ModelEntry, ModelTarget } from "./registry";
-import { isDailyQuotaError, isServerError, ModelTimeoutError } from "./retry";
+import { errorStatus, isDailyQuotaError, isServerError, ModelTimeoutError } from "./retry";
 
 // Which models a call tries, in what order, and what the circuit breaker
 // learns from each (PLAN, Reliability). The breaker tracks models rather
@@ -25,9 +25,9 @@ export function modelRoute(entry: ModelEntry, breaker: CircuitBreaker): ModelTar
   return breaker.isOpen(modelKey(entry)) ? [fallback] : [entry, fallback];
 }
 
-/** Timeouts and 5xx count against a model; a spent daily quota opens its breaker at once. */
+/** Timeouts and 5xx count against a model; a spent free quota or an exhausted account (402) opens its breaker at once. */
 function recordFailure(breaker: CircuitBreaker, target: ModelTarget, error: unknown): void {
-  if (isDailyQuotaError(error)) breaker.trip(modelKey(target));
+  if (isDailyQuotaError(error) || errorStatus(error) === 402) breaker.trip(modelKey(target));
   else if (error instanceof ModelTimeoutError || isServerError(error)) breaker.recordFailure(modelKey(target));
 }
 

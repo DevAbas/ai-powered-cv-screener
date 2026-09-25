@@ -3,9 +3,10 @@ import { ANSWER_MODEL_IDS } from "@/contracts/ask";
 
 // The model registry (PLAN, Model registry). Pure data: no SDK imports and
 // no env access, so the UI can import it. Model ids come from the
-// provider's model list (OpenRouter, models that support tools), never from
-// memory. The answer entries are provisional until the evaluation (PLAN,
-// Evaluation) confirms them: `enabled` says whether an entry is offered.
+// providers' model lists (the Gemini API's, OpenRouter's), never from
+// memory. This phase runs one model without a fallback (PLAN, Answer
+// models); the other entries stay here disabled for the next phase.
+// `enabled` says whether an entry is offered or used.
 
 /** Routing provider: which SDK provider builds the model. */
 export type Provider = "openrouter" | "google";
@@ -13,7 +14,7 @@ export type Provider = "openrouter" | "google";
 /** Model maker. UI logos resolve from `public/icons/providers/<vendor>.svg`. */
 export type Vendor = "google" | "nvidia" | "qwen";
 
-export type ModelId = AnswerModelId | "gemini-flash-lite" | "gemini-flash" | "extract" | "generate" | "image" | "embed";
+export type ModelId = AnswerModelId | "gemini-flash" | "extract" | "generate" | "image" | "embed";
 
 export type Tier = "free" | "paid";
 
@@ -54,46 +55,42 @@ export interface ModelEntry extends ModelTarget {
 const ANSWER_CAPABILITIES: Capabilities = { tools: true, streaming: true, structuredOutput: false, image: false, embedding: false };
 const SCRIPT_CAPABILITIES: Capabilities = { tools: false, streaming: false, structuredOutput: true, image: false, embedding: false };
 
-// Pinned free models with tool calling (OpenRouter's model list, 2026-09-24);
-// two vendors, so the fallback does not share the primary's outage.
-const NEMOTRON_SUPER: ModelTarget = { provider: "openrouter", vendor: "nvidia", model: "nvidia/nemotron-3-super-120b-a12b:free" };
-const QWEN_27B: ModelTarget = { provider: "openrouter", vendor: "qwen", model: "qwen/qwen3.8-27b:free" };
+// This phase's one model: Gemini 3.5 Flash-Lite, pinned to its July 2026
+// release (the Gemini API models list, 2026-09-25), not the moving
+// `gemini-flash-lite-latest` alias, so answers do not change under a
+// commit (PLAN, Answer models).
+const GEMINI_FLASH_LITE: ModelTarget = { provider: "google", vendor: "google", model: "gemini-3.5-flash-lite" };
 
-// Gemini answer models are kept for later: disabled, never a fallback, not evaluated in this phase (PLAN, Answer models).
-const GEMINI_FLASH_LITE: ModelTarget = { provider: "google", vendor: "google", model: "gemini-flash-lite-latest" };
+// Kept for the next phase, disabled: OpenRouter pay-as-you-go models with
+// tool calling (OpenRouter's model list, 2026-09-25; the `:free` endpoints
+// were dropped that day, PLAN, Environment), two vendors so a fallback does
+// not share the primary's outage; and Gemini 3.6 Flash.
+const NEMOTRON_SUPER: ModelTarget = { provider: "openrouter", vendor: "nvidia", model: "nvidia/nemotron-3-super-120b-a12b" };
+const QWEN_27B: ModelTarget = { provider: "openrouter", vendor: "qwen", model: "qwen/qwen3.8-27b" };
 const GEMINI_FLASH: ModelTarget = { provider: "google", vendor: "google", model: "gemini-3.6-flash" };
 
 // Descriptions state facts, never a quality ranking.
 export const REGISTRY: Readonly<Record<ModelId, ModelEntry>> = {
   primary: {
     id: "primary",
-    displayName: "Nemotron 3 Super",
-    description: "NVIDIA Nemotron 3 Super on OpenRouter's free tier.",
-    ...NEMOTRON_SUPER,
-    capabilities: ANSWER_CAPABILITIES,
-    tier: "free",
-    enabled: true,
-    // Provisional until the evaluation sets `recommended` and confirms the fallback (PLAN, Evaluation).
-    recommended: true,
-    fallback: QWEN_27B,
-  },
-  alternative: {
-    id: "alternative",
-    displayName: "Qwen3.8 27B",
-    description: "Qwen3.8 27B on OpenRouter's free tier.",
-    ...QWEN_27B,
-    capabilities: ANSWER_CAPABILITIES,
-    tier: "free",
-    enabled: true,
-  },
-  "gemini-flash-lite": {
-    id: "gemini-flash-lite",
     displayName: "Gemini Flash-Lite",
-    description: "Google Gemini Flash-Lite (latest) on the Gemini API free tier.",
+    description: "Google Gemini 3.5 Flash-Lite on the Gemini API.",
     ...GEMINI_FLASH_LITE,
     capabilities: ANSWER_CAPABILITIES,
     tier: "free",
+    enabled: true,
+    recommended: true,
+    // No fallback in this phase (PLAN, Answer models): one behaviour to tune for.
+  },
+  alternative: {
+    id: "alternative",
+    displayName: "Nemotron 3 Super",
+    description: "NVIDIA Nemotron 3 Super on OpenRouter, pay-as-you-go.",
+    ...NEMOTRON_SUPER,
+    capabilities: ANSWER_CAPABILITIES,
+    tier: "paid",
     enabled: false,
+    fallback: QWEN_27B,
   },
   "gemini-flash": {
     id: "gemini-flash",
@@ -107,23 +104,21 @@ export const REGISTRY: Readonly<Record<ModelId, ModelEntry>> = {
   // The scripts use the primary's model with structured outputs (PLAN, Answer models).
   extract: {
     id: "extract",
-    displayName: "Nemotron 3 Super",
+    displayName: "Gemini Flash-Lite",
     description: "Extracts candidate profiles from CV text in the indexer.",
-    ...NEMOTRON_SUPER,
+    ...GEMINI_FLASH_LITE,
     capabilities: SCRIPT_CAPABILITIES,
     tier: "free",
     enabled: true,
-    fallback: QWEN_27B,
   },
   generate: {
     id: "generate",
-    displayName: "Nemotron 3 Super",
+    displayName: "Gemini Flash-Lite",
     description: "Generates synthetic candidate seeds in the generation pipeline.",
-    ...NEMOTRON_SUPER,
+    ...GEMINI_FLASH_LITE,
     capabilities: SCRIPT_CAPABILITIES,
     tier: "free",
     enabled: true,
-    fallback: QWEN_27B,
   },
   // No free image model exists on any provider (PLAN, Generation pipeline). Paid, so it never runs by default: only when named.
   image: {

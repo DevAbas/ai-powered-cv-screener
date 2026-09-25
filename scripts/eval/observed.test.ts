@@ -12,7 +12,7 @@ const log = (overrides: Partial<RequestLog> = {}): RequestLog => ({
   steps: [],
   toolCalls: [],
   repairs: 0,
-  fallbacks: [],
+  modelFailures: [],
   candidatesReturned: ["jane-doe", "lena-novak", "sofia-almeida", "leon-fischer"],
   outcome: "answer",
   latencyMs: 1,

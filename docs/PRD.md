@@ -2,8 +2,8 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.15         |
-| Date    | 2026-09-24   |
+| Version | 1.17         |
+| Date    | 2026-09-25   |
 | Status  | Approved     |
 | Owner   | Product      |
 
@@ -84,7 +84,7 @@ different answer shape.
 | 2 | Rank | "Top 3 for a Frontend Lead role" | Ordered list with a short reason each |
 | 3 | Compare | "Compare Andrei and Elena on backend experience" | Side-by-side of two candidates |
 | 4 | Single fact | "Where did Lena work last?" | Short fact with one source |
-| 5 | Profile summary | "Summarize Jane Doe's profile" | Structured overview of one candidate |
+| 5 | Profile summary | "Summarize Jane Doe's profile" | A short summary in prose, with the candidate's name, title and CV |
 | 6 | Aggregate | "How many candidates know Python?" | Exact count, optionally the list |
 | 7 | Empty result | "Who knows Rust?" (nobody) | Explicit "no candidate matches" |
 | 8 | Out of scope | "What's the weather today?" | Polite refusal, redirect to CV questions |
@@ -179,14 +179,23 @@ Every interface decision is checked against these six.
 - An answer that names candidates carries one source per candidate;
   greetings and out-of-scope answers carry none.
 - Counts come from an exact count over the pool.
-- The model's text frames the data; it never restates counts or facts,
-  and never adds a candidate or fact the data does not contain.
+- A filter, count or list opens with a sentence the product composes from
+  the search ("There are 7 candidates with React experience. Here are
+  their details."), so its count and criteria are the data's. The model's
+  text adds only what the data cannot show; it never restates counts or
+  facts, and never adds a candidate or fact the data does not contain.
+- A list shows four candidates by default and the rest on request.
+- An answer about one candidate, whether named ("Where did Lena work
+  last?") or the one a question's criteria match ("Who is the mobile
+  engineer?"), is the model's two or three sentences on what was asked,
+  with the candidate's name, title line and CV; the details are in the
+  CV.
 - Each use case in §5 renders in its own shape.
 - Empty result and out-of-scope are distinct, explicit states.
 
 ### 10.2 Sources
-- A source is shown in the answer as the candidate's name and the word
-  "CV" with a link mark; the cited page is not displayed.
+- A source is shown in the answer as the word "Resume" with a document
+  mark beside the candidate's name; the cited page is not displayed.
 - It opens the original PDF at the cited page in a preview panel beside
   the conversation, with a download; outside the app (previews) it is a
   link to the PDF.
@@ -199,8 +208,9 @@ Every interface decision is checked against these six.
 Removed in 1.6: the pool is reached through answers and their sources.
 
 ### 10.5 Model selection
-- The recruiter selects a model by name, shown with the logo of the company
-  that made it.
+- When more than one model is offered, the recruiter selects one by name,
+  shown with the logo of the company that made it; with one model there
+  is nothing to select and no selector.
 - The recommended model is preselected.
 - The selector is part of the composer (the question input), not the
   header.
@@ -264,3 +274,5 @@ None open. Resolved:
 | 1.13    | 2026-09-24 | §8 step 1, §10.6: the empty state shows the number of CVs and one example question in the input, instead of suggested-question buttons. |
 | 1.14    | 2026-09-24 | §8, §13: copying an answer is dropped; the core flow ends with a follow-up or a new search. |
 | 1.15    | 2026-09-24 | Accuracy before speed (§3, §7.5, §11). §5: list all, lookup by role, follow-up and greeting use cases; one source per named candidate, none on greetings and out-of-scope answers, exact counts. §7.6: plain, warm, brief, with a next question after no match or out of scope. §8 step 3: the progress line says what was searched. §10.1: the text frames the data. §10.2: copied text removed. §11: correctness measured by the evaluation; response time reported. §13: resolutions dated. |
+| 1.16    | 2026-09-24 | §10.1: a filter, count or list opens with a sentence the product composes from the search; four candidates by default. §10.2: the source reads "Resume". |
+| 1.17    | 2026-09-25 | §5 row 5 and §10.1: an answer about one candidate is prose plus the name, title and CV. §10.5: the selector appears only when more than one model is offered. |

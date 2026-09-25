@@ -1,7 +1,6 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { ANSWER_MODEL_IDS } from "@/contracts/ask";
 import { answerEntries, answerEntry, getEntry, recommendedEntry, REGISTRY } from "./registry";
 
 describe("answer models", () => {
@@ -17,20 +16,23 @@ describe("answer models", () => {
     expect(answerEntries().filter((entry) => entry.recommended)).toEqual([recommendedEntry()]);
   });
 
-  it("pins free OpenRouter models, never the router, with a fallback from another vendor", () => {
-    for (const id of ANSWER_MODEL_IDS) {
-      const entry = getEntry(id);
-      expect(entry.provider).toBe("openrouter");
-      expect(entry.model).toMatch(/:free$/);
-      expect(entry.model).not.toBe("openrouter/free");
-      if (entry.fallback) expect(entry.fallback.vendor).not.toBe(entry.vendor);
-    }
+  it("offers one model in this phase, Gemini Flash-Lite pinned to a release, with no fallback", () => {
+    expect(answerEntries().map((entry) => entry.id)).toEqual(["primary"]);
+    const primary = getEntry("primary");
+    expect(primary.provider).toBe("google");
+    expect(primary.model).not.toMatch(/latest|preview/);
+    expect(primary.fallback).toBeUndefined();
   });
 
-  it("keeps the Gemini answer entries disabled and out of the menu", () => {
-    expect(REGISTRY["gemini-flash-lite"].enabled).toBe(false);
+  it("keeps the OpenRouter entries and Gemini 3.6 Flash disabled and out of the menu", () => {
+    const alternative = REGISTRY.alternative;
+    expect(alternative.enabled).toBe(false);
+    expect(alternative.provider).toBe("openrouter");
+    expect(alternative.model).not.toMatch(/:free$/);
+    expect(alternative.model).not.toBe("openrouter/free");
+    expect(alternative.fallback?.vendor).not.toBe(alternative.vendor);
     expect(REGISTRY["gemini-flash"].enabled).toBe(false);
-    expect(answerEntries().every((entry) => entry.vendor !== "google")).toBe(true);
+    expect(answerEntry("alternative")).toBeUndefined();
     expect(answerEntry("primary")?.id).toBe("primary");
   });
 

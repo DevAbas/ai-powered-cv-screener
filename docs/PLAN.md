@@ -2,11 +2,11 @@
 
 | Field   | Value                                    |
 |---------|------------------------------------------|
-| Version | 1.21                                     |
-| Date    | 2026-09-24                               |
+| Version | 1.23                                     |
+| Date    | 2026-09-25                               |
 | Status  | Active                                   |
 | Owner   | Engineering                              |
-| Goal    | Deliver the v1 pilot defined in PRD 1.15 |
+| Goal    | Deliver the v1 pilot defined in PRD 1.17 |
 
 If the code and this document disagree, change this document first, then
 the code. This plan is not extended with new features; a new feature gets
@@ -16,11 +16,18 @@ its own plan in `docs/plans/<feature>.md`.
 
 ## Environment
 
-- Cost ceiling is zero: every answer, extraction and seed call uses a
-  pinned OpenRouter `:free` model, never the `openrouter/free` router,
-  within the account's allowance of 1,000 free requests a day
-  (OpenRouter, API credit and rate limits). The paid `image` entry runs
-  only when named.
+- This phase runs one model: Google Gemini 3.5 Flash-Lite on the Gemini
+  API, pinned to its July 2026 release rather than the moving
+  `gemini-flash-lite-latest` alias, with no fallback, so there is one
+  behaviour to tune the mission for. Every answer, extraction and seed
+  call uses it. The Gemini API free tier allows about 1,000 requests a
+  day and 15 a minute per model (Gemini API rate limits); billed, a
+  question costs a few tenths of a cent. The OpenRouter entries stay in
+  the registry disabled for the next phase: pay-as-you-go, never the
+  `openrouter/free` router (the `:free` endpoints were dropped on
+  2026-09-25, when both pinned free models were unavailable at once). A
+  run states its estimate and the remaining quota or credits before it
+  starts. The paid `image` entry runs only when named.
 - Every script is resumable (skips what already exists) and can be forced
   to regenerate.
 - Every parameter starts from a documented value, cited next to it, and
@@ -70,15 +77,18 @@ from the provider's model list, never from memory.
 ### Answer models
 
 - The recruiter chooses between the entries that passed the evaluation
-  (PRD, Model selection): `primary` and `alternative`, pinned OpenRouter
-  `:free` models with tool calling, from different vendors. `primary` is
-  `recommended`; `alternative` is its fallback only because it passed too.
-  No name or description claims one answers better than another.
-- Candidates for the evaluation: `nvidia/nemotron-3-super-120b-a12b:free`,
-  `qwen/qwen3.8-27b:free`, `google/gemma-4-31b-it:free` and
-  `nvidia/nemotron-3-ultra-550b-a55b:free`.
-- Gemini answer entries stay in the registry disabled: not in the menu,
-  never a fallback, not evaluated in this phase.
+  (PRD, Model selection). In this phase `primary` is Gemini 3.5
+  Flash-Lite, `recommended`, offered provisionally until its evaluation
+  run (Acceptance criteria), with no fallback, and the composer shows no
+  menu; `alternative` (Nemotron 3 Super on OpenRouter, with Qwen3.8 27B
+  as its fallback) is disabled until the evaluation admits it. No name or
+  description claims one answers better than another.
+- Candidates for the evaluation: Gemini 3.5 Flash-Lite now; when the
+  alternative slot returns, `nvidia/nemotron-3-super-120b-a12b`,
+  `qwen/qwen3.8-27b`, `google/gemma-4-31b-it` and
+  `nvidia/nemotron-3-ultra-550b-a55b`.
+- Gemini 3.6 Flash stays in the registry disabled: not in the menu, never
+  a fallback, not evaluated in this phase.
 - `extract` and `generate` use the primary's model with structured
   outputs; `embed` is `gemini-embedding-001` at 768 dimensions with the
   `RETRIEVAL_DOCUMENT` and `RETRIEVAL_QUERY` task types (provider docs).
@@ -95,8 +105,10 @@ An answer model is offered only if it meets all four:
 2. **Correctness.** Every threshold in Evaluation.
 3. **Latency.** P95 per question type is reported, not a gate (PRD, Success
    criteria).
-4. **Free budget.** A working day fits the daily allowance: at most 3
-   model steps per question, so about 300 questions a day.
+4. **Cost.** A recruiter's day fits the Gemini API free tier (about
+   1,000 requests: at most 3 model steps per question, plus the repair,
+   presentation and rewrite calls a failed step can add), or a few tenths
+   of a cent per question billed.
 
 ### Reliability
 
@@ -104,16 +116,33 @@ An answer model is offered only if it meets all four:
   tool), set from the evaluation's measured P95 times two; until measured,
   generous values documented in code.
 - Before the first word of the final step, a 5xx gets one retry on the
-  same model; a timeout, an empty answer, an unavailable model or a spent
-  daily allowance hands over to the fallback. Once text has reached the
+  same model; a timeout, an empty answer, an unavailable model or an
+  exhausted account (402) hands over to the fallback, when the entry has
+  one (none in this phase: the error is shown, with Retry). Once text has reached the
   recruiter a failure ends the answer with an error, since two models'
   text would mix. When the fallback answers, the answer says so.
 - A circuit breaker per model: two failures within five minutes open it
-  for three minutes; a spent daily allowance opens it at once.
+  for three minutes; a spent free allowance or an exhausted account opens
+  it at once. The breaker only chooses between an entry and its fallback:
+  an entry without one is always tried.
+- Tool schemas reach the model without length, range or pattern keywords,
+  which some free providers' grammar compilers reject (the one serving
+  Qwen on OpenRouter refuses `minLength`); the contracts still validate
+  every call, so nothing those keywords enforced is lost.
 - Tool calls: an input that fails its schema is repaired by re-asking the
   model once (`repairToolCall`); if that fails it goes back to the model
   as a tool error in the next step. Nothing is dropped silently. A request
   is bounded at three model steps and ends with a clear error past that.
+  An answer that ended in text after a tool returned candidates is not
+  finished: one more call, with `present` as the tool choice, asks for the
+  presentation, so the answer carries its CVs and sources; if that call
+  fails, the text stands and the log says so. The text of that failed
+  step is not trusted: it is re-asked in a few sentences when the view
+  needs words (a profile, a comparison) and dropped when the app opens the
+  view (a list, a count); a profile or comparison the model presented
+  without words is re-asked the same way, and a count's answer is the
+  app's sentence alone, whatever the model wrote. The chat template's
+  tool-call tags are stripped from every answer.
 - Schema repair (one repair call after a failed schema) remains for
   extraction and seeds, the calls that still use structured output.
 
@@ -219,8 +248,16 @@ place, so each is tested alone.
 7. **Views.** List, ranked list, comparison, profile, count and the three
    states, built from the tool results and the index: the app draws names,
    titles, counts and skill years; the order is the app's for a filter and
-   the model's for a ranking; the text frames the view and never restates
-   counts or facts.
+   the model's for a ranking, and a list after an exact filter holds every
+   match the tool returned. One candidate, however presented, is a
+   profile: the model's sentences on what was asked, then the name, title
+   and CV, opened by the app's sentence when the model wrote none. A filter,
+   count, list or no match opens with
+   a sentence the app composes from the last filter call and its result
+   (the count, and the criteria put into words from the filter arguments;
+   a follow-up names the previous answer's size), so nothing in it is the
+   model's; a plain list drops the model's reasons, a ranking keeps them.
+   The model's text adds only what the view cannot show.
 8. **Mission prompt.** Plain, warm and brief, with a helpful next question
    after a no match or an out-of-scope question; the pool at a glance; the
    candidate directory (id, name, headline) so names map to ids, with a
@@ -234,8 +271,10 @@ place, so each is tested alone.
    no tool ran.
 10. **Logging.** One structured line per request: the model actually
     used, from the provider's response; every tool call with its
-    arguments, result and error; repairs; fallback events; latency; the
-    outcome; plus success and error counters per model.
+    arguments, result and error; repairs, forced presentations and
+    re-asked text; every model failure and what followed it (a retry, the
+    fallback, the end); latency; the outcome; plus success and error
+    counters per model.
 
 The stream carries progress, then the final step's text once that step
 ends (only then is it known to be the answer, not a tool step), then
@@ -304,14 +343,14 @@ thresholds are met, not when every question passes.
 
 1. **Contracts and design system** — done.
 2. **UI against mocks** — done.
-3. **Generation** — done when 30 unique seeds and PDFs are committed and a
+3. **Generation** — done: 30 unique seeds and PDFs are committed and a
    re-run is a no-op; photos wherever the paid step was run.
 4. **Evaluation set** — done: rules and scorer tested without a model.
-5. **Data layout** — done when the folders above exist, the loader and the
-   CV route are tested, and the lint rule holds.
-6. **Indexer** — done when every profile carries verified sources and
+5. **Data layout** — done: the folders above exist, the loader and the CV
+   route are tested, and the lint rule holds.
+6. **Indexer** — done: every profile carries verified sources and
    `--check` meets its thresholds.
-7. **Answering** — done when the tools, hybrid search, loop, presentation
+7. **Answering** — done: the tools, hybrid search, loop, presentation
    check, views and logging are unit-tested with mock models, and every
    PRD use case answers end to end against the mocks.
 8. **Runs** — done when the vectors are rebuilt and the evaluation
@@ -330,9 +369,10 @@ Every phase also ends with lint, typecheck, build and tests clean.
 
 ## Fresh clone
 
-`.env.local` needs `OPENROUTER_API_KEY` (answers, extraction, seeds),
-`GOOGLE_GENERATIVE_AI_API_KEY` (embeddings; photos when named),
-`PINECONE_API_KEY` and `PINECONE_INDEX` (`.env.example` lists them). Then
+`.env.local` needs `GOOGLE_GENERATIVE_AI_API_KEY` (answers, extraction,
+seeds, embeddings; photos when named), `PINECONE_API_KEY` and
+`PINECONE_INDEX`, and `OPENROUTER_API_KEY` only while an OpenRouter entry
+is enabled (`.env.example` lists them). Then
 `npm ci`, `npm run index` (profiles and vectors from `data/cvs`), `npm run
 eval` and `npm run dev`.
 
@@ -387,3 +427,5 @@ floor to tune.
 | 1.19    | 2026-09-24 | Retrieval and answering rebuilt: embeddings in Pinecone, a rules-first plan, a streamed Markdown answer from a mission prompt with the conversation, sources from the CVs it names. Data access adds Pinecone; the `embed` entry returns; `check-models` checks each job with its production code; open question 2 closed, 9 added. PRD §5 (answer shapes), §8 step 3 and §10.1 predate this and are to be revised. |
 | 1.20    | 2026-09-24 | Answer models: `openrouter-free` joins the menu and replaces Nemotron as the primary's fallback; OpenRouter's free allowance is shared per account. `check-models` dropped: model ids come from the provider's model list and are tried in the app. |
 | 1.21    | 2026-09-24 | Goal references PRD 1.15, which completes the revision the 1.19 entry announced. Zero cost with pinned OpenRouter free models; Gemini answer entries disabled. Data layout by owner, `data/index/<id>.json`, the CV route. Pinecone recorded as a fixed decision. Indexer: sections, chunks, verified sources per field, the accuracy check. Retrieval and answering rebuilt: typed tools over the index, pool vocabularies, filter semantics, hybrid search with RRF, the presentation check, views from tool results, progress and logging. Reliability: SDK timeouts, tool-call repair, bounded steps; schema repair for extraction only. Evaluation: thresholds per metric, done when met. Removals, fresh clone; open questions 3, 5 and 9 closed. |
+| 1.22    | 2026-09-25 | Goal references PRD 1.16. Views: a filter, count, list or no match opens with a sentence the app composes from the last filter call and its result; a plain list drops the model's reasons. Reliability: an answer that ends in text after a tool returned candidates gets its presentation from one forced call. This phase runs one model, Gemini 3.5 Flash-Lite, without a fallback; the OpenRouter entries move to pay-as-you-go and stay disabled; the evaluation's dry run states the cost or quota and the remaining credits. |
+| 1.23    | 2026-09-25 | Goal references PRD 1.17. Views: a list after an exact filter is complete; one candidate is a profile of sentences plus name, title and CV, re-asked when wordless; a count's answer is the app's sentence alone. Reliability: tool schemas without length or range keywords; one retry after a 5xx; every model failure logged; an entry without a fallback is always tried; Gemini offered provisionally until its evaluation run. Build order: generation, data layout, indexer and answering done. Fresh clone on the Google key. |

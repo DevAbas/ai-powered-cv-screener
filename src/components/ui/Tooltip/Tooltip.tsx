@@ -26,13 +26,16 @@ export interface TooltipProps {
   align?: TooltipVariants["align"];
   /** Start open (for previews). @default false */
   defaultOpen?: boolean;
+  /** Holds the tooltip shut: for a control whose own menu is open. @default false */
+  disabled?: boolean;
 }
 
 /**
  * A short label for a control, shown on hover (after a short delay) and on
- * keyboard focus; Escape closes it (WCAG 1.4.13). Not interactive itself.
+ * keyboard focus; Escape closes it (WCAG 1.4.13), and so does pressing the
+ * control. Not interactive itself.
  */
-export function Tooltip({ content, children, side, align, defaultOpen = false }: TooltipProps) {
+export function Tooltip({ content, children, side, align, defaultOpen = false, disabled = false }: TooltipProps) {
   const id = useId();
   const [open, setOpen] = useState(defaultOpen);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -45,6 +48,7 @@ export function Tooltip({ content, children, side, align, defaultOpen = false }:
   useEffect(() => clear, []);
 
   function show(delay: number) {
+    if (disabled) return;
     clear();
     timer.current = setTimeout(() => setOpen(true), delay);
   }
@@ -63,12 +67,13 @@ export function Tooltip({ content, children, side, align, defaultOpen = false }:
     if (event.key === "Escape") hide();
   }
 
-  const styles = tooltipSlotRecipe({ side, align, open });
+  const styles = tooltipSlotRecipe({ side, align, open: open && !disabled });
   return (
     <span
       className={styles.root()}
       onPointerEnter={() => show(OPEN_DELAY_MS)}
       onPointerLeave={hide}
+      onPointerDown={hide}
       onFocus={handleFocus}
       onBlur={hide}
       onKeyDown={handleKeyDown}

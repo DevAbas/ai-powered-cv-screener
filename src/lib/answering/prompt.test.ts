@@ -18,6 +18,11 @@ describe("prompt", () => {
     const text = buildInstructions(TEST_INDEX, ["lena-novak"]);
     expect(text).toContain("Plain, warm and brief");
     expect(text).toContain("count_candidates for how many (the only source of a count)");
+    expect(text).toContain("profile when the answer is one candidate");
+    expect(text).toContain("For a profile, write two or three sentences on what was asked");
+    expect(text).toContain("Text alone is not a finished answer once a tool has returned candidates");
+    expect(text).toContain("never narrow the matches yourself");
+    expect(text).toContain("Tool calls are calls, never text");
     expect(text).toContain("The previous answer showed 1 candidate(s): lena-novak");
     expect(text).toContain("ending with a question mark");
     expect(text).not.toContain("Kinetix Digital");

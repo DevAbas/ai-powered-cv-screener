@@ -1,3 +1,4 @@
+import { modelSchema } from "./tool-schema";
 import { tool } from "ai";
 import type { CandidateProfile, FieldSource, IndexEntry } from "@/contracts/candidate";
 import type { Filters, Scope, Vocabulary } from "@/contracts/tools";
@@ -57,12 +58,12 @@ export interface CandidateDetails {
 
 export type SearchResult = HybridHit[];
 
-/** The results a request's tools returned, by tool name and in order. */
+/** The results a request's tools returned, with their inputs, in order. */
 export type ToolResult =
-  | { tool: "find_candidates"; result: FindResult }
-  | { tool: "count_candidates"; result: CountResult }
-  | { tool: "get_candidates"; result: CandidateDetails[] }
-  | { tool: "search_cv_text"; result: SearchResult };
+  | { tool: "find_candidates"; input: { filters: Filters; scope: Scope }; result: FindResult }
+  | { tool: "count_candidates"; input: { filters: Filters; scope: Scope }; result: CountResult }
+  | { tool: "get_candidates"; input: { ids: readonly string[] }; result: CandidateDetails[] }
+  | { tool: "search_cv_text"; input: { query: string }; result: SearchResult };
 
 function scopeOf(scope: Scope, deps: ToolDeps): ReadonlySet<string> | undefined {
   if (scope === "whole_pool") return undefined;
@@ -105,44 +106,44 @@ export function createTools(deps: ToolDeps, onResult: (result: ToolResult) => vo
   return {
     find_candidates: tool({
       description: `Find the candidates matching exact criteria (skills, years, languages, role, seniority, location, education, employers, certifications, notice period, work mode, leadership, job stability); scope whole_pool searches everyone${previous}. Empty filters list every candidate. Returns each match with the evidence and its page.`,
-      inputSchema: findCandidatesInput(v),
+      inputSchema: modelSchema(findCandidatesInput(v)),
       execute: async ({ filters, scope }) => {
         const result = findCandidates(filters, scope, deps);
-        onResult({ tool: "find_candidates", result });
+        onResult({ tool: "find_candidates", input: { filters, scope }, result });
         return result;
       },
     }),
     count_candidates: tool({
       description: "Count the candidates matching exact criteria; the only source of a count. Same filters and scope as find_candidates.",
-      inputSchema: findCandidatesInput(v),
+      inputSchema: modelSchema(findCandidatesInput(v)),
       execute: async ({ filters, scope }) => {
         const result = countCandidates(filters, scope, deps);
-        onResult({ tool: "count_candidates", result });
+        onResult({ tool: "count_candidates", input: { filters, scope }, result });
         return result;
       },
     }),
     get_candidates: tool({
       description: "The full profile of one to five candidates by id (from the directory), with the page each field was read from: for a comparison, a profile summary or one fact.",
-      inputSchema: getCandidatesInput(v),
+      inputSchema: modelSchema(getCandidatesInput(v)),
       execute: async ({ ids }) => {
         const result = getCandidates(ids, deps);
-        onResult({ tool: "get_candidates", result });
+        onResult({ tool: "get_candidates", input: { ids }, result });
         return result;
       },
     }),
     search_cv_text: tool({
       description: `Search the CVs' text for what the exact criteria cannot express (a kind of work, a project, a phrase); optional filters and the scope narrow who is searched${previous}. Returns up to 10 candidates with the page and an excerpt that matched.`,
-      inputSchema: searchCvTextInput(v),
+      inputSchema: modelSchema(searchCvTextInput(v)),
       execute: async ({ query, filters, scope, limit }) => {
         const result = await searchCvText(query, filters, scope, limit, deps);
-        onResult({ tool: "search_cv_text", result });
+        onResult({ tool: "search_cv_text", input: { query }, result });
         return result;
       },
     }),
     present: tool({
       description:
-        "End your answer: name the view or state, the candidates to show by id with the page from the tool results, and the skills whose years to show. Call it once, in the same message as your answer text, after the tool results are in; never before.",
-      inputSchema: presentInput(v),
+        "End your answer: name the view or state, the candidates to show by id with the page from the tool results, and the skills whose years to show. Call it once, in the same message as your answer text, after the tool results are in; never before. A reason is for a ranking only; leave it empty otherwise.",
+      inputSchema: modelSchema(presentInput(v)),
     }),
   };
 }

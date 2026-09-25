@@ -47,6 +47,8 @@ export type ViewCandidate = z.infer<typeof ViewCandidateSchema>;
 export const AnswerViewSchema = z.discriminatedUnion("kind", [
   z.object({
     kind: z.literal("list"),
+    /** The opening sentence, composed by the app from the search; empty when the model's text opens the answer. */
+    lead: z.string(),
     /** In the model's order when ranked; otherwise in the app's order. */
     ranked: z.boolean(),
     skills: z.array(z.string().min(1)).max(MAX_VIEW_SKILLS),
@@ -60,13 +62,18 @@ export const AnswerViewSchema = z.discriminatedUnion("kind", [
     skills: z.array(z.string().min(1)).max(MAX_VIEW_SKILLS),
     candidates: z.array(ViewCandidateSchema).length(2),
   }),
+  /** One candidate: the model's sentences answer, the view shows who and their CV. */
   z.object({
     kind: z.literal("profile"),
     candidate: ViewCandidateSchema,
+    /** The app's sentence for the one match a search found, shown when the model wrote nothing; empty otherwise. */
+    lead: z.string(),
   }),
   z.object({
     kind: z.literal("status"),
     status: AnswerStatusSchema,
+    /** The opening sentence for a no match, composed by the app from the search; empty otherwise. */
+    lead: z.string(),
   }),
 ]);
 export type AnswerView = z.infer<typeof AnswerViewSchema>;

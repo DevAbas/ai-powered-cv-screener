@@ -52,7 +52,7 @@ Run `nvm use` first, in every shell: the Node version comes from `.nvmrc`
 | `npm test` | Unit tests (Vitest) |
 | `npm run generate` | Generate the pool into `data/generation` (seeds, photos, manifest) and `data/cvs` (PDFs): `--step seeds,photos,pdfs` (default seeds and pdfs; `photos` is paid and runs only when named), `--only <id,…>`, `--force`, `--dry-run`; skips what exists (makes API calls) |
 | `npm run index` | Index `data/cvs/*.pdf` into `data/index/<id>.json` (text per section and page, one extracted profile with the page and section of every field) and one vector per section chunk into Pinecone: `--step profiles,sources,vectors` (default profiles and vectors; `sources` rebuilds chunks and sources without a model; vectors need `PINECONE_API_KEY`), `--only <id,…>`, `--force`, `--dry-run`, `--check` (extraction accuracy against the seeds); skips files that exist (makes API calls) |
-| `npm run eval` | Run the golden questions through the answer pipeline per model and score them against the PLAN thresholds into `data/eval/`: `--model <id,…>` (default every offered model), `--only <q01,…>`, `--repeat <n>`, `--dry-run` (the estimate and the remaining daily allowance, no model call). Every run is estimated and approved first (makes API calls) |
+| `npm run eval` | Run the golden questions through the answer pipeline per model and score them against the PLAN thresholds into `data/eval/`: `--model <id,…>` (default every offered model), `--only <q01,…>`, `--repeat <n>`, `--dry-run` (the estimate, its cost and the remaining credits, no model call). Every run is estimated and approved first (makes API calls) |
 | `npm run design:lint` | Lint `DESIGN.md` in light and dark (dark values from `src/styles/theme.css`) |
 | `npm run design:export` | Regenerate `src/styles/tokens.generated.css` from `DESIGN.md` |
 | `npm run storybook` | Component previews on port 6006 |
@@ -139,8 +139,9 @@ before.
 - Changing `docs/PRD.md`, `docs/PLAN.md` or `DESIGN.md`.
 - Implementing an API that the docs for the installed version do not
   confirm.
-- Before any run that calls a model, state the number of calls and the
-  remaining daily allowance, and wait for approval. Chat questions are
+- Before any run that calls a model, state the number of calls, the
+  estimated cost or quota use and the remaining credits, and wait for
+  approval. Chat questions are
   run by the user: give them the questions.
 - Dropping code that looks redundant or like a workaround: list it and
   ask.

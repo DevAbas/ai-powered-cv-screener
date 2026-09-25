@@ -5,7 +5,7 @@ import type { CircuitBreaker } from "./breaker";
 import { modelBreaker } from "./breaker";
 import { languageModel } from "./providers";
 import type { ModelEntry, ModelTarget } from "./registry";
-import { isServerError, ModelTimeoutError, shouldFallBack } from "./retry";
+import { delay, isServerError, ModelTimeoutError, shouldFallBack } from "./retry";
 import { runRoute } from "./route";
 
 // Structured output for the scripts that still use it, extraction and seed
@@ -169,22 +169,6 @@ export async function generateWithRepair<T>(
     );
     return { output, repaired: true };
   }
-}
-
-/** Waits `ms`, or rejects with the signal's reason when it aborts first. */
-export function delay(ms: number, signal: AbortSignal): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (signal.aborted) return reject(signal.reason);
-    const onAbort = () => {
-      clearTimeout(timer);
-      reject(signal.reason);
-    };
-    const timer = setTimeout(() => {
-      signal.removeEventListener("abort", onAbort);
-      resolve();
-    }, ms);
-    signal.addEventListener("abort", onAbort, { once: true });
-  });
 }
 
 export interface RunOptions {

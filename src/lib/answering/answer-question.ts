@@ -1,5 +1,5 @@
 import type { LanguageModel } from "ai";
-import type { AskEvent, AskRequest } from "@/contracts/ask";
+import type { AnswerModelId, AskEvent, AskRequest } from "@/contracts/ask";
 import type { IndexEntry } from "@/contracts/candidate";
 import type { Vocabulary } from "@/contracts/tools";
 import type { CircuitBreaker } from "@/lib/ai/breaker";
@@ -9,7 +9,7 @@ import type { Embedder } from "@/lib/ai/embedder";
 import { languageModel } from "@/lib/ai/providers";
 import type { ModelEntry, ModelTarget } from "@/lib/ai/registry";
 import { answerEntry } from "@/lib/ai/registry";
-import { shouldFallBack } from "@/lib/ai/retry";
+import { delay, isServerError, shouldFallBack } from "@/lib/ai/retry";
 import { runRoute } from "@/lib/ai/route";
 import { toolMessage, STAGE_MESSAGES } from "@/lib/ask/stages";
 import type { Bm25Index } from "@/lib/retrieval/bm25";
@@ -44,6 +44,10 @@ export interface AnswerDeps {
   breaker?: CircuitBreaker;
   log: (record: RequestLog) => void;
   requestId?: () => string;
+  /** The longest wait before the one retry after a 5xx; tests pass 0. @default 1000 */
+  retryJitterMs?: number;
+  /** The answer entry a request names; tests pass entries of their own (a fallback, say). @default answerEntry */
+  entries?: (id: AnswerModelId) => ModelEntry | undefined;
 }
 
 /** The candidates of the last answer that showed any: what "of those" refers to. */
@@ -56,7 +60,7 @@ export function previousCandidateIds(history: AskRequest["history"]): string[] {
 }
 
 export async function answerQuestion(request: AskRequest, emit: (event: AskEvent) => void, deps: AnswerDeps, signal: AbortSignal): Promise<void> {
-  const { pool, modelFor = languageModel, breaker = modelBreaker } = deps;
+  const { pool, modelFor = languageModel, breaker = modelBreaker, retryJitterMs = 1_000, entries = answerEntry } = deps;
   const started = performance.now();
   const byId = new Map(pool.entries.map((entry) => [entry.id, entry]));
   const previousIds = previousCandidateIds(request.history).filter((id) => byId.has(id));
@@ -68,7 +72,7 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
     steps: [],
     toolCalls: [],
     repairs: 0,
-    fallbacks: [],
+    modelFailures: [],
     candidatesReturned: [],
     outcome: "error",
     latencyMs: 0,
@@ -82,7 +86,7 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
     deps.log(record);
   };
 
-  const entry: ModelEntry | undefined = answerEntry(request.model);
+  const entry: ModelEntry | undefined = entries(request.model);
   if (!entry) {
     finish("error", new Error(`Model ${request.model} is not offered`));
     emit({ type: "error", message: "That model isn't available. Choose another one.", retryable: false });
@@ -91,22 +95,35 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
 
   try {
     emit({ type: "progress", stage: "understand", message: STAGE_MESSAGES.understand });
+    // One model, with the single quick retry after a 5xx (an overloaded upstream, say) before the
+    // fallback (PLAN, Reliability); nothing has reached the recruiter yet, and the two attempts are
+    // one strike for the breaker.
     const run = async (target: ModelTarget) => {
-      const store = new ResultStore();
-      const tools = createTools({ ...pool, embedder: deps.embedder, store: deps.store, previousIds, signal }, (result) => store.add(result));
-      const outcome = await runLoop(modelFor(target), {
-        instructions: buildInstructions(pool.entries, previousIds),
-        messages: buildMessages(request.history, request.question),
-        tools,
-        signal,
-        onTool: (toolName, input) => emit({ type: "progress", stage: "search", message: toolMessage(toolName, input) }),
-        onStep: (step) => record.steps.push(step),
-        onToolCall: (call) => record.toolCalls.push(call),
-        onRepair: () => {
-          record.repairs += 1;
-        },
-      });
-      return { outcome, store };
+      for (let retried = false; ; retried = true) {
+        const store = new ResultStore(previousIds.length);
+        const tools = createTools({ ...pool, embedder: deps.embedder, store: deps.store, previousIds, signal }, (result) => store.add(result));
+        try {
+          const outcome = await runLoop(modelFor(target), {
+            instructions: buildInstructions(pool.entries, previousIds),
+            messages: buildMessages(request.history, request.question),
+            tools,
+            signal,
+            onTool: (toolName, input) => emit({ type: "progress", stage: "search", message: toolMessage(toolName, input) }),
+            onStep: (step) => record.steps.push(step),
+            onToolCall: (call) => record.toolCalls.push(call),
+            onRepair: () => {
+              record.repairs += 1;
+            },
+            // A list or count is opened by the app's sentence; a profile or comparison needs the model's words.
+            wantsText: () => !store.lastFilter && !store.lastSearch,
+          });
+          return { outcome, store };
+        } catch (error) {
+          if (retried || signal.aborted || !isServerError(error)) throw error;
+          record.modelFailures.push({ model: modelLabel(target), reason: brief(error), then: "retried" });
+          await delay(Math.random() * retryJitterMs, signal);
+        }
+      }
     };
     const { value, target, fellBack } = await runRoute(entry, {
       breaker,
@@ -115,23 +132,31 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
       // A model that is down, silent or empty may not be the next one's problem; a bad answer is not retried elsewhere.
       canSwitch: (error) => error instanceof EmptyAnswerError || shouldFallBack(error),
       onFailure: (error, from, next) => {
-        if (next) record.fallbacks.push({ from: modelLabel(from), to: modelLabel(next), reason: brief(error) });
+        record.modelFailures.push({ model: modelLabel(from), reason: brief(error), then: next ? "fell back" : "gave up", ...(next ? { to: modelLabel(next) } : {}) });
       },
     });
     const { outcome, store } = value;
     record.model = { requested: request.model, used: outcome.modelId ?? target.model, provider: outcome.provider, fellBack };
     record.candidatesReturned = [...store.knownIds];
+    if (outcome.presentForced) record.presentForced = true;
+    if (outcome.textRewritten) record.textRewritten = true;
 
     emit({ type: "progress", stage: "write", message: STAGE_MESSAGES.write });
     const built = outcome.present ? buildView(outcome.present, store, byId) : undefined;
+    // A count is the app's sentence: the model's words could only restate or contradict it.
+    let text = outcome.text;
+    if (text && built?.view.kind === "list" && built.view.count) {
+      built.corrections.push("The model's text was dropped: a count is the app's sentence");
+      text = "";
+    }
     if (built) record.presentation = { view: built.view.kind === "status" ? built.view.status : built.view.kind, candidates: built.sources.length, corrections: built.corrections };
-    if (outcome.text) emit({ type: "delta", text: outcome.text });
-    const answeredBy = { model: request.model, name: fellBack ? (entry.fallback ? fallbackName(entry) : target.model) : entry.displayName, fellBack };
+    if (text) emit({ type: "delta", text });
+    const answeredBy = { model: request.model, name: fellBack ? (entry.fallback ? fallbackName(entry, entries) : target.model) : entry.displayName, fellBack };
     recordOutcome(modelLabel(target), true);
     finish("answer");
     emit({
       type: "answer",
-      text: outcome.text,
+      text,
       view: built?.view,
       sources: built?.sources ?? [],
       matched: store.summary,
@@ -149,10 +174,10 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
   }
 }
 
-/** The display name of the entry's fallback: the registry entry that pins the same model, if any. */
-function fallbackName(entry: ModelEntry): string {
+/** The display name of the entry's fallback: the answer entry that pins the same model, if any. */
+function fallbackName(entry: ModelEntry, entries: (id: AnswerModelId) => ModelEntry | undefined): string {
   const fallback = entry.fallback;
   if (!fallback) return entry.displayName;
-  const named = answerEntry("alternative");
+  const named = entries("alternative");
   return named && named.model === fallback.model ? named.displayName : fallback.model;
 }
