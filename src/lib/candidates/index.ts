@@ -7,7 +7,7 @@
 
 export { chunkId, pageChunks, pageTexts, sectionPages } from "./cvChunks";
 
-export { cvFileName, cvSourceHref } from "./cvSource";
+export { cvFileName, cvSourceHref, cvEtag, etagMatches } from "./cvSource";
 
 export { buildIndexEntry } from "./indexEntry";
 export type { BuiltEntry } from "./indexEntry";
