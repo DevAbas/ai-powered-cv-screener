@@ -25,16 +25,16 @@ skips what already exists.
   seeds are the ground truth for the tests.
 - **Photos.** One portrait per candidate from the image model. It costs
   money, so it runs only when named.
-- **PDFs.** One CV per seed, rendered with react-pdf from one template in
-  three variants, at most three pages each.
+- **PDFs.** One CV per seed, rendered from one template in three
+  variants, at most three pages each.
 
 ### RAG workflow
 
 `npm run index` turns the PDFs into what the model can use, in three
 steps.
 
-- **Text.** pdf.js reads each page. The text is split into sections at the
-  CV's own headings; each section on each page is one chunk.
+- **Text.** Each page's text is split into sections at the CV's own
+  headings. Each section on each page is one chunk.
 - **Profile.** Gemini writes a structured profile from the chunks. The app
   then locates every field in the CV text, so each fact has a source page
   and a fact not found in the text is dropped. The result is one JSON file
@@ -42,14 +42,13 @@ steps.
 - **Vectors.** Each chunk is embedded and stored in Pinecone.
 
 At question time the model does not read the CVs. It calls tools: exact
-filters and counts over the index in memory, full profiles for named
-candidates, and a hybrid search of BM25 and vectors for free text. Every
-result carries its evidence and page, so the model can only say what a
-tool returned.
+filters and counts over the index, full profiles for named candidates, and
+a search by keyword and by meaning for free text. Every result carries its
+evidence and page, so the model can only say what a tool returned.
 
 ### Chat interface
 
-One page in Next.js. A text box takes the question, with an example
+One page. A text box takes the question, with an example
 question as its placeholder. The answer streams in: the progress, then the
 text, then the view.
 
@@ -84,75 +83,46 @@ and the app checks every candidate and page it names.
 ### Layers
 
 The code is grouped by what it does, not by technical layer. [src/lib](src/lib)
-has five domain modules. Each one can be used from a route, a script or a test,
+has five domain modules, each usable from a route, a script or a test,
 without React:
 
-- [screening](src/lib/screening) is the core. One question goes in, one answer comes out. It
-  runs the answer loop, defines the tools the model can call, collects the
-  results and builds the view.
-- [candidates](src/lib/candidates) owns the pool. It reads and checks the index, builds an
-  entry from a CV, checks a profile against the CV's text, and knows which
-  values exist in the pool.
-- [search](src/lib/search) finds CV text. It has BM25 over the section chunks, a vector
-  store behind an interface (a Pinecone adapter and an in-memory fake), and
-  rank fusion to join the two.
-- [models](src/lib/models) talks to the language models. It has the list of models and what
-  they can do, the provider clients, routing with a circuit breaker, retry
-  rules, and structured output with schema repair.
-- [conversation](src/lib/conversation) is what the recruiter sends and sees: the request client,
-  the progress messages, the answer as text.
+- [screening](src/lib/screening) is the core: one question in, one answer
+  out. It runs the answer loop, the tools and the view.
+- [candidates](src/lib/candidates) owns the pool: the index and each
+  candidate's verified profile.
+- [search](src/lib/search) finds CV text by keyword and by meaning, and
+  joins the two.
+- [models](src/lib/models) talks to the language models: which ones, how
+  they are called, and what happens when a call fails.
+- [conversation](src/lib/conversation) is what the recruiter sends and sees.
 
-Three rules keep this shape:
-
-- **Dependencies go one way.** Routes and scripts use `lib`. `lib` uses
-  `contracts`. A module never imports a component, a hook or a script.
-  `lib` never imports Next.
-- **The API route wires things together.** It loads the pool once. It
-  creates the real embedder, vector store and BM25 index. It puts them in
-  one bundle and gives it to the screening module. Tests give fakes instead.
-  There is no container and no injection framework. Only parameters.
-- **Contracts are the shared language.** `src/contracts` holds the Zod
-  schemas for the request, the events, the candidate profile, the tool
-  inputs and the view. The route checks what comes in. The client types
-  what goes out. Every tool call and every presentation call is checked
-  against them before use.
+Dependencies flow one way, from the app and the scripts to these modules,
+and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 
 ## Decisions and why
 
 - **Typed tools over the index, not a plain RAG prompt.** Most recruiter
   questions are exact: years, languages, roles, counts. These run as
   queries, so the answer is the query result and the model only puts it in
-  words. Search by meaning is kept for the questions that need it. A
-  question the filters cannot express falls to the text search, which ranks
-  its results and does not promise a complete list.
+  words. Search by meaning is kept for the questions the filters cannot
+  express.
 - **The app writes the counts, the lists and the first sentence.** A count
-  comes from the tool. A list after a filter has every match. The first
-  sentence of a view comes from the filter and its result. The model cannot
-  drop a candidate or add one. The opening sentence is a template, and a
-  count answer drops whatever the model wrote.
-- **Every cited page is checked.** The model names candidates and pages. If
-  a candidate was not returned by a tool, the answer fails. If a page was
-  not cited by a tool, it is replaced with one that was. An answer that
-  names an unknown candidate fails as a whole, with a Retry button, rather
-  than showing the part that could be verified.
+  comes from the tool, a list after a filter has every match, and the
+  opening sentence comes from the filter and its result. The model cannot
+  drop a candidate or add one.
+- **Every cited page is checked.** The model names candidates and pages. A
+  candidate no tool returned fails the answer. A page no tool cited is
+  replaced with one that was.
 - **Sources are found in the CV text during indexing.** Each profile field
-  is found as whole words on a page. So the link the recruiter clicks opens
-  where the fact is written. A fact the model read correctly but the CV
-  does not state in those words is dropped.
+  is located on a page, so the link the recruiter clicks opens where the
+  fact is written. A fact the text does not state is dropped.
 - **One fixed model, named in the environment.** One behaviour to tune the
-  prompt for, and no choice for the recruiter. The model's name lives in
-  `.env.local`, so a swap is a configuration change, not a commit, and the
-  evaluation can run a candidate first. There is no fallback yet, so an
-  outage or a spent quota shows an error and a Retry button.
-- **Pipelines can be resumed, and have dry runs.** Every script skips what
-  already exists and can be forced to redo it. It prints its work list and
-  cost estimate before it calls a model. After a change to a seed or the
-  template, the old file stays until the step is run with `--force`.
+  prompt for, and no choice for the recruiter. The name lives in
+  `.env.local`, so a swap is a configuration change, and the evaluation
+  can run a candidate first.
 - **Evaluation lives in the code.** The test questions carry their expected
-  answers as rules over the seed data. So they still work after the pool is
-  regenerated. The scorer measures retrieval, composition and citations
-  separately. Each question needs a rule, not just an expected answer, and
-  the run pays for model calls.
+  answers as rules over the seed data, so they still work after the pool
+  is regenerated.
 
 ## Stack
 
@@ -169,24 +139,20 @@ Three rules keep this shape:
 
 ## Testing
 
-Unit tests sit next to the code they test. They run in Node, with fakes for
-the model, the embedder and the vector store. The ingestion pipeline has an
-accuracy check: it compares every indexed profile with the seed its CV came
-from, field by field. The evaluation runs the test questions through the
-real answer pipeline and scores each model against fixed thresholds. It is
-the only test that calls a model, and it shows the cost first. A model
-answers recruiters only when it passes every threshold. Latency is
-reported, not gated. The thresholds sit beside the scorer, in
-[scripts/evaluation/score.ts](scripts/evaluation/score.ts).
+Unit tests sit next to the code they test and run with fakes for the
+model and the stores. The index has an accuracy check: every indexed
+profile is compared with the seed its CV came from, field by field. The
+evaluation runs the test questions through the real answer pipeline and
+scores the model against fixed thresholds. It is the only test that calls
+a model, and it shows the cost first. A model answers recruiters only when
+it passes every threshold. Latency is reported, not gated.
 
 ## Component previews
 
 Storybook is where the UI is built and checked before it meets the app.
 Every component has a story per state, in light and dark, rendered against
 the mocks, so a view can be seen without a model or an index. The
-accessibility addon runs on every story, and the previews serve the sample
-CVs, so a source link opens a real PDF. The screenshot above comes from
-there.
+accessibility addon runs on every story.
 
 ```bash
 npm run storybook
@@ -229,11 +195,9 @@ the Pinecone index when it does not exist yet.
 
 ## Contributing
 
-[AGENTS.md](AGENTS.md) is the contributing guide: the conventions, the full command
-list and the boundaries every change follows. Before a pull request, run
-`npm run lint`, `npm run typecheck`, `npm test` and `npm run build`. Each
-pipeline has a `--dry-run` flag. It prints what a run would do, without
-calling a model. Any run that does call a model shows its cost first.
+[AGENTS.md](AGENTS.md) is the contributing guide: the conventions, the
+commands and the boundaries every change follows. Before a pull request,
+run `npm run lint`, `npm run typecheck`, `npm test` and `npm run build`.
 
 ## Where to read next
 
