@@ -97,52 +97,14 @@ before.
   `@/contracts`) are the single source of truth. Every tool call and
   presentation call is validated against them before use; the answer text
   is free.
-- Visual rules live in `DESIGN.md` only (tokens, palette, states, do's and
-  don'ts); nothing here repeats them. In code, components use the token
-  utilities `design:export` generates from it (`bg-surface`,
-  `text-on-surface-variant`, …) and name their component tokens in a
-  comment (`button-primary`, `button-primary-hover`, …).
+- UI code follows `src/components/README.md`; visual rules are
+  `DESIGN.md`'s. Neither is repeated here.
 - Routes live in a route group per feature (`src/app/(screener)/`);
   application code stays outside `app`.
-- Components: UI primitives in `src/components/ui/<Name>/`, product
-  components in `src/components/<Name>/`, icons of our own (the PDF file
-  icon) in `src/components/ui/Icons/`. Folder and files are named after
-  the component: `<Name>.tsx`, `<Name>.stories.tsx`, `<Name>.recipe.ts` and
-  an `index.ts` with explicit named and type exports. Parts used only by one
-  component live in its folder with their own file and story
-  (`ChatExchange/QuestionBubble.tsx`). Names say what the component is
-  (`ChatExchange`, `AnswerProgress`), never in-house jargon.
 - `src/hooks`: one concern each, `src/hooks/use<Name>/` with `use<Name>.ts`
   and `index.ts`. The pure logic a hook binds to React is its own file with
   its unit tests, in the hook's folder when only that hook uses it
   (`useChatScreen/chatState.ts`), in `src/lib` when shared.
-- UI primitives: styles live in a recipe next to the component,
-  `<Name>.recipe.ts` (`buttonRecipe`, `tableSlotRecipe`), defined with
-  `defineRecipe` / `defineSlotRecipe` from `src/components/ui/recipe.ts`
-  (tailwind-variants: `base`, `variants`, `defaultVariants`,
-  `compoundVariants`, `slots`). CSS lives only in `src/styles`.
-  Multi-part components export parts (`TableRoot`, `TableRow`, …) and a
-  namespace (`Table.Root`) from `namespace.ts`. Props: `<Name>Props`
-  extends the element's props and the recipe's variant props, documents
-  defaults with `@default`, spreads the rest and appends `className`.
-- Stories: titles follow the folders, `UI / <Name>`, `Chat / <Name>` or
-  `App / <Name>` (parts: `Chat / ChatExchange / QuestionBubble`). UI stories
-  are example components with no args (`Basic`, `Variants`, `Sizes`,
-  `Disabled`), variant tables built from the recipe's variants.
-- Plain CSS (`src/app/globals.css`, `src/styles`) reads token variables
-  directly (`var(--color-surface)`); never `@apply` utility classes there.
-- Dark values and values `DESIGN.md` gives only in prose live in
-  `src/styles/theme.css`, changed in the same commit as `DESIGN.md`.
-- Interactive primitives come from `@headlessui/react` when it has one;
-  otherwise a small primitive in `src/components/ui` (`Tooltip`). Style the
-  element's real state: `hover:` (`enabled:hover:` on controls that can be
-  disabled), `focus-visible:`, `disabled:`, `aria-expanded:`,
-  `aria-selected:`. Use `data-*` attributes only where no native or ARIA
-  state exists: the active option in a list (`data-focus`), shown only
-  while `data-modality="keyboard"` (`useInteractionModality`), and
-  transitions (`data-closed`).
-- Icons: `lucide-react`, plus our own in `src/components/ui/Icons` and the
-  logo mark.
 - Each pipeline under `scripts/` is an ES module package (its own
   `package.json`; why, in `scripts/README.md`); a CommonJS import from
   there uses the default export of a CJS package (`nextEnv.loadEnvConfig`).
