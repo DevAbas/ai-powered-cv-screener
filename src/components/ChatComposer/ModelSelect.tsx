@@ -1,6 +1,6 @@
-import type { AnswerModelId } from "@/contracts/ask";
-import { answerEntries } from "@/lib/ai/registry";
-import type { ModelEntry } from "@/lib/ai/registry";
+import type { AnswerModelId } from "@/contracts";
+import { answerEntries } from "@/lib/models";
+import type { ModelEntry } from "@/lib/models";
 import { Select } from "@/components/ui/Select";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { VendorLogo } from "@/components/ui/VendorLogo";

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
-import type { AnswerModelId } from "@/contracts/ask";
+import type { AnswerModelId } from "@/contracts";
 import { ModelSelect } from "./ModelSelect";
 import type { ModelSelectProps } from "./ModelSelect";
 

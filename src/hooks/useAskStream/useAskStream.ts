@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { AskEvent, AskRequest } from "@/contracts/ask";
-import type { AskTransport } from "@/lib/ask/client";
-import { ask, httpAsk } from "@/lib/ask/client";
+import type { AskEvent, AskRequest } from "@/contracts";
+import type { AskTransport } from "@/lib/conversation";
+import { ask, httpAsk } from "@/lib/conversation";
 
 /** After this long without an answer, a neutral notice appears (PLAN, User interface). */
 export const SLOW_NOTICE_MS = 10_000;

@@ -18,21 +18,21 @@
 // ESM (see package.json here, which pdf.js needs): a CJS package has no named exports.
 import nextEnv from "@next/env";
 import { readdir, readFile } from "node:fs/promises";
-import type { IndexEntry } from "@/contracts/candidate";
-import { CandidateIdSchema, CandidateProfileSchema } from "@/contracts/candidate";
+import type { IndexEntry } from "@/contracts";
+import { CandidateIdSchema, CandidateProfileSchema } from "@/contracts";
 import { z } from "zod";
-import { createEmbedder } from "@/lib/ai/embedder";
-import { missingApiKeys } from "@/lib/ai/providers";
-import { getEntry } from "@/lib/ai/registry";
-import { buildIndexEntry } from "@/lib/pool/build-entry";
-import { indexEntryPath, INDEX_DIR, readIndexEntries } from "@/lib/pool/index-files";
-import { pineconeStoreFromEnv } from "@/lib/vector/pinecone";
+import { createEmbedder } from "@/lib/models/embedder";
+import { missingApiKeys } from "@/lib/models/modelProviders";
+import { getEntry } from "@/lib/models";
+import { buildIndexEntry } from "@/lib/candidates";
+import { indexEntryPath, INDEX_DIR, readIndexEntries } from "@/lib/candidates/indexFiles";
+import { pineconeStoreFromEnv } from "@/lib/search/pineconeStore";
 import { PDFS_DIR, pdfPath, readJson, writeJsonAtomic } from "../generation/paths";
 import { shortError, sleep } from "../generation/options";
 import { readSeeds } from "../generation/steps/seeds";
 import { accuracyReport, formatAccuracy } from "./accuracy";
 import { extractProfile } from "./extract";
-import { pdfPageTexts } from "./pdf-text";
+import { pdfPageTexts } from "./pdfText";
 import { syncVectors } from "./steps/vectors";
 
 nextEnv.loadEnvConfig(process.cwd());

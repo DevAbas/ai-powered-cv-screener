@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import type { FocusEvent, KeyboardEvent, ReactNode } from "react";
-import type { RecipeVariantProps } from "@/lib/recipe";
+import type { RecipeVariantProps } from "@/components/ui/recipe";
 import { tooltipSlotRecipe } from "./Tooltip.recipe";
 
 /** How long the pointer rests on the trigger before the tooltip starts to fade in. */

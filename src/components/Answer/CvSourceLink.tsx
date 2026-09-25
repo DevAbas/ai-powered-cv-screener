@@ -2,7 +2,7 @@
 
 import { PdfIcon } from "@/components/ui/Icons";
 import { Tooltip } from "@/components/ui/Tooltip";
-import { cx, focusVisibleRing } from "@/lib/recipe";
+import { cx, focusVisibleRing } from "@/components/ui/recipe";
 import { useOpenSource } from "./SourceContext";
 
 /**

@@ -1,5 +1,5 @@
 import { ChatScreen } from "@/components/ChatScreen";
-import { loadPool, toPoolCandidate } from "@/lib/pool/pool";
+import { loadPool, toPoolCandidate } from "@/lib/candidates/candidatePool";
 
 // The pool comes from the index, read on the server (PLAN, Data access);
 // only names and page counts reach the client.

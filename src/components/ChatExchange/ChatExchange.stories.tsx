@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
-import { STAGE_MESSAGES, toolMessage } from "@/lib/ask/stages";
+import { STAGE_MESSAGES, toolMessage } from "@/lib/conversation";
 import { storySourceHref } from "@/mocks/story";
 import { ANSWERS } from "@/mocks/answers";
 import type { MockAnswer } from "@/mocks/answers";

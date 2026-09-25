@@ -1,4 +1,4 @@
-import { defineRecipe } from "@/lib/recipe";
+import { defineRecipe } from "@/components/ui/recipe";
 
 // DESIGN.md, Model menu: the vendor logo at the 1rem icon size. A logo in its
 // maker's colours shows as is; a single-colour mark is black in its file, so

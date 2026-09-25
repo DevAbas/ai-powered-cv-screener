@@ -1,4 +1,4 @@
-import { defineSlotRecipe } from "@/lib/recipe";
+import { defineSlotRecipe } from "@/components/ui/recipe";
 
 // DESIGN.md, Tooltips. Token: tooltip (inverse-surface, inverse-on-surface,
 // label-md, rounded.md).

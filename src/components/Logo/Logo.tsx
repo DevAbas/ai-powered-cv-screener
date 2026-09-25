@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { capHeightBox, cx } from "@/lib/recipe";
+import { capHeightBox, cx } from "@/components/ui/recipe";
 import { LogoMark } from "./LogoMark";
 
 export type LogoProps = ComponentProps<"span">;

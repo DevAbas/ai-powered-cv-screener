@@ -12,12 +12,12 @@ import { CursorGrid } from "@/components/ui/CursorGrid";
 import { useChatScreen } from "@/hooks/useChatScreen";
 import { useElementHeight } from "@/hooks/useElementHeight";
 import { useFollowScroll } from "@/hooks/useFollowScroll";
-import type { AskTransport } from "@/lib/ask/client";
-import type { PoolCandidate } from "@/lib/pool/candidate";
+import type { AskTransport } from "@/lib/conversation";
+import type { PoolCandidate } from "@/lib/candidates";
 import { AppHeader } from "@/components/AppHeader";
-import { cvSourceHref } from "@/lib/pool/source-href";
-import { EXAMPLE_QUESTION } from "@/lib/chat/suggestions";
-import { cx } from "@/lib/recipe";
+import { cvSourceHref } from "@/lib/candidates";
+import { EXAMPLE_QUESTION } from "@/lib/conversation";
+import { cx } from "@/components/ui/recipe";
 
 export interface ChatScreenProps {
   /** Every CV in the pool: its size is shown in the empty state. */

@@ -1,5 +1,5 @@
 import { User } from "lucide-react";
-import { capHeightBox } from "@/lib/recipe";
+import { capHeightBox } from "@/components/ui/recipe";
 
 export interface CandidateNameProps {
   name: string;

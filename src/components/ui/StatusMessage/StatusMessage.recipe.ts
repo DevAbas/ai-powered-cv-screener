@@ -1,4 +1,4 @@
-import { capHeightBox, defineSlotRecipe } from "@/lib/recipe";
+import { capHeightBox, defineSlotRecipe } from "@/components/ui/recipe";
 
 // DESIGN.md, Components: States. Tokens: icon, state-icon-warning,
 // state-icon-error. A single line of text with a small leading icon; colour

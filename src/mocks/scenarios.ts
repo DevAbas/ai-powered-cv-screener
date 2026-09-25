@@ -1,4 +1,4 @@
-import { STAGE_MESSAGES, toolMessage } from "@/lib/ask/stages";
+import { STAGE_MESSAGES, toolMessage } from "@/lib/conversation";
 import type { MockAnswer } from "./answers";
 import { ANSWERS, malformedAnswer } from "./answers";
 

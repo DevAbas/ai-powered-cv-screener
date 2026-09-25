@@ -1,4 +1,4 @@
-import { defineRecipe, focusVisibleRing } from "@/lib/recipe";
+import { defineRecipe, focusVisibleRing } from "@/components/ui/recipe";
 
 // DESIGN.md, Links. Tokens: link, link-hover (primary-text).
 export const linkRecipe = defineRecipe({

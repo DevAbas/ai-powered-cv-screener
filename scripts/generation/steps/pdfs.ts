@@ -7,7 +7,7 @@ import { log, shortError } from "../options";
 import { countPdfPages, MAX_PAGES } from "../pdf";
 import { ROSTER } from "../roster";
 import { readSeeds } from "./seeds";
-import { renderTemplate } from "../cv-template/render-template";
+import { renderTemplate } from "../cv-template/renderTemplate";
 
 // Step 3: one PDF per seed in `data/cvs`, photo embedded when it exists
 // (PLAN, Generation pipeline). The manifest records whether each PDF

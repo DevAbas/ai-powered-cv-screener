@@ -1,10 +1,10 @@
 "use client";
 
 import { useReducer } from "react";
-import type { AskTransport } from "@/lib/ask/client";
-import { historyFrom } from "@/lib/chat/history";
-import { chatReducer, initialChatState, isRunning } from "@/lib/chat/state";
-import type { ExchangeState } from "@/lib/chat/state";
+import type { AskTransport } from "@/lib/conversation";
+import { historyFrom } from "@/hooks/useChatScreen/chatHistory";
+import { chatReducer, initialChatState, isRunning } from "@/hooks/useChatScreen/chatState";
+import type { ExchangeState } from "@/hooks/useChatScreen/chatState";
 import { useAskStream } from "@/hooks/useAskStream";
 import { useStoredModel } from "@/hooks/useStoredModel";
 

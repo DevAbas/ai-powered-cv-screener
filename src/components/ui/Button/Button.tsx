@@ -2,7 +2,7 @@
 
 import { Button as HeadlessButton } from "@headlessui/react";
 import type { ButtonProps as HeadlessButtonProps } from "@headlessui/react";
-import type { RecipeVariantProps } from "@/lib/recipe";
+import type { RecipeVariantProps } from "@/components/ui/recipe";
 import { buttonRecipe } from "./Button.recipe";
 
 export type ButtonBaseProps = RecipeVariantProps<typeof buttonRecipe>;

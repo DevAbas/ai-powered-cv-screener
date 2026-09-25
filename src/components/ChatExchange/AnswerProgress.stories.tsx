@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { STAGE_MESSAGES, toolMessage } from "@/lib/ask/stages";
+import { STAGE_MESSAGES, toolMessage } from "@/lib/conversation";
 import { AnswerProgress } from "./AnswerProgress";
 
 const all = [

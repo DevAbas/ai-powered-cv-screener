@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
-import { clampPreviewWidth, defaultPreviewWidth, PREVIEW_OPEN_MIN_WIDTH, widthFromPointer } from "@/lib/preview/width";
+import { clampPreviewWidth, defaultPreviewWidth, PREVIEW_OPEN_MIN_WIDTH, widthFromPointer } from "@/hooks/useResizablePanel/panelWidth";
 
 export interface ResizablePanel {
   /** Current width in px, clamped to the viewport. */

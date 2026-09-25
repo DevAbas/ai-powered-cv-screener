@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Vendor } from "@/lib/ai/registry";
+import type { Vendor } from "@/lib/models";
 import { vendorLogoRecipe } from "./VendorLogo.recipe";
 
 export interface VendorLogoProps {

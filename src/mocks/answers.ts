@@ -1,6 +1,5 @@
-import type { AnsweredBy, AnswerMatched, AnswerSource } from "@/contracts/ask";
-import type { AnswerView, CandidateRow } from "@/contracts/view";
-import { ANDREI, ELENA, LENA } from "@/lib/retrieval/fixtures";
+import type { AnsweredBy, AnswerMatched, AnswerSource, AnswerView, CandidateRow } from "@/contracts";
+import { ANDREI, ELENA, LENA } from "@/mocks/sampleIndex";
 import { findCandidate } from "./pool";
 
 // Answers for the mocks and stories (PLAN, Design system: mocks), about

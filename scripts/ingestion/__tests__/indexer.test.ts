@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { LENA } from "@/lib/retrieval/fixtures";
+import { LENA } from "@/mocks/sampleIndex";
 import { ANDREI as ANDREI_SEED, LENA as LENA_SEED, TEST_SEEDS } from "../../evaluation/fixtures";
 import { accuracyReport, compareEntry, formatAccuracy } from "../accuracy";
 import { extractPrompt, splitEvidence } from "../extract";
 import type { ExtractedProfile } from "../extract";
-import { cleanPageText, joinSpacedCapitals } from "../pdf-text";
+import { cleanPageText, joinSpacedCapitals } from "../pdfText";
 
 describe("joinSpacedCapitals", () => {
   it.each([

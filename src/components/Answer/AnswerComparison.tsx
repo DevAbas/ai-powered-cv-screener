@@ -1,6 +1,6 @@
-import type { AnswerView, ViewCandidate } from "@/contracts/view";
+import type { AnswerView, ViewCandidate } from "@/contracts";
 import { Table } from "@/components/ui/Table";
-import { profileFacts } from "@/lib/answer-text";
+import { profileFacts } from "@/lib/conversation";
 import type { SourceHref } from "./CvSourceLink";
 import { CvSourceLink } from "./CvSourceLink";
 

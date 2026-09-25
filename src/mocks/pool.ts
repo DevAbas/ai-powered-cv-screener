@@ -1,4 +1,4 @@
-import type { PoolCandidate } from "@/lib/pool/candidate";
+import type { PoolCandidate } from "@/lib/candidates";
 
 // Mock pool for component previews and tests: the 30 candidates of the
 // generator's roster (`scripts/generation/roster.ts`, kept equal by its test),

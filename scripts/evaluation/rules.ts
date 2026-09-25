@@ -1,7 +1,7 @@
-import type { CandidateSeed, LanguageLevel, Seniority } from "@/contracts/candidate";
-import { LANGUAGE_LEVELS, SENIORITIES } from "@/contracts/candidate";
-import { CURRENT_MONTH } from "../generation/seed-rules";
-import { medianTenureMonths } from "@/lib/pool/tenure";
+import type { CandidateSeed, LanguageLevel, Seniority } from "@/contracts";
+import { LANGUAGE_LEVELS, SENIORITIES } from "@/contracts";
+import { CURRENT_MONTH } from "../generation/seedRules";
+import { medianTenureMonths } from "@/lib/candidates";
 import type { Seeds } from "./types";
 
 // Pure rule helpers over the seeds (PLAN, Evaluation). Every expectation in

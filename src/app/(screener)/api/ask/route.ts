@@ -1,9 +1,8 @@
-import type { AskEvent } from "@/contracts/ask";
-import { AskRequestSchema } from "@/contracts/ask";
-import type { AnswerDeps } from "@/lib/answering/answer-question";
-import { answerQuestion } from "@/lib/answering/answer-question";
-import { answerDeps } from "@/lib/answering/deps";
-import { loadPool } from "@/lib/pool/pool";
+import type { AskEvent } from "@/contracts";
+import { AskRequestSchema } from "@/contracts";
+import type { AnswerDeps } from "@/lib/screening";
+import { answerQuestion, answerDeps } from "@/lib/screening";
+import { loadPool } from "@/lib/candidates/candidatePool";
 
 // POST /api/ask (PLAN, Retrieval and answering): HTTP only. Validates the
 // request, wires the answering service, and streams its events as NDJSON:

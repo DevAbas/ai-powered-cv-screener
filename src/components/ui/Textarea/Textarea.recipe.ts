@@ -1,4 +1,4 @@
-import { defineRecipe, focusVisibleRing } from "@/lib/recipe";
+import { defineRecipe, focusVisibleRing } from "@/components/ui/recipe";
 
 // DESIGN.md, Inputs. Tokens: input, input-placeholder. The multi-line field;
 // same variants as `inputRecipe`.

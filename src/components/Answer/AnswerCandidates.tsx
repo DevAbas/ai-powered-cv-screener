@@ -3,9 +3,9 @@
 import { ChevronDown, ChevronUp, User } from "lucide-react";
 import { useState } from "react";
 import type { TransitionEvent } from "react";
-import type { AnswerView, CandidateRow } from "@/contracts/view";
-import { listCaption, skillLabel } from "@/lib/answer-text";
-import { cx } from "@/lib/recipe";
+import type { AnswerView, CandidateRow } from "@/contracts";
+import { listCaption, skillLabel } from "@/lib/conversation";
+import { cx } from "@/components/ui/recipe";
 import type { SourceHref } from "./CvSourceLink";
 import { cardClass, CvSourceLink } from "./CvSourceLink";
 

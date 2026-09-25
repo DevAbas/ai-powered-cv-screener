@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
-import type { AnswerModelId } from "@/contracts/ask";
-import { getEntry } from "@/lib/ai/registry";
+import type { AnswerModelId } from "@/contracts";
+import { getEntry } from "@/lib/models";
 import { ChatComposer } from "./ChatComposer";
 import type { ChatComposerProps } from "./ChatComposer";
 

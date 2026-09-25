@@ -1,11 +1,10 @@
 import { generateText } from "ai";
-import { languageModel } from "@/lib/ai/providers";
-import { getEntry } from "@/lib/ai/registry";
-import { withRetry } from "@/lib/ai/retry";
+import { languageModel } from "@/lib/models/modelProviders";
+import { getEntry, withRetry } from "@/lib/models";
 import { exists, photoPath, writeFileAtomic } from "../paths";
 import type { StepOptions, StepReport } from "../options";
 import { log, shortError } from "../options";
-import { PHOTO_COST_USD, PHOTO_MEDIA_TYPE, photoPrompt, photoProviderOptions } from "../photo-options";
+import { PHOTO_COST_USD, PHOTO_MEDIA_TYPE, photoPrompt, photoProviderOptions } from "../photoOptions";
 import { ROSTER } from "../roster";
 import { readSeeds } from "./seeds";
 

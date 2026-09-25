@@ -1,4 +1,4 @@
-import { defineSlotRecipe, focusVisibleRing } from "@/lib/recipe";
+import { defineSlotRecipe, focusVisibleRing } from "@/components/ui/recipe";
 
 // DESIGN.md, Components: States and Icons; Layout: loading motion. Tokens:
 // icon, icon-disabled. One line in label-lg that breathes while working

@@ -1,18 +1,16 @@
 import { readdir } from "node:fs/promises";
-import type { CandidateSeed } from "@/contracts/candidate";
-import { CandidateSeedSchema } from "@/contracts/candidate";
-import { languageModel } from "@/lib/ai/providers";
-import { getEntry } from "@/lib/ai/registry";
-import type { ModelEntry, ModelTarget } from "@/lib/ai/registry";
-import { isDailyQuotaError, withRetry } from "@/lib/ai/retry";
-import type { RetryOptions } from "@/lib/ai/retry";
-import { generateWithRepair } from "@/lib/ai/structured";
-import type { StructuredRequest, StructuredResult } from "@/lib/ai/structured";
+import type { CandidateSeed } from "@/contracts";
+import { CandidateSeedSchema } from "@/contracts";
+import { languageModel } from "@/lib/models/modelProviders";
+import { getEntry, isDailyQuotaError, withRetry } from "@/lib/models";
+import type { ModelEntry, ModelTarget, RetryOptions } from "@/lib/models";
+import { generateWithRepair } from "@/lib/models/structuredOutput";
+import type { StructuredRequest, StructuredResult } from "@/lib/models/structuredOutput";
 import { exists, readJson, SEEDS_DIR, seedPath, writeJsonAtomic } from "../paths";
 import type { StepOptions, StepReport } from "../options";
 import { log, shortError, sleep } from "../options";
 import { ROSTER } from "../roster";
-import { assembleSeed, findDuplicateEmployment, seedRequest } from "../seed-rules";
+import { assembleSeed, findDuplicateEmployment, seedRequest } from "../seedRules";
 
 // Step 1: one seed per roster entry, written by the `generate` model
 // (PLAN, Generation pipeline). Resumable: an existing seed is kept unless

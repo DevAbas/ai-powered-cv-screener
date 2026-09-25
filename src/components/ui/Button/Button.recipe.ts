@@ -1,4 +1,4 @@
-import { defineRecipe, focusVisibleRing } from "@/lib/recipe";
+import { defineRecipe, focusVisibleRing } from "@/components/ui/recipe";
 
 // DESIGN.md, Buttons and Icons. Tokens: button-primary, button-primary-hover,
 // button-primary-pressed, button-secondary, button-secondary-hover,

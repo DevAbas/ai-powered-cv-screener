@@ -1,5 +1,5 @@
-import type { AskRequest } from "@/contracts/ask";
-import { EXAMPLE_QUESTION } from "@/lib/chat/suggestions";
+import type { AskRequest } from "@/contracts";
+import { EXAMPLE_QUESTION } from "@/lib/conversation";
 import type { ScenarioName } from "./scenarios";
 import { SCENARIOS } from "./scenarios";
 

@@ -1,4 +1,4 @@
-import type { AnswerView as View } from "@/contracts/view";
+import type { AnswerView as View } from "@/contracts";
 import { AnswerCandidates } from "./AnswerCandidates";
 import { AnswerComparison } from "./AnswerComparison";
 import { AnswerProfile } from "./AnswerProfile";

@@ -1,5 +1,5 @@
-import type { AskEvent } from "@/contracts/ask";
-import type { RequestLog } from "@/lib/answering/log";
+import type { AskEvent } from "@/contracts";
+import type { RequestLog } from "@/lib/screening";
 import type { ObservedAnswer } from "./score";
 
 // From the pipeline's events and log line to what the scorer reads.

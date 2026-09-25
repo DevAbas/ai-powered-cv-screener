@@ -7,8 +7,8 @@ import { IconButton } from "@/components/ui/Button";
 import { PdfIcon } from "@/components/ui/Icons";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useResizablePanel } from "@/hooks/useResizablePanel";
-import { cvFileName } from "@/lib/pool/source-href";
-import { cx } from "@/lib/recipe";
+import { cvFileName } from "@/lib/candidates";
+import { cx } from "@/components/ui/recipe";
 import { PdfPages } from "./PdfPages";
 import { ResizeHandle } from "./ResizeHandle";
 

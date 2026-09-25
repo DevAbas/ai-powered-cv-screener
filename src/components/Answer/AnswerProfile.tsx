@@ -1,5 +1,5 @@
-import type { AnswerView } from "@/contracts/view";
-import { profileFacts } from "@/lib/answer-text";
+import type { AnswerView } from "@/contracts";
+import { profileFacts } from "@/lib/conversation";
 import { CandidateName } from "./CandidateName";
 import type { SourceHref } from "./CvSourceLink";
 import { CvSourceLink } from "./CvSourceLink";

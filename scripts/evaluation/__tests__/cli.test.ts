@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import type { AskEvent, AskRequest } from "@/contracts/ask";
-import type { RequestLog } from "@/lib/answering/log";
+import type { AskEvent, AskRequest } from "@/contracts";
+import type { RequestLog } from "@/lib/screening";
 import { sourcesOf } from "@/mocks/answers";
 import { TEST_SEEDS } from "../fixtures";
 import { historyFor, REQUESTS_PER_QUESTION, reportOf, runEvaluation } from "../cli";

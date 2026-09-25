@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useSyncExternalStore } from "react";
-import type { AnswerModelId } from "@/contracts/ask";
-import { readStoredModel, writeStoredModel } from "@/lib/chat/stored-model";
+import type { AnswerModelId } from "@/contracts";
+import { readStoredModel, writeStoredModel } from "@/hooks/useStoredModel/storedModel";
 
 // The browser's storage as an external store (React docs, useSyncExternalStore):
 // the server snapshot is the recommended model, so the first render agrees

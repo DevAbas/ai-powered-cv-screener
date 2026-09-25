@@ -1,12 +1,12 @@
 import { ArrowUp, AudioLines, Square } from "lucide-react";
 import type { FormEvent, KeyboardEvent } from "react";
-import type { AnswerModelId } from "@/contracts/ask";
-import type { ModelEntry } from "@/lib/ai/registry";
-import { answerEntries } from "@/lib/ai/registry";
+import type { AnswerModelId } from "@/contracts";
+import type { ModelEntry } from "@/lib/models";
+import { answerEntries } from "@/lib/models";
 import { IconButton } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { Tooltip } from "@/components/ui/Tooltip";
-import { cx } from "@/lib/recipe";
+import { cx } from "@/components/ui/recipe";
 import { ModelSelect } from "./ModelSelect";
 
 export interface ChatComposerProps {

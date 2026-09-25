@@ -1,5 +1,5 @@
-import type { CandidateId, Role, Seniority } from "@/contracts/candidate";
-import { slugOf } from "./seed-rules";
+import type { CandidateId, Role, Seniority } from "@/contracts";
+import { slugOf } from "./seedRules";
 
 // The fixed part of every seed (PLAN, Generation pipeline): the generator
 // owns it, the mock pool mirrors it and `roster.test.ts` keeps them equal.

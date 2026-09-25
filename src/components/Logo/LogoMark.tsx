@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { cx } from "@/lib/recipe";
+import { cx } from "@/components/ui/recipe";
 
 export type LogoMarkProps = ComponentProps<"svg">;
 

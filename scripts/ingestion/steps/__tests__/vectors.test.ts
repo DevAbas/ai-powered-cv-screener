@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import type { Embedder } from "@/lib/ai/embedder";
-import { ANDREI, ELENA, LENA, TEST_INDEX } from "@/lib/retrieval/fixtures";
-import { createInMemoryStore } from "@/lib/vector/in-memory";
+import type { Embedder } from "@/lib/models/embedder";
+import { ANDREI, ELENA, LENA, TEST_INDEX } from "@/mocks/sampleIndex";
+import { createInMemoryStore } from "@/mocks/inMemoryVectorStore";
 import { chunkDocumentText, chunkMetadata, syncVectors } from "../vectors";
 
 const embedder = (): Embedder & { embedDocuments: ReturnType<typeof vi.fn> } => ({

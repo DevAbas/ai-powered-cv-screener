@@ -1,12 +1,11 @@
 "use client";
 
-import type { AnsweredBy, AnswerMatched } from "@/contracts/ask";
-import type { AnswerStatus, AnswerView as View } from "@/contracts/view";
+import type { AnsweredBy, AnswerMatched, AnswerStatus, AnswerView as View } from "@/contracts";
 import { StatusMessage } from "@/components/ui/StatusMessage";
 import type { StatusMessageProps } from "@/components/ui/StatusMessage";
 import { AnswerText, AnswerView } from "@/components/Answer";
 import type { SourceHref } from "@/components/Answer";
-import { statusText } from "@/lib/answer-text";
+import { statusText } from "@/lib/conversation";
 import { AnswerError } from "./AnswerError";
 import { AnswerProgress } from "./AnswerProgress";
 import { QuestionBubble } from "./QuestionBubble";

@@ -1,4 +1,4 @@
-import { defineSlotRecipe } from "@/lib/recipe";
+import { defineSlotRecipe } from "@/components/ui/recipe";
 
 // DESIGN.md, Tables. Tokens: table-header, table-cell. Horizontal rules only,
 // no vertical rules, no zebra striping.

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { ROLES } from "@/contracts/candidate";
+import { ROLES } from "@/contracts";
 import { MOCK_POOL } from "@/mocks/pool";
 import { EU_COUNTRIES, ROLE_MIX, ROSTER } from "../roster";
-import { isWinAnsi, slugOf } from "../seed-rules";
+import { isWinAnsi, slugOf } from "../seedRules";
 
 describe("roster", () => {
   it("has 30 candidates with unique ids and names", () => {

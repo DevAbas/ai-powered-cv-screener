@@ -1,4 +1,4 @@
-import type { SectionName } from "@/contracts/candidate";
+import type { SectionName } from "@/contracts";
 import type { ExpectedView, GoldenQuestion, QuestionKind, Seeds } from "./types";
 
 // Scoring (PLAN, Evaluation): retrieval, composition and citations are scored

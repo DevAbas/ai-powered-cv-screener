@@ -4,7 +4,7 @@ import { LoaderCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { PDFDocumentLoadingTask, PDFDocumentProxy, RenderTask } from "pdfjs-dist";
 import { StatusMessage } from "@/components/ui/StatusMessage";
-import { capHeightBox } from "@/lib/recipe";
+import { capHeightBox } from "@/components/ui/recipe";
 
 export interface PdfPagesProps {
   /** The PDF's URL, without a fragment. */

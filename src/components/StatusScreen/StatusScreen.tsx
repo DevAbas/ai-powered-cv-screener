@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { cx } from "@/lib/recipe";
+import { cx } from "@/components/ui/recipe";
 
 export interface StatusScreenProps {
   icon: LucideIcon;

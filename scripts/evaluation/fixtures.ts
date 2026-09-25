@@ -1,4 +1,4 @@
-import type { CandidateSeed } from "@/contracts/candidate";
+import type { CandidateSeed } from "@/contracts";
 import type { Seeds } from "./types";
 
 // Small seeds for the rule and scorer tests, independent of the pilot pool.

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { AnswerView } from "@/contracts/view";
+import type { AnswerView } from "@/contracts";
 import { storySourceHref } from "@/mocks/story";
 import { ANSWERS } from "@/mocks/answers";
 import { AnswerProfile } from "./AnswerProfile";

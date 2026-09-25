@@ -1,6 +1,6 @@
 import { mkdir, readFile, rename, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { cvPath } from "@/lib/pool/index-files";
+import { cvPath } from "@/lib/candidates/indexFiles";
 
 // Where the pipeline writes (PLAN, Data layout): the generation data it
 // owns under `data/generation`, and the CVs under `data/cvs`, which the app

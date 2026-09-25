@@ -1,7 +1,7 @@
 import { CircleAlert, Info, SearchX, TriangleAlert } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
-import type { RecipeVariantProps } from "@/lib/recipe";
+import type { RecipeVariantProps } from "@/components/ui/recipe";
 import { statusMessageSlotRecipe } from "./StatusMessage.recipe";
 
 type StatusMessageStatus = NonNullable<RecipeVariantProps<typeof statusMessageSlotRecipe>["status"]>;

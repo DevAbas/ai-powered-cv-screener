@@ -3,7 +3,7 @@
 import { Check, ChevronDown, Sparkles } from "lucide-react";
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from "react";
 import type { ComponentProps, ReactNode } from "react";
-import { formatElapsed, spokenElapsed } from "@/lib/chat/elapsed";
+import { formatElapsed, spokenElapsed } from "@/components/ui/ThoughtLine/elapsedTime";
 import { thoughtLineSlotRecipe } from "./ThoughtLine.recipe";
 
 export type ThoughtLineGlyph = "sparkle" | "dot" | "none" | ReactNode;

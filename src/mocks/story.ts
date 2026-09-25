@@ -1,4 +1,4 @@
-import { CandidateIdSchema } from "@/contracts/candidate";
+import { CandidateIdSchema } from "@/contracts";
 import type { SourceHref } from "@/components/Answer";
 import { findCandidate } from "./pool";
 

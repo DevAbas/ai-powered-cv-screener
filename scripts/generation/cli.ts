@@ -9,9 +9,9 @@
 
 // ESM (see package.json here, which react-pdf needs): a CJS package has no named exports.
 import nextEnv from "@next/env";
-import { missingApiKeys } from "@/lib/ai/providers";
-import { getEntry } from "@/lib/ai/registry";
-import type { Provider } from "@/lib/ai/registry";
+import { missingApiKeys } from "@/lib/models/modelProviders";
+import { getEntry } from "@/lib/models";
+import type { Provider } from "@/lib/models";
 import type { Step, StepOptions, StepReport } from "./options";
 import { STEPS } from "./options";
 import { runPdfs } from "./steps/pdfs";

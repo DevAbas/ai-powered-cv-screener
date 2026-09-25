@@ -1,6 +1,6 @@
 import { Document, Font, Image } from "@react-pdf/renderer";
 import type { ReactNode } from "react";
-import type { CandidateSeed } from "@/contracts/candidate";
+import type { CandidateSeed } from "@/contracts";
 
 // Parts every template variant shares.
 

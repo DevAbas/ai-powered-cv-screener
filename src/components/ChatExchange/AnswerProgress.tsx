@@ -1,4 +1,4 @@
-import type { AnsweredBy, AnswerMatched } from "@/contracts/ask";
+import type { AnsweredBy, AnswerMatched } from "@/contracts";
 import { ThoughtLine } from "@/components/ui/ThoughtLine";
 
 export interface AnswerProgressStep {

@@ -4,7 +4,7 @@ import { Textarea as HeadlessTextarea } from "@headlessui/react";
 import type { TextareaProps as HeadlessTextareaProps } from "@headlessui/react";
 import { useLayoutEffect, useRef } from "react";
 import type { InputEvent } from "react";
-import type { RecipeVariantProps } from "@/lib/recipe";
+import type { RecipeVariantProps } from "@/components/ui/recipe";
 import { textareaRecipe } from "./Textarea.recipe";
 
 export type TextareaBaseProps = RecipeVariantProps<typeof textareaRecipe>;

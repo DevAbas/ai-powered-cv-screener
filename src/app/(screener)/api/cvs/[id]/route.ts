@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
-import { resolveCv } from "@/lib/pool/index-files";
-import { loadPool } from "@/lib/pool/pool";
+import { resolveCv } from "@/lib/candidates/indexFiles";
+import { loadPool } from "@/lib/candidates/candidatePool";
 
 // GET /api/cvs/<id> (PLAN, Data access): the CV of an indexed candidate as
 // a PDF, shown inline by the preview and saved under its readable name. The

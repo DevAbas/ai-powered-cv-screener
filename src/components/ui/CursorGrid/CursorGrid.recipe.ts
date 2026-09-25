@@ -1,4 +1,4 @@
-import { defineSlotRecipe } from "@/lib/recipe";
+import { defineSlotRecipe } from "@/components/ui/recipe";
 
 // DESIGN.md, Layout (motion): the empty-state grid. Token: primary, as the
 // canvas's text colour, which the strokes are drawn in.

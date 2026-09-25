@@ -198,9 +198,9 @@ resumable by id prefix.
 The model understands the question, chooses typed tools and writes the
 answer from what they returned; the app runs the tools deterministically
 over the in-memory index and draws the views from their results. Every
-step is its own module behind an interface (`src/lib/answering`,
-`src/lib/retrieval`, `src/lib/vector`, `src/lib/ai`), composed in one
-place, so each is tested alone.
+step is its own module behind an interface (`src/lib/screening` with its
+`tools/`, `src/lib/search`, `src/lib/models`), composed in one place, so each
+is tested alone.
 
 1. **Tools.** `find_candidates(filters, scope)` returns the matching
    candidates with the evidence for each criterion (field, value, page,

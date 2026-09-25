@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { AskEvent } from "@/contracts/ask";
-import type { RequestLog } from "@/lib/answering/log";
+import type { AskEvent } from "@/contracts";
+import type { RequestLog } from "@/lib/screening";
 import { ANSWERS } from "@/mocks/answers";
 import { observeAnswer } from "../observed";
 

@@ -1,5 +1,5 @@
-import type { CandidateSeed, IndexEntry } from "@/contracts/candidate";
-import { normalizeLanguages, normalizeSkills } from "@/lib/pool/normalize";
+import type { CandidateSeed, IndexEntry } from "@/contracts";
+import { normalizeLanguages, normalizeSkills } from "@/lib/candidates";
 
 // The extraction accuracy check (PLAN, Indexer): every indexed profile
 // against the seed its PDF was rendered from, field by field, and the share
