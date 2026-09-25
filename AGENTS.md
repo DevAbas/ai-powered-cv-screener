@@ -167,4 +167,8 @@ nobody remembers it:
   runs `lint:strict` and `typecheck` first and is refused when either fails.
 - `.githooks/pre-commit` is the same commit gate for a person; `npm run
   prepare` (run by `npm ci`) points git at it.
+- `.claude/skills/building-ui-components` is the procedure for UI work; it
+  loads itself for files under `src/components`, `src/hooks`, `src/app` and
+  `.storybook`, and points at the owning documents instead of repeating
+  them.
 - ESLint's `no-restricted-imports` keeps `data/generation` out of app code.

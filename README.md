@@ -161,6 +161,27 @@ npm run storybook
 
 It opens on port 6006. `npm run build-storybook` writes a static copy.
 
+## Working with an agent
+
+The repository is set up so that an agent builds the same way a person
+does, and cannot drift from the design system unnoticed.
+
+- [AGENTS.md](AGENTS.md) is the contract: conventions, commands, and what to
+  ask before doing. `CLAUDE.md` points at it and asks for plan mode before a
+  feature.
+- The skill in [.claude/skills/building-ui-components](.claude/skills/building-ui-components/SKILL.md)
+  is the procedure for UI work: read `DESIGN.md` first, choose the kind of
+  component, build in the order the conventions expect, close with the
+  checks. It loads itself when a file under `src/components`, `src/hooks`,
+  `src/app` or `.storybook` is touched.
+- The hooks in [.claude/settings.json](.claude/settings.json) enforce what
+  the skill describes: every edited file is linted with the design rules as
+  errors, the generated token file cannot be edited, and a commit runs the
+  strict lint and the typecheck first. `.githooks/pre-commit` is the same
+  gate for a person. The list is in `AGENTS.md`, Harness.
+- The design rules themselves are in `scripts/design-lint`, described in
+  [src/components/README.md](src/components/README.md).
+
 ## Repository
 
 ```
@@ -175,6 +196,8 @@ src/lib/             the domain: screening, candidates, conversation, models, se
 src/mocks/           test doubles and the sample index
 scripts/             the pipelines, with their own README: generation, ingestion, evaluation, design lint
 data/                the pool: generation seeds and photos, the index, the CVs, and the evaluation reports once npm run eval has run
+.claude/             the agent's skill for UI work and the hooks that run the lint on every edit and before a commit
+.githooks/           the same commit gate for a person, installed by npm run prepare
 ```
 
 ## Running it
