@@ -1,7 +1,7 @@
 import type { CandidateId, Role, Seniority } from "@/contracts";
 import { slugOf } from "./seedRules";
 
-// The fixed part of every seed (PLAN, Generation pipeline): the generator
+// The fixed part of every seed: the generator
 // owns it, the mock pool mirrors it and `roster.test.ts` keeps them equal.
 // EU names in EU locations; every character is in WinAnsi, which is all the
 // built-in PDF fonts can encode.
@@ -16,7 +16,7 @@ export interface RosterCandidate {
   location: string;
 }
 
-/** Candidates per role (PLAN, Generation pipeline). */
+/** Candidates per role. */
 export const ROLE_MIX: Readonly<Record<Role, number>> = {
   frontend: 6,
   backend: 6,

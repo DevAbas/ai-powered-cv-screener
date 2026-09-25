@@ -2,7 +2,7 @@ import { STAGE_MESSAGES, toolMessage } from "@/lib/conversation";
 import type { MockAnswer } from "./answers";
 import { ANSWERS, malformedAnswer } from "./answers";
 
-// Timed event sequences the mock `ask` replays (PLAN, Design system: mocks).
+// Timed event sequences the mock `ask` replays.
 // Events are `unknown` because the malformed path must reach the client's
 // validation exactly as a bad server response would.
 

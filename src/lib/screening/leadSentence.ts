@@ -1,6 +1,6 @@
 import type { Role, Filters, Range } from "@/contracts";
 
-// A filter put into words (PLAN, Retrieval and answering: views): the
+// A filter put into words: the
 // opening sentence of a filter, count or list is composed by the app from
 // the tool call and its result, so the count and the criteria in it are
 // the tools', never the model's. Each criterion becomes a phrase that

@@ -1,7 +1,7 @@
 import type { LanguageModel } from "ai";
-import type { AnswerModelId, AskEvent, AskRequest, IndexEntry, Vocabulary } from "@/contracts";
+import type { AskEvent, AskRequest, IndexEntry, Vocabulary } from "@/contracts";
 import type { CircuitBreaker, ModelEntry, ModelTarget } from "@/lib/models";
-import { modelBreaker, answerEntry, delay, isServerError, shouldFallBack, runRoute } from "@/lib/models";
+import { modelBreaker, getEntry, delay, isServerError, shouldFallBack, runRoute } from "@/lib/models";
 import { counterSnapshot, recordOutcome } from "./modelCounters";
 import type { Embedder } from "@/lib/models/embedder";
 import { languageModel } from "@/lib/models/modelProviders";
@@ -16,7 +16,7 @@ import { ResultStore } from "./toolResults";
 import { createTools } from "./tools/toolSet";
 import { buildView, UnverifiedAnswerError } from "./answerView";
 
-// One question, end to end (PLAN, Retrieval and answering): the model
+// One question, end to end: the model
 // chooses tools, the tools run over the index, the presentation call is
 // checked against their results, the view is built from them, and one
 // structured log line records what happened. The primary's fallback takes
@@ -39,8 +39,8 @@ export interface AnswerDeps {
   requestId?: () => string;
   /** The longest wait before the one retry after a 5xx; tests pass 0. @default 1000 */
   retryJitterMs?: number;
-  /** The answer entry a request names; tests pass entries of their own (a fallback, say). @default answerEntry */
-  entries?: (id: AnswerModelId) => ModelEntry | undefined;
+  /** The registry entry that answers; the evaluation passes others, tests pass entries of their own (with a fallback, say). @default getEntry("primary") */
+  entry?: ModelEntry;
 }
 
 /** The candidates of the last answer that showed any: what "of those" refers to. */
@@ -53,7 +53,7 @@ export function previousCandidateIds(history: AskRequest["history"]): string[] {
 }
 
 export async function answerQuestion(request: AskRequest, emit: (event: AskEvent) => void, deps: AnswerDeps, signal: AbortSignal): Promise<void> {
-  const { pool, modelFor = languageModel, breaker = modelBreaker, retryJitterMs = 1_000, entries = answerEntry } = deps;
+  const { pool, modelFor = languageModel, breaker = modelBreaker, retryJitterMs = 1_000, entry = getEntry("primary") } = deps;
   const started = performance.now();
   const byId = new Map(pool.entries.map((entry) => [entry.id, entry]));
   const previousIds = previousCandidateIds(request.history).filter((id) => byId.has(id));
@@ -61,7 +61,7 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
     event: "ask",
     requestId: deps.requestId?.() ?? crypto.randomUUID(),
     question: request.question,
-    model: { requested: request.model, used: null, fellBack: false },
+    model: { entry: entry.id, used: null, fellBack: false },
     steps: [],
     toolCalls: [],
     repairs: 0,
@@ -79,18 +79,11 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
     deps.log(record);
   };
 
-  const entry: ModelEntry | undefined = entries(request.model);
-  if (!entry) {
-    finish("error", new Error(`Model ${request.model} is not offered`));
-    emit({ type: "error", message: "That model isn't available. Choose another one.", retryable: false });
-    return;
-  }
-
   try {
     emit({ type: "progress", stage: "understand", message: STAGE_MESSAGES.understand });
-    // One model, with the single quick retry after a 5xx (an overloaded upstream, say) before the
-    // fallback (PLAN, Reliability); nothing has reached the recruiter yet, and the two attempts are
-    // one strike for the breaker.
+    // One model, with the single quick retry after a 5xx (an overloaded
+    // upstream, say) before the fallback; nothing has reached the recruiter
+    // yet, and the two attempts are one strike for the breaker.
     const run = async (target: ModelTarget) => {
       for (let retried = false; ; retried = true) {
         const store = new ResultStore(previousIds.length);
@@ -129,7 +122,7 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
       },
     });
     const { outcome, store } = value;
-    record.model = { requested: request.model, used: outcome.modelId ?? target.model, provider: outcome.provider, fellBack };
+    record.model = { entry: entry.id, used: outcome.modelId ?? target.model, provider: outcome.provider, fellBack };
     record.candidatesReturned = [...store.knownIds];
     if (outcome.presentForced) record.presentForced = true;
     if (outcome.textRewritten) record.textRewritten = true;
@@ -144,7 +137,7 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
     }
     if (built) record.presentation = { view: built.view.kind === "status" ? built.view.status : built.view.kind, candidates: built.sources.length, corrections: built.corrections };
     if (text) emit({ type: "delta", text });
-    const answeredBy = { model: request.model, name: fellBack ? (entry.fallback ? fallbackName(entry, entries) : target.model) : entry.displayName, fellBack };
+    const answeredBy = { name: target.model, fellBack };
     recordOutcome(modelLabel(target), true);
     finish("answer");
     emit({
@@ -167,10 +160,3 @@ export async function answerQuestion(request: AskRequest, emit: (event: AskEvent
   }
 }
 
-/** The display name of the entry's fallback: the answer entry that pins the same model, if any. */
-function fallbackName(entry: ModelEntry, entries: (id: AnswerModelId) => ModelEntry | undefined): string {
-  const fallback = entry.fallback;
-  if (!fallback) return entry.displayName;
-  const named = entries("alternative");
-  return named && named.model === fallback.model ? named.displayName : fallback.model;
-}

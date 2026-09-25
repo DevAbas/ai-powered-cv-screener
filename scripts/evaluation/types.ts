@@ -1,6 +1,6 @@
 import type { CandidateSeed, SectionName } from "@/contracts";
 
-// The golden evaluation set (PLAN, Evaluation): what each question expects,
+// The golden evaluation set: what each question expects,
 // as rules over the seeds, so the expectations survive regeneration.
 
 /** The seeds by candidate id: the ground truth the rules read. */

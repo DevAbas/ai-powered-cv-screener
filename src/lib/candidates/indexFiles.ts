@@ -4,7 +4,7 @@ import type { IndexEntry } from "@/contracts";
 import { CandidateIdSchema, IndexEntrySchema } from "@/contracts";
 import { cvFileName } from "./cvSource";
 
-// Where the index and the CVs live (PLAN, Data layout), and how an index
+// Where the index and the CVs live, and how an index
 // file is read: one file per CV, validated against the contract when it is
 // loaded. Shared by the app's loader (candidatePool.ts) and the indexer.
 

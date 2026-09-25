@@ -2,7 +2,7 @@ import { embed, embedMany } from "ai";
 import { embeddingModel } from "./modelProviders";
 import type { ModelEntry } from "./modelRegistry";
 
-// The embedding port (PLAN, Retrieval and answering): services depend on this
+// The embedding port: services depend on this
 // interface, never on an SDK, so tests pass a fake and the model can change
 // in one place.
 

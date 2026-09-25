@@ -1,7 +1,7 @@
 import type { CandidateSeed, IndexEntry } from "@/contracts";
 import { normalizeLanguages, normalizeSkills } from "@/lib/candidates";
 
-// The extraction accuracy check (PLAN, Indexer): every indexed profile
+// The extraction accuracy check: every indexed profile
 // against the seed its PDF was rendered from, field by field, and the share
 // of sources found in the CV's text.
 
@@ -110,6 +110,6 @@ export function formatAccuracy(report: AccuracyReport): string {
   lines.push(`  ${"verified sources".padEnd(18)} ${pct(report.verified.verified, report.verified.total).padStart(6)}  (${report.verified.verified}/${report.verified.total})`);
   for (const m of report.mismatches) lines.push(`  ${m.id}: ${m.fields.join(", ")} differ from the seed`);
   for (const u of report.unverified) lines.push(`  ${u.id}: ${u.fields.join(", ")} not found in the CV text`);
-  lines.push(report.passes ? `PASS: every field ≥ ${FIELD_THRESHOLD * 100}% and verified sources ≥ ${VERIFIED_THRESHOLD * 100}%` : "FAIL: below the PLAN thresholds");
+  lines.push(report.passes ? `PASS: every field ≥ ${FIELD_THRESHOLD * 100}% and verified sources ≥ ${VERIFIED_THRESHOLD * 100}%` : "FAIL: below the thresholds");
   return lines.join("\n");
 }

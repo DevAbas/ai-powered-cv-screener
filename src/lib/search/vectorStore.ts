@@ -1,6 +1,6 @@
 import type { SectionName } from "@/contracts";
 
-// The vector store port (PLAN, Vector store): one record per section chunk.
+// The vector store port: one record per section chunk.
 // The answering service and the indexer depend on this interface;
 // `pineconeStore.ts` is the only implementation that talks to a real service.
 

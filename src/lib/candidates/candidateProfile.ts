@@ -3,8 +3,8 @@ import { LANGUAGE_LEVELS } from "@/contracts";
 
 // Tidying extracted and generated profiles: whitespace, and duplicates that
 // differ only in case or punctuation. Names stay as the CV writes them: the
-// pool's own values are the vocabulary the tools use (PLAN, Retrieval and
-// answering), so no alias table maps one spelling to another.
+// pool's own values are the vocabulary the tools use, so no alias table maps
+// one spelling to another.
 
 /** Case-, whitespace- and punctuation-insensitive key for spotting duplicates. Keeps `+` and `#` (C++, C#). */
 export function aliasKey(value: string): string {

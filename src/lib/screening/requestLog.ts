@@ -1,10 +1,8 @@
-import type { AnswerModelId } from "@/contracts";
-import type { ModelTarget } from "@/lib/models";
+import type { ModelId, ModelTarget } from "@/lib/models";
 
-// One structured log line per request (PLAN, Retrieval and answering:
-// logging): the model actually used, every tool call with its arguments,
-// result and error, repairs, every model failure and what followed it,
-// latency and the outcome.
+// One structured log line per request: the model actually used, every tool
+// call with its arguments, result and error, repairs, every model failure and
+// what followed it, latency and the outcome.
 
 export interface ToolCallLog {
   step: number;
@@ -27,7 +25,7 @@ export interface RequestLog {
   event: "ask";
   requestId: string;
   question: string;
-  model: { requested: AnswerModelId; used: string | null; provider?: string; fellBack: boolean };
+  model: { entry: ModelId; used: string | null; provider?: string; fellBack: boolean };
   steps: StepLog[];
   toolCalls: ToolCallLog[];
   repairs: number;

@@ -3,7 +3,7 @@ import { pineconeEnv } from "./pineconeEnv";
 import type { ChunkMetadata, MetadataFilter, VectorMatch, VectorRecord, VectorStore } from "./vectorStore";
 import { VectorStoreError } from "./vectorStore";
 
-// The Pinecone implementation of VectorStore (PLAN, Vector store): the only
+// The Pinecone implementation of VectorStore: the only
 // module that imports the Pinecone SDK. One client per store, the index
 // addressed by name (the SDK resolves and caches its host), chunk vectors
 // in one namespace.

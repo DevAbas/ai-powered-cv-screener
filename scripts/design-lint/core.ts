@@ -1,4 +1,4 @@
-// Pure helpers for `npm run design:lint` (PLAN, Design system): dark values
+// Pure helpers for `npm run design:lint`: dark values
 // live in src/styles/theme.css, so the dark theme is checked by substituting
 // them into DESIGN.md and linting that document with the same rules.
 

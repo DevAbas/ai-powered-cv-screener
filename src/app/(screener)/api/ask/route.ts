@@ -4,7 +4,7 @@ import type { AnswerDeps } from "@/lib/screening";
 import { answerQuestion, answerDeps } from "@/lib/screening";
 import { loadPool } from "@/lib/candidates/candidatePool";
 
-// POST /api/ask (PLAN, Retrieval and answering): HTTP only. Validates the
+// POST /api/ask: HTTP only. Validates the
 // request, wires the answering service, and streams its events as NDJSON:
 // progress, the answer text, then one answer or error.
 

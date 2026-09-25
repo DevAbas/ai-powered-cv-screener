@@ -1,5 +1,5 @@
-// Success and error counters per model (PLAN, Retrieval and answering:
-// logging), for the process; they appear in every request's log line.
+// Success and error counters per model, for the process; they appear in every
+// request's log line.
 
 const counters = new Map<string, { success: number; error: number }>();
 

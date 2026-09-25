@@ -3,7 +3,7 @@ import type { ModelEntry, ModelTarget } from "./modelRegistry";
 import { errorStatus, isDailyQuotaError, isServerError, ModelTimeoutError } from "./modelRetry";
 
 // Which models a call tries, in what order, and what the circuit breaker
-// learns from each (PLAN, Reliability). The breaker tracks models rather
+// learns from each. The breaker tracks models rather
 // than entries: answers and extraction share what they learn about a
 // model, and a fallback that has spent its daily allowance is passed over
 // by every entry that has it.

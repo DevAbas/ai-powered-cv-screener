@@ -22,7 +22,7 @@ import { cx } from "@/components/ui/recipe";
 export interface ChatScreenProps {
   /** Every CV in the pool: its size is shown in the empty state. */
   pool: readonly PoolCandidate[];
-  /** Links sources to their PDF: the CV route in the app, the static copy in previews (PLAN, User interface). */
+  /** Links sources to their PDF: the CV route in the app, the static copy in previews. */
   sourceHref?: SourceHref | undefined;
   /** Where questions go: the API by default, the mock in previews and tests. */
   transport?: AskTransport | undefined;
@@ -32,7 +32,6 @@ export interface ChatScreenProps {
 export function ChatScreen({ pool, sourceHref = cvSourceHref, transport }: ChatScreenProps) {
   const chat = useChatScreen({ transport });
   const { exchanges } = chat.state;
-  const { model } = chat;
   const [draft, setDraft] = useState("");
   const lastExchange = useRef<HTMLLIElement>(null);
   // The empty state's headline and composer: the grid behind them keeps clear of both.
@@ -77,8 +76,6 @@ export function ChatScreen({ pool, sourceHref = cvSourceHref, transport }: ChatS
       onSubmit={ask}
       running={chat.running}
       onStop={chat.stop}
-      model={model}
-      onModelChange={chat.setModel}
       autoFocus
       placeholder={placeholder}
     />

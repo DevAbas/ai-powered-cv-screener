@@ -8,9 +8,9 @@ import { runStructured } from "@/lib/models/structuredOutput";
 import { normalizeProfile } from "@/lib/candidates";
 import type { ExtractionEvidence } from "@/lib/candidates";
 
-// One structured profile per CV from the `extract` entry (PLAN, Indexer).
-// Beside each list entry the model copies the CV's own line, so numbers,
-// levels and dates can be checked against the text (lib/candidates/profileVerification.ts).
+// One structured profile per CV from the `extract` entry. Beside each list
+// entry the model copies the CV's own line, so numbers, levels and dates can
+// be checked against the text (lib/candidates/profileVerification.ts).
 
 /** A whole CV profile is long output; the reasoning stream counts as first output. */
 const EXTRACT_BUDGET: CallBudget = { firstOutputMs: 60_000, totalMs: 240_000 };

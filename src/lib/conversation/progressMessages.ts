@@ -1,6 +1,6 @@
 import type { ProgressStage } from "@/contracts";
 
-/** Progress messages per stage (PLAN, Retrieval and answering: progress). */
+/** Progress messages per stage. */
 export const STAGE_MESSAGES: Record<ProgressStage, string> = {
   understand: "Understanding the question",
   search: "Searching the CVs",

@@ -15,7 +15,7 @@ describe("roster", () => {
     for (const c of ROSTER) expect(c.id).toBe(slugOf(c.name));
   });
 
-  it("matches the role mix in PLAN, Generation pipeline", () => {
+  it("matches ROLE_MIX, role by role, and totals 30", () => {
     for (const role of ROLES) {
       expect(ROSTER.filter((c) => c.role === role).length, role).toBe(ROLE_MIX[role]);
     }

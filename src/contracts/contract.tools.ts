@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { Degree, LanguageLevel, Role, Seniority, WorkMode } from "./contract.candidate";
 import { DEGREES, LANGUAGE_LEVELS, ROLES, SENIORITIES, WORK_MODES } from "./contract.candidate";
 
-// The tools the answer model calls (PLAN, Retrieval and answering). Their
+// The tools the answer model calls. Their
 // arguments are enums built from the pool's own values, so a question's
 // wording is mapped to what the CVs say and a value outside the pool is
 // rejected, never silently matched to nothing. The schemas are factories
@@ -28,7 +28,7 @@ export interface Vocabulary {
   workAuthorizations: readonly string[];
 }
 
-/** A closed range: `gte`/`gt` bound it below, `lte`/`lt` above (PLAN, filter semantics). */
+/** A closed range: `gte`/`gt` bound it below, `lte`/`lt` above. */
 export const RangeSchema = z
   .object({
     gte: z.number().optional().describe("at least"),

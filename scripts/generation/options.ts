@@ -1,5 +1,4 @@
-// Options every step of the pipeline takes (PLAN, Environment: resumable,
-// forceable).
+// Options every step of the pipeline takes.
 
 export const STEPS = ["seeds", "photos", "pdfs"] as const;
 export type Step = (typeof STEPS)[number];

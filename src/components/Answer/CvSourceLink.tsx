@@ -6,8 +6,8 @@ import { cx, focusVisibleRing } from "@/components/ui/recipe";
 import { useOpenSource } from "./SourceContext";
 
 /**
- * Where a source points: the CV's PDF at the cited page (PLAN, User
- * interface). Returns undefined while no PDF exists, and the source is text.
+ * Where a source points: the CV's PDF at the cited page. Returns undefined
+ * while no PDF exists, and the source is text.
  */
 export type SourceHref = (candidateId: string, page: number) => string | undefined;
 

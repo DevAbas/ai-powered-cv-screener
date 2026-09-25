@@ -1,13 +1,12 @@
 import type { ModelSummary, QuestionScore } from "./score";
 import { pct, THRESHOLDS } from "./score";
 
-// The evaluation report (PLAN, Evaluation): one section per model with its
+// The evaluation report: one section per model with its
 // metrics against the thresholds and the questions that failed.
 
 export interface ModelReport {
+  /** The model name under evaluation. */
   model: string;
-  displayName: string;
-  pinned: string;
   startedAt: string;
   summary: ModelSummary;
   scores: readonly QuestionScore[];
@@ -20,7 +19,7 @@ function row(label: string, value: string, threshold: string, ok: boolean): stri
 export function formatModelReport(report: ModelReport): string {
   const { summary } = report;
   const lines = [
-    `## ${report.displayName} (${report.model}: ${report.pinned})`,
+    `## ${report.model}`,
     "",
     `Run ${report.startedAt}, ${summary.questions} question(s), ${summary.errors} error(s): **${summary.passes ? "PASS" : "FAIL"}**.`,
     "",

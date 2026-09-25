@@ -1,7 +1,7 @@
 // Reciprocal rank fusion (Cormack, Clarke and Büttcher, SIGIR 2009): each
 // ranked list contributes 1 / (k + rank) per item, k = 60 as in the paper.
 
-/** The constant of the paper; PLAN records it as the starting value. */
+/** The constant of the paper: the starting value, changed only when the evaluation shows it helps. */
 export const RRF_K = 60;
 
 export interface Fused {

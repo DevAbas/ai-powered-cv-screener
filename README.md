@@ -12,27 +12,6 @@ easier to support.
 This is a pilot. One team, one pool of CVs, running on the recruiter's own
 computer.
 
-## How it works
-
-The CVs are indexed once, before use. Each PDF is split into sections and
-pages. A language model reads it and writes a structured profile. Then each
-field of the profile is found in the CV's own text, so we know its page.
-The index is thirty JSON files. The server loads them into memory when it
-starts. The text of each section is also turned into a vector and stored,
-so we can search by meaning.
-
-A question goes to one answer model. The model has a set of typed tools.
-Exact questions, about skills, years, languages, roles or locations, run as
-queries over the index. So a count is always the real count, and a list is
-always complete. Free-text questions run a hybrid search over the CV text:
-keyword results and vector results, joined together. The model picks the
-tools, reads their results and writes the answer. The app builds the view
-from the tool results. It checks every candidate and page the model names.
-Then it streams the progress, the text and the view to the browser.
-
-The same path is used for testing. A fixed set of questions with known
-answers runs through the pipeline, and each model gets a score.
-
 ## Applied solution for the core requirements
 
 ### CV generation
@@ -41,14 +20,15 @@ answers runs through the pipeline, and each model gets a score.
 and each step skips what already exists.
 
 - **Seeds.** The pipeline starts from a fixed list of 30 candidates, written
-  by hand in the code: name, headline, role, seniority and an EU city. The roles are mixed: 6 frontend, 6 backend, 4
-  data, 4 DevOps, 4 QA, 3 product, and one each of full-stack, mobile and
-  security. For each one, Gemini writes the rest of the CV as JSON: summary,
-  skills with years, jobs with dates, education, languages, certifications.
-  The JSON is checked against the candidate schema and a set of rules, for
-  example that the years of experience fit the seniority, and that no two
-  candidates share the same job history. Each seed is saved as a file. It
-  is the ground truth for the tests later.
+  by hand in the code: name, headline, role, seniority and an EU city. The
+  roles are mixed: 6 frontend, 6 backend, 4 data, 4 DevOps, 4 QA, 3 product,
+  and one each of full-stack, mobile and security. For each one, Gemini
+  writes the rest of the CV as JSON: summary, skills with years, jobs with
+  dates, education, languages, certifications. The JSON is checked against
+  the candidate schema and a set of rules, for example that the years of
+  experience fit the seniority, and that no two candidates share the same
+  job history. Each seed is saved as a file. It is the ground truth for the
+  tests later.
 - **Photos.** The Gemini image model makes one portrait per candidate. This
   step costs money, so it runs only when named.
 - **PDFs.** One CV per seed is rendered with react-pdf from one template.
@@ -82,12 +62,12 @@ At question time, the model does not read the CVs. It calls tools:
   in memory: skills and years, languages and levels, role, seniority, city
   or country, education, employers, notice period, work mode. They return
   each match with its evidence and page.
-- `get_candidates` returns the full profile of up to five candidates, with
+- `get_candidates` returns the full profile of the candidates named, with
   the page of every field.
 - `search_cv_text` runs a hybrid search for free text: BM25 over the chunks
   and a vector search in Pinecone, both limited to the same candidates, and
-  the two rankings joined with reciprocal rank fusion. It returns up to ten
-  candidates with the page and the text that matched.
+  the two rankings joined with reciprocal rank fusion. It returns the best
+  matches with the page and the text that matched.
 
 So every answer is grounded on the CVs: the model can only say what a tool
 returned.
@@ -99,6 +79,15 @@ example question shows what to ask. The answer streams in as it is made:
 first the progress ("understanding", "searching", "writing"), then the
 model's text, then the view.
 
+Asked "Who has React and TypeScript?", the app opens with its own
+sentence, "There are 4 candidates with React and TypeScript experience.
+Here are their details.", and lists the four, each with their years of
+React and TypeScript and a link to the CV page that states them.
+
+![A list answer: the app's sentence, four candidates with their years of React and TypeScript, and a link to each CV page](docs/images/answer-list.png)
+
+Screenshot from the component previews.
+
 The view depends on the question. A filter or a search gives a list of
 candidates with the facts that matched. A comparison gives the candidates
 side by side. A question about one person gives their profile. A count, no
@@ -108,29 +97,21 @@ next to the chat, on the page where the fact was found. The panel can be
 resized and closed.
 
 A follow-up question sees the previous answer, so "which of them speak
-German?" narrows the last list. The recruiter can pick the model in the
-composer. The screen has a light and a dark mode.
+German?" narrows the last list. One model answers; the recruiter does not
+choose it. The screen has a light and a dark mode.
 
 ## Architecture
 
-### Pipelines
+### How an answer comes to be
 
-```mermaid
-flowchart LR
-  PDFs[cvs/*.pdf] --> Index[index] --> Store[(index files + Pinecone)]
-  Chat[Recruiter chat] --> Ask[/api/ask] --> Tools[model picks tools]
-  Store --> Tools
-  Tools --> Answer[answer + view, checked] --> Links[source links → CV panel]
-```
+This is the agentic form of RAG: retrieval is a set of tools the model
+calls, not text pasted before the question. The CVs are indexed once,
+before use. At question time the model reads only what the tools return,
+and the app checks every candidate and page it names.
+
+![The chat screen sends the question to the ask route, which runs an answer loop with the Gemini API. The model calls tools that run exact queries over the in-memory index or a hybrid search over BM25 and Pinecone. The route builds the view, checks the sources and streams the answer. A source link opens the CV PDF at the cited page. Before use, the generate and index scripts write the CVs, the profile files and the vectors.](docs/images/architecture.svg)
 
 ### Layers
-
-```mermaid
-flowchart TB
-  Top[screen, API routes, scripts] -->|use| Domain[domain: screening, candidates, search, models, conversation]
-  Domain -->|through interfaces| Adapters[adapters]
-  Adapters --> Services[(Gemini, Pinecone, disk)]
-```
 
 The code is grouped by what it does, not by technical layer. `src/lib` has
 five domain modules. Each one can be used from a route, a script or a test,
@@ -171,34 +152,44 @@ Three rules keep this shape:
 - **Typed tools over the index, not a plain RAG prompt.** Most recruiter
   questions are exact: years, languages, roles, counts. These run as
   queries, so the answer is the query result and the model only puts it in
-  words. Search by meaning is kept for the questions that need it.
+  words. Search by meaning is kept for the questions that need it. A
+  question the filters cannot express falls to the text search, which ranks
+  its results and does not promise a complete list.
 - **The app writes the counts, the lists and the first sentence.** A count
   comes from the tool. A list after a filter has every match. The first
   sentence of a view comes from the filter and its result. The model cannot
-  drop a candidate or add one.
+  drop a candidate or add one. The opening sentence is a template, and a
+  count answer drops whatever the model wrote.
 - **Every cited page is checked.** The model names candidates and pages. If
   a candidate was not returned by a tool, the answer fails. If a page was
-  not cited by a tool, it is replaced with one that was.
+  not cited by a tool, it is replaced with one that was. An answer that
+  names an unknown candidate fails as a whole, with a Retry button, rather
+  than showing the part that could be verified.
 - **Sources are found in the CV text during indexing.** Each profile field
   is found as whole words on a page. So the link the recruiter clicks opens
-  where the fact is written.
-- **One fixed model for this phase.** One behaviour to tune the prompt for.
-  The other models stay in the registry, turned off, with their routing and
-  fallback ready for the next phase.
+  where the fact is written. A fact the model read correctly but the CV
+  does not state in those words is dropped.
+- **One fixed model, named in the environment.** One behaviour to tune the
+  prompt for, and no choice for the recruiter. The model's name lives in
+  `.env.local`, so a swap is a configuration change, not a commit, and the
+  evaluation can run a candidate first. There is no fallback yet, so an
+  outage or a spent quota shows an error and a Retry button.
 - **Pipelines can be resumed, and have dry runs.** Every script skips what
   already exists and can be forced to redo it. It prints its work list and
-  cost estimate before it calls a model.
+  cost estimate before it calls a model. After a change to a seed or the
+  template, the old file stays until the step is run with `--force`.
 - **Evaluation lives in the code.** The test questions carry their expected
   answers as rules over the seed data. So they still work after the pool is
   regenerated. The scorer measures retrieval, composition and citations
-  separately.
+  separately. Each question needs a rule, not just an expected answer, and
+  the run pays for model calls.
 
 ## Stack
 
 | Layer | Choice |
 |---|---|
 | Framework | Next.js 16 (App Router), React 19, TypeScript strict |
-| Model access | Vercel AI SDK 7; Google Gemini through the Gemini API; OpenRouter entries kept off |
+| Model access | Vercel AI SDK 7; Google Gemini through the Gemini API |
 | Schemas | Zod 4, one contract per area in `src/contracts` |
 | Search | MiniSearch for BM25, Pinecone for vectors, reciprocal rank fusion |
 | PDF | pdf.js for text and the in-app preview; react-pdf to render the sample pool |
@@ -213,13 +204,30 @@ the model, the embedder and the vector store. The ingestion pipeline has an
 accuracy check: it compares every indexed profile with the seed its CV came
 from, field by field. The evaluation runs the test questions through the
 real answer pipeline and scores each model against fixed thresholds. It is
-the only test that calls a model, and it shows the cost first.
+the only test that calls a model, and it shows the cost first. A model
+answers recruiters only when it passes every threshold. Latency is
+reported, not gated. The thresholds sit beside the scorer, in
+`scripts/evaluation/score.ts`.
+
+## Component previews
+
+Storybook is where the UI is built and checked before it meets the app.
+Every component has a story per state, in light and dark, rendered against
+the mocks, so a view can be seen without a model or an index. The
+accessibility addon runs on every story, and the previews serve the sample
+CVs, so a source link opens a real PDF. The screenshot above comes from
+there.
+
+```bash
+npm run storybook
+```
+
+It opens on port 6006. `npm run build-storybook` writes a static copy.
 
 ## Repository
 
 ```
 docs/PRD.md          what we build and why
-docs/PLAN.md         how, and in which phases
 DESIGN.md            the design system: tokens and visual rules
 AGENTS.md            engineering conventions and the full command list
 src/app/             routes: the screen, the ask API, the CV file API
@@ -229,29 +237,34 @@ src/contracts/       the Zod schemas shared by the client, the server and the sc
 src/lib/             the domain: screening, candidates, conversation, models, search
 src/mocks/           test doubles and the sample index
 scripts/             the pipelines, with their own README: generation, ingestion, evaluation, design lint
-data/                the pool: generation seeds, the index, the CVs, evaluation reports
+data/                the pool: generation seeds, the index, the CVs, and the evaluation reports once npm run eval has run
 ```
 
 ## Running it
 
 ```bash
 nvm use
-npm install
+npm ci
 cp .env.example .env.local   # then fill in the keys
 npm run dev
 ```
 
-The index and the CVs are in the repository. So the screen answers exact
-questions with only a Gemini API key. Search by meaning needs the vectors in
-Pinecone. `npm run index -- --step vectors` writes them, once a Pinecone key
-and index name are set.
+Two services are needed. The Gemini API answers the questions and makes
+the embeddings. Pinecone holds the vectors. `.env.local` takes the Gemini
+key, the Pinecone key and index name, and the names of the three models the
+app calls; `.env.example` sets the ones the pilot ran on. Without them no
+question is answered. The index and the CVs are in the repository. The
+vectors are not: `npm run index -- --step vectors` writes them, and creates
+the Pinecone index when it does not exist yet.
 
-Before a pull request, run `npm run lint`, `npm run typecheck`, `npm test`
-and `npm run build`. Each pipeline has a `--dry-run` flag. It prints what a
-run would do, without calling a model. Any run that does call a model shows
-its cost first.
+## Contributing
+
+`AGENTS.md` is the contributing guide: the conventions, the full command
+list and the boundaries every change follows. Before a pull request, run
+`npm run lint`, `npm run typecheck`, `npm test` and `npm run build`. Each
+pipeline has a `--dry-run` flag. It prints what a run would do, without
+calling a model. Any run that does call a model shows its cost first.
 
 ## Where to read next
 
-`docs/PRD.md` for the product. `docs/PLAN.md` for the architecture and the
-open decisions. `AGENTS.md` for the conventions every change follows.
+`docs/PRD.md` for the product and its open questions.

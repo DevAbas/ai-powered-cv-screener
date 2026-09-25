@@ -18,7 +18,7 @@ const eslintConfig = defineConfig([
     "storybook-static/**",
   ]),
   ...storybook.configs["flat/recommended"],
-  // App code never reads the generation data (PLAN, Data layout; AGENTS.md, Boundaries).
+  // App code never reads the generation data (AGENTS.md, Boundaries).
   {
     files: ["src/**/*.{ts,tsx}"],
     rules: {

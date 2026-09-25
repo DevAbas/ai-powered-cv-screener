@@ -9,9 +9,9 @@ import { ROSTER } from "../roster";
 import { readSeeds } from "./seeds";
 import { renderTemplate } from "../cv-template/renderTemplate";
 
-// Step 3: one PDF per seed in `data/cvs`, photo embedded when it exists
-// (PLAN, Generation pipeline). The manifest records whether each PDF
-// carries a photo; the page count belongs to the index.
+// Step 3: one PDF per seed in `data/cvs`, photo embedded when it exists.
+// The manifest records whether each PDF carries a photo; the page count
+// belongs to the index.
 
 export const PdfManifestSchema = z.record(z.string(), z.object({ photo: z.boolean() }));
 export type PdfManifest = z.infer<typeof PdfManifestSchema>;

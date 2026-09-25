@@ -1,8 +1,7 @@
-// In-memory circuit breaker per model (PLAN, Model registry: Reliability;
-// keys and routing in modelRouting.ts). After `threshold` failures (timeouts or
-// 5xx) within `windowMs`, the model is passed over for `cooldownMs`; after
-// the cooldown it is tried again, and one more failure reopens the breaker
-// at once. `trip` opens it immediately.
+// In-memory circuit breaker per model (keys and routing in modelRouting.ts).
+// After `threshold` failures (timeouts or 5xx) within `windowMs`, the model
+// is passed over for `cooldownMs`; after the cooldown it is tried again, and
+// one more failure reopens the breaker at once. `trip` opens it immediately.
 
 export interface BreakerOptions {
   threshold?: number;

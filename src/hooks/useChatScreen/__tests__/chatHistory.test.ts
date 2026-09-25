@@ -54,6 +54,6 @@ describe("historyFrom", () => {
     const history = historyFrom(many);
     expect(history).toHaveLength(HISTORY_LIMIT);
     expect(history[0].question).toBe("Question 3");
-    expect(AskRequestSchema.safeParse({ question: "q", model: "primary", history }).success).toBe(true);
+    expect(AskRequestSchema.safeParse({ question: "q", history }).success).toBe(true);
   });
 });

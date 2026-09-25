@@ -1,10 +1,10 @@
 import type { ModelMessage } from "ai";
 import type { HistoryTurn, IndexEntry, Role } from "@/contracts";
 
-// What the answer model is told (PLAN, Retrieval and answering: mission
-// prompt): its job and tone, the pool at a glance, the candidate directory
-// so names map to ids, what each tool is for, how to end with `present`,
-// and the conversation so far. No CV text: the tools return what is needed.
+// What the answer model is told: its job and tone, the pool at a glance, the
+// candidate directory so names map to ids, what each tool is for, how to end
+// with `present`, and the conversation so far. No CV text: the tools return
+// what is needed.
 
 const ROLE_LABELS: Record<Role, string> = {
   frontend: "frontend",

@@ -8,7 +8,7 @@ const log = (overrides: Partial<RequestLog> = {}): RequestLog => ({
   event: "ask",
   requestId: "r",
   question: "q",
-  model: { requested: "primary", used: "m", fellBack: false },
+  model: { entry: "primary", used: "m", fellBack: false },
   steps: [],
   toolCalls: [],
   repairs: 0,

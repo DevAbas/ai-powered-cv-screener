@@ -15,7 +15,7 @@ import type { RequestLog } from "./requestLog";
 let store: PineconeStore | undefined;
 let pool: AnswerPool | undefined;
 
-/** One JSON line per request on stdout (PLAN, Retrieval and answering: logging). */
+/** One JSON line per request on stdout. */
 export const logRequest = (record: RequestLog): void => console.info(JSON.stringify(record));
 
 /** The production collaborators. Throws when Pinecone is not configured. */

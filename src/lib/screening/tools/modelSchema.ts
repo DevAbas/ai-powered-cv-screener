@@ -6,7 +6,7 @@ import { z } from "zod";
 // custom `validate`). The Zod contract still validates every call; what
 // the model sees is the same contract as JSON Schema without the
 // keywords some providers' grammar compilers reject when they constrain
-// decoding: lengths, ranges and patterns (PLAN, Reliability; the provider
+// decoding: lengths, ranges and patterns (the provider
 // serving Qwen on OpenRouter refused `minLength`). What
 // those keywords enforced is checked by the contract on the way in.
 

@@ -4,13 +4,12 @@ import type { MetadataFilter, VectorStore } from "./vectorStore";
 import type { Bm25Index } from "./bm25Index";
 import { reciprocalRankFusion, RRF_K } from "./rankFusion";
 
-// Free-text questions over the CVs (PLAN, Retrieval and answering: hybrid
-// search): the query embedded and searched in the vector store under a
-// metadata filter, BM25 over the same chunks in the same scope, the two
-// rankings merged with reciprocal rank fusion (k = 60), then grouped by
-// candidate so each appears once with its best chunk.
+// Free-text questions over the CVs: the query embedded and searched in the
+// vector store under a metadata filter, BM25 over the same chunks in the same
+// scope, the two rankings merged with reciprocal rank fusion (k = 60), then
+// grouped by candidate so each appears once with its best chunk.
 
-/** Chunks asked of each side; the pool has ~230 chunks, so this is generous (PLAN). */
+/** Chunks asked of each side; the pool has ~230 chunks, so this is generous. */
 export const TOP_K_CHUNKS = 50;
 /** Candidates returned when the tool call names no limit. */
 export const DEFAULT_LIMIT = 10;

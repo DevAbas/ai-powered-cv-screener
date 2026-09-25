@@ -6,7 +6,7 @@ import type { StepLog, ToolCallLog } from "./requestLog";
 import { brief, summarize } from "./requestLog";
 import type { AnswerTools } from "./tools/toolSet";
 
-// One model's answer loop (PLAN, Retrieval and answering: steps). The model
+// One model's answer loop. The model
 // calls tools until it ends with `present` (a tool without execute, so the
 // loop stops) or with text alone; at most STEP_LIMIT steps. An input that
 // fails its schema is repaired once by re-asking the same model
@@ -18,7 +18,7 @@ import type { AnswerTools } from "./tools/toolSet";
 // for the presentation. When the view needs words (a profile, a
 // comparison) and the model gave none, or gave them only in that failed
 // step, one call asks for them; a list or count is opened by the app
-// itself (PLAN, Reliability).
+// itself.
 
 export interface LoopRequest {
   instructions: string;

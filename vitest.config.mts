@@ -14,6 +14,8 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   test: {
     environment: "node",
+    // The model names come from the environment (lib/models/modelEnv.ts); the tests get fixed ones.
+    env: { ANSWER_MODEL: "test-answer-model", EMBEDDING_MODEL: "test-embedding-model", IMAGE_MODEL: "test-image-model" },
     include: ["src/**/*.test.ts", "scripts/**/*.test.ts"],
   },
 });

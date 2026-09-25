@@ -4,8 +4,8 @@ import { INDEX_DIR, readIndexEntries } from "@/lib/candidates/indexFiles";
 import { readSeeds } from "../../generation/steps/seeds";
 import { accuracyReport, compareEntry, COMPARED_FIELDS } from "../accuracy";
 
-// The committed index checked against the seeds its PDFs were rendered from
-// (PLAN, Indexer): every fact the PDF prints, and the accuracy thresholds.
+// The committed index checked against the seeds its PDFs were rendered
+// from: every fact the PDF prints, and the accuracy thresholds.
 
 const index = existsSync(INDEX_DIR) ? readIndexEntries() : [];
 const seeds = await readSeeds();

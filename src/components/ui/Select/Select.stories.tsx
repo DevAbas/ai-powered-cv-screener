@@ -1,6 +1,5 @@
 import type { Meta } from "@storybook/nextjs-vite";
 import { useState } from "react";
-import { VendorLogo } from "@/components/ui/VendorLogo";
 import { Select } from ".";
 
 export default {
@@ -32,36 +31,6 @@ export const Basic = () => {
         {fruits.map((fruit) => (
           <Select.Item key={fruit.value} value={fruit.value}>
             <Select.ItemText>{fruit.label}</Select.ItemText>
-            <Select.ItemIndicator />
-          </Select.Item>
-        ))}
-      </Select.Content>
-    </Select.Root>
-  );
-};
-
-const models = [
-  { value: "primary", label: "Gemini Flash-Lite", vendor: "google" },
-  { value: "alternative", label: "Gemini 3.6 Flash", vendor: "google" },
-  { value: "qwen", label: "Qwen3.8 27B", vendor: "qwen" },
-] as const;
-
-/** Options with a leading logo, as in the composer's model select. */
-export const WithIcons = () => {
-  const [value, setValue] = useState<string>("primary");
-  const selected = models.find((m) => m.value === value);
-  return (
-    <Select.Root value={value} onChange={setValue}>
-      <Select.Trigger aria-label={`Model: ${selected?.label}`}>
-        {selected && <VendorLogo vendor={selected.vendor} />}
-        <Select.ValueText>{selected?.label}</Select.ValueText>
-        <Select.Indicator />
-      </Select.Trigger>
-      <Select.Content>
-        {models.map((model) => (
-          <Select.Item key={model.value} value={model.value}>
-            <VendorLogo vendor={model.vendor} />
-            <Select.ItemText>{model.label}</Select.ItemText>
             <Select.ItemIndicator />
           </Select.Item>
         ))}

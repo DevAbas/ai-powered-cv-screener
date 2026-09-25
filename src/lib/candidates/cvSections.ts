@@ -2,7 +2,7 @@ import type { Chunk, SectionName } from "@/contracts";
 import { SECTION_NAMES } from "@/contracts";
 import { chunkId } from "./cvChunks";
 
-// Splitting a CV at its own section boundaries (PLAN, Indexer): a line
+// Splitting a CV at its own section boundaries: a line
 // that equals one of the contract's section names, case aside, starts a
 // section; the text before the first heading on page 1 is the header; a
 // section that continues on the next page gives one chunk per page. A CV

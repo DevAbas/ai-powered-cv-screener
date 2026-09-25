@@ -12,9 +12,8 @@ import { log, shortError, sleep } from "../options";
 import { ROSTER } from "../roster";
 import { assembleSeed, findDuplicateEmployment, seedRequest } from "../seedRules";
 
-// Step 1: one seed per roster entry, written by the `generate` model
-// (PLAN, Generation pipeline). Resumable: an existing seed is kept unless
-// forced.
+// Step 1: one seed per roster entry, written by the `generate` model.
+// Resumable: an existing seed is kept unless forced.
 
 /** Pause between calls: OpenRouter's free tier allows 20 requests a minute. */
 const PAUSE_MS = 3_500;

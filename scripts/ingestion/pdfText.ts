@@ -1,6 +1,6 @@
 import { getDocument, VerbosityLevel } from "pdfjs-dist/legacy/build/pdf.mjs";
 
-// Text per page of a CV (PLAN, Indexer), with pdf.js: the same library that
+// Text per page of a CV, with pdf.js: the same library that
 // draws the in-app preview, so a cited page is the page the recruiter sees.
 
 /** A heading set in spaced capitals, as extracted: "S U M M A RY", "L A N G UAG E S". */

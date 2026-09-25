@@ -2,7 +2,7 @@ import type { AnsweredBy, AnswerMatched, AnswerSource, AnswerView, CandidateRow 
 import { ANDREI, ELENA, LENA } from "@/mocks/sampleIndex";
 import { findCandidate } from "./pool";
 
-// Answers for the mocks and stories (PLAN, Design system: mocks), about
+// Answers for the mocks and stories, about
 // candidates in MOCK_POOL, written the way the answer model is asked to: a
 // short text beside the view that shows the candidates (DESIGN.md, Answer
 // views). The sources are the view's, as the server makes them.
@@ -15,9 +15,9 @@ export interface MockAnswer {
   answeredBy: AnsweredBy;
 }
 
-const PRIMARY: AnsweredBy = { model: "primary", name: "Gemini Flash-Lite", fellBack: false };
+const PRIMARY: AnsweredBy = { name: "gemini-3.5-flash-lite", fellBack: false };
 /** The settled line when a fallback answered (DESIGN.md, Progress line); no entry has one in this phase. */
-const FALLBACK: AnsweredBy = { model: "primary", name: "Nemotron 3 Super", fellBack: true };
+const FALLBACK: AnsweredBy = { name: "gemini-3.6-flash", fellBack: true };
 
 /** A list row for a pool candidate, with the years of each skill asked about. */
 function row(candidateId: string, skills: [string, number | null][] = [], reason = "", page = 1): CandidateRow {

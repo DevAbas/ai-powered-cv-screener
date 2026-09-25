@@ -8,9 +8,8 @@ import { PHOTO_COST_USD, PHOTO_MEDIA_TYPE, photoPrompt, photoProviderOptions } f
 import { ROSTER } from "../roster";
 import { readSeeds } from "./seeds";
 
-// Step 2: one photo per seed from the paid `image` entry (PLAN, Generation
-// pipeline). Runs only when named. A failed photo is reported, never fatal:
-// the CV simply has no photo.
+// Step 2: one photo per seed from the paid `image` entry. Runs only when
+// named. A failed photo is reported, never fatal: the CV simply has no photo.
 
 const CALL_TIMEOUT_MS = 120_000;
 

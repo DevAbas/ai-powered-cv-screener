@@ -17,7 +17,7 @@ export interface AnswerProgressProps {
    * @default true
    */
   working?: boolean;
-  /** Swaps in the neutral "Taking longer than usual…" line (PLAN, User interface). */
+  /** Swaps in the neutral "Taking longer than usual…" line. */
   slow?: boolean;
   /**
    * How the request ended, for the settled line: only an answer says what the search did.

@@ -4,8 +4,8 @@ import type { Components } from "react-markdown";
 // The answer text, Markdown rendered with the design system's type and
 // colour tokens only (DESIGN.md, Answer text). Paragraphs, lists and bold
 // are what the prompt asks for; anything else renders as plain text, and
-// raw HTML is never rendered. The text arrives once the final step ends
-// (PLAN, Retrieval and answering), through the same delta path.
+// raw HTML is never rendered. The text arrives once the final step ends,
+// through the same delta path.
 
 export interface AnswerTextProps {
   /** Markdown; may be partial while the answer streams. */

@@ -3,7 +3,7 @@ import type { ExchangeStatus } from "@/components/ChatExchange";
 
 // Session state of the screen (PRD, UX principles: context is not lost).
 // Pure, so every transition is unit-tested; the conversation never persists
-// (PRD, Non-goals). The selected model lives in `useStoredModel`.
+// (PRD, Non-goals).
 
 export interface ExchangeState {
   id: string;

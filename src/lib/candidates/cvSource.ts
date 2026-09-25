@@ -7,7 +7,7 @@ export function cvFileName(candidateId: string): string {
 
 /**
  * Where a cited source opens: the CV through the CV route, at the cited
- * page (PLAN, Data access). Undefined for an id or page that cannot name a
+ * page. Undefined for an id or page that cannot name a
  * CV, so the source stays plain text.
  */
 export function cvSourceHref(candidateId: string, page: number): string | undefined {

@@ -2,18 +2,17 @@ import type { AnswerSource, CandidateProfile, IndexEntry, PresentInput, AnswerSt
 import { leadSentence, searchLead } from "./leadSentence";
 import type { ResultStore } from "./toolResults";
 
-// From the model's presentation call to the view the browser renders (PLAN,
-// Retrieval and answering: presentation and views). The call is checked
-// against the tool results: a candidate no tool returned fails the answer,
-// a page the tools did not cite for that candidate is corrected to one they
-// did. Every fact shown comes from the index; the sources come only from
-// the call; the opening sentence of a filter, count, list or no match is
-// composed from the last filter call and its result (leadSentence.ts), so its
-// count and criteria are the tools'. A list after an exact filter holds
-// every candidate the filter matched (PRD: complete lists), so the model
-// can neither drop a match nor add one; and one candidate, however the
-// model presented them, is shown as their profile: the text answers, the
-// view shows who and their CV.
+// From the model's presentation call to the view the browser renders. The
+// call is checked against the tool results: a candidate no tool returned
+// fails the answer, a page the tools did not cite for that candidate is
+// corrected to one they did. Every fact shown comes from the index; the
+// sources come only from the call; the opening sentence of a filter, count,
+// list or no match is composed from the last filter call and its result
+// (leadSentence.ts), so its count and criteria are the tools'. A list after
+// an exact filter holds every candidate the filter matched (PRD: complete
+// lists), so the model can neither drop a match nor add one; and one
+// candidate, however the model presented them, is shown as their profile: the
+// text answers, the view shows who and their CV.
 
 export interface BuiltView {
   view: AnswerView;

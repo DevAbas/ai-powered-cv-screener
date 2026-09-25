@@ -5,7 +5,7 @@ import type { CandidateSeed } from "@/contracts";
 import { CvTemplate, VARIANTS } from "./CvTemplate";
 
 // Three variants of one layout (font and date style), so formats differ
-// without leaving the shape of the sample CV (PLAN, Generation pipeline).
+// without leaving the shape of the sample CV.
 export const TEMPLATE_COUNT = VARIANTS.length;
 
 /** The template's `Document` for a seed, ready for `renderToBuffer`. */

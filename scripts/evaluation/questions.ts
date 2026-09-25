@@ -19,9 +19,9 @@ import {
   union,
 } from "./rules";
 
-// The golden questions (PLAN, Evaluation): every PRD use case and the hard
-// cases, each with its expectation as a rule over the seeds. Ids are stable:
-// reports and PLAN refer to them.
+// The golden questions: every PRD use case and the hard cases, each with
+// its expectation as a rule over the seeds. Ids are stable: the reports
+// refer to them.
 
 const withBoth = (seeds: Seeds) => ids(seeds, (s) => hasSkill(s, "React") && hasSkill(s, "TypeScript"));
 const withReact = (seeds: Seeds) => ids(seeds, (s) => hasSkill(s, "React"));

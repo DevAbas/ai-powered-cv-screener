@@ -2,14 +2,10 @@ import { z } from "zod";
 import { CandidateIdSchema } from "./contract.candidate";
 import { AnswerViewSchema } from "./contract.view";
 
-// POST /api/ask: the request, and the NDJSON events streamed back (PLAN,
-// Retrieval and answering). Progress while the tools run, the final step's
-// text, then exactly one `answer` (the text, its view, its sources, what
-// was matched and which model answered) or one `error`.
-
-export const ANSWER_MODEL_IDS = ["primary", "alternative"] as const;
-export const AnswerModelIdSchema = z.enum(ANSWER_MODEL_IDS);
-export type AnswerModelId = z.infer<typeof AnswerModelIdSchema>;
+// POST /api/ask: the request, and the NDJSON events streamed back. Progress
+// while the tools run, the final step's text, then exactly one `answer` (the
+// text, its view, its sources, what was matched and which model answered) or
+// one `error`.
 
 /** Longest earlier answer sent back as context; older text is cut, not the question. */
 export const HISTORY_ANSWER_MAX = 4_000;
@@ -24,7 +20,6 @@ export type HistoryTurn = z.infer<typeof HistoryTurnSchema>;
 
 export const AskRequestSchema = z.object({
   question: z.string().trim().min(1).max(500),
-  model: AnswerModelIdSchema,
   history: z.array(HistoryTurnSchema).max(10),
 });
 export type AskRequest = z.infer<typeof AskRequestSchema>;
@@ -52,7 +47,6 @@ export type AnswerMatched = z.infer<typeof AnswerMatchedSchema>;
 
 /** Which model answered, and whether it was the fallback. */
 export const AnsweredBySchema = z.object({
-  model: AnswerModelIdSchema,
   name: z.string().min(1),
   fellBack: z.boolean(),
 });

@@ -2,14 +2,14 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.17         |
+| Version | 1.19         |
 | Date    | 2026-09-25   |
 | Status  | Approved     |
 | Owner   | Product      |
 
-This document describes what we are building and why. Technical decisions
-and phases live in `docs/PLAN.md`, data schemas in `src/contracts`, and
-engineering conventions in `AGENTS.md`. If a requirement conflicts with this
+This document describes what we are building and why. How it is built
+lives in `README.md`, data schemas in `src/contracts`, and engineering
+conventions in `AGENTS.md`. If a requirement conflicts with this
 document, update this document first, then the code.
 
 ---
@@ -207,15 +207,7 @@ Every interface decision is checked against these six.
 ### 10.4 Pool
 Removed in 1.6: the pool is reached through answers and their sources.
 
-### 10.5 Model selection
-- When more than one model is offered, the recruiter selects one by name,
-  shown with the logo of the company that made it; with one model there
-  is nothing to select and no selector.
-- The recommended model is preselected.
-- The selector is part of the composer (the question input), not the
-  header.
-
-### 10.6 States
+### 10.5 States
 - Empty state with the number of CVs and an example question.
 - Loading state that shows progress.
 - Error state with a plain-language message and a way to retry.
@@ -223,8 +215,9 @@ Removed in 1.6: the pool is reached through answers and their sources.
 ## 11. Success criteria
 
 - Filter, count, compare and profile questions return correct, sourced
-  answers on the recommended model, measured by the evaluation
-  (`docs/PLAN.md`, Evaluation) before a model is offered.
+  answers on the offered model, measured by the evaluation against
+  the thresholds in `scripts/evaluation/score.ts` before a model is
+  offered.
 - Response time is reported by the evaluation, not a pass/fail criterion.
 - Every answer can be traced to a CV in at most one click.
 - Empty-result and out-of-scope questions never produce an invented
@@ -276,3 +269,5 @@ None open. Resolved:
 | 1.15    | 2026-09-24 | Accuracy before speed (§3, §7.5, §11). §5: list all, lookup by role, follow-up and greeting use cases; one source per named candidate, none on greetings and out-of-scope answers, exact counts. §7.6: plain, warm, brief, with a next question after no match or out of scope. §8 step 3: the progress line says what was searched. §10.1: the text frames the data. §10.2: copied text removed. §11: correctness measured by the evaluation; response time reported. §13: resolutions dated. |
 | 1.16    | 2026-09-24 | §10.1: a filter, count or list opens with a sentence the product composes from the search; four candidates by default. §10.2: the source reads "Resume". |
 | 1.17    | 2026-09-25 | §5 row 5 and §10.1: an answer about one candidate is prose plus the name, title and CV. §10.5: the selector appears only when more than one model is offered. |
+| 1.18    | 2026-09-25 | Header and §11: the plan is retired; how it is built lives in `README.md`, the evaluation thresholds in `scripts/evaluation/score.ts`. |
+| 1.19    | 2026-09-25 | §10.5 Model selection removed: one model answers and the recruiter does not choose it; §10.6 States becomes §10.5. §11: the offered model. |

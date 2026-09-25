@@ -5,8 +5,8 @@ const config: StorybookConfig = {
   stories: ["../src/components/**/*.stories.tsx"],
   addons: ["@storybook/addon-a11y", "@storybook/addon-docs", "@storybook/addon-themes"],
   framework: "@storybook/nextjs-vite",
-  // The CVs live outside `public` (PLAN, Data layout); previews serve them at /cvs/<id>.pdf.
-  staticDirs: ["../public", { from: "../data/cvs", to: "/cvs" }],
+  // The CVs live in `data`; previews serve them at /cvs/<id>.pdf.
+  staticDirs: [{ from: "../data/cvs", to: "/cvs" }],
 };
 
 export default config;

@@ -3,8 +3,8 @@
 // not `export *`: the scripts run as ES modules and Node only sees the
 // names a CommonJS module declares itself.
 
-export { ANSWER_MODEL_IDS, AnswerModelIdSchema, HISTORY_ANSWER_MAX, HistoryTurnSchema, AskRequestSchema, PROGRESS_STAGES, ProgressStageSchema, AnswerSourceSchema, AnswerMatchedSchema, AnsweredBySchema, AskEventSchema } from "./contract.ask";
-export type { AnswerModelId, HistoryTurn, AskRequest, ProgressStage, AnswerSource, AnswerMatched, AnsweredBy, AskEvent } from "./contract.ask";
+export { HISTORY_ANSWER_MAX, HistoryTurnSchema, AskRequestSchema, PROGRESS_STAGES, ProgressStageSchema, AnswerSourceSchema, AnswerMatchedSchema, AnsweredBySchema, AskEventSchema } from "./contract.ask";
+export type { HistoryTurn, AskRequest, ProgressStage, AnswerSource, AnswerMatched, AnsweredBy, AskEvent } from "./contract.ask";
 
 export { ROLES, RoleSchema, SENIORITIES, SenioritySchema, WORK_MODES, WorkModeSchema, LANGUAGE_LEVELS, LanguageLevelSchema, DEGREES, DegreeSchema, SkillSchema, LanguageSchema, EducationSchema, EmploymentSchema, CandidateProfileSchema, SECTION_NAMES, SectionNameSchema, ChunkSchema, FieldSourceSchema, CandidateIdSchema, EmploymentSeedSchema, SkillGroupSchema, CandidateSeedSchema, IndexEntrySchema } from "./contract.candidate";
 export type { Role, Seniority, WorkMode, LanguageLevel, Degree, Skill, Language, Education, Employment, CandidateProfile, SectionName, Chunk, FieldSource, CandidateId, EmploymentSeed, SkillGroup, CandidateSeed, IndexEntry } from "./contract.candidate";

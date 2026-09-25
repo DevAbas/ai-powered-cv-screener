@@ -6,7 +6,7 @@ import { findCandidate, MOCK_POOL } from "../pool";
 import { SCENARIOS } from "../scenarios";
 import { EXAMPLE_QUESTION } from "@/lib/conversation";
 
-const request = (question: string) => ({ question, model: "primary" as const, history: [] });
+const request = (question: string) => ({ question, history: [] });
 
 describe("answer fixtures", () => {
   it.each(Object.entries(ANSWERS))("%s is a valid answer event", (_, answer) => {

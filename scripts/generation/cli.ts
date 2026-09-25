@@ -1,4 +1,4 @@
-// Generates the pilot pool (PLAN, Generation pipeline): seeds, photos and
+// Generates the pilot pool: seeds, photos and
 // PDFs for the fixed roster. Every step skips what exists and can be forced.
 //
 //   npm run generate                                   seeds and pdfs (photos are paid: only when named)
@@ -10,7 +10,7 @@
 // ESM (see package.json here, which react-pdf needs): a CJS package has no named exports.
 import nextEnv from "@next/env";
 import { missingApiKeys } from "@/lib/models/modelProviders";
-import { getEntry } from "@/lib/models";
+import { REGISTRY } from "@/lib/models";
 import type { Provider } from "@/lib/models";
 import type { Step, StepOptions, StepReport } from "./options";
 import { STEPS } from "./options";
@@ -49,11 +49,11 @@ function assertKnown(kind: string, values: readonly string[], known: readonly st
 function providersFor(step: Step): Provider[] {
   switch (step) {
     case "seeds": {
-      const entry = getEntry("generate");
-      return [entry.provider, ...(entry.fallback ? [entry.fallback.provider] : [])];
+      const slot = REGISTRY.generate;
+      return [slot.provider, ...(slot.fallback ? [slot.fallback.provider] : [])];
     }
     case "photos":
-      return [getEntry("image").provider];
+      return [REGISTRY.image.provider];
     case "pdfs":
       return [];
   }
@@ -88,7 +88,7 @@ async function main() {
     const verb = args.dryRun ? "would generate" : "generated";
     console.log(`${r.step}: ${verb} ${r.done.length}, skipped ${r.skipped.length}, failed ${r.failed.length}${r.failed.length ? ` (${r.failed.join(", ")})` : ""}`);
   }
-  // A missing photo is never fatal (PLAN, Generation pipeline).
+  // A missing photo is never fatal.
   if (reports.some((r) => r.step !== "photos" && r.failed.length)) process.exitCode = 1;
 }
 

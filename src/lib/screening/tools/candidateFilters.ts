@@ -2,10 +2,10 @@ import type { FieldSource, IndexEntry, LanguageLevel, SectionName, Seniority, Fi
 import { LANGUAGE_LEVELS, SENIORITIES } from "@/contracts";
 import { splitLocation } from "@/lib/candidates";
 
-// Exact questions as deterministic queries over the profiles (PLAN,
-// Retrieval and answering: filter semantics). A candidate matches when
-// every criterion holds; each criterion that holds leaves its evidence:
-// the value that satisfied it and the page and section it was read from.
+// Exact questions as deterministic queries over the profiles. A candidate
+// matches when every criterion holds; each criterion that holds leaves its
+// evidence: the value that satisfied it and the page and section it was read
+// from.
 
 export interface Evidence {
   field: string;

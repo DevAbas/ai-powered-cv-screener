@@ -5,7 +5,7 @@ import type { AskEvent, AskRequest } from "@/contracts";
 import type { AskTransport } from "@/lib/conversation";
 import { ask, httpAsk } from "@/lib/conversation";
 
-/** After this long without an answer, a neutral notice appears (PLAN, User interface). */
+/** After this long without an answer, a neutral notice appears. */
 export const SLOW_NOTICE_MS = 10_000;
 
 export interface AskStreamHandlers {
@@ -22,7 +22,7 @@ export interface AskStreamHandlers {
 /**
  * Runs one `ask` request at a time over the given transport: the API in
  * the app, the mock in previews and tests. `stop()` aborts it without
- * fallback (PLAN, User interface); unmounting aborts it too.
+ * fallback; unmounting aborts it too.
  */
 export function useAskStream(transport: AskTransport = httpAsk) {
   const controller = useRef<AbortController | null>(null);

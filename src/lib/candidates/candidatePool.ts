@@ -3,7 +3,7 @@ import type { CandidateProfile, IndexEntry } from "@/contracts";
 import type { PoolCandidate } from "./poolCandidate";
 import { readIndexEntries } from "./indexFiles";
 
-// The pool (PLAN, Data access): the index folder, read once per process
+// The pool: the index folder, read once per process
 // and kept in memory. Server only: Next refuses this module in a client
 // bundle, and it reads the file system.
 

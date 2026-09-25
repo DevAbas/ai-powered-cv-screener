@@ -2,7 +2,7 @@ import type { Chunk, IndexEntry } from "@/contracts";
 import type { Embedder } from "@/lib/models/embedder";
 import type { ChunkMetadata, VectorRecord, VectorStore } from "@/lib/search";
 
-// The vectors step of `npm run index` (PLAN, Vector store): one record per
+// The vectors step of `npm run index`: one record per
 // section chunk, keyed by the chunk id so re-runs replace rather than
 // duplicate, with the metadata the search filters on. Resumable: a CV
 // whose chunks are all stored is skipped unless forced.

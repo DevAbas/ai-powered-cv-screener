@@ -18,7 +18,7 @@ const log = (candidatesReturned: string[]): RequestLog => ({
   event: "ask",
   requestId: "r",
   question: "q",
-  model: { requested: "primary", used: "m", fellBack: false },
+  model: { entry: "primary", used: "m", fellBack: false },
   steps: [],
   toolCalls: [],
   repairs: 0,
@@ -29,7 +29,7 @@ const log = (candidatesReturned: string[]): RequestLog => ({
   counters: {},
 });
 
-const answeredBy = { model: "primary" as const, name: "Gemini Flash-Lite", fellBack: false };
+const answeredBy = { name: "test-answer-model", fellBack: false };
 const listOf = (ids: string[]): AskEvent => {
   const view = { kind: "list" as const, lead: "", ranked: false, skills: [], rows: ids.map((id) => ({ candidateId: id, name: id, headline: "x", skills: [], reason: "", page: 1 })) };
   return { type: "answer", text: "Here.", view, sources: sourcesOf(view), matched: { kind: "matched", count: ids.length, total: 3 }, answeredBy };
@@ -50,20 +50,20 @@ describe("runEvaluation", () => {
             : [listOf(["andrei-popescu"])];
       return { events, log: log(["andrei-popescu", "elena-georgiou"]), latencyMs: 100 };
     });
-    const runs = await runEvaluation({ questions, models: ["primary"], repeat: 1, seeds: TEST_SEEDS, sectionPages: pages, ask });
+    const runs = await runEvaluation({ questions, models: ["test-answer-model"], repeat: 1, seeds: TEST_SEEDS, sectionPages: pages, ask });
     expect(seen.map((r) => r.history.length)).toEqual([0, 1, 0]);
     expect(seen[1]?.history[0]).toMatchObject({ question: "Who knows Python?", candidateIds: ["andrei-popescu", "elena-georgiou"] });
     expect(runs[0]?.questions.map((q) => q.score.problems)).toEqual([[], [], []]);
     const report = reportOf(runs[0]!);
     expect(report.summary.passes).toBe(true);
-    expect(report.displayName).toBe("Gemini Flash-Lite");
+    expect(report.model).toBe("test-answer-model");
   });
 
   it("repeats, runs several models, and reports a failing question", async () => {
     const ask = vi.fn(async (): Promise<Asked> => ({ events: [listOf(["elena-georgiou"])], log: log(["elena-georgiou"]), latencyMs: 50 }));
-    const runs = await runEvaluation({ questions: questions.slice(0, 1), models: ["primary", "alternative"], repeat: 2, seeds: TEST_SEEDS, sectionPages: pages, ask });
+    const runs = await runEvaluation({ questions: questions.slice(0, 1), models: ["model-a", "model-b"], repeat: 2, seeds: TEST_SEEDS, sectionPages: pages, ask });
     expect(ask).toHaveBeenCalledTimes(4);
-    expect(runs.map((run) => run.model)).toEqual(["primary", "alternative"]);
+    expect(runs.map((run) => run.model)).toEqual(["model-a", "model-b"]);
     expect(reportOf(runs[0]!).summary.exactF1).toBeCloseTo(2 / 3);
     expect(reportOf(runs[0]!).summary.passes).toBe(false);
   });

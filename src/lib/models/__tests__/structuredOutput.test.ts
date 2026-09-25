@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 import { CircuitBreaker } from "../circuitBreaker";
 import type { ModelEntry, ModelTarget } from "../modelRegistry";
-import { getEntry } from "../modelRegistry";
+import { getEntry } from "../modelEnv";
 import { ModelTimeoutError } from "../modelRetry";
 import { modelKey } from "../modelRouting";
 import type { CallBudget, RunOptions } from "../structuredOutput";
@@ -115,7 +115,7 @@ function stalledOpenRouter(mode: "after-headers" | "before-headers") {
   return { model: createOpenRouter({ apiKey: "test", fetch }).chat("vendor/model:free"), calls };
 }
 
-const fallbackTarget: ModelTarget = { provider: "google", vendor: "google", model: "fallback-model" };
+const fallbackTarget: ModelTarget = { provider: "google", model: "fallback-model" };
 const entry: ModelEntry = { ...getEntry("primary"), fallback: fallbackTarget };
 const request = { schema: TestAnswerSchema, name: "answer", prompt: "Who has React?" };
 const BUDGET: CallBudget = { firstOutputMs: 150, totalMs: 2_000 };

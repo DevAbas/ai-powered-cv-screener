@@ -4,7 +4,7 @@ import { ANSWERS } from "@/mocks/answers";
 import { mockAsk } from "@/mocks/ask";
 import { ask, readNdjson, UNREADABLE_ANSWER } from "../askClient";
 
-const request = (question: string) => ({ question, model: "primary" as const, history: [] });
+const request = (question: string) => ({ question, history: [] });
 
 async function collect(question: string, signal = new AbortController().signal) {
   const events: AskEvent[] = [];

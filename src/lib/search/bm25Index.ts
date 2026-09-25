@@ -1,7 +1,7 @@
 import MiniSearch from "minisearch";
 import type { Chunk, IndexEntry, SectionName } from "@/contracts";
 
-// The keyword side of hybrid search (PLAN, Retrieval and answering): BM25+
+// The keyword side of hybrid search: BM25+
 // over the section chunks with MiniSearch at its documented defaults
 // (k 1.2, b 0.7, d 0.5). Terms are whole words split on Unicode space and
 // punctuation (the library's tokenizer), so a word never matches inside

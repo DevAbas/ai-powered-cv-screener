@@ -9,7 +9,7 @@ import { delay, isServerError, ModelTimeoutError, shouldFallBack } from "./model
 import { runRoute } from "./modelRouting";
 
 // Structured output for the scripts that still use it, extraction and seed
-// generation (PLAN, Reliability: schema repair): streamed internally so a
+// generation: streamed internally so a
 // hung model is detected by a first-output timer; one schema repair per
 // model; one quick retry after a 5xx; the next model on the route
 // (modelRouting.ts) on timeout, daily quota, other failures or a failed repair;
@@ -23,7 +23,7 @@ export interface CallBudget {
   totalMs: number;
 }
 
-/** Placeholders until set from the measured P95 time to first token (PLAN, Open questions). */
+/** Placeholders until set from the evaluation's measured P95 time to first token, times two. */
 export const ANSWER_BUDGET: CallBudget = { firstOutputMs: 10_000, totalMs: 60_000 };
 
 /**

@@ -4,7 +4,7 @@ import { CURRENT_MONTH } from "../generation/seedRules";
 import { medianTenureMonths } from "@/lib/candidates";
 import type { Seeds } from "./types";
 
-// Pure rule helpers over the seeds (PLAN, Evaluation). Every expectation in
+// Pure rule helpers over the seeds. Every expectation in
 // questions.ts is built from these, so a rule reads like the question.
 
 type Keep = (seed: CandidateSeed) => boolean;
@@ -31,7 +31,7 @@ export function languageLevel(seed: CandidateSeed, language: string): LanguageLe
   return seed.languages.find((entry) => entry.language === language)?.level;
 }
 
-/** CEFR order, native above C2 (PLAN, Retrieval and answering: filter semantics). */
+/** CEFR order, native above C2. */
 export const levelRank = (level: LanguageLevel): number => LANGUAGE_LEVELS.indexOf(level);
 
 export const seniorityRank = (seniority: Seniority): number => SENIORITIES.indexOf(seniority);

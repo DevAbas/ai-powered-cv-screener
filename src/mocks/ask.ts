@@ -3,7 +3,7 @@ import { EXAMPLE_QUESTION } from "@/lib/conversation";
 import type { ScenarioName } from "./scenarios";
 import { SCENARIOS } from "./scenarios";
 
-// Mock transport for the `ask` client module (PLAN, User interface): the
+// Mock transport for the `ask` client module: the
 // component previews and the tests. Yields raw events: validating them is
 // the client's job. A question is matched exactly against the example
 // questions below; any other question replays the filter answer.

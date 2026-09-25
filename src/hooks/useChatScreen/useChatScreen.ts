@@ -6,7 +6,6 @@ import { historyFrom } from "@/hooks/useChatScreen/chatHistory";
 import { chatReducer, initialChatState, isRunning } from "@/hooks/useChatScreen/chatState";
 import type { ExchangeState } from "@/hooks/useChatScreen/chatState";
 import { useAskStream } from "@/hooks/useAskStream";
-import { useStoredModel } from "@/hooks/useStoredModel";
 
 const LOST_MESSAGE = "The request did not finish. Try again.";
 
@@ -18,12 +17,11 @@ export interface ChatScreenOptions {
 /** The screen's session state and the recruiter's actions on it. */
 export function useChatScreen({ transport }: ChatScreenOptions = {}) {
   const [state, dispatch] = useReducer(chatReducer, undefined, initialChatState);
-  const { model, setModel } = useStoredModel();
   const stream = useAskStream(transport);
 
   function run(exchangeId: string, question: string, previous: readonly ExchangeState[]) {
     void stream.start(
-      { question, model, history: historyFrom(previous) },
+      { question, history: historyFrom(previous) },
       {
         onEvent(event) {
           switch (event.type) {
@@ -46,7 +44,6 @@ export function useChatScreen({ transport }: ChatScreenOptions = {}) {
 
   return {
     state,
-    model,
     running: isRunning(state),
 
     ask(question: string) {
@@ -66,6 +63,5 @@ export function useChatScreen({ transport }: ChatScreenOptions = {}) {
     },
 
     stop: stream.stop,
-    setModel,
   };
 }

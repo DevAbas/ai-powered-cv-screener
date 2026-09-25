@@ -6,11 +6,8 @@ import type { ModelTarget, Provider } from "./modelRegistry";
 // Builds SDK models from registry entries. Server and scripts only: reads
 // API keys from the environment at call time. Model parameters follow each
 // vendor's documentation: none are set here, so every model runs at its
-// documented defaults (Gemini 3 keeps its default temperature; PLAN, Model
-// registry).
-
-/** What the SDK needs to build a model; `vendor` is for display only. */
-export type RoutedModel = Pick<ModelTarget, "provider" | "model">;
+// documented defaults (Gemini 3 keeps its default temperature, per the Gemini 3
+// developer guide).
 
 const KEY_ENV: Record<Provider, string> = {
   openrouter: "OPENROUTER_API_KEY",
@@ -29,7 +26,7 @@ function apiKey(provider: Provider): string {
   return key;
 }
 
-export function languageModel(target: RoutedModel): LanguageModel {
+export function languageModel(target: ModelTarget): LanguageModel {
   switch (target.provider) {
     case "openrouter":
       // Usage accounting puts the upstream provider and the cost in providerMetadata.openrouter (provider README).
@@ -40,7 +37,7 @@ export function languageModel(target: RoutedModel): LanguageModel {
 }
 
 /** An embedding model for a registry target; only Google serves one here. */
-export function embeddingModel(target: RoutedModel): EmbeddingModel {
+export function embeddingModel(target: ModelTarget): EmbeddingModel {
   if (target.provider !== "google") throw new Error(`No embedding models on provider "${target.provider}"`);
   return createGoogle({ apiKey: apiKey("google") }).embedding(target.model);
 }

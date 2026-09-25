@@ -1,6 +1,6 @@
 import type { CandidateProfile, Chunk, FieldSource, SectionName } from "@/contracts";
 
-// Checking an extracted profile against the CV's text (PLAN, Indexer):
+// Checking an extracted profile against the CV's text:
 // every field is located in its own section, so its source page is known
 // and the CV's spelling is kept. A value is located when its characters
 // appear as a run of whole words of the text, case, accents, punctuation

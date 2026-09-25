@@ -23,10 +23,27 @@ stores one vector per section chunk in Pinecone. Has its own `package.json`
 ## evaluation/
 
 `npm run eval`. Runs the golden questions through the answer pipeline per
-model and scores them against the PLAN thresholds into `data/eval/`. Has its
-own `package.json` (`"type": "module"`) because it imports the generation
-package's ESM modules (the seeds step, the seed rules, the step options), so
-its files must be ESM as well.
+model and scores them against the thresholds in `score.ts` into
+`data/eval/`. Has its own `package.json` (`"type": "module"`) because it
+imports the generation package's ESM modules (the seeds step, the seed
+rules, the step options), so its files must be ESM as well.
+
+The report says whether each model passes. `--model <name>` runs a
+candidate without touching the environment; swapping the model is then a
+change of `ANSWER_MODEL` in `.env.local`.
+
+## Data
+
+Each folder of `data/` has one owner:
+
+| Path | Holds | Read by |
+|---|---|---|
+| `data/generation/seeds/<id>.json` | The ground truth each CV was rendered from | The scripts and the evaluation |
+| `data/generation/manifest.json` | The generator's state: whether each PDF carries a photo | The generator |
+| `data/generation/photos/<id>.jpg` | Generated photos | The generator |
+| `data/index/<id>.json` | One index entry per CV (`IndexEntrySchema`) | The app, once at startup |
+| `data/cvs/<id>.pdf` | The CVs | The CV route and the component previews |
+| `data/eval/` | Evaluation reports | Nobody at run time |
 
 ## design-lint/
 

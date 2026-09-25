@@ -1,4 +1,4 @@
-// Builds the CV index (PLAN, Indexer) in three steps:
+// Builds the CV index in three steps:
 //   profiles: for every PDF in `data/cvs`, the text per page split into
 //             section chunks, one profile from the `extract` entry, verified
 //             against the text, written to data/index/<id>.json after every CV;
@@ -37,7 +37,7 @@ import { syncVectors } from "./steps/vectors";
 
 nextEnv.loadEnvConfig(process.cwd());
 
-/** Pause between calls, kept from the OpenRouter phase (20 requests a minute there); the Gemini API free tier allows about 15 (PLAN, Environment). */
+/** Pause between calls, kept from the OpenRouter phase (20 requests a minute there); the Gemini API free tier allows about 15 (Gemini API rate limits). */
 const PAUSE_MS = 3_500;
 
 const STEPS = ["profiles", "sources", "vectors"] as const;

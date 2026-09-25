@@ -1,6 +1,6 @@
 import type { Chunk, IndexEntry, SectionName } from "@/contracts";
 
-// Reading an entry's chunks (PLAN, Indexer): the text of a page, and the
+// Reading an entry's chunks: the text of a page, and the
 // pages each section falls on.
 
 /** The chunk id: `<candidateId>:<section>:<page>`, also the vector's id. */

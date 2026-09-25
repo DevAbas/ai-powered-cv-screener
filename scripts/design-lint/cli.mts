@@ -1,4 +1,4 @@
-// Lints DESIGN.md in both themes (PLAN, Design system).
+// Lints DESIGN.md in both themes.
 //
 //   npm run design:lint
 //

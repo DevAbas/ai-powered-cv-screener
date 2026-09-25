@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// Candidate data model (PLAN, Data model). Schemas an LLM fills avoid
+// Candidate data model. Schemas an LLM fills avoid
 // `z.union`: Gemini structured output does not accept it.
 
 export const ROLES = [
@@ -91,14 +91,14 @@ export const CandidateProfileSchema = z.object({
 export type CandidateProfile = z.infer<typeof CandidateProfileSchema>;
 
 /**
- * The sections a CV is split into (PLAN, Indexer): `header` is the text before
+ * The sections a CV is split into: `header` is the text before
  * the first heading on page 1, `other` a heading the list does not name.
  */
 export const SECTION_NAMES = ["header", "summary", "skills", "experience", "education", "languages", "leadership", "certifications", "other"] as const;
 export const SectionNameSchema = z.enum(SECTION_NAMES);
 export type SectionName = z.infer<typeof SectionNameSchema>;
 
-/** One section of one page of a CV: the unit of retrieval (PLAN, Indexer). */
+/** One section of one page of a CV: the unit of retrieval. */
 export const ChunkSchema = z.object({
   /** `<candidateId>:<section>:<page>`, the vector's id too. */
   id: z.string().min(1),
@@ -153,7 +153,7 @@ export const CandidateSeedSchema = CandidateProfileSchema.extend({
 });
 export type CandidateSeed = z.infer<typeof CandidateSeedSchema>;
 
-/** One indexed CV (PLAN, Indexer): its section chunks, its profile and where each field was read. */
+/** One indexed CV: its section chunks, its profile and where each field was read. */
 export const IndexEntrySchema = z.object({
   id: CandidateIdSchema,
   pages: z.number().int().min(1),

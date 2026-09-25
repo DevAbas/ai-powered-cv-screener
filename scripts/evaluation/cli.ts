@@ -1,18 +1,18 @@
-// Runs the golden questions through the answer pipeline (PLAN, Evaluation),
+// Runs the golden questions through the answer pipeline,
 // per model, and scores them against the thresholds. Every run makes model
 // calls: state the estimate first (`--dry-run`) and get it approved.
 //
 //   npm run eval -- --dry-run                       the estimate, its cost and the remaining credits
-//   npm run eval                                    every offered model, every question
-//   npm run eval -- --model primary --only q01,q19  one model, a few questions
+//   npm run eval                                    the model ANSWER_MODEL names, every question
+//   npm run eval -- --model <name> --only q01,q19   a candidate model, a few questions
 //   npm run eval -- --repeat 2                      each question twice
 
 import nextEnv from "@next/env";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { AskEvent, AskRequest, HistoryTurn, AnswerModelId } from "@/contracts";
-import { AnswerModelIdSchema, HISTORY_ANSWER_MAX } from "@/contracts";
-import { answerEntries, answerEntry } from "@/lib/models";
+import type { AskEvent, AskRequest, HistoryTurn } from "@/contracts";
+import { HISTORY_ANSWER_MAX } from "@/contracts";
+import { REGISTRY, getEntry, modelName } from "@/lib/models";
 import { answerAsText } from "@/lib/conversation";
 import { answerQuestion, answerDeps } from "@/lib/screening";
 import type { RequestLog } from "@/lib/screening";
@@ -30,9 +30,9 @@ import type { GoldenQuestion, Seeds } from "./types";
 
 nextEnv.loadEnvConfig(process.cwd());
 
-/** Model requests a question takes on average: tool steps, then the answer (PLAN, Retrieval and answering: steps). */
+/** Model requests a question takes on average: tool steps, then the answer. */
 export const REQUESTS_PER_QUESTION = 2.5;
-/** Pause between questions, kept from the OpenRouter phase; the Gemini API free tier allows about 15 requests a minute (PLAN, Environment). */
+/** Pause between questions, kept from the OpenRouter phase; the Gemini API free tier allows about 15 requests a minute (Gemini API rate limits). */
 const PAUSE_MS = 3_500;
 export const REPORT_DIR = path.join("data", "eval");
 
@@ -44,12 +44,13 @@ export interface Asked {
 
 export interface RunOptions {
   questions: readonly GoldenQuestion[];
-  models: readonly AnswerModelId[];
+  /** The model names under evaluation, on the answer slot's provider. */
+  models: readonly string[];
   repeat: number;
   seeds: Seeds;
   sectionPages: SectionPages;
   /** One question through the pipeline; the runner passes the history of a follow-up. */
-  ask: (request: AskRequest) => Promise<Asked>;
+  ask: (request: AskRequest, model: string) => Promise<Asked>;
   log?: (message: string) => void;
   pauseMs?: number;
 }
@@ -63,7 +64,7 @@ export interface QuestionRun {
 }
 
 export interface ModelRun {
-  model: AnswerModelId;
+  model: string;
   startedAt: string;
   questions: QuestionRun[];
 }
@@ -86,7 +87,7 @@ export async function runEvaluation(options: RunOptions): Promise<ModelRun[]> {
       const answered = new Map<string, Asked>();
       for (const question of options.questions) {
         if (run.questions.length > 0 && pauseMs > 0) await sleep(pauseMs);
-        const asked = await options.ask({ question: question.question, model, history: historyFor(question, answered, options.questions) });
+        const asked = await options.ask({ question: question.question, history: historyFor(question, answered, options.questions) }, model);
         answered.set(question.id, asked);
         const observed = observeAnswer(asked.events, asked.log, asked.latencyMs);
         const score = scoreQuestion(question, observed, options.seeds, options.sectionPages);
@@ -100,11 +101,8 @@ export async function runEvaluation(options: RunOptions): Promise<ModelRun[]> {
 }
 
 export function reportOf(run: ModelRun): ModelReport {
-  const entry = answerEntry(run.model);
   return {
     model: run.model,
-    displayName: entry?.displayName ?? run.model,
-    pinned: entry?.model ?? "-",
     startedAt: run.startedAt,
     summary: summarize(run.questions.map((q) => q.score)),
     scores: run.questions.map((q) => q.score),
@@ -118,8 +116,7 @@ function parseArgs(argv: string[]) {
     const i = argv.indexOf(flag);
     return i >= 0 ? (argv[i + 1] ?? "").split(",").filter(Boolean) : undefined;
   };
-  const models = (value("--model") ?? answerEntries().map((entry) => entry.id)).map((id) => AnswerModelIdSchema.parse(id));
-  for (const id of models) if (!answerEntry(id)) throw new Error(`Model ${id} is not offered`);
+  const models = value("--model") ?? [modelName("ANSWER_MODEL")];
   const only = value("--only");
   const questions = only ? only.map(goldenQuestion) : [...GOLDEN_QUESTIONS];
   const repeat = Number(value("--repeat")?.[0] ?? 1);
@@ -149,16 +146,14 @@ async function creditStatus(): Promise<string> {
 }
 
 /** The run's cost per model, from OpenRouter's public prices (GET /api/v1/models) and the tokens a request takes. */
-async function estimatedCost(models: readonly AnswerModelId[], requestsPerModel: number): Promise<string> {
+async function estimatedCost(models: readonly string[], requestsPerModel: number): Promise<string> {
   try {
     const response = await fetch("https://openrouter.ai/api/v1/models");
     if (!response.ok) return `prices unavailable (HTTP ${response.status})`;
     const { data } = (await response.json()) as { data: { id: string; pricing?: { prompt?: string; completion?: string } }[] };
-    const lines = models.map((id) => {
-      const entry = answerEntry(id);
-      const model = entry?.model ?? id;
+    const lines = models.map((model) => {
       // The Gemini API is a quota, not a price list: free tier about 1,000 requests a day per model (Gemini API rate limits), or billed per token.
-      if (entry?.provider === "google") return `${model}: Gemini API quota (free tier about 1,000 requests a day per model, or billed per token)`;
+      if (REGISTRY.primary.provider === "google") return `${model}: Gemini API quota (free tier about 1,000 requests a day per model, or billed per token)`;
       const pricing = data.find((listed) => listed.id === model)?.pricing;
       if (!pricing) return `${model}: no price listed`;
       const perRequest = INPUT_TOKENS_PER_REQUEST * Number(pricing.prompt ?? 0) + OUTPUT_TOKENS_PER_REQUEST * Number(pricing.completion ?? 0);
@@ -175,17 +170,17 @@ async function main() {
   const requests = Math.ceil(args.questions.length * args.repeat * REQUESTS_PER_QUESTION);
   console.log(`eval: ${args.questions.length} question(s) × ${args.repeat} × ${args.models.length} model(s) ≈ ${requests * args.models.length} model requests (${REQUESTS_PER_QUESTION} per question)`);
   console.log(await estimatedCost(args.models, requests));
-  if (args.models.some((id) => answerEntry(id)?.provider === "openrouter")) console.log(await creditStatus());
+  if (REGISTRY.primary.provider === "openrouter") console.log(await creditStatus());
   if (args.dryRun) return;
 
   const entries = readIndexEntries();
   const pages = new Map(entries.map((entry) => [entry.id, sectionPages(entry)]));
   const deps = answerDeps(entries);
-  const ask = async (request: AskRequest): Promise<Asked> => {
+  const ask = async (request: AskRequest, model: string): Promise<Asked> => {
     const events: AskEvent[] = [];
     let log: RequestLog | undefined;
     const started = performance.now();
-    await answerQuestion(request, (event) => events.push(event), { ...deps, log: (record) => (log = record) }, new AbortController().signal);
+    await answerQuestion(request, (event) => events.push(event), { ...deps, entry: { ...getEntry("primary"), model }, log: (record) => (log = record) }, new AbortController().signal);
     return { events, log, latencyMs: Math.round(performance.now() - started) };
   };
   const runs = await runEvaluation({

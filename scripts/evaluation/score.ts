@@ -1,7 +1,7 @@
 import type { SectionName } from "@/contracts";
 import type { ExpectedView, GoldenQuestion, QuestionKind, Seeds } from "./types";
 
-// Scoring (PLAN, Evaluation): retrieval, composition and citations are scored
+// Scoring: retrieval, composition and citations are scored
 // separately per question, then summarised per model against the thresholds.
 // Nothing here calls a model: the runner turns the answer events into an
 // `ObservedAnswer`, and the metrics are plain set arithmetic.
@@ -185,7 +185,7 @@ export function scoreQuestion(question: GoldenQuestion, observed: ObservedAnswer
   };
 }
 
-/** The thresholds a model must meet to be offered (PLAN, Evaluation). */
+/** The thresholds a model must meet to be offered. */
 export const THRESHOLDS = {
   invented: 0,
   candidateCitations: 1,

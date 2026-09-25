@@ -2,11 +2,11 @@ import { APICallError } from "ai";
 import { describe, expect, it, vi } from "vitest";
 import { CircuitBreaker } from "../circuitBreaker";
 import type { ModelEntry, ModelTarget } from "../modelRegistry";
-import { getEntry } from "../modelRegistry";
+import { getEntry } from "../modelEnv";
 import { ModelTimeoutError } from "../modelRetry";
 import { modelKey, modelRoute, runRoute } from "../modelRouting";
 
-const fallback: ModelTarget = { provider: "openrouter", vendor: "qwen", model: "vendor/fallback:free" };
+const fallback: ModelTarget = { provider: "openrouter", model: "vendor/fallback:free" };
 const entry: ModelEntry = { ...getEntry("primary"), fallback };
 
 const stall = new ModelTimeoutError("first-output", 10_000);

@@ -1,9 +1,9 @@
 import type { AnswerMatched } from "@/contracts";
 import type { ToolResult } from "./tools/toolSet";
 
-// What the tools returned during one request (PLAN, Retrieval and
-// answering: presentation): the candidates any tool returned, the pages
-// each was cited on, the exact count, and what the progress line says.
+// What the tools returned during one request: the candidates any tool
+// returned, the pages each was cited on, the exact count, and what the
+// progress line says.
 
 export class ResultStore {
   readonly results: ToolResult[] = [];

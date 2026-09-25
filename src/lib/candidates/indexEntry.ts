@@ -4,9 +4,9 @@ import { medianTenureMonths, yearMonthOf } from "./jobTenure";
 import type { ExtractionEvidence } from "./profileVerification";
 import { verifyProfile } from "./profileVerification";
 
-// An index entry from a CV's page texts and its extracted profile (PLAN,
-// Indexer): the section chunks, the profile as the CV spells it, the
-// source of every field, and the median job tenure.
+// An index entry from a CV's page texts and its extracted profile: the
+// section chunks, the profile as the CV spells it, the source of every field,
+// and the median job tenure.
 
 export interface BuiltEntry {
   entry: IndexEntry;

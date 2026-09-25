@@ -27,6 +27,6 @@ export const SettledRead: Story = { args: { steps: all, working: false, matched:
 /** "Answered": no CV was searched. */
 export const SettledAnswered: Story = { args: { steps: all.slice(0, 1), working: false, matched: null } };
 /** The fallback model answered, and the line says which. */
-export const SettledFallback: Story = { args: { steps: all, working: false, answeredBy: { model: "primary", name: "Qwen3.8 27B", fellBack: true } } };
+export const SettledFallback: Story = { args: { steps: all, working: false, answeredBy: { name: "gemini-3.6-flash", fellBack: true } } };
 export const SettledStopped: Story = { args: { steps: all.slice(0, 2), working: false, outcome: "stopped" } };
 export const SettledFailed: Story = { args: { steps: all.slice(0, 2), working: false, outcome: "failed" } };

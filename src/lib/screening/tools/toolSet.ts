@@ -12,7 +12,7 @@ import type { SearchResult } from "./searchCvText";
 import { searchCvText } from "./searchCvText";
 import type { ToolDeps } from "./toolDependencies";
 
-// The tools the answer model calls (PLAN, Retrieval and answering). The
+// The tools the answer model calls. The
 // exact ones run deterministic queries over the in-memory index; the text
 // search is hybrid; `present` has no execute, so calling it ends the loop
 // and the server builds the view from the results collected here. An

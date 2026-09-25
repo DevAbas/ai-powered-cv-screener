@@ -1,10 +1,9 @@
 import type { IndexEntry, Vocabulary } from "@/contracts";
 import { LANGUAGE_LEVELS, SENIORITIES } from "@/contracts";
 
-// The pool's own values for every filterable field (PLAN, Retrieval and
-// answering: vocabularies): what the tool enums are built from. Ordered
-// scales (seniority, language level) list every step, since a question
-// names a threshold, not a value the pool must hold.
+// The pool's own values for every filterable field: what the tool enums are
+// built from. Ordered scales (seniority, language level) list every step,
+// since a question names a threshold, not a value the pool must hold.
 
 const unique = <T extends string>(values: readonly T[]): T[] => [...new Set(values)].sort((a, b) => a.localeCompare(b));
 

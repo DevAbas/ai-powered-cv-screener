@@ -1,7 +1,7 @@
 import type { AskEvent, AskRequest } from "@/contracts";
 import { AskEventSchema, AskRequestSchema } from "@/contracts";
 
-// The screen's only data source (PLAN, User interface): POST /api/ask, read
+// The screen's only data source: POST /api/ask, read
 // as NDJSON. The mocks plug in as another transport (tests, previews).
 
 /** Where events come from: raw values, validated here. */

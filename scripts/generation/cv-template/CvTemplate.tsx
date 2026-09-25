@@ -10,7 +10,7 @@ import type { TemplateProps } from "./shared";
 // read all three from the PDF. The accent is the design
 // system's `primary-text` (DESIGN.md, Colors): the accent as text on a light
 // surface. Variants differ in font and date style only, so the pool's CVs
-// are not byte-for-byte alike (PLAN, Generation pipeline).
+// are not byte-for-byte alike.
 
 /** DESIGN.md `primary-text`: the one colour in the document. */
 const ACCENT = "#007C5A";
