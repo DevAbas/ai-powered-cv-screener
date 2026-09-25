@@ -139,20 +139,16 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 
 ## Testing
 
-Unit tests sit next to the code they test and run with fakes for the
-model and the stores. The index has an accuracy check: every indexed
-profile is compared with the seed its CV came from, field by field. The
-evaluation runs the test questions through the real answer pipeline and
-scores the model against fixed thresholds. It is the only test that calls
-a model, and it shows the cost first. A model answers recruiters only when
-it passes every threshold. Latency is reported, not gated.
+Unit tests sit next to the code they test, with fakes for the model and
+the stores. An accuracy check compares every indexed profile with its
+seed, field by field. The evaluation asks the real pipeline the golden
+questions and scores the model against fixed thresholds, showing the cost
+before any model call.
 
 ## Component previews
 
-Storybook is where the UI is built and checked before it meets the app.
-Every component has a story per state, in light and dark, rendered against
-the mocks, so a view can be seen without a model or an index. The
-accessibility addon runs on every story.
+Storybook shows every component in every state, in light and dark,
+against the mocks, with the accessibility addon on each story.
 
 ```bash
 npm run storybook
