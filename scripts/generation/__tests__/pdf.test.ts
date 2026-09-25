@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countPdfPages, formatAvailability, formatDegree, formatMonth, formatMonthNumeric, formatSkill, formatWorkModes } from "./pdf";
+import { countPdfPages, formatAvailability, formatDegree, formatMonth, formatMonthNumeric, formatSkill, formatWorkModes } from "../pdf";
 
 describe("countPdfPages", () => {
   it("counts page objects, not the page tree", () => {

@@ -1,8 +1,8 @@
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { INDEX_DIR, readIndexEntries } from "@/lib/pool/index-files";
-import { readSeeds } from "../generate/seeds";
-import { accuracyReport, compareEntry, COMPARED_FIELDS } from "./accuracy";
+import { readSeeds } from "../../generation/steps/seeds";
+import { accuracyReport, compareEntry, COMPARED_FIELDS } from "../accuracy";
 
 // The committed index checked against the seeds its PDFs were rendered from
 // (PLAN, Indexer): every fact the PDF prints, and the accuracy thresholds.

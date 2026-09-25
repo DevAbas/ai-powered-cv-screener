@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { ANDREI, LENA, TEST_SEEDS } from "./fixtures";
-import { argmax, country, hasCertificationContaining, ids, intersection, languageLevel, levelRank, medianTenure, seniorityRank, skillYears, union } from "./rules";
+import { ANDREI, LENA, TEST_SEEDS } from "../fixtures";
+import { argmax, country, hasCertificationContaining, ids, intersection, languageLevel, levelRank, medianTenure, seniorityRank, skillYears, union } from "../rules";
 
 describe("rules", () => {
   it("selects ids by a predicate, sorted", () => {

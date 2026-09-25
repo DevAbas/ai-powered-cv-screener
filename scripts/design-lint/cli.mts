@@ -10,8 +10,8 @@
 import { readFileSync } from "node:fs";
 import { lint } from "@google/design.md/linter";
 import type { Finding } from "@google/design.md/linter";
-import type { Issue } from "./design-lint-core";
-import { checkCoverage, parseDarkColors, withDarkColors } from "./design-lint-core";
+import type { Issue } from "./core";
+import { checkCoverage, parseDarkColors, withDarkColors } from "./core";
 
 const designMd = readFileSync("DESIGN.md", "utf8");
 const themeCss = readFileSync("src/styles/theme.css", "utf8");

@@ -64,6 +64,8 @@ before.
 ## Conventions
 
 - TypeScript strict; no `any`.
+- Tests live in a `__tests__` folder inside the folder of the code they
+  test, each named after the file it tests (`seed-rules.test.ts`).
 - Zod schemas in `src/contracts` are the single source of truth. Every
   tool call and presentation call is validated against them before use;
   the answer text is free.
@@ -113,7 +115,7 @@ before.
 - Icons: `lucide-react`, plus our own in `src/components/ui/Icons` and the
   logo mark; colours on them are token classes (`fill-primary`), never
   literal.
-- `scripts/generate/` is an ES module package (its own `package.json`)
+- `scripts/generation/` is an ES module package (its own `package.json`)
   because `@react-pdf/renderer` ships ESM only; a CommonJS import from
   there uses the default export of a CJS package (`nextEnv.loadEnvConfig`).
 

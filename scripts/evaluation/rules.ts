@@ -1,6 +1,6 @@
 import type { CandidateSeed, LanguageLevel, Seniority } from "@/contracts/candidate";
 import { LANGUAGE_LEVELS, SENIORITIES } from "@/contracts/candidate";
-import { CURRENT_MONTH } from "../generate/seed";
+import { CURRENT_MONTH } from "../generation/seed-rules";
 import { medianTenureMonths } from "@/lib/pool/tenure";
 import type { Seeds } from "./types";
 

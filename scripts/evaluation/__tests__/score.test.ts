@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { TEST_SEEDS } from "./fixtures";
-import { percentile, scoreQuestion, setMetrics, summarize, THRESHOLDS } from "./score";
-import type { ObservedAnswer, QuestionScore, SectionPages } from "./score";
-import type { GoldenQuestion } from "./types";
+import { TEST_SEEDS } from "../fixtures";
+import { percentile, scoreQuestion, setMetrics, summarize, THRESHOLDS } from "../score";
+import type { ObservedAnswer, QuestionScore, SectionPages } from "../score";
+import type { GoldenQuestion } from "../types";
 
 const pages: SectionPages = () => ({ header: [1], skills: [1], languages: [2], experience: [1] });
 

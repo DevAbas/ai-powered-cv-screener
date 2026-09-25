@@ -315,7 +315,7 @@ both themes.
 
 ## Evaluation
 
-The golden questions (`scripts/eval/questions.ts`) cover every PRD use
+The golden questions (`scripts/evaluation/questions.ts`) cover every PRD use
 case and the hard cases: acronyms, listing all CVs, lookups by role,
 narrowing follow-ups including one that matches nobody, a field no CV
 contains, greetings, out of scope. Expectations are rules over the seeds,

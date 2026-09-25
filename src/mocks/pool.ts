@@ -1,7 +1,7 @@
 import type { PoolCandidate } from "@/lib/pool/candidate";
 
 // Mock pool for component previews and tests: the 30 candidates of the
-// generator's roster (`scripts/generate/roster.ts`, kept equal by its test),
+// generator's roster (`scripts/generation/roster.ts`, kept equal by its test),
 // with the page count of each generated PDF. The app reads the pool from the
 // index (PLAN, Data access).
 

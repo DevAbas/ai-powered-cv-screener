@@ -1,13 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { z } from "zod";
-import { exists, PDF_MANIFEST, pdfPath, photoPath, readJson, writeFileAtomic, writeJsonAtomic } from "./fs";
-import type { StepOptions, StepReport } from "./options";
-import { log, shortError } from "./options";
-import { countPdfPages, MAX_PAGES } from "./pdf";
-import { ROSTER } from "./roster";
+import { exists, PDF_MANIFEST, pdfPath, photoPath, readJson, writeFileAtomic, writeJsonAtomic } from "../paths";
+import type { StepOptions, StepReport } from "../options";
+import { log, shortError } from "../options";
+import { countPdfPages, MAX_PAGES } from "../pdf";
+import { ROSTER } from "../roster";
 import { readSeeds } from "./seeds";
-import { renderTemplate } from "./templates";
+import { renderTemplate } from "../cv-template/render-template";
 
 // Step 3: one PDF per seed in `data/cvs`, photo embedded when it exists
 // (PLAN, Generation pipeline). The manifest records whether each PDF

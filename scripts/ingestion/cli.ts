@@ -27,13 +27,13 @@ import { getEntry } from "@/lib/ai/registry";
 import { buildIndexEntry } from "@/lib/pool/build-entry";
 import { indexEntryPath, INDEX_DIR, readIndexEntries } from "@/lib/pool/index-files";
 import { pineconeStoreFromEnv } from "@/lib/vector/pinecone";
-import { PDFS_DIR, pdfPath, readJson, writeJsonAtomic } from "../generate/fs";
-import { shortError, sleep } from "../generate/options";
-import { readSeeds } from "../generate/seeds";
+import { PDFS_DIR, pdfPath, readJson, writeJsonAtomic } from "../generation/paths";
+import { shortError, sleep } from "../generation/options";
+import { readSeeds } from "../generation/steps/seeds";
 import { accuracyReport, formatAccuracy } from "./accuracy";
 import { extractProfile } from "./extract";
 import { pdfPageTexts } from "./pdf-text";
-import { syncVectors } from "./vectors";
+import { syncVectors } from "./steps/vectors";
 
 nextEnv.loadEnvConfig(process.cwd());
 

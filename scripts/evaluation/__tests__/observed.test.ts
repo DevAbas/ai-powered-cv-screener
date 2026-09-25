@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { AskEvent } from "@/contracts/ask";
 import type { RequestLog } from "@/lib/answering/log";
 import { ANSWERS } from "@/mocks/answers";
-import { observeAnswer } from "./observed";
+import { observeAnswer } from "../observed";
 
 const log = (overrides: Partial<RequestLog> = {}): RequestLog => ({
   event: "ask",

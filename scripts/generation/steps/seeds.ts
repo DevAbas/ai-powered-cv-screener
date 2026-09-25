@@ -8,11 +8,11 @@ import { isDailyQuotaError, withRetry } from "@/lib/ai/retry";
 import type { RetryOptions } from "@/lib/ai/retry";
 import { generateWithRepair } from "@/lib/ai/structured";
 import type { StructuredRequest, StructuredResult } from "@/lib/ai/structured";
-import { exists, readJson, SEEDS_DIR, seedPath, writeJsonAtomic } from "./fs";
-import type { StepOptions, StepReport } from "./options";
-import { log, shortError, sleep } from "./options";
-import { ROSTER } from "./roster";
-import { assembleSeed, findDuplicateEmployment, seedRequest } from "./seed";
+import { exists, readJson, SEEDS_DIR, seedPath, writeJsonAtomic } from "../paths";
+import type { StepOptions, StepReport } from "../options";
+import { log, shortError, sleep } from "../options";
+import { ROSTER } from "../roster";
+import { assembleSeed, findDuplicateEmployment, seedRequest } from "../seed-rules";
 
 // Step 1: one seed per roster entry, written by the `generate` model
 // (PLAN, Generation pipeline). Resumable: an existing seed is kept unless

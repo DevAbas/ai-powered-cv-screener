@@ -20,14 +20,14 @@ import { answerDeps } from "@/lib/answering/deps";
 import type { RequestLog } from "@/lib/answering/log";
 import { sectionPages } from "@/lib/pool/chunks";
 import { readIndexEntries } from "@/lib/pool/index-files";
-import { shortError, sleep } from "../generate/options";
+import { shortError, sleep } from "../generation/options";
 import { observeAnswer } from "./observed";
 import { GOLDEN_QUESTIONS, goldenQuestion } from "./questions";
 import type { ModelReport } from "./report";
 import { formatReports } from "./report";
 import type { QuestionScore, SectionPages } from "./score";
 import { scoreQuestion, summarize } from "./score";
-import { loadSeeds } from "./seeds";
+import { loadSeeds } from "./load-seeds";
 import type { GoldenQuestion, Seeds } from "./types";
 
 nextEnv.loadEnvConfig(process.cwd());
@@ -213,7 +213,7 @@ async function main() {
   if (reports.some((report) => !report.summary.passes)) process.exitCode = 1;
 }
 
-if (process.argv[1]?.endsWith("run.ts")) {
+if (process.argv[1]?.endsWith("cli.ts")) {
   main().catch((error: unknown) => {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;

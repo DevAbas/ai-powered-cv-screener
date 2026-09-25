@@ -1,4 +1,4 @@
-import { readSeeds } from "../generate/seeds";
+import { readSeeds } from "../generation/steps/seeds";
 import type { Seeds } from "./types";
 
 /** The ground truth (PLAN, Data layout): the seeds, read by the evaluation only. */

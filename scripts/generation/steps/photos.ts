@@ -2,11 +2,11 @@ import { generateText } from "ai";
 import { languageModel } from "@/lib/ai/providers";
 import { getEntry } from "@/lib/ai/registry";
 import { withRetry } from "@/lib/ai/retry";
-import { exists, photoPath, writeFileAtomic } from "./fs";
-import type { StepOptions, StepReport } from "./options";
-import { log, shortError } from "./options";
-import { PHOTO_COST_USD, PHOTO_MEDIA_TYPE, photoPrompt, photoProviderOptions } from "./photo-options";
-import { ROSTER } from "./roster";
+import { exists, photoPath, writeFileAtomic } from "../paths";
+import type { StepOptions, StepReport } from "../options";
+import { log, shortError } from "../options";
+import { PHOTO_COST_USD, PHOTO_MEDIA_TYPE, photoPrompt, photoProviderOptions } from "../photo-options";
+import { ROSTER } from "../roster";
 import { readSeeds } from "./seeds";
 
 // Step 2: one photo per seed from the paid `image` entry (PLAN, Generation

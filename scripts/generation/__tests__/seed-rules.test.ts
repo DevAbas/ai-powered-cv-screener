@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { CandidateSeedSchema } from "@/contracts/candidate";
-import { ROSTER } from "./roster";
-import type { GeneratedSeed } from "./seed";
+import { ROSTER } from "../roster";
+import type { GeneratedSeed } from "../seed-rules";
 import {
   assembleSeed,
   contactFor,
@@ -13,7 +13,7 @@ import {
   slugOf,
   templateFor,
   tenureMonths,
-} from "./seed";
+} from "../seed-rules";
 
 /** A valid seed for a senior (5–10 years). */
 const generated: GeneratedSeed = {

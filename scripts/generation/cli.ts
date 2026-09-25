@@ -14,10 +14,10 @@ import { getEntry } from "@/lib/ai/registry";
 import type { Provider } from "@/lib/ai/registry";
 import type { Step, StepOptions, StepReport } from "./options";
 import { STEPS } from "./options";
-import { runPdfs } from "./pdfs";
-import { runPhotos } from "./photos";
+import { runPdfs } from "./steps/pdfs";
+import { runPhotos } from "./steps/photos";
 import { ROSTER } from "./roster";
-import { runSeeds } from "./seeds";
+import { runSeeds } from "./steps/seeds";
 
 nextEnv.loadEnvConfig(process.cwd());
 

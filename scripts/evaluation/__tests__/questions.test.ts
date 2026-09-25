@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { readSeeds } from "../generate/seeds";
-import { GOLDEN_QUESTIONS, goldenQuestion } from "./questions";
-import type { Seeds } from "./types";
+import { readSeeds } from "../../generation/steps/seeds";
+import { GOLDEN_QUESTIONS, goldenQuestion } from "../questions";
+import type { Seeds } from "../types";
 
 // The golden questions against the committed pool: every rule yields what the
 // seeds say, so a regenerated pool shows up here before any model runs.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { checkCoverage, parseDarkColors, withDarkColors } from "./design-lint-core";
+import { checkCoverage, parseDarkColors, withDarkColors } from "../core";
 
 const THEME = `
 :root {

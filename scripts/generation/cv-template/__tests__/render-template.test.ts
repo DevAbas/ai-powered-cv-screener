@@ -2,8 +2,8 @@ import { inflateSync } from "node:zlib";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { describe, expect, it } from "vitest";
 import type { CandidateSeed } from "@/contracts/candidate";
-import { countPdfPages, MAX_PAGES } from "./pdf";
-import { TEMPLATE_COUNT, renderTemplate } from "./templates";
+import { countPdfPages, MAX_PAGES } from "../../pdf";
+import { TEMPLATE_COUNT, renderTemplate } from "../render-template";
 
 const seed: CandidateSeed = {
   name: "Lena Novak",

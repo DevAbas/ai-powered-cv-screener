@@ -2,11 +2,11 @@ import { describe, expect, it, vi } from "vitest";
 import type { AskEvent, AskRequest } from "@/contracts/ask";
 import type { RequestLog } from "@/lib/answering/log";
 import { sourcesOf } from "@/mocks/answers";
-import { TEST_SEEDS } from "./fixtures";
-import { historyFor, REQUESTS_PER_QUESTION, reportOf, runEvaluation } from "./run";
-import type { Asked } from "./run";
-import type { SectionPages } from "./score";
-import type { GoldenQuestion } from "./types";
+import { TEST_SEEDS } from "../fixtures";
+import { historyFor, REQUESTS_PER_QUESTION, reportOf, runEvaluation } from "../cli";
+import type { Asked } from "../cli";
+import type { SectionPages } from "../score";
+import type { GoldenQuestion } from "../types";
 
 const questions: GoldenQuestion[] = [
   { id: "a", kind: "exact", question: "Who knows Python?", expect: { view: "list", candidates: () => ["andrei-popescu", "elena-georgiou"], section: "skills" } },
