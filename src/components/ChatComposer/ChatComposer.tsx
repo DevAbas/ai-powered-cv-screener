@@ -1,9 +1,12 @@
 import { ArrowUp, AudioLines, Square } from "lucide-react";
+import { useState } from "react";
 import type { FormEvent, KeyboardEvent } from "react";
 import { IconButton } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { cx } from "@/components/ui/recipe";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { TypedPlaceholder } from "./TypedPlaceholder";
 
 export interface ChatComposerProps {
   value: string;
@@ -14,10 +17,12 @@ export interface ChatComposerProps {
   onStop: () => void;
   autoFocus?: boolean;
   /**
-   * The field's placeholder; the empty state passes an example question.
+   * The field's placeholder. A list is typed out one question after another
+   * over the empty, unfocused field (the empty state's example questions);
+   * under reduced motion its first entry shows still.
    * @default "Ask about the candidate pool"
    */
-  placeholder?: string;
+  placeholder?: string | readonly string[];
 }
 
 /**
@@ -35,6 +40,11 @@ export function ChatComposer({
   placeholder = "Ask about the candidate pool",
 }: ChatComposerProps) {
   const question = value.trim();
+  const reducedMotion = usePrefersReducedMotion();
+  // The typed placeholder shows only while the field is empty and unfocused: a focused field is the recruiter's.
+  const [focused, setFocused] = useState(false);
+  const typed = typeof placeholder === "string" || reducedMotion ? undefined : placeholder;
+  const staticPlaceholder = typeof placeholder === "string" ? placeholder : reducedMotion ? placeholder[0] : undefined;
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -53,15 +63,18 @@ export function ChatComposer({
     <Textarea
       variant="plain"
       autoResize
-      // One line with `py-1` is exactly the actions' height (1rem × 1.5 + 0.5rem = 2rem), so text and placeholder sit centred on them.
-      className="max-h-48 min-w-0 flex-1 py-1"
+      // One line with `py-1` is exactly the actions' height (1rem × 1.5 + 0.5rem = 2rem), so a last line sits centred on them;
+      // DESIGN.md, Composer: the field is at least two lines tall, so the actions sit under the first line's text.
+      className="max-h-48 min-h-14 min-w-0 flex-1 py-1"
       onKeyDown={handleKeyDown}
       aria-label="Question"
-      placeholder={placeholder}
+      placeholder={staticPlaceholder}
       autoComplete="off"
       autoFocus={autoFocus}
       value={value}
       onChange={(event) => onChange(event.target.value)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
     />
   );
 
@@ -91,13 +104,22 @@ export function ChatComposer({
     <form
       onSubmit={submit}
       className={cx(
-        "flex w-full flex-col gap-2.5 rounded-xl bg-surface-container-lowest p-3 shadow-raised",
+        // DESIGN.md, Composer: an `outline` border and the raised shadow, so the card reads on `surface` at rest.
+        "flex w-full flex-col gap-2.5 rounded-xl border border-outline bg-surface-container-lowest p-4 shadow-raised",
         "has-[textarea:focus-visible]:ring-2 has-[textarea:focus-visible]:ring-primary-outline",
       )}
     >
       {/* The actions stay on the field's last line as it grows. */}
       <div className="flex items-end gap-2">
-        {field}
+        {typed ? (
+          // The typed placeholder lies over the field's first line while it is empty.
+          <div className="relative min-w-0 flex-1">
+            {field}
+            {value === "" && !focused && <TypedPlaceholder texts={typed} />}
+          </div>
+        ) : (
+          field
+        )}
         {actions}
       </div>
     </form>

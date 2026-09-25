@@ -11,3 +11,13 @@ export const googleSans = localFont({
   style: "normal",
   variable: "--font-google-sans",
 });
+
+// DESIGN.md, Typography: the headline's leading words in Google Sans Flex,
+// the family's variable cut, for its light weight; Google Sans itself is
+// served from 400 up. Same latin subset and licence (./fonts/OFL.txt).
+export const googleSansFlex = localFont({
+  src: "./fonts/google-sans-flex-latin.woff2",
+  weight: "100 1000",
+  style: "normal",
+  variable: "--font-google-sans-flex",
+});

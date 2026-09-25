@@ -75,8 +75,14 @@ typography:
     lineHeight: "1.2"
   display:
     fontFamily: Google Sans
-    fontSize: 2.75rem
+    fontSize: 5rem
     fontWeight: 600
+    lineHeight: "1.1"
+    letterSpacing: -0.025em
+  display-light:
+    fontFamily: Google Sans Flex
+    fontSize: 5rem
+    fontWeight: 300
     lineHeight: "1.1"
     letterSpacing: -0.025em
   wordmark:
@@ -252,9 +258,9 @@ the tint. Hover and pressed are derived from step 9 (below).
 
 - **Primary (#00F8C0):** Mint. The only chromatic colour in the UI, used for
   the primary action, the logo mark, the band of the PDF icon, the
-  strokes of the empty-state grid and the highlight under the empty-state
-  headline (in dark, `primary-outline`, which light text reads on). Never
-  for text blocks, content backgrounds or other decoration.
+  strokes of the empty-state grid and the corners of the frame on the
+  empty-state headline. Never for text blocks, content backgrounds or other
+  decoration.
 - **On primary (#0A281E):** Text and icons on `primary`: Radix's contrast
   colour, since mint is too light for white text.
 - **Primary hover (#16DDAC) and pressed (#08C498):** `primary` with its OKLCH
@@ -286,10 +292,15 @@ the tint. Hover and pressed are derived from step 9 (below).
 
 One family, Google Sans (SIL OFL), self-hosted. Two working weights, 400 and
 500; 600 only when a single element must dominate: the logo, the
-empty-state headline and a candidate's name in an answer row. No italics.
+empty-state headline and a candidate's name in an answer row. One light
+weight, 300, for the headline's leading words alone, from Google Sans Flex,
+the family's variable cut (Google Sans itself is served from 400 up). No
+italics.
 
-- **display:** the empty-state headline only; the one large, 600-weight line
-  a recruiter sees before the first question.
+- **display / display-light:** the empty-state headline only; the one large
+  line a recruiter sees before the first question: the leading words in
+  `display-light` (300), the highlighted phrase in `display` (600), so the
+  weight lands where the highlight is.
 - **headline-lg / headline-md:** page and section titles, one-line summaries.
 - **body-lg:** primary input text.
 - **body-md:** running text, list items, table cells.
@@ -307,7 +318,9 @@ Lines are never justified. Prefer lists and tables over paragraphs.
 
 Single-column layout: the conversation, padded with `spacing.gutter`, with
 the message column capped at a comfortable reading width and the composer
-centred on it, 1rem wider on each side. All spacing is a multiple of half
+centred on it, 1rem wider on each side; the header's logo and toggle sit on
+a wider column of their own, 104rem, so on a wide screen they frame the
+content without drifting to the edges or crowding it. All spacing is a multiple of half
 `spacing.base` (0.125rem); whole steps are the default, half steps fine-tune
 small controls. Rows inside a list sit close together; blocks
 are separated generously, so density and clarity coexist.
@@ -316,7 +329,9 @@ Breakpoints: sm 40rem, md 48rem, lg 64rem, xl 80rem.
 
 Motion is functional only, 150–200ms. Easings: standard
 `cubic-bezier(0.2, 0, 0, 1)`, decelerate `cubic-bezier(0, 0, 0, 1)` for
-entering elements, accelerate `cubic-bezier(0.3, 0, 1, 1)` for leaving ones.
+entering elements, accelerate `cubic-bezier(0.3, 0, 1, 1)` for leaving ones,
+and one spring, overshoot `cubic-bezier(0.34, 1.56, 0.64, 1)`, for the
+colour mode toggle's icon alone (280ms).
 Loading motion is the one exception: the progress line breathes (a 1.6s
 opacity cycle on its glyph) and one band of ink sweeps its label every
 1.8s, both off under reduced motion; the values live in
@@ -325,13 +340,14 @@ reduced motion.
 
 The empty state is the one place motion is decorative. It enters once per
 page load, each part fading up 24px (600ms): the headline word by word,
-100ms apart, "Candidates" last, its highlight growing up from just below
-the word to the middle of its letters as it appears (700ms); then the CV
-count and the composer, 120ms apart. Hovering the word fills the highlight to the
-whole word (300ms). Slower than functional motion on purpose, with its own
-gentler easings (an ease-out for the rise, an ease-in-out for the
-highlight): it is seen once and sets the tone. The composer takes input from the first frame. Under
-reduced motion everything appears at once, the highlight already drawn.
+100ms apart, "Candidates" last with its frame fading in around it; then the
+composer and the CV count, 120ms apart. Slower than functional motion on
+purpose, with its own gentler ease-out: it is seen once and sets the tone.
+The composer is ready from the first frame, focused by a click or Tab. Afterwards the frame slides
+to whichever word is in focus (500ms) and the words out of focus blur
+(500ms), and the composer's placeholder types the example questions
+(Components: Composer). Under reduced motion everything appears at once,
+sharp and still.
 
 Behind the empty state,
 an invisible lattice of rounded cells lights up in `primary` hairlines
@@ -346,7 +362,7 @@ reduced motion.
 Depth is tonal first: `surface` → `surface-container-lowest` →
 `surface-container` → `surface-container-high`. Shadows exist in three
 places only: floating input containers use raised
-(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.06)`), menus use overlay
+(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.10)`), menus use overlay
 (`0 0.5rem 2rem rgba(0, 0, 0, 0.10)`), and the file card uses soft
 (`0 0.125rem 0.75rem rgba(0, 0, 0, 0.04)`), which it loses while pressed,
 so the press reads as the card meeting the page. In dark the same shadows
@@ -384,8 +400,13 @@ text and in `xs` buttons, 1.25rem in other buttons.
   `surface-container-low` circle on hover and `surface-container-high` while
   pressed. Sizes: `xs` 1.875rem, `sm` 2rem, `md` 2.25rem tall.
 - **Icons:** `on-surface-variant` at rest, `on-surface` on hover, `outline-variant` when disabled; 1.25rem beside a headline (a candidate's name).
-- **Colour mode toggle:** a ghost icon button in the header, Moon in light
-  and Sun in dark. A press plays a short light-switch click: synthesized,
+- **Colour mode toggle:** a `md` ghost icon button in the header, Moon in
+  light and Sun in dark, its icon 1.5rem: the one icon larger than the
+  1.25rem of other buttons, so the switch reads at a glance. On a switch
+  the icon turns: the leaving one rotates 45°, shrinks to half and fades
+  while the arriving one rotates in from the other side, grows and settles
+  a little past its mark (280ms, the overshoot easing); under reduced
+  motion the swap is immediate. A press plays a short light-switch click: synthesized,
   under 60 ms, quiet, a snap of band-limited noise over a low thock; the
   click for "on" (to light) sits above the one for "off" (to dark), so the
   direction is audible. It is the interface's only sound; nothing plays on
@@ -393,15 +414,25 @@ text and in `xs` buttons, 1.25rem in other buttons.
   beside this rule (`switchClick.ts`).
 - **Inputs:** no border at rest when placed on `surface`; the background
   step separates them. Focus: 2px `primary-outline` ring.
-- **Composer:** the largest floating container: `surface-container-lowest`,
-  `rounded.xl`, raised shadow. With one model offered (this phase), one
-  row: the text input, then audio-lines and a circular primary send button
-  that becomes Stop while a request runs, aligned to the input's last
-  line. With a choice of models, the input has its own row with a 0.625rem
+- **Composer:** the largest floating container: `surface-container-lowest`
+  with an `outline` border, `rounded.xl`, raised shadow, padded 1rem; the
+  border is what separates it from `surface` at rest, three tones away. With one model offered (this
+  phase), one row: the text input, at least two lines tall (3.5rem), then
+  audio-lines and a circular primary send button that becomes Stop while a
+  request runs, aligned to the input's last line. With a choice of models, the input has its own row with a 0.625rem
   bottom margin, then a 0.625rem gap to a bottom row: the model chip on
   the left, the same actions on the right. Audio-lines is disabled, with
   the tooltip "Voice mode coming soon…" above it. The input grows with the
-  question up to a maximum height, then scrolls.
+  question up to a maximum height, then scrolls. In the empty state the
+  placeholder is typed: the example questions one after another, each
+  character 75ms apart, the full question held 1.5s, deleted at 30ms a
+  character, 0.5s empty before the next, in `input-placeholder` and
+  `body-lg` where typed text will sit, with a 1px bar cursor one line tall
+  blinking once a second; it goes as soon as the field is focused or holds
+  text, and returns when the field is empty and unfocused again, so the
+  empty state's field does not take focus on load. In the conversation the
+  placeholder is still ("Ask about the candidate pool"). Under reduced
+  motion the first example question shows still, no cursor.
   Centred in the empty state; after the first question it sits at the bottom
   of the conversation, 1rem wider on each side than the message column.
 - **Question:** the recruiter's question sits right-aligned on
@@ -434,7 +465,7 @@ text and in `xs` buttons, 1.25rem in other buttons.
   edge, full height, `surface-container-lowest` with an `outline` left edge
   and no shadow: the CV's pages drawn one under another on
   `surface-container`, each page on `surface-container-lowest` with the
-  raised shadow and a gutter of 1rem, under a 3.5rem header with the PDF
+  raised shadow and a gutter of 1rem, under a 4rem header with the PDF
   icon, the file name in `label-lg`, and ghost icon buttons Download and
   Close; while the pages load, a spinner and "Loading the CV…" sit in the
   middle. It opens 30rem wide, is dragged wider or narrower by
@@ -500,11 +531,20 @@ viewport, never under 30rem. Below `lg` it fills the
   text, `label-md`, `rounded.md`. Fades in on hover after 150ms and at once on
   keyboard focus; Escape closes it, and so does pressing the control. A
   control whose own menu is open shows none.
-- **Empty state:** the headline "Find The Right Candidates" in `display`,
-  title case, "Candidates" on the highlight (Layout: motion); below it one `body-lg`
-  line in `on-surface-variant` with the CV count, "You currently have 30 CVs
-  to review." (1 CV in the singular); then the composer, its placeholder an
-  example question. No suggested-question buttons.
+- **Empty state:** the headline "Find The Right Candidates" on one line,
+  title case: "Find The Right" in `display-light`, "Candidates" in
+  `display`, wrapping only when the column is narrower than the line. One
+  word is in focus: "Candidates", unless the pointer is over another word,
+  then that word. A frame marks the focused word: four `primary` corners,
+  1rem squares with 3px strokes, set 0.5rem outside the word's box, no
+  glow; it slides and resizes to the focused word (500ms, standard
+  easing). The other words blur 5px (500ms); the focused one is sharp.
+  Under reduced motion nothing blurs or moves. 3rem below the headline the
+  composer, its placeholder typing the example questions in turn
+  (Composer); 1.5rem under the composer
+  the CV count as a quiet label: `label-md` in capitals, letter-spaced as
+  `label-sm`, in `on-surface-variant` at 70%, "30 CVs TO REVIEW" with the
+  s of CVs small (1 CV in the singular). No suggested-question buttons.
 - **States:** an error is a single line of text with a small leading icon
   in `error` and a Retry action. No match, not enough information and
   outside the pool are the answer's own words behind a small leading icon

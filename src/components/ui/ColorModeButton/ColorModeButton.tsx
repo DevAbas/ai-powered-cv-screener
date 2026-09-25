@@ -3,6 +3,7 @@
 import { Moon, Sun } from "lucide-react";
 import { IconButton } from "@/components/ui/Button";
 import type { IconButtonProps } from "@/components/ui/Button";
+import { cx } from "@/components/ui/recipe";
 import { playSwitchClick } from "./switchClick";
 
 const DARK_QUERY = "(prefers-color-scheme: dark)";
@@ -30,12 +31,23 @@ function onToggle() {
 
 export type ColorModeButtonProps = Omit<IconButtonProps, "aria-label" | "children" | "onClick">;
 
-/** Moon in light mode, Sun in dark mode, switched by the `dark:` variant so the server render matches; a press plays the switch click. */
+/**
+ * DESIGN.md, Colour mode toggle: the leaving icon turns 45°, shrinks to half
+ * and fades as the arriving one turns in from the other side and settles
+ * with a slight overshoot. Both icons are always present, one on top of the
+ * other, so the `dark:` variant does the swap and the server render matches.
+ */
+const TURN = "col-start-1 row-start-1 size-6 motion-safe:transition-[rotate,scale,opacity] motion-safe:duration-(--color-mode-turn) motion-safe:ease-overshoot";
+
+/** Moon in light mode, Sun in dark mode, turning from one to the other; a press plays the switch click. */
 export function ColorModeButton({ variant = "ghost", ...rest }: ColorModeButtonProps) {
   return (
     <IconButton aria-label="Switch between light and dark theme" variant={variant} {...rest} onClick={onToggle}>
-      <Moon aria-hidden className="dark:hidden" />
-      <Sun aria-hidden className="hidden dark:block" />
+      {/* DESIGN.md, Colour mode toggle: a 1.5rem icon, larger than the other buttons' 1.25rem. */}
+      <span aria-hidden className="grid">
+        <Moon className={cx(TURN, "rotate-0 scale-100 opacity-100 dark:rotate-45 dark:scale-50 dark:opacity-0")} />
+        <Sun className={cx(TURN, "rotate-45 scale-50 opacity-0 dark:rotate-0 dark:scale-100 dark:opacity-100")} />
+      </span>
     </IconButton>
   );
 }

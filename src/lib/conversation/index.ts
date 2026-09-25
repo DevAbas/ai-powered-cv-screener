@@ -8,6 +8,6 @@ export { skillLabel, listCaption, statusText, profileFacts, viewLines, answerAsT
 export { UNREADABLE_ANSWER, ask, readNdjson, httpAsk } from "./askClient";
 export type { AskTransport } from "./askClient";
 
-export { EXAMPLE_QUESTION } from "./exampleQuestion";
+export { EXAMPLE_QUESTION, EXAMPLE_QUESTIONS } from "./exampleQuestion";
 
 export { STAGE_MESSAGES, toolMessage } from "./progressMessages";

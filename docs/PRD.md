@@ -2,8 +2,8 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.20         |
-| Date    | 2026-09-25   |
+| Version | 1.23         |
+| Date    | 2026-09-26   |
 | Status  | Approved     |
 | Owner   | Product      |
 
@@ -147,7 +147,8 @@ Every interface decision is checked against these six.
 ## 8. Core flow
 
 1. **Entry.** Recruiter opens the tool and sees how many CVs there are to
-   review and an example question in the input. Never a blank screen.
+   review and example questions in the input, typed one after another so
+   the range of questions is seen. Never a blank screen.
 2. **Ask.** Types a question in natural language.
 3. **Wait.** Sees which step of the search is running until the answer
    arrives, and afterwards what it did, in plain words ("Matched 7 of 30
@@ -210,7 +211,7 @@ Every interface decision is checked against these six.
 Removed in 1.6: the pool is reached through answers and their sources.
 
 ### 10.5 States
-- Empty state with the number of CVs and an example question.
+- Empty state with the number of CVs and example questions typed in the input.
 - Loading state that shows progress.
 - Error state with a plain-language message and a way to retry.
 
@@ -274,3 +275,6 @@ None open. Resolved:
 | 1.18    | 2026-09-25 | Header and §11: the plan is retired; how it is built lives in `README.md`, the evaluation thresholds in `scripts/evaluation/score.ts`. |
 | 1.19    | 2026-09-25 | §10.5 Model selection removed: one model answers and the recruiter does not choose it; §10.6 States becomes §10.5. §11: the offered model. |
 | 1.20    | 2026-09-25 | §9: the light/dark toggle plays a short switch click, the interface's only sound. |
+| 1.21    | 2026-09-26 | §8 step 1: the headline names the vacancies the pool could fill, one after another. |
+| 1.22    | 2026-09-26 | §8 step 1: the cycling vacancies of 1.21 are dropped; the headline stays "Find The Right Candidates". |
+| 1.23    | 2026-09-26 | §8 step 1, §10.5: the input's placeholder types the example questions one after another. |

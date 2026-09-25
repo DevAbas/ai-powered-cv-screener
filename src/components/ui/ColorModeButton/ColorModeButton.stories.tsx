@@ -5,5 +5,5 @@ export default {
   title: "UI / ColorModeButton",
 } satisfies Meta;
 
-/** Moon in light mode, Sun in dark mode; clicking switches the preview's theme and plays the switch click. */
+/** Moon in light mode, Sun in dark mode; clicking turns one into the other, switches the preview's theme and plays the switch click. */
 export const Basic = () => <ColorModeButton />;

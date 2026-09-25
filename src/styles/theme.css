@@ -18,7 +18,7 @@
 
 :root {
   color-scheme: light;
-  --shadow-opacity-raised: 0.06;
+  --shadow-opacity-raised: 0.1;
   --shadow-opacity-overlay: 0.1;
   --shadow-opacity-soft: 0.04;
   /* DESIGN.md, Layout: the empty-state grid's hairlines; thinner in dark,
@@ -67,6 +67,10 @@
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ease-decelerate: cubic-bezier(0, 0, 0, 1);
   --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  /* DESIGN.md, Layout: motion. The one spring: the colour mode toggle's icon
+     turns in and settles a little past its mark. */
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --color-mode-turn: 280ms;
   --default-transition-duration: 150ms;
   --default-transition-timing-function: var(--ease-standard);
 
@@ -90,30 +94,42 @@
   }
 
   /* DESIGN.md, Layout: the empty state's entrance. The headline's words fade
-     up one word-stagger apart, "Candidates" last with its highlight growing;
-     then the CV count and the composer, one stagger apart. Each animates from
-     a start state to the element's own style, so hover can still change it
-     afterwards. */
+     up one word-stagger apart, "Candidates" last with the frame fading in
+     around it; then the CV count and the composer, one stagger apart. Each
+     animates from a start state to the element's own style, so a transition
+     can still move it afterwards. */
   --empty-state-stagger: 120ms;
   --empty-state-word-stagger: 100ms;
   /* When "Candidates", the fourth word, starts. */
   --empty-state-word-delay: calc(var(--empty-state-word-stagger) * 3);
-  --empty-state-highlight-hover: 300ms;
   /* Gentler than decelerate and standard, which spend almost all their
      movement in the first ~100ms: seen once, the entrance should be seen. */
   --ease-entrance: cubic-bezier(0.33, 1, 0.68, 1);
-  --ease-entrance-highlight: cubic-bezier(0.65, 0, 0.35, 1);
   --animate-rise: rise 600ms var(--ease-entrance) backwards;
-  --animate-highlight-grow: highlight-grow 700ms var(--ease-entrance-highlight) backwards;
+  --animate-fade-in: fade-in 600ms var(--ease-entrance) backwards;
   @keyframes rise {
     from {
       opacity: 0;
       transform: translateY(1.5rem);
     }
   }
-  @keyframes highlight-grow {
+  @keyframes fade-in {
     from {
-      transform: scaleY(0.08);
+      opacity: 0;
+    }
+  }
+  /* DESIGN.md, Layout: motion. The frame slides to the word in focus; the
+     words not in focus blur. */
+  --empty-state-frame-move: 500ms;
+  --empty-state-blur: 5px;
+  --empty-state-blur-fade: 500ms;
+  /* DESIGN.md, Composer: the placeholder's bar cursor blinks once a second
+     (on for half, off for half). The typing speeds are in
+     ChatComposer/typewriter.ts, which runs the clock. */
+  --animate-blink: blink 1s steps(2, start) infinite;
+  @keyframes blink {
+    to {
+      visibility: hidden;
     }
   }
 
@@ -127,6 +143,8 @@
   --container-reading: 50rem;
   /* DESIGN.md, Layout: the composer, 1rem wider on each side than the column */
   --container-composer: 52rem;
+  /* DESIGN.md, Layout: the header's logo and toggle, on a wider column than the conversation */
+  --container-header: 104rem;
   /* DESIGN.md, Components: Question, the widest the question box grows */
   --container-question: 33.75rem;
   /* DESIGN.md, Components: CV preview, where it opens and its narrowest */
@@ -136,6 +154,8 @@
 
 @theme inline {
   --font-sans: var(--font-google-sans);
+  /* DESIGN.md, Typography: `display-light` is Google Sans Flex, loaded by next/font (src/app/fonts.ts). */
+  --font-display-light: var(--font-google-sans-flex);
   --spacing: var(--spacing-base);
 }
 

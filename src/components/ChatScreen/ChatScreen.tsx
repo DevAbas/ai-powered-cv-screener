@@ -6,7 +6,7 @@ import type { CvSource, SourceHref } from "@/components/Answer";
 import { OpenSourceProvider } from "@/components/Answer";
 import { CvPreview } from "@/components/CvPreview";
 import { ChatComposer } from "@/components/ChatComposer";
-import { ChatEmptyState } from "@/components/ChatEmptyState";
+import { ChatEmptyState, PoolCount } from "@/components/ChatEmptyState";
 import { ChatExchange } from "@/components/ChatExchange";
 import { CursorGrid } from "@/components/ui/CursorGrid";
 import { useChatScreen } from "@/hooks/useChatScreen";
@@ -16,7 +16,7 @@ import type { AskTransport } from "@/lib/conversation";
 import type { PoolCandidate } from "@/lib/candidates";
 import { AppHeader } from "@/components/AppHeader";
 import { cvSourceHref } from "@/lib/candidates";
-import { EXAMPLE_QUESTION } from "@/lib/conversation";
+import { EXAMPLE_QUESTIONS } from "@/lib/conversation";
 import { cx } from "@/components/ui/recipe";
 
 export interface ChatScreenProps {
@@ -68,15 +68,16 @@ export function ChatScreen({ pool, sourceHref = cvSourceHref, transport }: ChatS
     follow();
   }
 
-  // The empty state's composer shows an example question (DESIGN.md, Empty state).
-  const composer = (placeholder?: string) => (
+  // The empty state's composer types the example questions (DESIGN.md, Empty state).
+  const composer = (placeholder?: string | readonly string[]) => (
     <ChatComposer
       value={draft}
       onChange={setDraft}
       onSubmit={ask}
       running={chat.running}
       onStop={chat.stop}
-      autoFocus
+      // The empty state's field waits for a click or Tab, so its typed placeholder is seen; the conversation's takes focus at once.
+      autoFocus={placeholder === undefined}
       placeholder={placeholder}
     />
   );
@@ -92,15 +93,13 @@ export function ChatScreen({ pool, sourceHref = cvSourceHref, transport }: ChatS
         <main aria-label="Conversation" className="flex flex-1 flex-col">
           {exchanges.length === 0 ? (
             // `isolate`: the grid sits behind the empty state, above the page background.
-            <div className="relative isolate flex flex-1 flex-col items-center justify-center gap-8 px-gutter py-16">
+            <div className="relative isolate flex flex-1 flex-col items-center justify-center gap-12 px-gutter py-16">
               <CursorGrid className="-z-10" clearOf={[emptyStateText, emptyStateComposer]} />
-              <ChatEmptyState ref={emptyStateText} poolSize={pool.length} />
+              <ChatEmptyState ref={emptyStateText} />
               {/* Third in the entrance (DESIGN.md, Layout: motion); it takes input from the first frame. */}
-              <div
-                ref={emptyStateComposer}
-                className="w-full max-w-composer motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--empty-state-word-delay)+var(--empty-state-stagger)*2)]"
-              >
-                {composer(EXAMPLE_QUESTION)}
+              <div ref={emptyStateComposer} className="flex w-full max-w-composer flex-col gap-6">
+                <div className="motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--empty-state-word-delay)+var(--empty-state-stagger)*2)]">{composer(EXAMPLE_QUESTIONS)}</div>
+                <PoolCount poolSize={pool.length} />
               </div>
             </div>
           ) : (

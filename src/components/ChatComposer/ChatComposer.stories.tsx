@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
+import { EXAMPLE_QUESTIONS } from "@/lib/conversation";
 import { ChatComposer } from "./ChatComposer";
 import type { ChatComposerProps } from "./ChatComposer";
 
@@ -33,3 +34,5 @@ export const Empty: Story = {};
 export const Filled: Story = { args: { value: "Who has React and TypeScript?" } };
 export const Focus: Story = { play: async ({ userEvent }) => userEvent.tab() };
 export const Running: Story = { args: { value: "Who has React and TypeScript?", running: true } };
+/** The empty state's placeholder: the example questions typed in turn, with a blinking bar. */
+export const TypedPlaceholder: Story = { args: { placeholder: EXAMPLE_QUESTIONS } };
