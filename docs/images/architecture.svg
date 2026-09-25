@@ -71,7 +71,7 @@
 <text x="38" y="770" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#1f2a44">Before use: data preparation</text>
 <rect x="60" y="830" width="220" height="80" rx="8" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5"/>
 <text x="170.0" y="868" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">npm run generate</text>
-<text x="170.0" y="887" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(seeds, then PDFs)</text>
+<text x="170.0" y="887" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(seeds, photos, then PDFs)</text>
 <rect x="370" y="830" width="200" height="80" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.5"/>
 <text x="470.0" y="868" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">CV PDFs</text>
 <text x="470.0" y="887" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(30 files)</text>

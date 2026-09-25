@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nSwedish (native) · English (C2)"
     },
     {
-      "id": "sara-lindqvist:leadership:1",
+      "id": "sara-lindqvist:leadership:2",
       "section": "leadership",
-      "page": 1,
-      "text": "LEADERSHIP\nGuided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing\nindustry."
+      "page": 2,
+      "text": "Guided cross-functional product and engineering teams as a Senior Product Manager in the cloud computing\nindustry."
     },
     {
       "id": "sara-lindqvist:certifications:2",
@@ -231,7 +231,7 @@
     },
     "leadership": {
       "section": "leadership",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "certifications.0": {

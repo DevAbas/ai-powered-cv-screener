@@ -33,10 +33,10 @@
       "text": "EDUCATION\nBSc Computer Science 2018\nUniversity of Lisbon"
     },
     {
-      "id": "sofia-almeida:languages:1",
+      "id": "sofia-almeida:languages:2",
       "section": "languages",
-      "page": 1,
-      "text": "LANGUAGES\nPortuguese (native) · English (C1)"
+      "page": 2,
+      "text": "Portuguese (native) · English (C1)"
     },
     {
       "id": "sofia-almeida:leadership:2",
@@ -230,12 +230,12 @@
     },
     "languages.0": {
       "section": "languages",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "languages.1": {
       "section": "languages",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "education.0": {

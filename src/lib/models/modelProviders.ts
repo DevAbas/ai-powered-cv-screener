@@ -9,21 +9,33 @@ import type { ModelTarget, Provider } from "./modelRegistry";
 // documented defaults (Gemini 3 keeps its default temperature, per the Gemini 3
 // developer guide).
 
-const KEY_ENV: Record<Provider, string> = {
-  openrouter: "OPENROUTER_API_KEY",
-  google: "GOOGLE_GENERATIVE_AI_API_KEY",
+/** The environment variables each provider needs (.env.example). */
+const KEY_ENV: Record<Provider, readonly string[]> = {
+  openrouter: ["OPENROUTER_API_KEY"],
+  google: ["GOOGLE_GENERATIVE_AI_API_KEY"],
+  cloudflare: ["CLOUDFLARE_ACCOUNT_ID", "CLOUDFLARE_API_TOKEN"],
 };
 
 /** Env variables for the given providers that are not set. */
 export function missingApiKeys(providers: Iterable<Provider>): string[] {
-  return [...new Set(providers)].map((p) => KEY_ENV[p]).filter((name) => !process.env[name]);
+  return [...new Set(providers)].flatMap((p) => KEY_ENV[p]).filter((name) => !process.env[name]);
 }
 
-function apiKey(provider: Provider): string {
-  const name = KEY_ENV[provider];
-  const key = process.env[name];
-  if (!key) throw new Error(`${name} is not set. Add it to .env.local (see .env.example).`);
-  return key;
+function envValue(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`${name} is not set. Add it to .env.local (see .env.example).`);
+  return value;
+}
+
+const SDK_KEY: Record<"openrouter" | "google", string> = { openrouter: "OPENROUTER_API_KEY", google: "GOOGLE_GENERATIVE_AI_API_KEY" };
+
+function apiKey(provider: "openrouter" | "google"): string {
+  return envValue(SDK_KEY[provider]);
+}
+
+/** The Workers AI account and token (Workers AI docs, REST API). */
+export function cloudflareCredentials(): { accountId: string; token: string } {
+  return { accountId: envValue("CLOUDFLARE_ACCOUNT_ID"), token: envValue("CLOUDFLARE_API_TOKEN") };
 }
 
 export function languageModel(target: ModelTarget): LanguageModel {
@@ -33,6 +45,8 @@ export function languageModel(target: ModelTarget): LanguageModel {
       return createOpenRouter({ apiKey: apiKey("openrouter") }).chat(target.model, { usage: { include: true } });
     case "google":
       return createGoogle({ apiKey: apiKey("google") })(target.model);
+    case "cloudflare":
+      throw new Error(`No language models on provider "cloudflare": it serves images (imageProviders.ts)`);
   }
 }
 

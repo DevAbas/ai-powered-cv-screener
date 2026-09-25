@@ -1,6 +1,6 @@
 {
   "id": "aino-virtanen",
-  "pages": 1,
+  "pages": 2,
   "chunks": [
     {
       "id": "aino-virtanen:header:1",
@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nFinnish (native) · English (C1)"
     },
     {
-      "id": "aino-virtanen:certifications:1",
+      "id": "aino-virtanen:certifications:2",
       "section": "certifications",
-      "page": 1,
-      "text": "CERTIFICATIONS\nAWS Certified Solutions Architect"
+      "page": 2,
+      "text": "AWS Certified Solutions Architect"
     }
   ],
   "profile": {
@@ -229,7 +229,7 @@
     },
     "certifications.0": {
       "section": "certifications",
-      "page": 1,
+      "page": 2,
       "verified": true
     }
   },

@@ -1,6 +1,6 @@
 {
   "id": "marco-bianchi",
-  "pages": 1,
+  "pages": 2,
   "chunks": [
     {
       "id": "marco-bianchi:header:1",
@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nItalian (native) · English (C1)"
     },
     {
-      "id": "marco-bianchi:certifications:1",
+      "id": "marco-bianchi:certifications:2",
       "section": "certifications",
-      "page": 1,
-      "text": "CERTIFICATIONS\nJavaScript Developer Certificate"
+      "page": 2,
+      "text": "JavaScript Developer Certificate"
     }
   ],
   "profile": {
@@ -229,7 +229,7 @@
     },
     "certifications.0": {
       "section": "certifications",
-      "page": 1,
+      "page": 2,
       "verified": true
     }
   },

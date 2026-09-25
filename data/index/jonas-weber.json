@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nGerman (native) · English (C1)"
     },
     {
-      "id": "jonas-weber:leadership:1",
+      "id": "jonas-weber:leadership:2",
       "section": "leadership",
-      "page": 1,
-      "text": "LEADERSHIP\nLed engineering teams as a Lead Data Engineer across enterprise software projects."
+      "page": 2,
+      "text": "Led engineering teams as a Lead Data Engineer across enterprise software projects."
     },
     {
       "id": "jonas-weber:certifications:2",
@@ -230,7 +230,7 @@
     },
     "leadership": {
       "section": "leadership",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "certifications.0": {

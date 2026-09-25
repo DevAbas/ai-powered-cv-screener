@@ -1,6 +1,6 @@
 {
   "id": "leon-fischer",
-  "pages": 1,
+  "pages": 2,
   "chunks": [
     {
       "id": "leon-fischer:header:1",
@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nGerman (native) · English (C2)"
     },
     {
-      "id": "leon-fischer:certifications:1",
+      "id": "leon-fischer:certifications:2",
       "section": "certifications",
-      "page": 1,
-      "text": "CERTIFICATIONS\nAWS Certified Developer"
+      "page": 2,
+      "text": "AWS Certified Developer"
     }
   ],
   "profile": {
@@ -229,7 +229,7 @@
     },
     "certifications.0": {
       "section": "certifications",
-      "page": 1,
+      "page": 2,
       "verified": true
     }
   },

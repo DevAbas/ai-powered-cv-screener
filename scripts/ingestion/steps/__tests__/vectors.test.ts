@@ -16,7 +16,7 @@ describe("syncVectors", () => {
   it("stores one record per chunk, keyed by the chunk id, with the metadata the search filters on", async () => {
     const store = createInMemoryStore();
     const report = await syncVectors(TEST_INDEX, { embedder: embedder(), store }, { force: false });
-    expect(report).toEqual({ done: ["andrei-popescu", "elena-georgiou", "lena-novak"], skipped: [] });
+    expect(report).toEqual({ done: ["andrei-popescu", "elena-georgiou", "lena-novak"], skipped: [], failed: [] });
     expect(store.records.size).toBe(chunkCount);
     expect(store.records.get("lena-novak:skills:1")?.metadata).toEqual({
       candidateId: "lena-novak",
@@ -37,9 +37,10 @@ describe("syncVectors", () => {
     expect(await syncVectors(TEST_INDEX, { embedder: again, store }, { force: false })).toEqual({
       done: ["andrei-popescu", "elena-georgiou", "lena-novak"],
       skipped: [],
+      failed: [],
     });
     const third = embedder();
-    expect(await syncVectors(TEST_INDEX, { embedder: third, store }, { force: false })).toEqual({ done: [], skipped: ["andrei-popescu", "elena-georgiou", "lena-novak"] });
+    expect(await syncVectors(TEST_INDEX, { embedder: third, store }, { force: false })).toEqual({ done: [], skipped: ["andrei-popescu", "elena-georgiou", "lena-novak"], failed: [] });
     expect(third.embedDocuments).not.toHaveBeenCalled();
     await syncVectors(TEST_INDEX, { embedder: third, store }, { force: true, only: [ELENA.id] });
     expect(third.embedDocuments).toHaveBeenCalledTimes(1);
@@ -49,6 +50,20 @@ describe("syncVectors", () => {
   it("limits the work to the ids asked for", async () => {
     const store = createInMemoryStore();
     expect((await syncVectors([ANDREI, ELENA, LENA], { embedder: embedder(), store }, { force: false, only: [ELENA.id] })).done).toEqual(["elena-georgiou"]);
+  });
+
+  it("embeds one CV per call, keeps going past a failure, and picks the failed one up next time", async () => {
+    const store = createInMemoryStore();
+    const flaky = embedder();
+    flaky.embedDocuments.mockImplementationOnce(async (texts: readonly string[]) => texts.map(() => [1, 0])).mockImplementationOnce(async () => {
+      throw new Error("HTTP 429");
+    });
+    const lines: string[] = [];
+    const first = await syncVectors(TEST_INDEX, { embedder: flaky, store }, { force: false, log: (id, message) => lines.push(`${id}: ${message}`) });
+    expect(flaky.embedDocuments.mock.calls.map(([texts]) => (texts as string[]).length)).toEqual(TEST_INDEX.map((entry) => entry.chunks.length));
+    expect(first).toEqual({ done: ["andrei-popescu", "lena-novak"], skipped: [], failed: ["elena-georgiou"] });
+    expect(lines).toContain("elena-georgiou: FAILED: HTTP 429");
+    expect(await syncVectors(TEST_INDEX, { embedder: embedder(), store }, { force: false })).toEqual({ done: ["elena-georgiou"], skipped: ["andrei-popescu", "lena-novak"], failed: [] });
   });
 
   it("embeds who the candidate is with the chunk's text", () => {

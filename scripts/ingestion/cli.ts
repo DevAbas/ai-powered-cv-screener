@@ -208,9 +208,8 @@ async function runVectors(args: Args, index: Map<string, IndexEntry>): Promise<R
   const store = pineconeStoreFromEnv(embedder.dimensions);
   await store.ensureIndex();
   if (args.force && !args.only) await store.deleteAll();
-  const { done, skipped } = await syncVectors(entries, { embedder, store }, { only: args.only, force: args.force });
-  for (const id of done) log(id, `vectors stored (${embedEntry.model}, ${embedder.dimensions} dimensions)`);
-  return { done, skipped, failed: [] };
+  console.log(`vectors: ${embedEntry.model}, ${embedder.dimensions} dimensions, one call per CV`);
+  return syncVectors(entries, { embedder, store }, { only: args.only, force: args.force, pauseMs: PAUSE_MS, log });
 }
 
 async function main() {

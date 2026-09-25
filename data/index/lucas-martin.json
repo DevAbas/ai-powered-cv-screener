@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nFrench (native) · English (C1)"
     },
     {
-      "id": "lucas-martin:leadership:1",
+      "id": "lucas-martin:leadership:2",
       "section": "leadership",
-      "page": 1,
-      "text": "LEADERSHIP\nMentored junior data engineers and led cloud migration initiatives."
+      "page": 2,
+      "text": "Mentored junior data engineers and led cloud migration initiatives."
     },
     {
       "id": "lucas-martin:certifications:2",
@@ -230,7 +230,7 @@
     },
     "leadership": {
       "section": "leadership",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "certifications.0": {

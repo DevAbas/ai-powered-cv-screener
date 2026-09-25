@@ -33,10 +33,10 @@
       "text": "EDUCATION\nBSc Computer Science 2017\nUniversity of Zagreb"
     },
     {
-      "id": "petra-horvat:languages:1",
+      "id": "petra-horvat:languages:2",
       "section": "languages",
-      "page": 1,
-      "text": "LANGUAGES\nCroatian (native) · English (C1)"
+      "page": 2,
+      "text": "Croatian (native) · English (C1)"
     },
     {
       "id": "petra-horvat:leadership:2",
@@ -212,12 +212,12 @@
     },
     "languages.0": {
       "section": "languages",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "languages.1": {
       "section": "languages",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "education.0": {

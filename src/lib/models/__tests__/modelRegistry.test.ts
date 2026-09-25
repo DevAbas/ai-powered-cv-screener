@@ -28,4 +28,9 @@ describe("model registry", () => {
     expect(REGISTRY.embed.capabilities.embedding).toBe(true);
     expect(REGISTRY.embed.dimensions).toBe(768);
   });
+
+  it("makes the photos on Workers AI", () => {
+    expect(REGISTRY.image.provider).toBe("cloudflare");
+    expect(REGISTRY.image.capabilities.image).toBe(true);
+  });
 });

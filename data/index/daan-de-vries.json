@@ -33,10 +33,10 @@
       "text": "EDUCATION\nBSc Computer Science 2012\nUniversity of Amsterdam"
     },
     {
-      "id": "daan-de-vries:languages:1",
+      "id": "daan-de-vries:languages:2",
       "section": "languages",
-      "page": 1,
-      "text": "LANGUAGES\nDutch (native) · English (C2)"
+      "page": 2,
+      "text": "Dutch (native) · English (C2)"
     },
     {
       "id": "daan-de-vries:leadership:2",
@@ -231,12 +231,12 @@
     },
     "languages.0": {
       "section": "languages",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "languages.1": {
       "section": "languages",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "education.0": {

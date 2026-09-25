@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nSpanish (native) · English (C1)"
     },
     {
-      "id": "ines-garcia:leadership:1",
+      "id": "ines-garcia:leadership:2",
       "section": "leadership",
-      "page": 1,
-      "text": "LEADERSHIP\nLed junior engineers and mentored interns in machine learning practices."
+      "page": 2,
+      "text": "Led junior engineers and mentored interns in machine learning practices."
     },
     {
       "id": "ines-garcia:certifications:2",
@@ -239,7 +239,7 @@
     },
     "leadership": {
       "section": "leadership",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "certifications.0": {

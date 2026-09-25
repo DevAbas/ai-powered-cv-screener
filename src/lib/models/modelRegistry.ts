@@ -4,8 +4,8 @@
 // .env.example), never from the code, so a swap is a configuration change
 // and not a commit.
 
-/** Routing provider: which SDK provider builds the model. */
-export type Provider = "openrouter" | "google";
+/** Which service serves the model: an AI SDK provider for language models, Workers AI for images. */
+export type Provider = "openrouter" | "google" | "cloudflare";
 
 export type ModelId = "primary" | "extract" | "generate" | "image" | "embed";
 
@@ -84,15 +84,15 @@ export const REGISTRY: Readonly<Record<ModelId, ModelSlot>> = {
     capabilities: SCRIPT_CAPABILITIES,
     tier: "free",
   },
-  // No free image model exists on any provider. Paid, so it never runs by
-  // default: only when named.
+  // The Gemini API has no free tier for images; Workers AI has a daily
+  // allowance. The step runs only when named: it calls a second service.
   image: {
     id: "image",
-    description: "Candidate photos in the generation pipeline. Paid: runs only when named.",
-    provider: "google",
+    description: "Candidate photos in the generation pipeline, on Cloudflare Workers AI. Runs only when named.",
+    provider: "cloudflare",
     modelVar: "IMAGE_MODEL",
     capabilities: { tools: false, streaming: false, structuredOutput: false, image: true, embedding: false },
-    tier: "paid",
+    tier: "free",
   },
   // One vector per section chunk and per query, at 768 dimensions.
   embed: {

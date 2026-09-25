@@ -1,6 +1,6 @@
 {
   "id": "hana-novotna",
-  "pages": 1,
+  "pages": 2,
   "chunks": [
     {
       "id": "hana-novotna:header:1",
@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nCzech (native) · English (C1)"
     },
     {
-      "id": "hana-novotna:certifications:1",
+      "id": "hana-novotna:certifications:2",
       "section": "certifications",
-      "page": 1,
-      "text": "CERTIFICATIONS\nISTQB Certified Tester Foundation Level"
+      "page": 2,
+      "text": "ISTQB Certified Tester Foundation Level"
     }
   ],
   "profile": {
@@ -229,7 +229,7 @@
     },
     "certifications.0": {
       "section": "certifications",
-      "page": 1,
+      "page": 2,
       "verified": true
     }
   },

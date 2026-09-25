@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nBulgarian (native) · English (C1)"
     },
     {
-      "id": "viktor-ivanov:leadership:1",
+      "id": "viktor-ivanov:leadership:2",
       "section": "leadership",
-      "page": 1,
-      "text": "LEADERSHIP\nLed security reviews and mentored junior engineers across multiple teams."
+      "page": 2,
+      "text": "Led security reviews and mentored junior engineers across multiple teams."
     },
     {
       "id": "viktor-ivanov:certifications:2",
@@ -230,7 +230,7 @@
     },
     "leadership": {
       "section": "leadership",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "certifications.0": {

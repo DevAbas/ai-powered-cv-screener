@@ -8,8 +8,9 @@ paths are documented once, in `AGENTS.md` (Commands).
 ## generation/
 
 `npm run generate`. Produces the pilot pool for the fixed roster: seeds from
-a model, photos from the paid image entry, and one PDF per seed rendered
-from `cv-template/`. Has its own `package.json` (`"type": "module"`) because
+a model, photos from the image slot on Cloudflare Workers AI, reproducible
+from a seed per candidate, and one PDF per seed rendered from
+`cv-template/`. Has its own `package.json` (`"type": "module"`) because
 `@react-pdf/renderer` ships ESM only, and a CommonJS import of an ESM-only
 package has no named exports.
 

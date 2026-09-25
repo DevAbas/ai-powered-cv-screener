@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nGerman (native) · English (C1)"
     },
     {
-      "id": "lena-novak:leadership:1",
+      "id": "lena-novak:leadership:2",
       "section": "leadership",
-      "page": 1,
-      "text": "LEADERSHIP\nLed technical frontend initiatives and mentored junior team members."
+      "page": 2,
+      "text": "Led technical frontend initiatives and mentored junior team members."
     },
     {
       "id": "lena-novak:certifications:2",
@@ -248,7 +248,7 @@
     },
     "leadership": {
       "section": "leadership",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "certifications.0": {

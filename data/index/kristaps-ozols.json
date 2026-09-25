@@ -39,10 +39,10 @@
       "text": "LANGUAGES\nLatvian (native) · English (C1)"
     },
     {
-      "id": "kristaps-ozols:leadership:1",
+      "id": "kristaps-ozols:leadership:2",
       "section": "leadership",
-      "page": 1,
-      "text": "LEADERSHIP\nGuided junior developers on backend best practices."
+      "page": 2,
+      "text": "Guided junior developers on backend best practices."
     },
     {
       "id": "kristaps-ozols:certifications:2",
@@ -230,7 +230,7 @@
     },
     "leadership": {
       "section": "leadership",
-      "page": 1,
+      "page": 2,
       "verified": true
     },
     "certifications.0": {

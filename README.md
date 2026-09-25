@@ -23,8 +23,8 @@ skips what already exists.
   headline, role, seniority and an EU city. Gemini writes the rest of each
   CV as JSON, checked against the candidate schema and a set of rules. The
   seeds are the ground truth for the tests.
-- **Photos.** One portrait per candidate from the image model. It costs
-  money, so it runs only when named.
+- **Photos.** One portrait per candidate from an image model on Cloudflare
+  Workers AI, reproducible from a seed. The step runs only when named.
 - **PDFs.** One CV per seed, rendered from one template in three
   variants, at most three pages each.
 
@@ -129,7 +129,7 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 | Layer | Choice |
 |---|---|
 | Framework | Next.js 16 (App Router), React 19, TypeScript strict |
-| Model access | Vercel AI SDK 7; Google Gemini through the Gemini API |
+| Model access | Vercel AI SDK 7; Google Gemini through the Gemini API; Cloudflare Workers AI for the CV photos |
 | Schemas | Zod 4, one contract per area in [src/contracts](src/contracts) |
 | Search | MiniSearch for BM25, Pinecone for vectors, reciprocal rank fusion |
 | PDF | pdf.js for text and the in-app preview; react-pdf to render the sample pool |
@@ -169,7 +169,7 @@ src/contracts/       the Zod schemas shared by the client, the server and the sc
 src/lib/             the domain: screening, candidates, conversation, models, search
 src/mocks/           test doubles and the sample index
 scripts/             the pipelines, with their own README: generation, ingestion, evaluation, design lint
-data/                the pool: generation seeds, the index, the CVs, and the evaluation reports once npm run eval has run
+data/                the pool: generation seeds and photos, the index, the CVs, and the evaluation reports once npm run eval has run
 ```
 
 ## Running it
@@ -187,7 +187,8 @@ key, the Pinecone key and index name, and the names of the three models the
 app calls; [.env.example](.env.example) sets the ones the pilot ran on. Without them no
 question is answered. The index and the CVs are in the repository. The
 vectors are not: `npm run index -- --step vectors` writes them, and creates
-the Pinecone index when it does not exist yet.
+the Pinecone index when it does not exist yet. Only the photo step of the
+generator needs the Cloudflare account id and token as well.
 
 ## Contributing
 
