@@ -1,7 +1,7 @@
 import { defineRecipe, focusVisibleRing } from "@/components/ui/recipe";
 
-// DESIGN.md, Inputs. Tokens: input, input-placeholder. The multi-line field;
-// same variants as `inputRecipe`.
+// DESIGN.md, Inputs. Tokens: `input`, `input-placeholder`. The multi-line
+// field.
 export const textareaRecipe = defineRecipe({
   base: [
     "block w-full min-w-0 resize-none wrap-anywhere text-body-lg leading-body-lg text-on-surface",

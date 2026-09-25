@@ -1,7 +1,7 @@
 import { defineSlotRecipe } from "@/components/ui/recipe";
 
-// DESIGN.md, Tables. Tokens: table-header, table-cell. Horizontal rules only,
-// no vertical rules, no zebra striping.
+// DESIGN.md, Tables. Tokens: `table-header`, `table-cell`. Horizontal rules
+// only, no vertical rules, no zebra striping.
 export const tableSlotRecipe = defineSlotRecipe({
   slots: {
     root: "w-full border-collapse text-left",
@@ -12,6 +12,6 @@ export const tableSlotRecipe = defineSlotRecipe({
     columnHeader: "py-2 pr-4 align-bottom text-label-sm leading-label-sm tracking-label-sm font-(weight:--font-weight-label-sm) text-on-surface-variant uppercase",
     // A row's header reads as a header too: a criterion in a comparison.
     rowHeader: "py-2 pr-4 align-top text-label-sm leading-body-md tracking-label-sm font-(weight:--font-weight-label-sm) text-on-surface-variant uppercase",
-    cell: "py-2 pr-4 align-top text-body-md leading-body-md font-normal text-on-surface",
+    cell: "py-2 pr-4 align-top text-body-md leading-body-md font-(weight:--font-weight-body-md) text-on-surface",
   },
 });

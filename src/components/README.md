@@ -67,10 +67,11 @@ removes Tailwind's own palette so nothing else is available. If a class you
 want does not exist, the token does not exist, and the conversation belongs
 in `DESIGN.md` first.
 
-Every recipe opens with a comment naming the `DESIGN.md` component tokens it
-implements, for example `button-primary`, `button-primary-hover`,
-`button-disabled`. That comment is how a reviewer checks the recipe against
-the design without reading every class.
+Every recipe opens with a comment naming, in backticks, the `DESIGN.md`
+component tokens it implements, for example `button-primary`,
+`button-primary-hover`, `button-disabled`. That comment is how a reviewer
+checks the recipe against the design without reading every class, and the
+lint checks that every name in it exists in `DESIGN.md`.
 
 We use the lite build of tailwind-variants, which has no tailwind-merge. A
 `className` passed to a component is appended, not merged, so it cannot
@@ -136,6 +137,31 @@ colour role and the handful of values `DESIGN.md` states only in prose. It
 changes in the same commit as `DESIGN.md`, so the two never disagree.
 `tokens.generated.css` is never edited by hand; change `DESIGN.md` and run
 the export.
+
+## What the lint enforces
+
+The rules above that a linter can hold the code to are ESLint rules, in
+`scripts/design-lint/rules`, each with its reasons and examples on top and
+its tests beside it. `npm run lint` reports them as warnings; `npm run
+lint:strict`, the hooks and CI report them as errors, so an agent cannot
+pass a lint with a violation in it (`AGENTS.md`, Harness).
+
+- `design/token-classes`: every colour, text, radius, shadow and motion
+  class is a token `DESIGN.md` exports. The rule reads the token names from
+  `tokens.generated.css` and `theme.css`, so `bg-red-500`, `text-[13px]`,
+  `rounded-[6px]`, `font-bold` and `shadow-lg` fail, and the one way to make
+  a class legal is a token in `DESIGN.md`.
+- `design/no-raw-color`: no hex or colour function with literal channels in
+  component source; the dark theme cannot reach a literal.
+- `design/focus-visible-only`: a ring, outline, border or shadow keys off
+  `focus-visible:`, never `focus:` or `focus-within:`. Autofixable.
+- `design/no-hover-on-disabled`: on a control that can be disabled, `hover:`
+  and `active:` are `enabled:hover:` and `enabled:active:`. Autofixable.
+- `design/recipe-cites-tokens`: a recipe's opening comment names `DESIGN.md`
+  and cites real tokens in backticks.
+
+A class list the rules cannot read (built at runtime from non-literal parts)
+is checked only where it is literal; the rules never guess.
 
 ## Stories
 

@@ -1,8 +1,8 @@
 import { defineSlotRecipe, focusVisibleRing } from "@/components/ui/recipe";
 
-// DESIGN.md, Menus and Model menu. Tokens: model-chip, model-chip-hover,
-// model-chip-pressed, menu,
-// menu-item, menu-item-hover; the selected row is marked by the check only.
+// DESIGN.md, Menus and Model menu. Tokens: `model-chip`, `model-chip-hover`,
+// `model-chip-pressed`, `menu`, `menu-item`, `menu-item-hover`; the selected
+// row is marked by the check only.
 export const selectSlotRecipe = defineSlotRecipe({
   slots: {
     trigger: [

@@ -1,8 +1,8 @@
 import { defineSlotRecipe, focusVisibleRing } from "@/components/ui/recipe";
 
 // DESIGN.md, Components: States and Icons; Layout: loading motion. Tokens:
-// icon, icon-disabled. One line in label-lg that breathes while working
-// and settles into a sentence; its trace of steps in body-sm.
+// `icon`, `icon-disabled`. One line in `label-lg` that breathes while working
+// and settles into a sentence; its trace of steps in `body-sm`.
 export const thoughtLineSlotRecipe = defineSlotRecipe({
   slots: {
     root: "inline-flex max-w-full flex-col items-start text-label-lg leading-label-lg font-(weight:--font-weight-label-lg) text-on-surface",

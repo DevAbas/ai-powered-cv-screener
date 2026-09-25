@@ -123,6 +123,11 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 - **Evaluation lives in the code.** The test questions carry their expected
   answers as rules over the seed data, so they still work after the pool
   is regenerated.
+- **The design system is enforced, not described.** `DESIGN.md` is the only
+  source of colour, type, radius, shadow and motion. Its tokens are exported
+  to Tailwind and the palette reset removes everything else; a lint that
+  reads the same export fails on any class outside it, as warnings for a
+  person and errors for an agent and CI, and a hook runs it on every edit.
 
 ## Stack
 

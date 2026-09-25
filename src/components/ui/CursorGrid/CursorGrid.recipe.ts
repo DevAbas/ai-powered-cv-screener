@@ -1,6 +1,6 @@
 import { defineSlotRecipe } from "@/components/ui/recipe";
 
-// DESIGN.md, Layout (motion): the empty-state grid. Token: primary, as the
+// DESIGN.md, Layout (motion): the empty-state grid. Token: `primary`, as the
 // canvas's text colour, which the strokes are drawn in.
 export const cursorGridSlotRecipe = defineSlotRecipe({
   slots: {

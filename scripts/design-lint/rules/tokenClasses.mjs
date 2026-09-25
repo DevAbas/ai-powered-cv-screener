@@ -1,0 +1,179 @@
+/**
+ * design/token-classes
+ *
+ * Every class in a class list must be a DESIGN.md token where the utility is
+ * one DESIGN.md owns: colour, text style, line height, letter spacing, font,
+ * radius, shadow, easing, animation. The rule reads the token names from the
+ * files that define them (`designTokens.mjs`: tokens.generated.css, theme.css
+ * and DESIGN.md's front matter), so the one way to make a class legal is to
+ * add the token to DESIGN.md and run `npm run design:export`.
+ *
+ * Why a lint and not the build: `palette-reset.css` removes Tailwind's own
+ * palette, so `bg-red-500` produces no CSS and no error; the element is
+ * simply unstyled, and nobody notices until a screenshot. An arbitrary value
+ * (`text-[13px]`, `bg-[#fff]`, `rounded-[6px]`) does produce CSS, which is
+ * worse: a size or colour that is in no document.
+ *
+ * Bad
+ *   className="bg-red-500 text-[13px] rounded-[6px] font-bold shadow-lg"
+ *
+ * Good
+ *   className="bg-surface-container text-body-sm rounded-md font-(weight:--font-weight-label-md) shadow-soft"
+ *   className="min-h-[calc(100dvh-var(--composer-height))] -ml-[calc(--spacing(2)+1px)]"  // references tokens
+ *
+ * Scope: JSX `className`, the arguments of `cx`, the class values of
+ * `defineRecipe` / `defineSlotRecipe`, and constants those resolve to in the
+ * same file (`classLists.mjs`). Variants are stripped first, so
+ * `enabled:hover:bg-primary-hover` is judged on `bg-primary-hover`. Outside
+ * the rule: layout utilities (`p-4`, `w-full`, `gap-2`, `grid-rows-[1fr]`),
+ * arbitrary properties (`[text-box:…]`), arbitrary variants (`[&_svg]:`),
+ * `transition-[…]`, and Tailwind's static keywords for a token-owned utility
+ * (`text-center`, `border-b`, `ring-2`, `bg-linear-to-b`, `outline-none`).
+ * The three static values allowed beyond DESIGN.md's tokens are cited where
+ * they are listed below.
+ *
+ * Known limitation: a class list built at runtime from non-literal parts is
+ * checked only where it is literal; the rule never guesses.
+ */
+
+import { loadDesignTokens, NAMESPACES } from "../designTokens.mjs";
+import { classGroupCollector, classesOf, piecesOf } from "../classLists.mjs";
+
+/** Static keywords Tailwind gives every colour utility. */
+const COLOR_KEYWORDS = ["transparent", "current", "inherit"];
+
+/**
+ * The token-owned utilities: the namespace whose tokens the suffix must name,
+ * what to call it in a message, the static keywords Tailwind gives the utility
+ * (no token involved), and whether a bare number is a width (`ring-2`).
+ * Longest prefix first, so `border-b` wins over `border`.
+ */
+const UTILITIES = [
+  ...["border-x", "border-y", "border-t", "border-r", "border-b", "border-l", "border-s", "border-e"].map((prefix) => ({
+    prefix,
+    namespaces: ["color"],
+    kind: "colour",
+    keywords: [...COLOR_KEYWORDS],
+    numeric: true,
+  })),
+  {
+    prefix: "border",
+    namespaces: ["color"],
+    kind: "colour",
+    keywords: [...COLOR_KEYWORDS, "solid", "dashed", "dotted", "double", "hidden", "none", "collapse", "separate"],
+    patterns: [/^spacing-(x-|y-)?\d/],
+    numeric: true,
+  },
+  {
+    prefix: "bg",
+    namespaces: ["color"],
+    kind: "colour",
+    // The gradient directions: DESIGN.md, Elevation & Depth, the header's fade from `surface` to transparent.
+    keywords: [...COLOR_KEYWORDS, "none", "cover", "contain", "auto", "fixed", "local", "scroll", "top", "bottom", "left", "right", "center"],
+    patterns: [/^(linear|radial|conic)-/, /^(clip|origin|position|size|repeat|no-repeat)(-|$)/, /^(top|bottom)-(left|right)$/],
+  },
+  {
+    prefix: "text",
+    namespaces: ["color", "text"],
+    kind: "colour or text style",
+    keywords: [...COLOR_KEYWORDS, "left", "center", "right", "justify", "start", "end", "wrap", "nowrap", "balance", "pretty", "ellipsis", "clip"],
+  },
+  { prefix: "ring", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS, "inset"], numeric: true },
+  { prefix: "outline", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS, "none", "hidden", "solid", "dashed", "dotted", "double"], patterns: [/^offset-\d/], numeric: true },
+  { prefix: "fill", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS, "none"] },
+  { prefix: "stroke", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS, "none"], numeric: true },
+  { prefix: "decoration", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS, "solid", "double", "dotted", "dashed", "wavy", "auto", "from-font"], numeric: true },
+  { prefix: "divide", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS, "x", "y", "solid", "dashed", "dotted", "double", "none"], patterns: [/^(x|y)-\d/], numeric: true },
+  { prefix: "accent", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS, "auto"] },
+  { prefix: "caret", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS] },
+  { prefix: "placeholder", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS] },
+  { prefix: "from", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS], numeric: true },
+  { prefix: "via", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS], numeric: true },
+  { prefix: "to", namespaces: ["color"], kind: "colour", keywords: [...COLOR_KEYWORDS], numeric: true },
+  { prefix: "leading", namespaces: ["leading"], kind: "line height", keywords: [] },
+  // `tracking-normal` resets the spacing a `label-sm` parent sets: the styles without letterSpacing in DESIGN.md have none.
+  { prefix: "tracking", namespaces: ["tracking"], kind: "letter spacing", keywords: ["normal"] },
+  { prefix: "font", namespaces: ["font"], kind: "font", keywords: [] },
+  ...["rounded-ss", "rounded-se", "rounded-ee", "rounded-es", "rounded-tl", "rounded-tr", "rounded-br", "rounded-bl", "rounded-t", "rounded-r", "rounded-b", "rounded-l", "rounded-s", "rounded-e"].map((prefix) => ({
+    prefix,
+    namespaces: ["radius"],
+    kind: "radius",
+    keywords: [],
+  })),
+  { prefix: "rounded", namespaces: ["radius"], kind: "radius", keywords: [], bare: true },
+  { prefix: "shadow", namespaces: ["shadow"], kind: "shadow", keywords: ["none"], bare: true },
+  { prefix: "ease", namespaces: ["ease"], kind: "easing", keywords: ["linear", "initial"] },
+  // `animate-spin` is Tailwind's own: the CV preview's loading spinner (DESIGN.md, Components: CV preview).
+  { prefix: "animate", namespaces: ["animate"], kind: "animation", keywords: ["none", "spin"] },
+].sort((a, b) => b.prefix.length - a.prefix.length);
+
+/** True when `--name` is a registered token in any namespace. */
+function isTokenVariable(name, theme) {
+  const property = name.replace(/^--/, "");
+  return NAMESPACES.some((namespace) => property.startsWith(`${namespace}-`) && theme.get(namespace).has(property.slice(namespace.length + 1)));
+}
+
+/**
+ * Why a class is not a token, or undefined when it is one.
+ * @returns {{ messageId: string, kind: string, example: string } | undefined}
+ */
+export function judgeClass(base, tokens) {
+  const utility = UTILITIES.find((candidate) => base === candidate.prefix || base.startsWith(`${candidate.prefix}-`));
+  if (!utility) return undefined;
+  const example = () => {
+    const names = [...(tokens.theme.get(utility.namespaces[0]) ?? [])];
+    return `${utility.prefix}-${names.includes("md") ? "md" : (names[0] ?? "…")}`;
+  };
+  if (base === utility.prefix) {
+    return utility.bare ? { messageId: "bareUtility", kind: utility.kind, example: example() } : undefined;
+  }
+  const suffix = base.slice(utility.prefix.length + 1);
+  if (suffix.startsWith("(") && suffix.endsWith(")")) {
+    const variable = suffix.slice(1, -1).replace(/^[a-z-]+:/, "");
+    return isTokenVariable(variable, tokens.theme) ? undefined : { messageId: "unknownToken", kind: utility.kind, example: example() };
+  }
+  if (suffix.startsWith("[") && suffix.endsWith("]")) {
+    const content = suffix.slice(1, -1);
+    return /var\(--|--[a-z]+\(/.test(content) ? undefined : { messageId: "arbitraryValue", kind: utility.kind, example: example() };
+  }
+  if (utility.keywords.includes(suffix)) return undefined;
+  if (utility.patterns?.some((pattern) => pattern.test(suffix))) return undefined;
+  if (utility.numeric && /^\d+(\.\d+)?$/.test(suffix)) return undefined;
+  if (utility.namespaces.some((namespace) => tokens.theme.get(namespace)?.has(suffix))) return undefined;
+  return { messageId: "unknownToken", kind: utility.kind, example: example() };
+}
+
+/** @type {import("eslint").Rule.RuleModule} */
+export const tokenClasses = {
+  meta: {
+    type: "problem",
+    docs: { description: "Every colour, text, radius, shadow and motion class is a DESIGN.md token" },
+    messages: {
+      unknownToken: "`{{class}}` is not a DESIGN.md {{kind}} token{{note}}. Use an exported token (`{{example}}`), or add it to DESIGN.md and run `npm run design:export`.",
+      arbitraryValue: "`{{class}}` sets a literal {{kind}} that is in no document. DESIGN.md owns every {{kind}}: use a token (`{{example}}`) or reference one (`var(--…)`).",
+      bareUtility: "`{{class}}` is Tailwind's default {{kind}}, not one of DESIGN.md's. Name the token (`{{example}}`).",
+    },
+    schema: [],
+  },
+  create(context) {
+    const tokens = loadDesignTokens(context.cwd);
+    const collector = classGroupCollector(context);
+    return {
+      ...collector.visitors(),
+      "Program:exit"() {
+        for (const group of collector.groups()) {
+          for (const node of group.nodes) {
+            for (const piece of piecesOf(node, context.sourceCode)) {
+              for (const { parsed } of classesOf(piece.text)) {
+                const verdict = judgeClass(parsed.base, tokens);
+                if (!verdict) continue;
+                const note = verdict.kind === "colour" ? ", and the palette reset drops an unknown colour silently" : "";
+                context.report({ node, messageId: verdict.messageId, data: { class: parsed.raw, kind: verdict.kind, example: verdict.example, note } });
+              }
+            }
+          }
+        }
+      },
+    };
+  },
+};

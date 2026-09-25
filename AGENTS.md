@@ -48,7 +48,8 @@ Run `nvm use` first, in every shell: the Node version comes from `.nvmrc`
 | `npm run dev` | Start the dev server |
 | `npm run build` | Production build |
 | `npm start` | Serve the production build |
-| `npm run lint` | ESLint |
+| `npm run lint` | ESLint, the design rules as warnings |
+| `npm run lint:strict` | ESLint with the design rules as errors: what an agent, the hooks and CI run |
 | `npm run typecheck` | TypeScript, no emit |
 | `npm test` | Unit tests (Vitest) |
 | `npm run generate` | Generate the pool into `data/generation` (seeds, photos, manifest) and `data/cvs` (PDFs): `--step seeds,photos,pdfs` (default seeds and pdfs; `photos` calls Cloudflare Workers AI, free within its daily allowance, and runs only when named), `--only <id,…>`, `--force`, `--dry-run`; skips what exists (makes API calls) |
@@ -99,7 +100,9 @@ before.
   presentation call is validated against them before use; the answer text
   is free.
 - UI code follows `src/components/README.md`; visual rules are
-  `DESIGN.md`'s. Neither is repeated here.
+  `DESIGN.md`'s. Neither is repeated here. The design rules in
+  `scripts/design-lint/rules` fail the lint on a class outside `DESIGN.md`'s
+  tokens; what each checks is in `src/components/README.md`.
 - Routes live in a route group per feature (`src/app/(screener)/`);
   application code stays outside `app`.
 - `src/hooks`: one concern each, `src/hooks/use<Name>/` with `use<Name>.ts`
@@ -122,7 +125,7 @@ before.
 ## Boundaries
 
 **Always**
-- Run lint and typecheck before committing.
+- Run `npm run lint:strict` and `npm run typecheck` before committing.
 - Read `DESIGN.md` before touching UI.
 
 **Ask first**
@@ -150,3 +153,18 @@ before.
   capitalisation, or tune a threshold by eye. Every parameter starts from
   a documented value, cited next to it, and changes only when the
   evaluation shows it helps.
+
+## Harness
+
+What the tooling enforces without being asked, so a rule above holds when
+nobody remembers it:
+
+- `.claude/settings.json` runs the hooks in `.claude/hooks`. After every
+  `Edit` or `Write`, the edited file is linted with the design rules as
+  errors, and a failure comes back as the next message; an edit to
+  `DESIGN.md` or `theme.css` runs `design:lint` and checks that the export
+  is current; an edit to `tokens.generated.css` is denied; a `git commit`
+  runs `lint:strict` and `typecheck` first and is refused when either fails.
+- `.githooks/pre-commit` is the same commit gate for a person; `npm run
+  prepare` (run by `npm ci`) points git at it.
+- ESLint's `no-restricted-imports` keeps `data/generation` out of app code.

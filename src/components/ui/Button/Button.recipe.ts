@@ -1,9 +1,9 @@
 import { defineRecipe, focusVisibleRing } from "@/components/ui/recipe";
 
-// DESIGN.md, Buttons and Icons. Tokens: button-primary, button-primary-hover,
-// button-primary-pressed, button-secondary, button-secondary-hover,
-// button-secondary-pressed, button-disabled; ghost uses icon, icon-hover,
-// icon-pressed and icon-disabled. Pressed is the native `:active` state.
+// DESIGN.md, Buttons and Icons. Tokens: `button-primary`, `button-primary-hover`,
+// `button-primary-pressed`, `button-secondary`, `button-secondary-hover`,
+// `button-secondary-pressed`, `button-disabled`; ghost uses `icon`, `icon-hover`,
+// `icon-pressed` and `icon-disabled`. Pressed is the native `:active` state.
 export const buttonRecipe = defineRecipe({
   base: [
     "inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap select-none",

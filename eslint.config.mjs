@@ -4,6 +4,7 @@ import storybook from "eslint-plugin-storybook";
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import { designPlugin, isStrictLint } from "./scripts/design-lint/plugin.mjs";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -27,6 +28,12 @@ const eslintConfig = defineConfig([
         { patterns: [{ group: ["**/data/generation", "**/data/generation/**"], message: "App code never reads data/generation (AGENTS.md, Boundaries)." }] },
       ],
     },
+  },
+  // The design rules (scripts/design-lint/plugin.mjs): warnings for a person,
+  // errors for an agent and CI (`npm run lint:strict`, or CI=true).
+  {
+    files: ["src/**/*.{ts,tsx}", ".storybook/**/*.tsx"],
+    ...(isStrictLint() ? designPlugin.configs.strict : designPlugin.configs.recommended),
   },
 ]);
 

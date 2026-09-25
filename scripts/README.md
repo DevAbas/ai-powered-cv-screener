@@ -52,3 +52,13 @@ Each folder of `data/` has one owner:
 `src/styles/theme.css` gives every colour role a dark value, then lints the
 document again with the dark values substituted. No `package.json`:
 `cli.mts` is ESM by its extension and `core.ts` has no dependencies.
+
+The same folder holds the design rules for the code: `plugin.mjs` is an
+ESLint plugin, one rule per file in `rules/`, that `eslint.config.mjs`
+applies to `src` and `.storybook` as warnings (`npm run lint`) or errors
+(`npm run lint:strict`, the hooks, CI). `designTokens.mjs` reads the token
+names from `tokens.generated.css`, `theme.css` and `DESIGN.md`'s front
+matter, so the rules accept exactly what `DESIGN.md` exports. The plugin and
+the rules are plain `.mjs` because ESLint loads its config without a
+TypeScript loader; their tests, in TypeScript, run ESLint's `RuleTester`
+under Vitest. What each rule checks is in `src/components/README.md`.

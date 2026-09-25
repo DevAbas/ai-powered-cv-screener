@@ -1,7 +1,7 @@
 import { capHeightBox, defineSlotRecipe } from "@/components/ui/recipe";
 
-// DESIGN.md, Components: States. Tokens: icon, state-icon-warning,
-// state-icon-error. A single line of text with a small leading icon; colour
+// DESIGN.md, Components: States. Tokens: `icon`, `state-icon-warning`,
+// `state-icon-error`. A single line of text with a small leading icon; colour
 // only on the warning and error icons; never a box.
 export const statusMessageSlotRecipe = defineSlotRecipe({
   slots: {

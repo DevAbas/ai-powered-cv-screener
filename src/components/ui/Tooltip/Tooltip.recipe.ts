@@ -1,7 +1,7 @@
 import { defineSlotRecipe } from "@/components/ui/recipe";
 
-// DESIGN.md, Tooltips. Token: tooltip (inverse-surface, inverse-on-surface,
-// label-md, rounded.md).
+// DESIGN.md, Tooltips. Token: `tooltip` (`inverse-surface`, `inverse-on-surface`,
+// `label-md`, rounded `md`).
 export const tooltipSlotRecipe = defineSlotRecipe({
   slots: {
     root: "relative inline-flex",

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "lint:strict": "DESIGN_LINT_STRICT=1 eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "generate": "tsx scripts/generation/cli.ts",
@@ -15,7 +16,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "design:export": "design.md export --format css-tailwind DESIGN.md > src/styles/tokens.generated.css.tmp && mv src/styles/tokens.generated.css.tmp src/styles/tokens.generated.css",
-    "design:lint": "tsx scripts/design-lint/cli.mts"
+    "design:lint": "tsx scripts/design-lint/cli.mts",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.78",
