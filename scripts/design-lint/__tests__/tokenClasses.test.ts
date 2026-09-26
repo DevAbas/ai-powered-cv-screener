@@ -27,11 +27,15 @@ describe("judgeClass", () => {
       "rounded-full",
       "shadow-soft",
       "shadow-none",
-      "leading-body-md",
       "tracking-normal",
-      "tracking-display",
       "font-sans",
-      "font-(weight:--font-weight-label-md)",
+      "font-display-light",
+      // A documented override reads the other style's part.
+      "leading-(--text-label-lg--line-height)",
+      "tracking-(--text-label-sm--letter-spacing)",
+      "font-(weight:--text-label-lg--font-weight)",
+      "bg-surface-panel",
+      "text-on-surface-subtle",
       "ease-decelerate",
       "ease-(--ease-accelerate)",
       "animate-breath",
@@ -45,6 +49,7 @@ describe("judgeClass", () => {
       "[text-box:trim-both_cap_alphabetic]",
       "transition-[background-color,box-shadow]",
       "min-h-[calc(100dvh_-_var(--spacing-base)*30_-_var(--composer-height))]",
+      "duration-(--motion-duration-short)",
       "ml-[calc(--spacing(2)+1px)]",
     ];
     for (const cls of fine) expect(judgeClass(cls, tokens), cls).toBeUndefined();
@@ -56,6 +61,9 @@ describe("judgeClass", () => {
     expect(judgeClass("text-xl", tokens)?.messageId).toBe("unknownToken");
     expect(judgeClass("font-bold", tokens)?.messageId).toBe("unknownToken");
     expect(judgeClass("leading-5", tokens)?.messageId).toBe("unknownToken");
+    // A style is one unit: its parts are not classes of their own.
+    expect(judgeClass("leading-body-md", tokens)?.messageId).toBe("unknownToken");
+    expect(judgeClass("text-body-md--line-height", tokens)?.messageId).toBe("unknownToken");
     expect(judgeClass("shadow-lg", tokens)?.messageId).toBe("unknownToken");
     expect(judgeClass("rounded-2xl", tokens)?.messageId).toBe("unknownToken");
     expect(judgeClass("ease-in-out", tokens)?.messageId).toBe("unknownToken");
@@ -66,11 +74,23 @@ describe("judgeClass", () => {
     expect(judgeClass("text-[13px]", tokens)?.messageId).toBe("arbitraryValue");
     expect(judgeClass("rounded-[6px]", tokens)?.messageId).toBe("arbitraryValue");
   });
+
+  it("refuses a colour made by opacity, and any read of the palette", () => {
+    expect(judgeClass("bg-primary", tokens, "10")?.messageId).toBe("modifier");
+    expect(judgeClass("text-body-md", tokens, "6")?.messageId).toBe("modifier");
+    expect(judgeClass("text-(--palette-gray-11)", tokens)?.messageId).toBe("paletteReference");
+    expect(judgeClass("bg-[var(--palette-mint-9)]", tokens)?.messageId).toBe("paletteReference");
+  });
+
+  it("offers an example of the kind the utility reads, never a colour for a size", () => {
+    expect(judgeClass("text-[13px]", tokens)?.example).toBe("text-on-surface` or `text-body-md");
+    expect(judgeClass("bg-red-500", tokens)?.example).toBe("bg-surface");
+  });
 });
 
 ruleTester.run("design/token-classes", tokenClasses, {
   valid: [
-    { filename: COMPONENT, code: '<div className="bg-surface-container-low/60 rounded-md text-body-md leading-body-md text-on-surface" />' },
+    { filename: COMPONENT, code: '<div className="bg-surface-panel rounded-md text-body-md text-on-surface" />' },
     { filename: COMPONENT, code: '<button className="enabled:hover:bg-surface-container-high group-data-[modality=keyboard]/menu:data-focus:bg-surface-container-low has-[textarea:focus-visible]:ring-2 motion-safe:animate-spin" />' },
     { filename: COMPONENT, code: "<div className={`flex ${open ? \"bg-primary\" : \"bg-surface\"}`} />" },
     { filename: COMPONENT, code: 'import { cx } from "@/components/ui/recipe";\nconst CARD = "rounded-md border border-outline";\nexport const cardClass = (active: boolean) => cx(CARD, active && "bg-surface-container-low");' },
@@ -84,6 +104,7 @@ ruleTester.run("design/token-classes", tokenClasses, {
   ],
   invalid: [
     { filename: COMPONENT, code: '<div className="bg-red-500" />', errors: [{ messageId: "unknownToken", data: { class: "bg-red-500", kind: "colour", example: "bg-surface", note: ", and the palette reset drops an unknown colour silently" } }] },
+    { filename: COMPONENT, code: '<div className="bg-surface-container-low/60 text-(--palette-gray-11)" />', errors: [{ messageId: "modifier" }, { messageId: "paletteReference" }] },
     { filename: COMPONENT, code: '<div className="text-[13px] rounded-[6px]" />', errors: [{ messageId: "arbitraryValue" }, { messageId: "arbitraryValue" }] },
     { filename: COMPONENT, code: '<div className={cond ? "shadow-lg" : "shadow-soft"} />', errors: [{ messageId: "unknownToken" }] },
     { filename: COMPONENT, code: "<div className={`p-2 ${cond && \"font-bold\"}`} />", errors: [{ messageId: "unknownToken" }] },

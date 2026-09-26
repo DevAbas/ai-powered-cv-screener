@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "../styles/palette-reset.css";
 @import "../styles/tokens.generated.css";
-@import "../styles/theme.css";
+@import "../styles/theme.generated.css";
 
 /* DESIGN.md `scrollbar`: thin, transparent track, `outline` thumb, on every scroll area. */
 @layer base {
@@ -40,8 +40,8 @@ body {
   color: var(--color-on-surface);
   font-family: var(--font-sans);
   font-size: var(--text-body-md);
-  line-height: var(--leading-body-md);
-  font-weight: var(--font-weight-body-md);
+  line-height: var(--text-body-md--line-height);
+  font-weight: var(--text-body-md--font-weight);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

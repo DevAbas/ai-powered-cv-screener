@@ -37,18 +37,18 @@ function Row({ row, index, ranked, sourceHref }: RowProps) {
   return (
     <li className="flex gap-3 py-2.5">
       {ranked && (
-        <span className="w-4 shrink-0 text-label-md leading-label-lg font-(weight:--font-weight-label-md) text-on-surface-variant tabular-nums">{index + 1}</span>
+        <span className="w-4 shrink-0 text-label-md leading-(--text-label-lg--line-height) text-on-surface-variant tabular-nums">{index + 1}</span>
       )}
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <p className="flex min-w-0 items-center gap-x-2">
           {/* DESIGN.md, Icons: the person mark at the text size, on-surface-variant */}
           <User aria-hidden className="size-4 shrink-0 text-on-surface-variant" />
           {/* DESIGN.md `name`: the name leads the row */}
-          <span className="text-name leading-name font-(weight:--font-weight-name) text-on-surface">{row.name}</span>
+          <span className="text-name text-on-surface">{row.name}</span>
         </p>
-        <p className="pl-6 text-body-sm leading-body-sm text-on-surface-variant">{row.headline}</p>
-        {row.skills.length > 0 && <p className="pl-6 text-body-sm leading-body-sm text-on-surface tabular-nums">{row.skills.map(skillLabel).join(" · ")}</p>}
-        {row.reason && <p className="pl-6 text-body-sm leading-body-sm text-on-surface-variant">{row.reason}</p>}
+        <p className="pl-6 text-body-sm text-on-surface-variant">{row.headline}</p>
+        {row.skills.length > 0 && <p className="pl-6 text-body-sm text-on-surface tabular-nums">{row.skills.map(skillLabel).join(" · ")}</p>}
+        {row.reason && <p className="pl-6 text-body-sm text-on-surface-variant">{row.reason}</p>}
         {/* Shifted left by the card's padding and border, so its icon sits on the text column above it. */}
         <div className="pl-6 -ml-[calc(--spacing(2)+1px)]">
           <CvSourceLink compact candidateId={row.candidateId} name={row.name} page={row.page} sourceHref={sourceHref} />
@@ -90,8 +90,8 @@ export function AnswerCandidates({ view, sourceHref }: AnswerCandidatesProps) {
   return (
     <section aria-label={caption ?? "Candidates"} className="flex flex-col gap-3">
       {/* DESIGN.md `candidate-list`: the panel that holds the sentence and the rows, the low surface at 60% over the page */}
-      <div className="flex flex-col gap-3 rounded-md bg-surface-container-low/60 p-4">
-        {caption && <p className="text-body-md leading-body-md text-on-surface">{caption}</p>}
+      <div className="flex flex-col gap-3 rounded-md bg-surface-panel p-4">
+        {caption && <p className="text-body-md text-on-surface">{caption}</p>}
         {first.length > 0 && (
           <div>
             <Rows className={GRID}>
@@ -107,7 +107,7 @@ export function AnswerCandidates({ view, sourceHref }: AnswerCandidatesProps) {
                 onTransitionEnd={handleTransitionEnd}
                 className={cx(
                   "grid motion-safe:transition-[grid-template-rows,opacity]",
-                  showAll ? "[grid-template-rows:1fr] opacity-100 motion-safe:duration-200 motion-safe:ease-(--ease-decelerate)" : "[grid-template-rows:0fr] opacity-0 motion-safe:duration-150 motion-safe:ease-(--ease-accelerate)",
+                  showAll ? "[grid-template-rows:1fr] opacity-100 motion-safe:duration-(--motion-duration-medium) motion-safe:ease-(--ease-decelerate)" : "[grid-template-rows:0fr] opacity-0 motion-safe:duration-(--motion-duration-short) motion-safe:ease-(--ease-accelerate)",
                 )}
               >
                 <div className={cx("min-h-0", unfolded ? "overflow-visible" : "overflow-hidden")}>
@@ -127,7 +127,7 @@ export function AnswerCandidates({ view, sourceHref }: AnswerCandidatesProps) {
             <button
               type="button"
               aria-expanded={showAll}
-              className={cx(cardClass(true, true), "text-label-md leading-label-md font-(weight:--font-weight-label-md) text-on-surface")}
+              className={cx(cardClass(true, true), "text-label-md text-on-surface")}
               onClick={toggle}
             >
               {showAll ? (

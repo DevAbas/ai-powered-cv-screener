@@ -1,0 +1,13 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "The spacing unit every spacing is a multiple of.",
+  "spacing": {
+    "$type": "dimension",
+    "base": {
+      "$value": {
+        "value": 0.25,
+        "unit": "rem"
+      }
+    }
+  }
+}

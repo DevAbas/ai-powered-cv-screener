@@ -4,9 +4,15 @@
  * Every class in a class list must be a DESIGN.md token where the utility is
  * one DESIGN.md owns: colour, text style, line height, letter spacing, font,
  * radius, shadow, easing, animation. The rule reads the token names from the
- * files that define them (`designTokens.mjs`: tokens.generated.css, theme.css
- * and DESIGN.md's front matter), so the one way to make a class legal is to
- * add the token to DESIGN.md and run `npm run design:export`.
+ * files that define them (`designTokens.mjs`: the generated Tailwind theme and
+ * DESIGN.md's front matter), so the one way to make a class legal is to add
+ * the token to DESIGN.md and run `npm run design:export`.
+ *
+ * Two ways around a token are refused as well. An opacity modifier on a token
+ * utility (`bg-primary/10`) makes a colour DESIGN.md does not know: a new tint
+ * is a derived role (DESIGN.md, Colors). And the palette is never read by code
+ * (DESIGN.md, Overview), so `bg-(--palette-mint-9)` or `[var(--palette-…)]`
+ * fails; a role points to the palette, code points to the role.
  *
  * Why a lint and not the build: `palette-reset.css` removes Tailwind's own
  * palette, so `bg-red-500` produces no CSS and no error; the element is
@@ -16,9 +22,11 @@
  *
  * Bad
  *   className="bg-red-500 text-[13px] rounded-[6px] font-bold shadow-lg"
+ *   className="bg-surface-container-low/60 text-(--palette-gray-11)"
  *
  * Good
- *   className="bg-surface-container text-body-sm rounded-md font-(weight:--font-weight-label-md) shadow-soft"
+ *   className="bg-surface-panel text-body-sm rounded-md shadow-soft"
+ *   className="text-label-md leading-(--text-label-lg--line-height)"  // a documented override reads the other style's part
  *   className="min-h-[calc(100dvh-var(--composer-height))] -ml-[calc(--spacing(2)+1px)]"  // references tokens
  *
  * Scope: JSX `className`, the arguments of `cx`, the class values of
@@ -107,30 +115,42 @@ const UTILITIES = [
   { prefix: "animate", namespaces: ["animate"], kind: "animation", keywords: ["none", "spin"] },
 ].sort((a, b) => b.prefix.length - a.prefix.length);
 
-/** True when `--name` is a registered token in any namespace. */
-function isTokenVariable(name, theme) {
+/** True when `--name` is a registered token in any namespace, or a variable code may read by name (motion). */
+function isTokenVariable(name, tokens) {
   const property = name.replace(/^--/, "");
-  return NAMESPACES.some((namespace) => property.startsWith(`${namespace}-`) && theme.get(namespace).has(property.slice(namespace.length + 1)));
+  if (tokens.variables.has(property)) return true;
+  return NAMESPACES.some((namespace) => property.startsWith(`${namespace}-`) && tokens.theme.get(namespace).has(property.slice(namespace.length + 1)));
 }
+
+const PALETTE_VARIABLE = /--palette-/;
 
 /**
  * Why a class is not a token, or undefined when it is one.
  * @returns {{ messageId: string, kind: string, example: string } | undefined}
  */
-export function judgeClass(base, tokens) {
+export function judgeClass(base, tokens, modifier) {
   const utility = UTILITIES.find((candidate) => base === candidate.prefix || base.startsWith(`${candidate.prefix}-`));
   if (!utility) return undefined;
-  const example = () => {
-    const names = [...(tokens.theme.get(utility.namespaces[0]) ?? [])];
-    return `${utility.prefix}-${names.includes("md") ? "md" : (names[0] ?? "…")}`;
-  };
+  /** One real token per namespace the utility reads: `text-on-surface` or `text-body-md`, never a colour offered for a size. */
+  const example = () =>
+    utility.namespaces
+      .map((namespace) => {
+        const names = [...(tokens.theme.get(namespace) ?? [])].filter((name) => !name.includes("--"));
+        // Text is set in `on-surface`; everything else coloured sits on `surface`.
+        const preferred = [utility.prefix === "text" ? "on-surface" : "surface", "md", "body-md", "standard"].find((name) => names.includes(name));
+        return `${utility.prefix}-${preferred ?? names[0] ?? "…"}`;
+      })
+      .join("` or `");
   if (base === utility.prefix) {
     return utility.bare ? { messageId: "bareUtility", kind: utility.kind, example: example() } : undefined;
   }
   const suffix = base.slice(utility.prefix.length + 1);
+  if (PALETTE_VARIABLE.test(suffix)) return { messageId: "paletteReference", kind: utility.kind, example: example() };
+  // A modifier on a token utility is an opacity (a new colour) or a line height (a new text style).
+  if (modifier !== undefined && !utility.keywords.includes(suffix)) return { messageId: "modifier", kind: utility.kind, example: example() };
   if (suffix.startsWith("(") && suffix.endsWith(")")) {
     const variable = suffix.slice(1, -1).replace(/^[a-z-]+:/, "");
-    return isTokenVariable(variable, tokens.theme) ? undefined : { messageId: "unknownToken", kind: utility.kind, example: example() };
+    return isTokenVariable(variable, tokens) ? undefined : { messageId: "unknownToken", kind: utility.kind, example: example() };
   }
   if (suffix.startsWith("[") && suffix.endsWith("]")) {
     const content = suffix.slice(1, -1);
@@ -139,7 +159,8 @@ export function judgeClass(base, tokens) {
   if (utility.keywords.includes(suffix)) return undefined;
   if (utility.patterns?.some((pattern) => pattern.test(suffix))) return undefined;
   if (utility.numeric && /^\d+(\.\d+)?$/.test(suffix)) return undefined;
-  if (utility.namespaces.some((namespace) => tokens.theme.get(namespace)?.has(suffix))) return undefined;
+  // `text-body-md--line-height` is a part of a style, read through a variable, never a class of its own.
+  if (!suffix.includes("--") && utility.namespaces.some((namespace) => tokens.theme.get(namespace)?.has(suffix))) return undefined;
   return { messageId: "unknownToken", kind: utility.kind, example: example() };
 }
 
@@ -152,6 +173,8 @@ export const tokenClasses = {
       unknownToken: "`{{class}}` is not a DESIGN.md {{kind}} token{{note}}. Use an exported token (`{{example}}`), or add it to DESIGN.md and run `npm run design:export`.",
       arbitraryValue: "`{{class}}` sets a literal {{kind}} that is in no document. DESIGN.md owns every {{kind}}: use a token (`{{example}}`) or reference one (`var(--…)`).",
       bareUtility: "`{{class}}` is Tailwind's default {{kind}}, not one of DESIGN.md's. Name the token (`{{example}}`).",
+      modifier: "`{{class}}` changes a token with a modifier, which makes a {{kind}} DESIGN.md does not know. Use a token as it is (`{{example}}`); a new tint is a derived role in DESIGN.md first (Colors).",
+      paletteReference: "`{{class}}` reads the palette. Code reads roles, never primitives (DESIGN.md, Overview): use the role that points to it (`{{example}}`).",
     },
     schema: [],
   },
@@ -165,7 +188,7 @@ export const tokenClasses = {
           for (const node of group.nodes) {
             for (const piece of piecesOf(node, context.sourceCode)) {
               for (const { parsed } of classesOf(piece.text)) {
-                const verdict = judgeClass(parsed.base, tokens);
+                const verdict = judgeClass(parsed.base, tokens, parsed.modifier);
                 if (!verdict) continue;
                 const note = verdict.kind === "colour" ? ", and the palette reset drops an unknown colour silently" : "";
                 context.report({ node, messageId: verdict.messageId, data: { class: parsed.raw, kind: verdict.kind, example: verdict.example, note } });

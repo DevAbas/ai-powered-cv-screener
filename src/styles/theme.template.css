@@ -1,0 +1,118 @@
+/*
+ * The Tailwind theme's template. `npm run design:export` fills each `@tz`
+ * with the tokens of one theme (from tokens/design.resolver.json, which the
+ * export writes from DESIGN.md) and writes the result to theme.generated.css.
+ * Everything else here is wiring Tailwind needs and states no value of its
+ * own: every value is a token.
+ */
+
+/* Dark follows the system unless <html data-theme> overrides it for the session. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+}
+
+@theme {
+  @tz (theme: "light");
+}
+
+@variant dark {
+  @tz (theme: "dark");
+}
+
+:root {
+  color-scheme: light;
+  /* DESIGN.md, Layout: the empty-state grid's hairlines; thinner in dark, where mint on near-black reads stronger. */
+  --cursor-grid-line-width: 1px;
+  /* DESIGN.md, Layout: "Candidates", the fourth word, starts three word-staggers in. */
+  --motion-delay-last-word: calc(var(--motion-stagger-entrance-word) * 3);
+
+  @variant dark {
+    color-scheme: dark;
+    --cursor-grid-line-width: 0.5px;
+  }
+}
+
+@theme {
+  /* DESIGN.md, Layout: motion. What a bare `transition` uses. */
+  --default-transition-duration: var(--motion-duration-short);
+  --default-transition-timing-function: var(--ease-standard);
+
+  /* DESIGN.md, Layout: loading motion. A slow opacity cycle on the glyph and
+     the current step, and one band of ink sweeping the working label. */
+  --animate-breath: breath var(--motion-duration-breath) var(--ease-standard) infinite;
+  --animate-shimmer: shimmer var(--motion-duration-shimmer) linear infinite;
+  @keyframes breath {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes shimmer {
+    to {
+      background-position: -125% 0;
+    }
+  }
+
+  /* DESIGN.md, Layout: the empty state's entrance. Each part animates from a
+     start state to the element's own style, so a transition can still move
+     it afterwards. */
+  --animate-rise: rise var(--motion-duration-entrance) var(--ease-entrance) backwards;
+  --animate-fade-in: fade-in var(--motion-duration-entrance) var(--ease-entrance) backwards;
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(var(--motion-distance-entrance));
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  /* DESIGN.md, Composer: the placeholder's bar cursor blinks once a
+     `duration-blink` (on for half, off for half). The typing speeds are in
+     ChatComposer/typewriter.ts, which runs the clock. */
+  --animate-blink: blink var(--motion-duration-blink) steps(2, start) infinite;
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+}
+
+/* The families are self-hosted with next/font (src/app/fonts.ts), which exposes each only as the variable set on <html>. */
+@theme inline {
+  --font-sans: var(--font-google-sans);
+  --font-display-light: var(--font-google-sans-flex);
+  --spacing: var(--spacing-base);
+}
+
+/*
+ * The sweeping band of ink behind `--animate-shimmer`: the text shows the
+ * gradient. The ink is named, not `currentColor`: the text colour itself has
+ * to be transparent for the gradient to show through.
+ */
+@utility shimmer-text {
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--color-on-surface) 50%, transparent) 30%,
+    var(--color-on-surface) 50%,
+    color-mix(in srgb, var(--color-on-surface) 50%, transparent) 70%
+  );
+  background-size: 250% 100%;
+  background-position: 125% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}

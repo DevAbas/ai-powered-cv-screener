@@ -25,7 +25,7 @@ export function AnswerProfile({ view, sourceHref }: AnswerProfileProps) {
         <CandidateName name={profile.name} />
         <CvSourceLink compact candidateId={candidateId} name={profile.name} page={page} sourceHref={sourceHref} />
       </div>
-      <p className="text-body-md leading-body-md text-on-surface-variant">{profileFacts.summary(profile)}</p>
+      <p className="text-body-md text-on-surface-variant">{profileFacts.summary(profile)}</p>
     </section>
   );
 }

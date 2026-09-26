@@ -1,234 +1,136 @@
 ---
+# The design system's rules. Every value lives in the design tokens `imports:` names (W3C Design
+# Tokens), never here, as the format's planned token import intends (google-labs-code/design.md#13):
+# `components:` names, by their token ids, the roles each component reads.
 version: alpha
 name: CV Screener
-description: A quiet monochrome recruiting tool with a single mint accent. Tokens follow Material 3 role names.
-colors:
-  surface: "#FCFCFC"
-  surface-container-lowest: "#FFFFFF"
-  surface-container-low: "#F3F3F3"
-  surface-container: "#EFEFEF"
-  surface-container-high: "#E6E6E6"
-  surface-container-highest: "#E0E0E0"
-  outline: "#F3F3F3"
-  outline-variant: "#AFAFAF"
-  on-surface-variant: "#595959"
-  on-surface: "#202020"
-  primary: "#00F8C0"
-  primary-hover: "#16DDAC"
-  primary-pressed: "#08C498"
-  on-primary: "#0A281E"
-  primary-outline: "#2DDCAC"
-  primary-text: "#007C5A"
-  primary-container: "#B1FCDF"
-  on-primary-container: "#004932"
-  inverse-surface: "#202020"
-  inverse-on-surface: "#FCFCFC"
-  warning: "#B08A2E"
-  error: "#D23B3B"
-typography:
-  headline-lg:
-    fontFamily: Google Sans
-    fontSize: 1.375rem
-    fontWeight: 500
-    lineHeight: "1.3"
-    letterSpacing: -0.01em
-  headline-md:
-    fontFamily: Google Sans
-    fontSize: 1.0625rem
-    fontWeight: 500
-    lineHeight: "1.35"
-  body-lg:
-    fontFamily: Google Sans
-    fontSize: 1rem
-    fontWeight: 400
-    lineHeight: "1.5"
-  body-md:
-    fontFamily: Google Sans
-    fontSize: 1rem
-    fontWeight: 400
-    lineHeight: "1.5"
-  body-sm:
-    fontFamily: Google Sans
-    fontSize: 0.875rem
-    fontWeight: 400
-    lineHeight: "1.45"
-  label-lg:
-    fontFamily: Google Sans
-    fontSize: 0.875rem
-    fontWeight: 500
-    lineHeight: "1.2"
-  label-md:
-    fontFamily: Google Sans
-    fontSize: 0.8125rem
-    fontWeight: 500
-    lineHeight: "1.2"
-  label-sm:
-    fontFamily: Google Sans
-    fontSize: 0.75rem
-    fontWeight: 500
-    lineHeight: "1.2"
-    letterSpacing: 0.01em
-  name:
-    fontFamily: Google Sans
-    fontSize: 0.9375rem
-    fontWeight: 600
-    lineHeight: "1.2"
-  display:
-    fontFamily: Google Sans
-    fontSize: 5rem
-    fontWeight: 600
-    lineHeight: "1.1"
-    letterSpacing: -0.025em
-  display-light:
-    fontFamily: Google Sans Flex
-    fontSize: 5rem
-    fontWeight: 300
-    lineHeight: "1.1"
-    letterSpacing: -0.025em
-  wordmark:
-    fontFamily: Google Sans
-    fontSize: 1rem
-    fontWeight: 600
-    lineHeight: "1.2"
-    letterSpacing: 0.16em
-  mark:
-    fontFamily: Google Sans
-    fontSize: 0.875rem
-    fontWeight: 600
-    lineHeight: "1"
-    letterSpacing: 0.02em
-rounded:
-  none: 0px
-  sm: 0.5rem
-  md: 0.75rem
-  lg: 1rem
-  xl: 1.25rem
-  full: 9999px
-spacing:
-  base: 0.25rem
-  gutter: 1.25rem
+description: A quiet monochrome recruiting tool with a single mint accent. The rules and their reasons; the values are the design tokens it imports.
+imports: ./tokens/design.resolver.json
 components:
   page:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface}"
+    textColor: "{color.on-surface}"
     typography: "{typography.body-md}"
   logo:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
+    backgroundColor: "{color.primary}"
+    textColor: "{color.on-primary}"
     typography: "{typography.mark}"
     rounded: "{rounded.sm}"
   logo-wordmark:
-    textColor: "{colors.on-surface}"
+    textColor: "{color.on-surface}"
     typography: "{typography.wordmark}"
   question:
-    backgroundColor: "{colors.primary-container}"
-    textColor: "{colors.on-primary-container}"
+    backgroundColor: "{color.primary-container}"
+    textColor: "{color.on-primary-container}"
     typography: "{typography.body-md}"
     rounded: "{rounded.xl}"
   composer:
-    backgroundColor: "{colors.surface-container-lowest}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface-container-lowest}"
+    textColor: "{color.on-surface}"
     typography: "{typography.body-lg}"
     rounded: "{rounded.xl}"
   model-chip:
-    backgroundColor: "{colors.surface-container}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface-container}"
+    textColor: "{color.on-surface}"
     typography: "{typography.label-md}"
     rounded: "{rounded.full}"
   model-chip-hover:
-    backgroundColor: "{colors.surface-container-high}"
+    backgroundColor: "{color.surface-container-high}"
   model-chip-pressed:
-    backgroundColor: "{colors.surface-container-highest}"
+    backgroundColor: "{color.surface-container-highest}"
   button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
+    backgroundColor: "{color.primary}"
+    textColor: "{color.on-primary}"
     typography: "{typography.label-md}"
     rounded: "{rounded.full}"
   button-primary-hover:
-    backgroundColor: "{colors.primary-hover}"
+    backgroundColor: "{color.primary-hover}"
   button-primary-pressed:
-    backgroundColor: "{colors.primary-pressed}"
+    backgroundColor: "{color.primary-pressed}"
   button-secondary:
-    backgroundColor: "{colors.surface-container}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface-container}"
+    textColor: "{color.on-surface}"
     typography: "{typography.label-md}"
     rounded: "{rounded.full}"
   button-secondary-hover:
-    backgroundColor: "{colors.surface-container-high}"
+    backgroundColor: "{color.surface-container-high}"
   button-secondary-pressed:
-    backgroundColor: "{colors.surface-container-highest}"
+    backgroundColor: "{color.surface-container-highest}"
   button-disabled:
-    backgroundColor: "{colors.surface-container}"
-    textColor: "{colors.on-surface-variant}"
+    backgroundColor: "{color.surface-container}"
+    textColor: "{color.on-surface-variant}"
     rounded: "{rounded.full}"
   icon:
-    textColor: "{colors.on-surface-variant}"
+    textColor: "{color.on-surface-variant}"
   icon-hover:
-    backgroundColor: "{colors.surface-container-low}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface-container-low}"
+    textColor: "{color.on-surface}"
   icon-pressed:
-    backgroundColor: "{colors.surface-container-high}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface-container-high}"
+    textColor: "{color.on-surface}"
   icon-disabled:
-    textColor: "{colors.outline-variant}"
+    textColor: "{color.outline-variant}"
   input:
-    backgroundColor: "{colors.surface-container-lowest}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface-container-lowest}"
+    textColor: "{color.on-surface}"
     typography: "{typography.body-lg}"
     rounded: "{rounded.md}"
   input-placeholder:
-    textColor: "{colors.outline-variant}"
+    textColor: "{color.outline-variant}"
   focus-ring:
-    backgroundColor: "{colors.primary-outline}"
+    backgroundColor: "{color.primary-outline}"
   menu:
-    backgroundColor: "{colors.surface-container-lowest}"
+    backgroundColor: "{color.surface-container-lowest}"
     rounded: "{rounded.lg}"
   menu-item:
-    textColor: "{colors.on-surface}"
+    textColor: "{color.on-surface}"
     typography: "{typography.body-sm}"
     rounded: "{rounded.sm}"
   menu-item-hover:
-    backgroundColor: "{colors.surface-container-low}"
+    backgroundColor: "{color.surface-container-low}"
   link:
-    textColor: "{colors.on-surface}"
+    textColor: "{color.on-surface}"
     typography: "{typography.body-md}"
   link-hover:
-    textColor: "{colors.primary-text}"
+    textColor: "{color.primary-text}"
   table-header:
-    textColor: "{colors.on-surface-variant}"
+    textColor: "{color.on-surface-variant}"
     typography: "{typography.label-sm}"
   table-cell:
-    textColor: "{colors.on-surface}"
+    textColor: "{color.on-surface}"
     typography: "{typography.body-md}"
   file-card:
-    backgroundColor: "{colors.surface-container-lowest}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface-container-lowest}"
+    textColor: "{color.on-surface}"
     typography: "{typography.label-lg}"
     rounded: "{rounded.md}"
   file-card-hover:
-    backgroundColor: "{colors.surface-container-low}"
+    backgroundColor: "{color.surface-container-low}"
   file-card-pressed:
-    backgroundColor: "{colors.surface-container}"
+    backgroundColor: "{color.surface-container}"
   candidate-list:
-    backgroundColor: "{colors.surface-container-low}"
+    backgroundColor: "{color.surface-panel}"
     rounded: "{rounded.md}"
   preview:
-    backgroundColor: "{colors.surface-container-lowest}"
-    textColor: "{colors.on-surface}"
+    backgroundColor: "{color.surface-container-lowest}"
+    textColor: "{color.on-surface}"
     typography: "{typography.label-lg}"
   tooltip:
-    backgroundColor: "{colors.inverse-surface}"
-    textColor: "{colors.inverse-on-surface}"
+    backgroundColor: "{color.inverse-surface}"
+    textColor: "{color.inverse-on-surface}"
     typography: "{typography.label-md}"
     rounded: "{rounded.md}"
   divider:
-    backgroundColor: "{colors.outline}"
+    backgroundColor: "{color.outline}"
   scrollbar:
-    backgroundColor: "{colors.outline}"
+    backgroundColor: "{color.outline}"
   state-icon-warning:
-    textColor: "{colors.warning}"
+    textColor: "{color.warning}"
   state-icon-error:
-    textColor: "{colors.error}"
+    textColor: "{color.error}"
+  cv-count:
+    textColor: "{color.on-surface-subtle}"
+    typography: "{typography.label-md}"
 ---
 
 # CV Screener — Design System
@@ -244,49 +146,152 @@ with one exception: the empty state (Layout), whose entrance and pointer
 grid greet the recruiter before the first question and are gone once it is
 asked.
 
+This document is the source of truth for the design system's rules: what
+each token means, when it is used, which roles each component reads, how
+things behave, and why. It holds no values. Every value is a design token in
+`tokens/` (W3C Design Tokens, the source of truth for what exists), and this
+document names tokens by their ids there (`color.primary`, `shadow.raised`,
+`motion.ease-standard`). The front matter holds two things: `imports:`,
+which names the design tokens, and `components:`, the contract of which
+roles each component reads.
+
+The tokens come in three tiers. The **palette** (`palette.gray-*`,
+`palette.mint-*` and the few named values beside them) holds values only
+and is never used in code. The **roles** (`color.*`, `typography.*`,
+`rounded.*`, `spacing.*`, `shadow.*`, `motion.*`, `breakpoints.*`,
+`containers.*`) say what a value is for; the colour roles and shadows take
+a value per theme, light and dark. The **components** say which roles each
+component of the interface reads. How the tokens reach the code and the
+rules that hold the code to them are in `README.md` (Decisions) and
+`src/components/README.md`.
+
+### Reading the tokens
+
+Every token id in this document is a path in the design tokens `imports:`
+names. The resolver there lists the token files and how the themes apply:
+`foundation` (the palette and raw values) and `semantic` (roles that are
+the same in every theme) always, then the `theme` modifier, `light` by
+default or `dark`. So `color.surface` is found in
+`tokens/themes/light.tokens.json` and `tokens/themes/dark.tokens.json`,
+each time as an alias into the palette (`{palette.gray-background}`, in
+`tokens/foundation/colors.tokens.json`) or, for a derived role, as the
+value its rule gives, the rule itself in the token's `$extensions`. The
+colour roles and shadows are the only tokens that change with the theme.
+
+Where the kind is clear from the sentence, the prose names a role by its
+bare name: `surface` is `color.surface`, `label-lg` is
+`typography.label-lg`. In code the same name is the Tailwind class:
+`color.surface` is `bg-surface` or `text-surface`, `typography.body-md` is
+`text-body-md` (the whole style: size, line height, weight and letter
+spacing), `rounded.md` is `rounded-md`, `shadow.raised` is `shadow-raised`,
+`motion.ease-standard` is `ease-standard`; the palette has no class.
+
 ## Colors
 
 The palette is three colours: white, black and mint. Every other value is
-a tone between them. Roles use Material 3 names.
+a tone between them.
 
-Values were generated with the Radix Colors custom palette tool from three
-seeds: accent `#00F8C0` (`#00FFC6` in dark), gray `#8B8B8B`, background
-`#FCFCFC`. Radix step anatomy maps to roles: steps 1–2 surfaces, 3–4
-containers, 6 and 8 outlines, 11–12 neutral text; for the accent, 4 the
-question tint, 7 the focus ring, 9 the solid fill, 11 accent text, 12 text on
-the tint. Hover and pressed are derived from step 9 (below).
+Code never reads the palette: a colour on screen is always a role, and a
+role points to one palette entry in each theme, or is derived (below). The
+palette (`palette.*`) was generated with the Radix Colors custom palette
+generator from three seeds per theme; the seeds and the generator's version
+are recorded with the palette in `tokens/foundation/colors.tokens.json`, so
+it can be generated again. `palette.gray-*` and `palette.mint-*` are its
+twelve steps, `gray-background` its page colour and `mint-contrast` its
+text colour on step 9; the `-dark` scales are the dark theme's. `white`,
+`gold` and `red` are not from the seeds. The Radix step anatomy decides the
+step a role takes: 1–2 backgrounds, 3–5 component fills, 6–8 borders,
+9–10 solid fills, 11–12 text. A colour the interface needs and no role
+gives is a new role first; a value no step gives is a new seed or a
+derived role, never a hand-picked colour.
 
-- **Primary (#00F8C0):** Mint. The only chromatic colour in the UI, used for
-  the primary action, the logo mark, the band of the PDF icon, the
-  strokes of the empty-state grid and the corners of the frame on the
-  empty-state headline. Never for text blocks, content backgrounds or other
-  decoration.
-- **On primary (#0A281E):** Text and icons on `primary`: Radix's contrast
-  colour, since mint is too light for white text.
-- **Primary hover (#16DDAC) and pressed (#08C498):** `primary` with its OKLCH
-  lightness 7 and 14 points lower, same hue and chroma. Radix step 10 is too
-  close to step 9 for this bright accent to read as a hover.
-- **Primary text (#007C5A):** The accent as text or an icon on a surface: the
-  check mark on selected items and link hover. Radix step 11; mint itself is
-  too light to read on the page.
-- **Inverse surface (#202020) and inverse on surface (#FCFCFC):** Tooltips:
-  very dark in light mode, light in dark mode.
-- **Primary container (#B1FCDF):** A light mint tint (Radix step 4): the
-  background of the recruiter's question.
-- **On primary container (#004932):** The question's text on that tint
-  (Radix step 12, the accent's high-contrast text).
-- **Surface (#FCFCFC):** Near-white page background, never pure white.
-- **Surface container lowest (#FFFFFF):** Inputs, menus, the composer.
-- **Surface container low (#F3F3F3):** Hover on menu items and ghost icon buttons.
-- **Surface container (#EFEFEF):** Secondary buttons, the model chip.
-- **Surface container high (#E6E6E6):** Hover on secondary buttons and the model chip; ghost icon buttons while pressed.
-- **Surface container highest (#E0E0E0):** Pressed secondary buttons and the model chip. Radix step 5.
-- **On surface (#202020):** Body text. Not pure black.
-- **On surface variant (#595959):** Secondary text, metadata, disabled text and icons at rest.
-- **Outline (#F3F3F3):** Every border and divider, and scrollbar thumbs. There is one border colour, kept faint.
-- **Outline variant (#AFAFAF):** Disabled icons only.
-- **Warning (#B08A2E) and Error (#D23B3B):** Icons only. Never used as a
-  background or for running text.
+Roles are named by what they do. `surface` is the page and `on-surface`
+what sits on it; a `-container` is a fill that separates a region from what
+is under it; `outline` draws edges; `primary` is the one accent; `inverse`
+reverses light and dark. The names echo a common convention, but the
+meanings are the ones given here.
+
+- **Surface** (`color.surface`): the page background. Near-white, never
+  pure white.
+- **Surface container lowest** (`color.surface-container-lowest`): the fill
+  of a thing that floats on the page: inputs, menus, the composer, file
+  cards, the CV preview and its pages. Pure white in light. In dark it is
+  one step *lighter* than `surface`, not darker: containers rise above the
+  page in both themes.
+- **Surface container low / container / high / highest**
+  (`color.surface-container-low` … `color.surface-container-highest`): four
+  ascending fills for controls and their states.
+- **Surface panel** (`color.surface-panel`): a quiet region that groups
+  related rows on the page, a shade lighter than `surface-container-low`.
+  Derived: low at 60% over `surface`.
+- **Outline** (`color.outline`): every edge, divider and scrollbar thumb.
+  There is one edge colour, kept faint: an edge separates, it never frames.
+- **Outline variant** (`color.outline-variant`): the strongest neutral that
+  is not text: a disabled icon, a placeholder, a handle being dragged. Marks
+  what is inactive or in transit.
+- **On surface** (`color.on-surface`): body text. Not pure black.
+- **On surface variant** (`color.on-surface-variant`): secondary text:
+  metadata, captions, icons at rest, disabled text.
+- **On surface subtle** (`color.on-surface-subtle`): a tertiary label that
+  should be read last. Derived: `on-surface-variant` at 70% over `surface`.
+- **Primary** (`color.primary`): mint, the only chromatic colour: the
+  primary action and the marks of the brand (see Do's and Don'ts). Never
+  for text blocks, content backgrounds or decoration.
+- **Primary hover / pressed** (`color.primary-hover`,
+  `color.primary-pressed`): `primary` with its OKLCH lightness 7 and 14
+  points lower, same hue and chroma. Radix's step 10 is too close to step 9
+  for this bright accent to read as a hover.
+- **On primary** (`color.on-primary`): text and icons on `primary`: mint is
+  too light for white text.
+- **Primary outline** (`color.primary-outline`): the focus ring.
+- **Primary text** (`color.primary-text`): the accent as text or an icon on
+  a surface; mint itself is too light to read on the page.
+- **Primary container / on primary container** (`color.primary-container`,
+  `color.on-primary-container`): a light mint tint and the text on it: the
+  recruiter's question.
+- **Inverse surface / inverse on surface** (`color.inverse-surface`,
+  `color.inverse-on-surface`): a surface in the opposite theme and its
+  text: tooltips.
+- **Warning / error** (`color.warning`, `color.error`): state icons only.
+  Never a background, never running text.
+
+A text or icon role is made for the surfaces it is paired with here, and
+for no other:
+
+- `on-surface` and `on-surface-variant`: on `surface`, every
+  `surface-container-*` and `surface-panel`.
+- `on-surface-subtle`: on `surface`, for a label read last; never for
+  anything a recruiter must read to act.
+- `on-primary`: on `primary`, `primary-hover` and `primary-pressed`, and
+  nothing else sits on those three.
+- `on-primary-container`: on `primary-container` only.
+- `inverse-on-surface`: on `inverse-surface` only.
+- `primary-text`, `warning` and `error`: on `surface` and the containers.
+- `outline-variant`: never for text that carries information.
+
+Contrast follows WCAG 2.1 AA in both themes: text 4.5:1 against what it
+sits on; icons, the edges a control needs to be seen and the focus ring
+3:1 (1.4.11); disabled controls are exempt. `npm run design:lint` checks
+every text and fill pair the components name, in both themes, from the
+tokens. Three roles do not meet their threshold yet and are open work:
+`on-surface-subtle` as the CV count in light, `outline-variant` as the
+placeholder, and `primary-outline` as the focus ring on white containers.
+
+An interaction state moves one tonal step and changes nothing else: a
+neutral control goes from `surface-container` to `surface-container-high`
+on hover and `surface-container-highest` while pressed; a ghost control
+shows `surface-container-low` on hover and `surface-container-high` while
+pressed; a primary action takes `primary-hover`, then `primary-pressed`. A
+disabled control takes `surface-container` with `on-surface-variant` text,
+or `outline-variant` for a bare icon, and has no hover. Keyboard focus, and
+only keyboard focus, draws `primary-outline`.
+
+Only the colour roles and shadows change with the theme, and a role means
+the same in both: the dark value is chosen to keep the meaning, not by
+inverting the light one. A derived role is a plain colour in each theme,
+as hover and pressed are in every major design system; its rule travels
+with the token (in its `$extensions`), and the export refuses a value that
+is not what the rule gives from that theme's roles.
 
 ## Typography
 
@@ -312,77 +317,86 @@ italics.
 - **wordmark / mark:** the logo only: the product name uppercase, 600 and
   widely letter-spaced; the "CV" letters of the mark, 600.
 
+A text style is one unit: its size, line height, weight and letter spacing
+travel together. The one sanctioned mix is a line height or letter spacing
+borrowed from another style to align with it (a table's row header on the
+cells' line height, the CV count letter-spaced as `label-sm`).
+
 Lines are never justified. Prefer lists and tables over paragraphs.
 
 ## Layout
 
 Single-column layout: the conversation, padded with `spacing.gutter`, with
-the message column capped at a comfortable reading width and the composer
-centred on it, 1rem wider on each side; the header's logo and toggle sit on
-a wider column of their own, 104rem, so on a wide screen they frame the
-content without drifting to the edges or crowding it. All spacing is a multiple of half
-`spacing.base` (0.125rem); whole steps are the default, half steps fine-tune
-small controls. Rows inside a list sit close together; blocks
-are separated generously, so density and clarity coexist.
+the message column capped at `containers.reading` and the composer centred
+on it at `containers.composer`, 1rem wider on each side; the header's logo
+and toggle sit on a wider column of their own, `containers.header`, so on a
+wide screen they frame the content without drifting to the edges or
+crowding it. All spacing is a multiple of half `spacing.base`; whole steps
+are the default, half steps fine-tune small controls. Rows inside a list
+sit close together; blocks are separated generously, so density and
+clarity coexist.
 
-Breakpoints: sm 40rem, md 48rem, lg 64rem, xl 80rem.
+Breakpoints: `breakpoints.sm`, `md`, `lg` and `xl`.
 
-Motion is functional only, 150–200ms. Easings: standard
-`cubic-bezier(0.2, 0, 0, 1)`, decelerate `cubic-bezier(0, 0, 0, 1)` for
-entering elements, accelerate `cubic-bezier(0.3, 0, 1, 1)` for leaving ones,
-and one spring, overshoot `cubic-bezier(0.34, 1.56, 0.64, 1)`, for the
-colour mode toggle's icon alone (280ms).
-Loading motion is the one exception: the progress line breathes (a 1.6s
-opacity cycle on its glyph) and one band of ink sweeps its label every
-1.8s, both off under reduced motion; the values live in
-`src/styles/theme.css`. Following a response scrolls smoothly, never under
-reduced motion.
+Motion is functional only: `motion.duration-short`, and
+`motion.duration-medium` at most. Easings: `motion.ease-standard`;
+`motion.ease-decelerate` for entering elements; `motion.ease-accelerate`
+for leaving ones; and one spring, `motion.ease-overshoot`, for the colour
+mode toggle's icon alone (`motion.duration-color-mode-turn`).
+Loading motion is the one exception: the progress line breathes (an
+opacity cycle of `motion.duration-breath` on its glyph) and one band of ink
+sweeps its label every `motion.duration-shimmer`, both off under reduced
+motion. Following a response scrolls smoothly, never under reduced motion.
 
 The empty state is the one place motion is decorative. It enters once per
-page load, each part fading up 24px (600ms): the headline word by word,
-100ms apart, "Candidates" last with its frame fading in around it; then the
-composer and the CV count, 120ms apart. Slower than functional motion on
-purpose, with its own gentler ease-out: it is seen once and sets the tone.
-The composer is ready from the first frame, focused by a click or Tab. Afterwards the frame slides
-to whichever word is in focus (500ms) and the words out of focus blur
-(500ms), and the composer's placeholder types the example questions
-(Components: Composer). Under reduced motion everything appears at once,
-sharp and still.
+page load, each part fading up `motion.distance-entrance` over
+`motion.duration-entrance`: the headline word by word,
+`motion.stagger-entrance-word` apart, "Candidates" last with its frame
+fading in around it; then the composer and the CV count,
+`motion.stagger-entrance` apart. Slower than functional motion on purpose,
+with its own gentler ease-out, `motion.ease-entrance`: it is seen once and
+sets the tone. The composer is ready from the first frame, focused by a
+click or Tab. Afterwards the frame slides to whichever word is in focus and
+the words out of focus blur by `motion.blur-out-of-focus`, both over
+`motion.duration-focus-move`, and the composer's placeholder types the
+example questions (Components: Composer). Under reduced motion everything
+appears at once, sharp and still.
 
-Behind the empty state,
-an invisible lattice of rounded cells lights up in `primary` hairlines
-(1px in light, 0.5px in dark) around the pointer and fades out after it leaves; a click sends a ring of
-lit cells outward. Nothing is drawn until the pointer moves; no lit cell
-is drawn over the headline block or the composer (with a small margin
-around them), it never blocks the content above it, and it is off under
-reduced motion.
+Behind the empty state, an invisible lattice of rounded cells lights up in
+`primary` hairlines (1px in light, 0.5px in dark, where mint on near-black
+reads stronger) around the pointer and fades out
+after it leaves; a click sends a ring of lit cells outward. Nothing is
+drawn until the pointer moves; no lit cell is drawn over the headline block
+or the composer (with a small margin around them), it never blocks the
+content above it, and it is off under reduced motion.
 
 ## Elevation & Depth
 
 Depth is tonal first: `surface` → `surface-container-lowest` →
 `surface-container` → `surface-container-high`. Shadows exist in three
-places only: floating input containers use raised
-(`0 0.25rem 1.5rem rgba(0, 0, 0, 0.10)`), menus use overlay
-(`0 0.5rem 2rem rgba(0, 0, 0, 0.10)`), and the file card uses soft
-(`0 0.125rem 0.75rem rgba(0, 0, 0, 0.04)`), which it loses while pressed,
-so the press reads as the card meeting the page. In dark the same shadows
-use opacity 0.5 (raised), 0.6 (overlay) and 0.35 (soft), since the light
-values are invisible on dark surfaces. The sticky header casts no shadow and has no border: a 2rem
-gradient from `surface` to transparent below it fades the conversation out
-as it passes underneath.
+places only, each a black shadow at the opacity its token gives:
+floating input containers use `shadow.raised`, menus use
+`shadow.overlay`, and the file card uses `shadow.soft`, which it
+loses while pressed, so the press reads as the card meeting the page. Each
+shadow is stronger in the dark theme, since the light opacities are
+invisible on dark surfaces. The sticky header casts no shadow and has no
+border: a 2rem gradient from `surface` to transparent below it fades the
+conversation out as it passes underneath.
 
 ## Shapes
 
 Soft, with pill-shaped actions. Buttons use `rounded.full`. The largest
 floating container and the question use `rounded.xl`; menus `rounded.lg`;
 inputs, containers and tooltips `rounded.md`; menu rows and small controls
-`rounded.sm`. Links are plain text
-with an underline, never chips.
+`rounded.sm`. Links are plain text with an underline, never chips.
 
 ## Components
 
-Components are styled with these tokens only; which libraries they use and
-how states are selected is in `AGENTS.md`, Conventions. Icons are 1rem in
+Each component token above names the roles a component reads; the code
+styles the component with those roles (a recipe cites its tokens, and the
+lint holds the classes to them). Sizes that belong to one component are
+stated here and live in its code. Which libraries components use and how
+states are selected is in `src/components/README.md`. Icons are 1rem in
 text and in `xs` buttons, 1.25rem in other buttons.
 
 - **Logo:** the mark is "CV" in `mark` on a `primary` square of 1.75rem,
@@ -483,8 +497,8 @@ viewport, never under 30rem. Below `lg` it fills the
 - **Answer views:** the data under an answer, drawn from the CVs rather
   than written by the model; one per answer. The comparison and the
   profile are unboxed like the text; the candidate list sits on a panel.
-  - **Candidate list:** a panel (`candidate-list`: `surface-container-low`
-    at 60% over the page, a shade lighter than the low surface itself;
+  - **Candidate list:** a panel (`candidate-list`: `surface-panel`, a
+    shade lighter than the low surface itself;
     `rounded.md`, padded `spacing.base` × 4) that holds the whole answer,
     so its rows read as one group apart from the conversation and the
     white file cards read as files on it: an opening sentence in `body-md`
@@ -542,8 +556,8 @@ viewport, never under 30rem. Below `lg` it fills the
   Under reduced motion nothing blurs or moves. 3rem below the headline the
   composer, its placeholder typing the example questions in turn
   (Composer); 1.5rem under the composer
-  the CV count as a quiet label: `label-md` in capitals, letter-spaced as
-  `label-sm`, in `on-surface-variant` at 70%, "30 CVs TO REVIEW" with the
+  the CV count as a quiet label (`cv-count`): `label-md` in capitals,
+  letter-spaced as `label-sm`, in `on-surface-subtle`, "30 CVs TO REVIEW" with the
   s of CVs small (1 CV in the singular). No suggested-question buttons.
 - **States:** an error is a single line of text with a small leading icon
   in `error` and a Retry action. No match, not enough information and
@@ -563,17 +577,18 @@ viewport, never under 30rem. Below `lg` it fills the
 ## Do's and Don'ts
 
 - Do keep solid mint (`primary`) for interaction, the logo mark and the PDF
-  icon's badge only; if
-  more than one solid mint element competes for attention, something is
-  wrong. The mint tint (`primary-container`) marks the recruiter's question
-  only.
+  icon's badge only; if more than one solid mint element competes for
+  attention, something is wrong. The mint tint (`primary-container`) marks
+  the recruiter's question only.
 - Do use a tonal step before a border, and a border before a shadow.
 - Don't render states as filled or bordered boxes.
 - Don't box answer text; only the question sits on a tint, and only a
-  candidate list sits on a grey panel. No gradients, emoji or decorative
+  candidate list sits on a panel. No gradients, emoji or decorative
   illustration.
 - Don't wrap content in cards; whitespace is the container. The file card
   is the exception: it is the file, not a container for content.
-- Every colour, size and radius on screen traces to a token in this file.
+- Every colour, size and radius on screen traces to a token in `tokens/`;
+  code never reads the palette, and never makes a colour by opacity: a new
+  tint is a derived role in the tokens first.
 - Don't add a second accent for any purpose.
 - Don't use weights above 500 for running text.

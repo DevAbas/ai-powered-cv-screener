@@ -7,8 +7,8 @@ export const tooltipSlotRecipe = defineSlotRecipe({
     root: "relative inline-flex",
     content: [
       "pointer-events-none absolute z-20 w-max max-w-xs px-2.5 py-1.5",
-      "rounded-md bg-inverse-surface text-label-md leading-label-md font-(weight:--font-weight-label-md) text-inverse-on-surface",
-      "transition-opacity duration-150 ease-decelerate",
+      "rounded-md bg-inverse-surface text-label-md text-inverse-on-surface",
+      "transition-opacity duration-(--motion-duration-short) ease-decelerate",
     ],
   },
   variants: {

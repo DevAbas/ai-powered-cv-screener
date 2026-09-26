@@ -64,7 +64,7 @@ export function CvPreview({ candidateId, name, page, href, onClose, onResize, cl
       <ResizeHandle {...panel.handleProps} className="hidden lg:flex" />
       <header className="flex h-16 shrink-0 items-center gap-2 border-b border-outline px-4">
         <PdfIcon aria-hidden className="size-5 text-on-surface" />
-        <h2 className="min-w-0 flex-1 truncate text-label-lg leading-label-lg font-(weight:--font-weight-label-lg) text-on-surface">{fileName}</h2>
+        <h2 className="min-w-0 flex-1 truncate text-label-lg text-on-surface">{fileName}</h2>
         {/* Each label repeats the button's name, so the trigger props are not spread. */}
         <Tooltip content="Download CV" side="bottom">
           {() => (

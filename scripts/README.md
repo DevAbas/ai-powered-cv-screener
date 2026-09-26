@@ -46,19 +46,41 @@ Each folder of `data/` has one owner:
 | `data/cvs/<id>.pdf` | The CVs | The CV route and the component previews |
 | `data/eval/` | Evaluation reports | Nobody at run time |
 
+## design-tokens/
+
+`npm run design:export`. The design tokens in `tokens/` (W3C Design Tokens,
+DTCG 2025.10) are the source of every value; `DESIGN.md` is the source of
+the rules and holds none. `tokenSource.ts` reads the tokens through
+`tokens/design.resolver.json` with `@terrazzo/parser` (which checks the
+format and resolves each theme) and checks the tiers DTCG leaves to a team:
+the palette holds values only, a colour role points to the palette or is
+derived by the rule on its token, both themes define the same roles.
+`derivedColors.ts` applies a derived role's rule with lightningcss.
+`designDocument.ts` checks `DESIGN.md`'s `imports:` and components contract
+against the tokens and composes, in memory only, the document
+`@google/design.md`'s linter reads. The CLI then runs Terrazzo
+(`terrazzo.config.ts`), which builds `src/styles/tokens.generated.css` and,
+from `src/styles/theme.template.css`, `theme.generated.css`; `--check`
+compares both with a fresh build. No `package.json`: `cli.mts` is ESM by its
+extension.
+
 ## design-lint/
 
-`npm run design:lint`. Lints `DESIGN.md` in light, checks that
-`src/styles/theme.css` gives every colour role a dark value, then lints the
-document again with the dark values substituted. No `package.json`:
-`cli.mts` is ESM by its extension and `core.ts` has no dependencies.
+`npm run design:lint`. Checks the tokens' tiers and `DESIGN.md`'s
+components contract, then runs the `@google/design.md` linter on the
+document `designDocument.ts` composes with each theme's values, for
+references and contrast. Only the findings the design system means (a
+palette entry no component reads directly) are let through. No
+`package.json`: `cli.mts` is ESM by its extension and `core.ts` has no
+dependencies.
 
 The same folder holds the design rules for the code: `plugin.mjs` is an
 ESLint plugin, one rule per file in `rules/`, that `eslint.config.mjs`
 applies to `src` and `.storybook` as warnings (`npm run lint`) or errors
 (`npm run lint:strict`, the hooks, CI). `designTokens.mjs` reads the token
-names from `tokens.generated.css`, `theme.css` and `DESIGN.md`'s front
-matter, so the rules accept exactly what `DESIGN.md` exports. The plugin and
-the rules are plain `.mjs` because ESLint loads its config without a
-TypeScript loader; their tests, in TypeScript, run ESLint's `RuleTester`
-under Vitest. What each rule checks is in `src/components/README.md`.
+names from `src/styles/theme.generated.css` and the components contract
+from `DESIGN.md`, so the rules accept exactly what the tokens define. The
+plugin and the rules are plain `.mjs` because ESLint loads its config
+without a TypeScript loader; their tests, in TypeScript, run ESLint's
+`RuleTester` under Vitest. What each rule checks is in
+`src/components/README.md`.

@@ -13,7 +13,7 @@ function Area({ label, children }: { label?: string; children: ReactNode }) {
   return (
     <div className="relative isolate flex h-80 w-full items-center justify-center rounded-md bg-surface">
       {children}
-      {label && <span className="text-body-sm leading-body-sm text-on-surface-variant">{label}</span>}
+      {label && <span className="text-body-sm text-on-surface-variant">{label}</span>}
     </div>
   );
 }

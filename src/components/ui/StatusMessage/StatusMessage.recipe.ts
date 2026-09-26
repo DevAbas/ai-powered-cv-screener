@@ -5,7 +5,7 @@ import { capHeightBox, defineSlotRecipe } from "@/components/ui/recipe";
 // only on the warning and error icons; never a box.
 export const statusMessageSlotRecipe = defineSlotRecipe({
   slots: {
-    root: "flex items-center gap-2 text-body-md leading-body-md text-on-surface",
+    root: "flex items-center gap-2 text-body-md text-on-surface",
     indicator: "size-4 shrink-0",
     text: capHeightBox,
   },

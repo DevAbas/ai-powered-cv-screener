@@ -4,7 +4,7 @@ import { defineRecipe, focusVisibleRing } from "@/components/ui/recipe";
 // field.
 export const textareaRecipe = defineRecipe({
   base: [
-    "block w-full min-w-0 resize-none wrap-anywhere text-body-lg leading-body-lg text-on-surface",
+    "block w-full min-w-0 resize-none wrap-anywhere text-body-lg text-on-surface",
     "placeholder:text-outline-variant disabled:cursor-not-allowed",
   ],
   variants: {

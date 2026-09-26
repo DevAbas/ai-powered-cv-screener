@@ -123,11 +123,21 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 - **Evaluation lives in the code.** The test questions carry their expected
   answers as rules over the seed data, so they still work after the pool
   is regenerated.
-- **The design system is enforced, not described.** `DESIGN.md` is the only
-  source of colour, type, radius, shadow and motion. Its tokens are exported
-  to Tailwind and the palette reset removes everything else; a lint that
-  reads the same export fails on any class outside it, as warnings for a
-  person and errors for an agent and CI, and a hook runs it on every edit.
+- **The design system is enforced, not described.** It has two sources of
+  truth. The values are design tokens in `tokens/`, in the W3C Design
+  Tokens format (DTCG 2025.10), in three tiers (a palette only roles read;
+  roles, with a value per theme where they change; the components'
+  contract), orchestrated by a resolver with a light and a dark theme.
+  The rules are `DESIGN.md`, which holds no values and names tokens by
+  their ids: DTCG is the interchange standard every token tool reads, and
+  the design.md format imports tokens rather than duplicating them
+  (google-labs-code/design.md#13). Terrazzo builds the Tailwind theme from
+  the tokens; the palette reset removes Tailwind's own; a lint fails on any
+  class outside the tokens, any colour made by opacity and any read of the
+  palette, and checks each recipe against the roles its component token
+  names, as warnings for a person and errors for an agent and CI. Hover,
+  pressed and the other derived roles are a plain colour per theme, their
+  rule kept on the token, as in every major design system.
 
 ## Stack
 
@@ -138,7 +148,7 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 | Schemas | Zod 4, one contract per area in [src/contracts](src/contracts) |
 | Search | MiniSearch for BM25, Pinecone for vectors, reciprocal rank fusion |
 | PDF | pdf.js for text and the in-app preview; react-pdf to render the sample pool |
-| Styling | Tailwind 4 with tokens generated from [DESIGN.md](DESIGN.md), tailwind-variants, Headless UI |
+| Styling | Tailwind 4 with a theme Terrazzo builds from the design tokens in [tokens/](tokens), tailwind-variants, Headless UI |
 | Tooling | Vitest, Storybook 10, ESLint, tsx for the scripts |
 | Runtime | Node 22, from `.nvmrc` |
 
@@ -176,17 +186,19 @@ does, and cannot drift from the design system unnoticed.
   `src/app` or `.storybook` is touched.
 - The hooks in [.claude/settings.json](.claude/settings.json) enforce what
   the skill describes: every edited file is linted with the design rules as
-  errors, the generated token file cannot be edited, and a commit runs the
-  strict lint and the typecheck first. `.githooks/pre-commit` is the same
-  gate for a person. The list is in `AGENTS.md`, Harness.
+  errors, the generated stylesheets cannot be edited, and a commit runs the
+  strict lint, the typecheck and the design checks first. `.githooks/pre-commit`
+  is the same gate for a person. The list is in `AGENTS.md`, Harness.
 - The design rules themselves are in `scripts/design-lint`, described in
-  [src/components/README.md](src/components/README.md).
+  [src/components/README.md](src/components/README.md); the tokens' pipeline
+  is in `scripts/design-tokens`.
 
 ## Repository
 
 ```
 docs/PRD.md          what we build and why
-DESIGN.md            the design system: tokens and visual rules
+DESIGN.md            the design system's rules: what each token means and which roles each component reads
+tokens/              the design tokens: every value, as W3C Design Tokens with a light and a dark theme
 AGENTS.md            engineering conventions and the full command list
 src/app/             routes: the screen, the ask API, the CV file API
 src/components/      UI, with its own README on how components are built
@@ -194,7 +206,7 @@ src/hooks/           React glue, each hook with its own logic beside it
 src/contracts/       the Zod schemas shared by the client, the server and the scripts
 src/lib/             the domain: screening, candidates, conversation, models, search
 src/mocks/           test doubles and the sample index
-scripts/             the pipelines, with their own README: generation, ingestion, evaluation, design lint
+scripts/             the pipelines, with their own README: generation, ingestion, evaluation, design tokens, design lint
 data/                the pool: generation seeds and photos, the index, the CVs, and the evaluation reports once npm run eval has run
 .claude/             the agent's skill for UI work and the hooks that run the lint on every edit and before a commit
 .githooks/           the same commit gate for a person, installed by npm run prepare

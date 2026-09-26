@@ -37,7 +37,7 @@ export type ColorModeButtonProps = Omit<IconButtonProps, "aria-label" | "childre
  * with a slight overshoot. Both icons are always present, one on top of the
  * other, so the `dark:` variant does the swap and the server render matches.
  */
-const TURN = "col-start-1 row-start-1 size-6 motion-safe:transition-[rotate,scale,opacity] motion-safe:duration-(--color-mode-turn) motion-safe:ease-overshoot";
+const TURN = "col-start-1 row-start-1 size-6 motion-safe:transition-[rotate,scale,opacity] motion-safe:duration-(--motion-duration-color-mode-turn) motion-safe:ease-overshoot";
 
 /** Moon in light mode, Sun in dark mode, turning from one to the other; a press plays the switch click. */
 export function ColorModeButton({ variant = "ghost", ...rest }: ColorModeButtonProps) {

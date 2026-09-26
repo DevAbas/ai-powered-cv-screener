@@ -126,7 +126,7 @@ export function PdfPages({ href, page }: PdfPagesProps) {
       {status !== "ready" && (
         <div className="absolute inset-0 flex items-center justify-center">
           {status === "loading" ? (
-            <div className="flex items-center gap-2 text-body-sm leading-body-sm text-on-surface-variant">
+            <div className="flex items-center gap-2 text-body-sm text-on-surface-variant">
               <LoaderCircle aria-hidden className="size-5 shrink-0 motion-safe:animate-spin" />
               <span role="status" className={capHeightBox}>
                 Loading the CV…

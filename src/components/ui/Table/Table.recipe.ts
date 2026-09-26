@@ -9,9 +9,9 @@ export const tableSlotRecipe = defineSlotRecipe({
     header: "",
     body: "",
     row: "border-b border-outline last:border-b-0 [thead_&]:border-b",
-    columnHeader: "py-2 pr-4 align-bottom text-label-sm leading-label-sm tracking-label-sm font-(weight:--font-weight-label-sm) text-on-surface-variant uppercase",
+    columnHeader: "py-2 pr-4 align-bottom text-label-sm text-on-surface-variant uppercase",
     // A row's header reads as a header too: a criterion in a comparison.
-    rowHeader: "py-2 pr-4 align-top text-label-sm leading-body-md tracking-label-sm font-(weight:--font-weight-label-sm) text-on-surface-variant uppercase",
-    cell: "py-2 pr-4 align-top text-body-md leading-body-md font-(weight:--font-weight-body-md) text-on-surface",
+    rowHeader: "py-2 pr-4 align-top text-label-sm leading-(--text-body-md--line-height) text-on-surface-variant uppercase",
+    cell: "py-2 pr-4 align-top text-body-md text-on-surface",
   },
 });

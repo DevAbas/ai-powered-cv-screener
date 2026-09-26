@@ -98,7 +98,7 @@ export function ChatScreen({ pool, sourceHref = cvSourceHref, transport }: ChatS
               <ChatEmptyState ref={emptyStateText} />
               {/* Third in the entrance (DESIGN.md, Layout: motion); it takes input from the first frame. */}
               <div ref={emptyStateComposer} className="flex w-full max-w-composer flex-col gap-6">
-                <div className="motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--empty-state-word-delay)+var(--empty-state-stagger)*2)]">{composer(EXAMPLE_QUESTIONS)}</div>
+                <div className="motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--motion-delay-last-word)+var(--motion-stagger-entrance)*2)]">{composer(EXAMPLE_QUESTIONS)}</div>
                 <PoolCount poolSize={pool.length} />
               </div>
             </div>

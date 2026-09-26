@@ -68,7 +68,7 @@ export function ChatEmptyState({ ref }: ChatEmptyStateProps) {
       <h2
         ref={headline}
         aria-label="Find the right candidates"
-        className="relative inline-flex max-w-full cursor-default flex-wrap items-baseline justify-center gap-x-5 text-display leading-display tracking-display font-(weight:--font-weight-display) text-on-surface"
+        className="relative inline-flex max-w-full cursor-default flex-wrap items-baseline justify-center gap-x-5 text-display text-on-surface"
         onPointerLeave={() => setHovered(null)}
         // The entrance moves the words by transform, which no observer sees: once a word's rise ends, the frame is measured again.
         onAnimationEnd={measure}
@@ -82,12 +82,12 @@ export function ChatEmptyState({ ref }: ChatEmptyStateProps) {
             aria-hidden
             onPointerEnter={() => setHovered(i)}
             className={cx(
-              "inline-block motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--empty-state-word-stagger)*var(--word-index))]",
+              "inline-block motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--motion-stagger-entrance-word)*var(--word-index))]",
               // DESIGN.md, Empty state: the leading words in `display-light`; "Candidates" keeps `display`.
-              i < LAST && "font-display-light font-(weight:--font-weight-display-light)",
+              i < LAST && "text-display-light font-display-light",
               // DESIGN.md, Empty state: the words not in focus blur softly; the focused one is sharp.
-              "motion-safe:transition-[filter] motion-safe:duration-(--empty-state-blur-fade) motion-safe:ease-standard",
-              focused === i ? "blur-none" : "motion-safe:blur-(--empty-state-blur)",
+              "motion-safe:transition-[filter] motion-safe:duration-(--motion-duration-focus-move) motion-safe:ease-standard",
+              focused === i ? "blur-none" : "motion-safe:blur-(--motion-blur-out-of-focus)",
             )}
             style={{ "--word-index": i } as CSSProperties}
           >
@@ -109,8 +109,8 @@ function FocusFrame({ box }: { box: Box | null }) {
     <div
       aria-hidden
       className={cx(
-        "pointer-events-none absolute top-0 left-0 motion-safe:transition-[transform,width,height] motion-safe:duration-(--empty-state-frame-move) motion-safe:ease-standard",
-        "motion-safe:animate-fade-in motion-safe:[animation-delay:var(--empty-state-word-delay)]",
+        "pointer-events-none absolute top-0 left-0 motion-safe:transition-[transform,width,height] motion-safe:duration-(--motion-duration-focus-move) motion-safe:ease-standard",
+        "motion-safe:animate-fade-in motion-safe:[animation-delay:var(--motion-delay-last-word)]",
         !box && "invisible",
       )}
       style={box ? { transform: `translate(${box.x}px, ${box.y}px)`, width: box.width, height: box.height } : undefined}

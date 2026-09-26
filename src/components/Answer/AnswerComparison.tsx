@@ -52,7 +52,7 @@ export function AnswerComparison({ view, sourceHref }: AnswerComparisonProps) {
           {view.candidates.map((c) => (
             <Table.ColumnHeader key={c.candidateId}>
               <span className="flex flex-col items-start gap-1.5 tracking-normal normal-case">
-                <span className="text-label-lg leading-label-lg font-(weight:--font-weight-label-lg) text-on-surface">{c.profile.name}</span>
+                <span className="text-label-lg text-on-surface">{c.profile.name}</span>
                 <CvSourceLink compact candidateId={c.candidateId} name={c.profile.name} page={c.page} sourceHref={sourceHref} />
               </span>
             </Table.ColumnHeader>

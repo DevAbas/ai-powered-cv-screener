@@ -18,7 +18,7 @@ export function Logo({ className, ...rest }: LogoProps) {
         DESIGN.md `logo-wordmark`: on-surface, wordmark (uppercase, 600, letter-spaced).
         Trimmed to its capitals, so they centre on the mark rather than the line box.
       */}
-      <span className={cx("text-wordmark leading-wordmark tracking-wordmark font-(weight:--font-weight-wordmark) text-on-surface uppercase", capHeightBox)}>
+      <span className={cx("text-wordmark text-on-surface uppercase", capHeightBox)}>
         Screener
       </span>
     </span>

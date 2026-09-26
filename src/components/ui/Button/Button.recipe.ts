@@ -7,7 +7,7 @@ import { defineRecipe, focusVisibleRing } from "@/components/ui/recipe";
 export const buttonRecipe = defineRecipe({
   base: [
     "inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap select-none",
-    "rounded-full text-label-md leading-label-md font-(weight:--font-weight-label-md) transition-colors",
+    "rounded-full text-label-md transition-colors",
     "disabled:cursor-not-allowed [&_svg]:shrink-0",
     focusVisibleRing,
   ],

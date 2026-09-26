@@ -22,7 +22,7 @@ export function ResizeHandle({ className, ...rest }: ResizeHandleProps) {
         className,
       )}
     >
-      {/* DESIGN.md `divider` at rest, `icon-disabled` (outline-variant) on hover and while dragging */}
+      {/* DESIGN.md, CV preview: a `divider` line at rest that fills to `outline-variant` on hover and while dragging */}
       <div className="h-full w-px bg-outline transition-colors group-hover:bg-outline-variant group-active:bg-outline-variant" />
     </div>
   );

@@ -22,8 +22,8 @@ export function StatusScreen({ icon: Icon, tone = "neutral", title, children, ac
     <main className="flex min-h-dvh flex-col items-center justify-center gap-3 px-gutter py-16 text-center">
       {/* DESIGN.md `icon`, `state-icon-error` */}
       <Icon aria-hidden className={cx("size-6", tone === "error" ? "text-error" : "text-on-surface-variant")} />
-      <h1 className="text-headline-lg leading-headline-lg tracking-headline-lg font-(weight:--font-weight-headline-lg) text-on-surface">{title}</h1>
-      <p className="max-w-reading text-body-md leading-body-md text-on-surface-variant">{children}</p>
+      <h1 className="text-headline-lg text-on-surface">{title}</h1>
+      <p className="max-w-reading text-body-md text-on-surface-variant">{children}</p>
       {action && <div className="mt-3">{action}</div>}
     </main>
   );

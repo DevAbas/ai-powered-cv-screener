@@ -1,0 +1,202 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "The text styles, each one unit of size, line height, weight and letter spacing.",
+  "typography": {
+    "$type": "typography",
+    "headline-lg": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 1.375,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.500}",
+        "lineHeight": 1.3,
+        "letterSpacing": {
+          "value": -0.01375,
+          "unit": "rem"
+        }
+      }
+    },
+    "headline-md": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 1.0625,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.500}",
+        "lineHeight": 1.35,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "rem"
+        }
+      }
+    },
+    "body-lg": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.400}",
+        "lineHeight": 1.5,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "rem"
+        }
+      }
+    },
+    "body-md": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.400}",
+        "lineHeight": 1.5,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "rem"
+        }
+      }
+    },
+    "body-sm": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.400}",
+        "lineHeight": 1.45,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "rem"
+        }
+      }
+    },
+    "label-lg": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.500}",
+        "lineHeight": 1.2,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "rem"
+        }
+      }
+    },
+    "label-md": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 0.8125,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.500}",
+        "lineHeight": 1.2,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "rem"
+        }
+      }
+    },
+    "label-sm": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.500}",
+        "lineHeight": 1.2,
+        "letterSpacing": {
+          "value": 0.0075,
+          "unit": "rem"
+        }
+      }
+    },
+    "name": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 0.9375,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.600}",
+        "lineHeight": 1.2,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "rem"
+        }
+      }
+    },
+    "display": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 5,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.600}",
+        "lineHeight": 1.1,
+        "letterSpacing": {
+          "value": -0.125,
+          "unit": "rem"
+        }
+      }
+    },
+    "display-light": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans-flex}",
+        "fontSize": {
+          "value": 5,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.300}",
+        "lineHeight": 1.1,
+        "letterSpacing": {
+          "value": -0.125,
+          "unit": "rem"
+        }
+      }
+    },
+    "wordmark": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.600}",
+        "lineHeight": 1.2,
+        "letterSpacing": {
+          "value": 0.16,
+          "unit": "rem"
+        }
+      }
+    },
+    "mark": {
+      "$value": {
+        "fontFamily": "{font.family.google-sans}",
+        "fontSize": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "fontWeight": "{font.weight.600}",
+        "lineHeight": 1,
+        "letterSpacing": {
+          "value": 0.0175,
+          "unit": "rem"
+        }
+      }
+    }
+  }
+}

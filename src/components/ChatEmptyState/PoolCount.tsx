@@ -10,7 +10,7 @@ export interface PoolCountProps {
 export function PoolCount({ poolSize }: PoolCountProps) {
   return (
     // Capitals written, not transformed, so the s of "CVs" stays small (DESIGN.md, Empty state).
-    <p className="motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--empty-state-word-delay)+var(--empty-state-stagger)*3)] text-center text-label-md leading-label-md font-(weight:--font-weight-label-md) tracking-label-sm text-on-surface-variant/70">
+    <p className="motion-safe:animate-rise motion-safe:[animation-delay:calc(var(--motion-delay-last-word)+var(--motion-stagger-entrance)*3)] text-center text-label-md tracking-(--text-label-sm--letter-spacing) text-on-surface-subtle">
       {poolSize} {poolSize === 1 ? "CV" : "CVs"} TO REVIEW
     </p>
   );

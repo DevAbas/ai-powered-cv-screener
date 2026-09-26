@@ -38,8 +38,8 @@ function Label({ name, note = "Resume", compact }: { name: string; note?: string
     <>
       {/* DESIGN.md, File card: the PDF icon; its band is primary, the document the text colour; 1rem in a row. */}
       <PdfIcon aria-hidden className={cx("shrink-0 text-on-surface", compact ? "size-4" : "size-5")} />
-      {!compact && <span className="truncate text-label-lg leading-label-lg font-(weight:--font-weight-label-lg) text-on-surface">{name}</span>}
-      <span className="text-body-sm leading-body-sm text-on-surface-variant">{note}</span>
+      {!compact && <span className="truncate text-label-lg text-on-surface">{name}</span>}
+      <span className="text-body-sm text-on-surface-variant">{note}</span>
     </>
   );
 }

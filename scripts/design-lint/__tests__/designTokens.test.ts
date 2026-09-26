@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseDesignFrontMatter, parseThemeTokens } from "../designTokens.mjs";
+import { parseComponents, parseDesignFrontMatter, parseThemeTokens } from "../designTokens.mjs";
 
 describe("parseThemeTokens", () => {
   it("reads every namespace from every @theme block and skips the palette reset", () => {
@@ -33,5 +33,14 @@ describe("parseDesignFrontMatter", () => {
     expect([...sections.get("typography")!]).toEqual(["body-md"]);
     expect([...sections.get("components")!]).toEqual(["button-primary"]);
     expect(sections.has("name")).toBe(false);
+  });
+});
+
+describe("parseComponents", () => {
+  it("reads each component token's references, and nothing after the front matter", () => {
+    const md = ["---", "# A note", "components:", "  button-primary:", '    backgroundColor: "{colors.primary}"', '    typography: "{typography.label-md}"', "  divider:", '    backgroundColor: "{colors.outline}"', "---", "  ghost:", '    textColor: "{colors.x}"'].join("\n");
+    const components = parseComponents(md);
+    expect([...components.keys()]).toEqual(["button-primary", "divider"]);
+    expect(Object.fromEntries(components.get("button-primary")!)).toEqual({ backgroundColor: "colors.primary", typography: "typography.label-md" });
   });
 });

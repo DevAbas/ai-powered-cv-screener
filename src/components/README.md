@@ -61,17 +61,21 @@ export const buttonRecipe = defineRecipe({
 
 The classes in a recipe are token utilities: `bg-surface`,
 `text-on-surface-variant`, `rounded-full`, `text-label-md`. They exist
-because `npm run design:export` generates them from `DESIGN.md` into
-`src/styles/tokens.generated.css`, and `src/styles/palette-reset.css`
-removes Tailwind's own palette so nothing else is available. If a class you
-want does not exist, the token does not exist, and the conversation belongs
-in `DESIGN.md` first.
+because `npm run design:export` builds them from the design tokens in
+`tokens/` into `src/styles/theme.generated.css`, and
+`src/styles/palette-reset.css` removes Tailwind's own palette so nothing
+else is available. A text style is one class: `text-label-md` sets the
+size, line height, weight and letter spacing together. If a class you want
+does not exist, the token does not exist, and the conversation belongs in
+`tokens/` and `DESIGN.md` first.
 
 Every recipe opens with a comment naming, in backticks, the `DESIGN.md`
 component tokens it implements, for example `button-primary`,
 `button-primary-hover`, `button-disabled`. That comment is how a reviewer
 checks the recipe against the design without reading every class, and the
-lint checks that every name in it exists in `DESIGN.md`.
+lint holds it to the design: every name must exist, and the recipe must
+use, as a class, each role its cited tokens name (`button-primary` names
+`color.primary`, so the recipe has `bg-primary`).
 
 We use the lite build of tailwind-variants, which has no tailwind-merge. A
 `className` passed to a component is appended, not merged, so it cannot
@@ -122,7 +126,7 @@ UI's `data-focus`, shown only while `data-modality="keyboard"`, which
 mouse user does not see a keyboard highlight. Enter and leave transitions
 use `data-closed`. The fourth attribute you will meet, `data-theme` on the
 root element, is not a state: it is the colour-mode override that
-`theme.css` reads.
+the Tailwind theme reads.
 
 ## CSS outside recipes
 
@@ -132,11 +136,12 @@ such as the scrollbar. Plain CSS there and in `src/styles` reads tokens as
 variables, `var(--color-surface)`, and never uses `@apply` on a utility
 class.
 
-`src/styles/theme.css` is hand-written. It holds the dark values of every
-colour role and the handful of values `DESIGN.md` states only in prose. It
-changes in the same commit as `DESIGN.md`, so the two never disagree.
-`tokens.generated.css` is never edited by hand; change `DESIGN.md` and run
-the export.
+`src/styles/theme.template.css` is hand-written: the dark variant, the
+keyframes and animations, the font wiring. Terrazzo fills its `@tz` rules
+with each theme's tokens and writes `theme.generated.css`; it also writes
+every token as a `:root` variable into `tokens.generated.css`. Neither
+generated file is edited by hand; change `tokens/` (a value) or the
+template (wiring) and run `npm run design:export`.
 
 ## What the lint enforces
 
@@ -147,10 +152,12 @@ lint:strict`, the hooks and CI report them as errors, so an agent cannot
 pass a lint with a violation in it (`AGENTS.md`, Harness).
 
 - `design/token-classes`: every colour, text, radius, shadow and motion
-  class is a token `DESIGN.md` exports. The rule reads the token names from
-  `tokens.generated.css` and `theme.css`, so `bg-red-500`, `text-[13px]`,
+  class is a design token. The rule reads the token names from
+  `theme.generated.css`, so `bg-red-500`, `text-[13px]`,
   `rounded-[6px]`, `font-bold` and `shadow-lg` fail, and the one way to make
-  a class legal is a token in `DESIGN.md`.
+  a class legal is a token in `tokens/`. A modifier on a token class
+  (`bg-primary/10`) and a read of the palette (`bg-(--palette-mint-9)`) fail
+  too: a new tint is a derived role in the tokens, and code reads roles.
 - `design/no-raw-color`: no hex or colour function with literal channels in
   component source; the dark theme cannot reach a literal.
 - `design/focus-visible-only`: a ring, outline, border or shadow keys off
@@ -158,7 +165,8 @@ pass a lint with a violation in it (`AGENTS.md`, Harness).
 - `design/no-hover-on-disabled`: on a control that can be disabled, `hover:`
   and `active:` are `enabled:hover:` and `enabled:active:`. Autofixable.
 - `design/recipe-cites-tokens`: a recipe's opening comment names `DESIGN.md`
-  and cites real tokens in backticks.
+  and cites real tokens in backticks, and the recipe uses each role its cited
+  component tokens name.
 
 A class list the rules cannot read (built at runtime from non-literal parts)
 is checked only where it is literal; the rules never guess.

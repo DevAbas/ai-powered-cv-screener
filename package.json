@@ -15,7 +15,7 @@
     "eval": "tsx scripts/evaluation/cli.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "design:export": "design.md export --format css-tailwind DESIGN.md > src/styles/tokens.generated.css.tmp && mv src/styles/tokens.generated.css.tmp src/styles/tokens.generated.css",
+    "design:export": "tsx scripts/design-tokens/cli.mts",
     "design:lint": "tsx scripts/design-lint/cli.mts",
     "prepare": "git config core.hooksPath .githooks || true"
   },
@@ -44,18 +44,25 @@
     "@storybook/addon-themes": "^10.6.0",
     "@storybook/nextjs-vite": "^10.6.0",
     "@tailwindcss/postcss": "^4",
+    "@terrazzo/cli": "^2.7.1",
+    "@terrazzo/parser": "^2.7.1",
+    "@terrazzo/plugin-css": "^2.7.1",
+    "@terrazzo/plugin-tailwind": "^2.7.1",
+    "@terrazzo/token-tools": "^2.7.1",
     "@types/node": "^22.20.4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
     "eslint-plugin-storybook": "^10.6.0",
+    "lightningcss": "^1.32.0",
     "storybook": "^10.6.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5",
     "vite": "^8.3.0",
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.1",
+    "yaml": "^2.9.1"
   },
   "engines": {
     "node": ">=22.13"

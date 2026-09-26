@@ -1,0 +1,13 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Named spacings.",
+  "spacing": {
+    "$type": "dimension",
+    "gutter": {
+      "$value": {
+        "value": 1.25,
+        "unit": "rem"
+      }
+    }
+  }
+}

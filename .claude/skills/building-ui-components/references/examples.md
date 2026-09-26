@@ -10,7 +10,7 @@ component and the story of the example; copy the shape, not the content.
 | A table | `src/components/ui/Table/` (parts exported by full name and as a namespace) |
 | A state line: no match, error, out of scope | `src/components/ui/StatusMessage/` (icon per status, `sr-only` label, `role="alert"` on error) |
 | A tooltip or small hand-written behaviour | `src/components/ui/Tooltip/` (the one primitive Headless UI does not provide) |
-| A loading or progress line with motion | `src/components/ui/ThoughtLine/` (theme.css animations, `elapsedTime.ts` pure logic beside it) |
+| A loading or progress line with motion | `src/components/ui/ThoughtLine/` (the template's animations, `elapsedTime.ts` pure logic beside it) |
 | A product view over answer data | `src/components/Answer/AnswerCandidates.tsx` (typed `AnswerView` from `@/contracts`, show-all fold under `motion-safe:`, compact file card) |
 | A one-off part used by one component | `src/components/ChatExchange/QuestionBubble.tsx` (lives in the parent's folder with its own story) |
 | A resizable or measured panel | `src/hooks/useResizablePanel/` (`panelWidth.ts` pure logic with tests, the hook binds it) |

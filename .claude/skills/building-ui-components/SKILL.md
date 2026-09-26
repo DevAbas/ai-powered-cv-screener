@@ -6,9 +6,10 @@ paths: src/components/**,src/hooks/**,src/app/**,.storybook/**
 
 # Building UI in this codebase
 
-The design system is one document, `DESIGN.md`, and the code must trace to
-it: every colour, size and radius on screen is a token, every component
-follows one shape. Lint rules and hooks catch a class outside the tokens
+The design system has two sources: the design tokens in `tokens/` (every
+value) and `DESIGN.md` (the rules: what each token means, which roles each
+component reads, and why). The code must trace to both: every colour, size
+and radius on screen is a token, every component follows one shape. Lint rules and hooks catch a class outside the tokens
 after the fact; this procedure keeps the work inside them from the start,
 so the lint has nothing to say. Each fact below lives in one owning file;
 this skill points at it and never restates it.
@@ -47,7 +48,7 @@ this skill points at it and never restates it.
 - [ ] Recipe first: defineRecipe / defineSlotRecipe, token utilities only, opening comment naming the DESIGN.md tokens in backticks
 - [ ] Props: extend the element's or Headless UI's props minus what the component decides, plus RecipeVariantProps; className passed last, layout classes only
 - [ ] States through real states: enabled:hover:, enabled:active:, focus-visible: (focusVisibleRing), disabled:, aria-expanded:, data-closed; keyboard-only affordances behind useInteractionModality
-- [ ] Motion: functional, 150–200 ms, tokens from theme.css; nothing decorative outside the empty state; off under usePrefersReducedMotion
+- [ ] Motion: functional, `motion.duration-short` to `-medium`, easings and durations from the motion tokens; nothing decorative outside the empty state; off under usePrefersReducedMotion
 - [ ] Accessibility: the element that has the semantics (button, not div); aria-hidden on decorative icons; a screen-reader label for a state shown by an icon; role="alert" on an error
 - [ ] Stories: title from the folder (UI / Name, Chat / Name); Basic plus a variant table built from the recipe's own variants object; product stories use src/mocks
 - [ ] index.ts lists exports by name, values and types
@@ -59,16 +60,16 @@ before the component is wired into a screen.
 
 ## What the tokens allow
 
-Colour, text style, line height, letter spacing, weight, radius, shadow,
-easing and animation come only from the exported tokens (`bg-surface`,
-`text-body-md`, `rounded-md`, `shadow-soft`, `ease-decelerate`,
-`font-(weight:--font-weight-label-md)`). Layout numbers (`p-4`, `gap-2`,
-`w-full`, `grid-rows-[1fr]`) are the code's. A value `DESIGN.md` states only
-in prose lives in `src/styles/theme.css` and is read as a variable
-(`min-h-[calc(100dvh-var(--composer-height))]`). Tailwind's own palette and
-scale (`bg-red-500`, `text-xl`, `font-bold`, `shadow-lg`, `rounded-2xl`) do
-not exist here; a missing token is a `DESIGN.md` conversation, not an
-arbitrary value.
+Colour, text style, radius, shadow, easing, duration and animation come
+only from the design tokens (`bg-surface`, `text-body-md`, `rounded-md`,
+`shadow-soft`, `ease-decelerate`, `duration-(--motion-duration-short)`). A
+text style is one class; a documented override reads the other style's part
+(`leading-(--text-label-lg--line-height)`). No opacity modifier on a token
+(`bg-primary/10`) and no palette variable (`--palette-*`): code reads roles.
+Layout numbers (`p-4`, `gap-2`, `w-full`, `grid-rows-[1fr]`) are the code's.
+Tailwind's own palette and scale (`bg-red-500`, `text-xl`, `font-bold`,
+`shadow-lg`, `rounded-2xl`) do not exist here; a missing token is a
+`tokens/` and `DESIGN.md` conversation, not an arbitrary value.
 
 ## Close the loop
 
@@ -87,9 +88,9 @@ npm run storybook
 ```
 
 Open the new story in light and in dark and read the accessibility panel: it
-fails the story on a violation. For a change to `DESIGN.md` or `theme.css`,
-also `npm run design:lint` and `npm run design:export`; never edit
-`tokens.generated.css`. The hooks in `.claude/settings.json` run the strict
+fails the story on a violation. For a change to `tokens/`, `DESIGN.md` or
+`src/styles/theme.template.css`, also `npm run design:export` and
+`npm run design:lint`; never edit a generated stylesheet. The hooks in `.claude/settings.json` run the strict
 lint on every edited file and before a commit, so an error here is one you
 would have met anyway.
 

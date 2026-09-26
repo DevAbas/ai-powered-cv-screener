@@ -1,0 +1,71 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/resolver.json",
+  "name": "CV Screener",
+  "description": "A quiet monochrome recruiting tool with a single mint accent. Three tiers of tokens, palette, roles and components; code reads the roles, never the palette.",
+  "version": "2025.10",
+  "sets": {
+    "foundation": {
+      "description": "The palette and raw values: the same in every theme.",
+      "sources": [
+        {
+          "$ref": "foundation/colors.tokens.json"
+        },
+        {
+          "$ref": "foundation/spacing.tokens.json"
+        },
+        {
+          "$ref": "foundation/typography.tokens.json"
+        },
+        {
+          "$ref": "foundation/motion.tokens.json"
+        }
+      ]
+    },
+    "semantic": {
+      "description": "Roles that are the same in every theme.",
+      "sources": [
+        {
+          "$ref": "semantic/typography.tokens.json"
+        },
+        {
+          "$ref": "semantic/spacing.tokens.json"
+        },
+        {
+          "$ref": "semantic/radius.tokens.json"
+        },
+        {
+          "$ref": "semantic/layout.tokens.json"
+        }
+      ]
+    }
+  },
+  "modifiers": {
+    "theme": {
+      "description": "Colour theme. Only colours and shadows change.",
+      "contexts": {
+        "light": [
+          {
+            "$ref": "themes/light.tokens.json"
+          }
+        ],
+        "dark": [
+          {
+            "$ref": "themes/dark.tokens.json"
+          }
+        ]
+      },
+      "default": "light"
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/foundation"
+    },
+    {
+      "$ref": "#/sets/semantic"
+    },
+    {
+      "$ref": "#/modifiers/theme"
+    }
+  ]
+}

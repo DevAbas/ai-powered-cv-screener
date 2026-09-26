@@ -74,7 +74,7 @@ export function ChatExchange({ question, status, steps, slow, text, view, matche
         written && <AnswerText text={written} />
       )}
       {answered && view && <AnswerView view={view} sourceHref={sourceHref} />}
-      {status === "stopped" && <p className="text-body-sm leading-body-sm text-on-surface-variant">Stopped.</p>}
+      {status === "stopped" && <p className="text-body-sm text-on-surface-variant">Stopped.</p>}
       {status === "error" && error && <AnswerError message={error.message} retryable={error.retryable} onRetry={onRetry} />}
     </article>
   );

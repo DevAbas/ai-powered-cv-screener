@@ -12,9 +12,9 @@ export interface AnswerTextProps {
   text: string;
 }
 
-const BODY = "text-body-md leading-body-md text-on-surface";
+const BODY = "text-body-md text-on-surface";
 const LIST_ITEM = `${BODY} marker:text-on-surface-variant`;
-const HEADING = "text-headline-md leading-headline-md font-(weight:--font-weight-headline-md) text-on-surface";
+const HEADING = "text-headline-md text-on-surface";
 
 // react-markdown passes its syntax-tree `node` to every component; only the children are rendered.
 const COMPONENTS: Components = {
@@ -26,7 +26,7 @@ const COMPONENTS: Components = {
     </ol>
   ),
   li: ({ children }) => <li className={LIST_ITEM}>{children}</li>,
-  strong: ({ children }) => <strong className="font-(weight:--font-weight-label-lg) text-on-surface">{children}</strong>,
+  strong: ({ children }) => <strong className="font-(weight:--text-label-lg--font-weight) text-on-surface">{children}</strong>,
   em: ({ children }) => <em className="not-italic">{children}</em>,
   h1: ({ children }) => <p className={HEADING}>{children}</p>,
   h2: ({ children }) => <p className={HEADING}>{children}</p>,
