@@ -9,6 +9,10 @@ import { loadPool } from "@/lib/candidates/candidatePool";
 // progress, the answer text, then one answer or error.
 
 export const runtime = "nodejs";
+// The answer loop's 120 s total (answerLimits.ts), its one retry and the
+// fallback model can pass 240 s; 300 s is Vercel's maximum on Hobby
+// (vercel.com/docs/functions/configuring-functions/duration).
+export const maxDuration = 300;
 
 const NDJSON = { "content-type": "application/x-ndjson; charset=utf-8", "cache-control": "no-store" };
 

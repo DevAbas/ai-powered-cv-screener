@@ -230,6 +230,22 @@ vectors are not: `npm run index -- --step vectors` writes them, and creates
 the Pinecone index when it does not exist yet. Only the photo step of the
 generator needs the Cloudflare account id and token as well.
 
+### Deploying
+
+The app runs on Vercel, imported from its GitHub repository: a push to
+`main` deploys production, any other branch a preview. Vercel detects
+Next.js and runs `npm run build`; `engines` in `package.json` picks Node 22,
+as `.nvmrc` does locally.
+
+Set Deployment Protection to All Deployments with Vercel Authentication
+before the first deploy, in the team's defaults or the project's settings:
+only members of the Vercel team open the app, so nobody else spends the
+API credits (PRD, Non-goals). The project takes the runtime variables of
+`.env.local` for Production and Preview: the Gemini key, `ANSWER_MODEL`,
+`EMBEDDING_MODEL`, `PINECONE_API_KEY` and `PINECONE_INDEX`. The vectors
+must already be in Pinecone; the deploy makes no model call. `/api/ask`
+runs for at most its `maxDuration`, set beside it.
+
 ## Contributing
 
 [AGENTS.md](AGENTS.md) is the contributing guide: the conventions, the

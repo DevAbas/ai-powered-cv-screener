@@ -238,7 +238,9 @@ Stated explicitly so nothing is inferred from omission.
 - No vacancy object, job-description matching or scoring model.
 - No editing, tagging or annotating CVs.
 - No persistence of conversations across restarts.
-- No deployment or hosting; runs locally.
+- No public hosting: the app runs locally or on Vercel behind Vercel
+  Authentication (Deployment Protection, All Deployments); the app has no
+  sign-in of its own.
 - No pools larger than ~50 CVs.
 - No integrations with ATS, email or calendar.
 
