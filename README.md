@@ -12,57 +12,38 @@ easier to support.
 This is a pilot. One team, one pool of CVs, deployed on Vercel behind
 Vercel Authentication.
 
-## How it works
+## Applied solution for the core requirements
 
 ### CV generation
 
-`npm run generate` builds the pool of 30 CVs in three steps. Each step
-skips what already exists.
-
-- **Seeds.** A fixed roster of 30 candidates is in the code: name,
-  headline, role, seniority and an EU city. Gemini writes the rest of each
-  CV as JSON, checked against the candidate schema and a set of rules. The
-  seeds are the ground truth for the tests.
-- **Photos.** One portrait per candidate from an image model on Cloudflare
-  Workers AI, reproducible from a seed. The step runs only when named.
-- **PDFs.** One CV per seed, rendered from one template in three
-  variants, at most three pages each.
+`npm run generate` builds a synthetic pool of 30 CVs from a fixed roster
+in the code. Gemini writes each CV as JSON, checked against the candidate
+schema, an image model on Cloudflare Workers AI draws the portrait, and
+each CV is rendered to a PDF. The JSON seeds are the ground truth the tests
+and the evaluation check against. The steps are in
+[scripts/README.md](scripts/README.md).
 
 ### RAG workflow
 
-`npm run index` turns the PDFs into what the model can use, in three
-steps.
-
-- **Text.** Each page's text is split into sections at the CV's own
-  headings. Each section on each page is one chunk.
-- **Profile.** Gemini writes a structured profile from the chunks, and the
-  app locates every field in the CV text. The result is one JSON file per
-  CV.
-- **Vectors.** Each chunk is embedded and stored in Pinecone.
-
-At question time the model does not read the CVs. It calls tools: exact
-filters and counts over the index, full profiles for named candidates, and
-a search by keyword and by meaning for free text. Every result carries its
-evidence and page, so the model can only say what a tool returned.
+`npm run index` splits each PDF's text into sections at the CV's own
+headings, one chunk per section per page. Gemini extracts a profile from
+the chunks, and the app keeps only the fields it finds in the text, each
+with its page. The chunks are embedded into Pinecone. At question time the
+model reads no CV text: it calls tools over the profiles and the chunks
+(Architecture, How an answer comes to be).
 
 ### Chat interface
 
-One page. A text box takes the question, with an example
-question as its placeholder. The answer streams in: the progress, then the
-text, then the view.
-
-Asked "Who has React and TypeScript?", the app opens with its own
+One page. The answer streams in: the progress, then the text, then the
+view. Asked "Who has React and TypeScript?", the app opens with its own
 sentence, "There are 4 candidates with React and TypeScript experience.
 Here are their details.", and lists the four with their years and a link
 to the CV page that states them.
 
 ![A list answer: the app's sentence, four candidates with their years of React and TypeScript, and a link to each CV page](docs/images/answer-list.png)
 
-Screenshot from the component previews.
-
-The model asks for a view in its `present` call, and the app builds it
-from what the tools returned. Which view each kind of question gets, and
-how a follow-up narrows the last answer, are in the
+Screenshot from the component previews. Which view each kind of question
+gets, and how a follow-up narrows the last answer, are in the
 [PRD](docs/PRD.md) (§5, §10).
 
 ## Architecture
