@@ -78,7 +78,7 @@ calls, not text pasted before the question. The CVs are indexed once,
 before use. At question time the model reads only what the tools return,
 and the app checks every candidate and page it names.
 
-![The chat screen sends the question to the ask route, which runs an answer loop with the Gemini API. The model calls tools that run exact queries over the in-memory index or a hybrid search over BM25 and Pinecone. The route builds the view, checks the sources and streams the answer. A source link opens the CV PDF at the cited page. Before use, the generate and index scripts write the CVs, the profile files and the vectors.](docs/images/architecture.svg)
+![Before use, npm run generate writes 30 CV PDFs, and npm run index has Gemini extract a profile from each, locates every field in the CV text so each fact has a page, and embeds each chunk into Pinecone. At question time the chat screen sends the question and the history to POST /api/ask, whose prompt holds no CV text. Gemini calls tools in a loop: three exact queries over the index in memory, and a text search that embeds the query and fuses BM25 with Pinecone. The loop ends with present. The app checks every candidate and page against what the tools returned, writes the counts itself and streams the answer to the chat. A source link opens the CV PDF at the cited page.](docs/images/architecture.svg)
 
 ### Layers
 
@@ -138,6 +138,8 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
   names, as warnings for a person and errors for an agent and CI. Hover,
   pressed and the other derived roles are a plain colour per theme, their
   rule kept on the token, as in every major design system.
+
+  ![Four columns. Authored: the palette, the roles and the resolver in tokens/, and the components contract and the rules in DESIGN.md. Build: design:export checks the components contract, then Terrazzo resolves light and dark. Generated, never edited: tokens.generated.css holds every token as a variable, theme.generated.css the roles as the Tailwind theme with a dark variant. Consumed: Tailwind 4, with its own palette reset, feeds the components, which use role classes only; the palette stops before them. Below, four checks run on every edit and commit, as errors for an agent and warnings for a human: the ESLint design rules, design:lint, design:export --check and the agent hooks.](docs/images/design-system.svg)
 
 ## Stack
 

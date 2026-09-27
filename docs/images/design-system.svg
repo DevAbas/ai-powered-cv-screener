@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 910" width="1040" height="910" role="img" aria-labelledby="title desc" aria-label="Design system architecture: tokens and DESIGN.md are authored, design:export checks the contract and Terrazzo builds light and dark stylesheets, Tailwind 4 feeds the components with roles only, and four checks enforce it on every edit and commit.">
+  <title id="title">Design system architecture</title>
+  <desc id="desc">Four columns. Authored: the palette, the roles and the resolver in tokens/, and the components contract and rules in DESIGN.md. Build: design:export checks the components contract before the build, then Terrazzo resolves light and dark. Generated, never edited: tokens.generated.css holds every token as a variable; theme.generated.css holds the roles as the Tailwind theme with a dark variant. Consumed: Tailwind 4, its default palette reset and dark mode following the system or the toggle, feeds the components, which use role classes only; the palette stops before the components, where the lint fails. Below, four checks run on every edit and commit, as errors for an agent and warnings for a human: the ESLint design rules, design:lint, design:export --check and the agent hooks.</desc>
+  <!--
+    Colours, type and radii are the design system's own (tokens/, read through tokens/design.resolver.json):
+    each variable below is the resolved value of the token named beside it, light first, dark under
+    prefers-color-scheme. Motion is native SMIL on one 10 s cycle, eased with motion.ease-standard; it is
+    hidden under prefers-reduced-motion, which leaves the still diagram.
+  -->
+  <style>
+    :root {
+      --surface: #fcfcfc; /* color.surface */
+      --surface-container-lowest: #ffffff; /* color.surface-container-lowest */
+      --surface-container: #ececec; /* color.surface-container */
+      --surface-panel: #f8f8f8; /* color.surface-panel */
+      --outline: #f5f5f5; /* color.outline */
+      --outline-variant: #b6b6b6; /* color.outline-variant */
+      --on-surface: #202020; /* color.on-surface */
+      --on-surface-variant: #606060; /* color.on-surface-variant */
+      --on-surface-subtle: #8f8f8f; /* color.on-surface-subtle */
+      --primary: #00f3bb; /* color.primary */
+      --primary-outline: #2dd6a8; /* color.primary-outline */
+      --primary-container: #aef7db; /* color.primary-container */
+      --on-primary-container: #004832; /* color.on-primary-container */
+      --inverse-surface: #202020; /* color.inverse-surface */
+      --inverse-on-surface: #fcfcfc; /* color.inverse-on-surface */
+      --warning: #b08a2e; /* color.warning */
+      --error: #d23b3b; /* color.error */
+      --shadow-raised: 0.1; /* shadow.raised opacity */
+      --lattice: 1px; /* DESIGN.md, Layout: the empty-state lattice hairline */
+      --font: "Google Sans", "Google Sans Text", "Product Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* font.google-sans */
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+      --surface: #111111; /* color.surface */
+      --surface-container-lowest: #191919; /* color.surface-container-lowest */
+      --surface-container: #222222; /* color.surface-container */
+      --surface-panel: #1b1b1b; /* color.surface-panel */
+      --outline: #222222; /* color.outline */
+      --outline-variant: #606060; /* color.outline-variant */
+      --on-surface: #eeeeee; /* color.on-surface */
+      --on-surface-variant: #b4b4b4; /* color.on-surface-variant */
+      --on-surface-subtle: #838383; /* color.on-surface-subtle */
+      --primary: #00ffc6; /* color.primary */
+      --primary-outline: #006f4f; /* color.primary-outline */
+      --primary-container: #003e29; /* color.primary-container */
+      --on-primary-container: #eeeeee; /* color.on-primary-container */
+      --inverse-surface: #eeeeee; /* color.inverse-surface */
+      --inverse-on-surface: #111111; /* color.inverse-on-surface */
+      --warning: #d9ac45; /* color.warning */
+      --error: #e5605c; /* color.error */
+      --shadow-raised: 0.5; /* shadow.raised opacity */
+      --lattice: 0.5px; /* DESIGN.md, Layout: the empty-state lattice hairline */
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .motion { display: none; }
+    }
+    text { font-family: var(--font); text-anchor: middle; }
+    .col { font-size: 17px; font-weight: 500; fill: var(--on-surface); }
+    .col-sub { font-size: 13px; font-weight: 400; fill: var(--on-surface-subtle); }
+    .title { font-size: 15px; font-weight: 500; }
+    .sub { font-size: 13px; font-weight: 400; }
+    .lane { font-size: 17px; font-weight: 500; fill: var(--on-surface); text-anchor: start; }
+    .note { font-size: 13px; font-weight: 400; fill: var(--on-surface-variant); text-anchor: start; }
+    .lattice { fill: none; stroke: var(--outline); stroke-width: var(--lattice); }
+    .lattice-lit { fill: none; stroke: var(--primary); stroke-width: var(--lattice); }
+  </style>
+  <defs>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="raised" x="-20%" y="-30%" width="140%" height="190%"><feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#000" style="flood-opacity:var(--shadow-raised)"/></filter>
+    <marker id="m-palette" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="m-role" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="m-contract" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <clipPath id="canvas"><rect width="1040" height="910" rx="20"/></clipPath>
+    <clipPath id="lane"><rect x="40" y="560" width="960" height="284" rx="20"/></clipPath>
+    <pattern id="cells" width="36" height="36" patternUnits="userSpaceOnUse"><rect class="lattice" x="3" y="3" width="30" height="30" rx="8"/><animateTransform attributeName="patternTransform" type="translate" from="0 0" to="36 36" dur="90s" repeatCount="indefinite"/></pattern>
+    <pattern id="cells-lit" width="36" height="36" patternUnits="userSpaceOnUse"><rect class="lattice-lit" x="3" y="3" width="30" height="30" rx="8"/><animateTransform attributeName="patternTransform" type="translate" from="0 0" to="36 36" dur="90s" repeatCount="indefinite"/></pattern>
+    <radialGradient id="spot-fade"><stop offset="0" stop-color="#fff" stop-opacity="0.3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <mask id="spot" maskUnits="userSpaceOnUse" x="0" y="0" width="1040" height="910"><circle r="300" cx="220" cy="180" fill="url(#spot-fade)"><animate attributeName="cx" dur="48s" repeatCount="indefinite" values="220;820;620;220" keyTimes="0;0.35;0.7;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/><animate attributeName="cy" dur="48s" repeatCount="indefinite" values="180;360;700;180" keyTimes="0;0.35;0.7;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/></circle></mask>
+    <linearGradient id="shimmer" x1="0" x2="1" y1="0" y2="0"><stop offset="0" style="stop-color:var(--primary)" stop-opacity="0"/><stop offset="0.5" style="stop-color:var(--primary)" stop-opacity="0.12"/><stop offset="1" style="stop-color:var(--primary)" stop-opacity="0"/></linearGradient>
+  </defs>
+
+  <rect width="1040" height="910" rx="20" style="fill:var(--surface)"/>
+
+  <!-- Ambient: the empty state's lattice, lit in primary hairlines where a slow spot passes. -->
+  <g class="motion" clip-path="url(#canvas)" opacity="0.8">
+    <rect width="1040" height="910" fill="url(#cells)"/>
+    <rect width="1040" height="910" fill="url(#cells-lit)" mask="url(#spot)"/>
+  </g>
+
+  <!-- Columns -->
+  <text class="col" x="140" y="58">Authored</text><text class="col-sub" x="140" y="80">edit these</text>
+  <text class="col" x="380" y="58">Build</text><text class="col-sub" x="380" y="80">design:export</text>
+  <text class="col" x="640" y="58">Generated</text><text class="col-sub" x="640" y="80">never edit</text>
+  <text class="col" x="905" y="58">Consumed</text><text class="col-sub" x="905" y="80">the app</text>
+
+  <!-- Enforcement lane: a surface panel, swept by the loading shimmer once the components are reached. -->
+  <rect x="40" y="560" width="960" height="284" rx="20" style="fill:var(--surface-panel)"/>
+  <g class="motion" clip-path="url(#lane)">
+    <rect x="-260" y="560" width="260" height="284" fill="url(#shimmer)"><animateTransform attributeName="transform" type="translate" dur="10s" repeatCount="indefinite" values="0 0;0 0;1300 0;1300 0" keyTimes="0;0.58;0.78;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/></rect>
+  </g>
+  <text class="lane" x="64" y="596">Enforcement, on every edit and commit</text>
+  <text class="note" x="64" y="626">for agent: errors</text><rect x="190" y="615" width="14" height="14" rx="4" style="fill:var(--error)"/>
+  <text class="note" x="232" y="626">for human: warnings</text><rect x="374" y="615" width="14" height="14" rx="4" style="fill:var(--warning)"/>
+
+  <!-- Connectors, coloured by tier: palette grey, roles mint, the components contract ink. -->
+    <path d="M240 410 H288" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="1.25" marker-end="url(#m-contract)"/>
+    <path d="M240 140 H265 V204 H288" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-palette)"/>
+    <path d="M240 220 H288" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-role)"/>
+    <path d="M240 300 H265 V236 H288" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-palette)"/>
+    <path d="M470 206 H492 V152 H518" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-palette)"/>
+    <path d="M470 220 H502 V172 H518" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-role)"/>
+    <path d="M470 234 H502 V260 H518" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-role)"/>
+    <path d="M760 150 H808" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-palette)"/>
+    <path d="M760 170 H808" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-role)"/>
+    <path d="M760 260 H785 V182 H808" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-role)"/>
+    <path d="M935 190 V258" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-role)"/>
+    <path d="M470 410 H795 V300 H808" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="1.25" marker-end="url(#m-contract)"/>
+    <path d="M875 190 V221" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25"/>
+    <path d="M862 222 H888" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Nodes -->
+    <g id="n0"><rect x="40" y="110" width="200" height="60" rx="12" filter="url(#raised)" style="fill:var(--surface-container);stroke:var(--outline)"/><text class="title" x="140" y="135" style="fill:var(--on-surface)">palette</text><text class="sub" x="140" y="155" style="fill:var(--on-surface-variant)">foundation/</text></g>
+    <g id="n1"><rect x="40" y="190" width="200" height="60" rx="12" filter="url(#raised)" style="fill:var(--primary-container);stroke:var(--outline)"/><text class="title" x="140" y="215" style="fill:var(--on-primary-container)">roles</text><text class="sub" x="140" y="235" style="fill:var(--on-primary-container)">semantic/, themes/</text></g>
+    <g id="n2"><rect x="40" y="270" width="200" height="60" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="140" y="295" style="fill:var(--on-surface)">resolver</text><text class="sub" x="140" y="315" style="fill:var(--on-surface-variant)">light | dark</text></g>
+    <g id="n3"><rect x="40" y="380" width="200" height="60" rx="12" filter="url(#raised)" style="fill:var(--inverse-surface);stroke:var(--outline)"/><text class="title" x="140" y="405" style="fill:var(--inverse-on-surface)">components</text><text class="sub" x="140" y="425" style="fill:var(--inverse-on-surface)">DESIGN.md contract</text></g>
+    <g id="n4"><rect x="40" y="460" width="200" height="60" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="140" y="485" style="fill:var(--on-surface)">rules</text><text class="sub" x="140" y="505" style="fill:var(--on-surface-variant)">prose, no values</text></g>
+    <g id="n5"><rect x="290" y="190" width="180" height="60" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="380" y="215" style="fill:var(--on-surface)">Terrazzo</text><text class="sub" x="380" y="235" style="fill:var(--on-surface-variant)">light and dark</text></g>
+    <g id="n6"><rect x="290" y="380" width="180" height="60" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="380" y="405" style="fill:var(--on-surface)">contract check</text><text class="sub" x="380" y="425" style="fill:var(--on-surface-variant)">before the build</text></g>
+    <g id="n7"><rect x="520" y="130" width="240" height="60" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="640" y="155" style="fill:var(--on-surface)">tokens.generated.css</text><text class="sub" x="640" y="175" style="fill:var(--on-surface-variant)">all tokens as vars</text></g>
+    <g id="n8"><rect x="520" y="230" width="240" height="60" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="640" y="255" style="fill:var(--on-surface)">theme.generated.css</text><text class="sub" x="640" y="275" style="fill:var(--on-surface-variant)">roles + dark variant</text></g>
+    <g id="n9"><rect x="810" y="110" width="190" height="80" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="905" y="135" style="fill:var(--on-surface)">Tailwind 4</text><text class="sub" x="905" y="155" style="fill:var(--on-surface-variant)">palette reset</text><text class="sub" x="905" y="173" style="fill:var(--on-surface-variant)">dark: OS, toggle</text></g>
+    <g id="n10"><rect x="810" y="260" width="190" height="60" rx="12" filter="url(#raised)" style="fill:var(--inverse-surface);stroke:var(--outline)"/><text class="title" x="905" y="285" style="fill:var(--inverse-on-surface)">components</text><text class="sub" x="905" y="305" style="fill:var(--inverse-on-surface)">role classes</text></g>
+    <g id="n11"><rect x="64" y="644" width="448" height="80" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="288" y="669" style="fill:var(--on-surface)">ESLint design rules</text><text class="sub" x="288" y="689" style="fill:var(--on-surface-variant)">reads the theme, contract</text><text class="sub" x="288" y="707" style="fill:var(--on-surface-variant)">checks component code</text></g>
+    <g id="n12"><rect x="528" y="644" width="448" height="80" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="752" y="669" style="fill:var(--on-surface)">design:lint</text><text class="sub" x="752" y="689" style="fill:var(--on-surface-variant)">reads tokens, DESIGN.md</text><text class="sub" x="752" y="707" style="fill:var(--on-surface-variant)">checks contrast, 2 themes</text></g>
+    <g id="n13"><rect x="64" y="740" width="448" height="80" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="288" y="765" style="fill:var(--on-surface)">design:export --check</text><text class="sub" x="288" y="785" style="fill:var(--on-surface-variant)">reads tokens, CSS</text><text class="sub" x="288" y="803" style="fill:var(--on-surface-variant)">checks CSS is current</text></g>
+    <g id="n14"><rect x="528" y="740" width="448" height="80" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--primary-outline);stroke-width:1.5"/><text class="title" x="752" y="765" style="fill:var(--on-surface)">Agent hooks</text><text class="sub" x="752" y="785" style="fill:var(--on-surface-variant)">lint after every edit</text><text class="sub" x="752" y="803" style="fill:var(--on-surface-variant)">generated CSS: denied</text></g>
+
+  <!-- Motion: trails, signals and the node each one reaches. -->
+  <g class="motion">
+    <path d="M240 410 H288" fill="none" style="stroke:var(--on-surface)" stroke-width="2" stroke-linecap="round" stroke-dasharray="48 48" stroke-dashoffset="48" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="48;48;0;0" keyTimes="0;0.02;0.1;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.02;0.021;0.12;0.2;1"/></path>
+    <path d="M240 140 H265 V204 H288" fill="none" style="stroke:var(--on-surface-subtle)" stroke-width="2" stroke-linecap="round" stroke-dasharray="112 112" stroke-dashoffset="112" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="112;112;0;0" keyTimes="0;0.12;0.22;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.12;0.121;0.24;0.32;1"/></path>
+    <path d="M240 220 H288" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="48 48" stroke-dashoffset="48" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="48;48;0;0" keyTimes="0;0.12;0.22;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.12;0.121;0.24;0.32;1"/></path>
+    <path d="M240 300 H265 V236 H288" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2" stroke-linecap="round" stroke-dasharray="112 112" stroke-dashoffset="112" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="112;112;0;0" keyTimes="0;0.12;0.22;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.12;0.121;0.24;0.32;1"/></path>
+    <path d="M470 206 H492 V152 H518" fill="none" style="stroke:var(--on-surface-subtle)" stroke-width="2" stroke-linecap="round" stroke-dasharray="102 102" stroke-dashoffset="102" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="102;102;0;0" keyTimes="0;0.25;0.34;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.25;0.251;0.36;0.44;1"/></path>
+    <path d="M470 220 H502 V172 H518" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="96 96" stroke-dashoffset="96" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="96;96;0;0" keyTimes="0;0.25;0.34;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.25;0.251;0.36;0.44;1"/></path>
+    <path d="M470 234 H502 V260 H518" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="74 74" stroke-dashoffset="74" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="74;74;0;0" keyTimes="0;0.25;0.34;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.25;0.251;0.36;0.44;1"/></path>
+    <path d="M760 150 H808" fill="none" style="stroke:var(--on-surface-subtle)" stroke-width="2" stroke-linecap="round" stroke-dasharray="48 48" stroke-dashoffset="48" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="48;48;0;0" keyTimes="0;0.37;0.45;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.37;0.371;0.47;0.55;1"/></path>
+    <path d="M760 170 H808" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="48 48" stroke-dashoffset="48" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="48;48;0;0" keyTimes="0;0.37;0.45;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.37;0.371;0.47;0.55;1"/></path>
+    <path d="M760 260 H785 V182 H808" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="126 126" stroke-dashoffset="126" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="126;126;0;0" keyTimes="0;0.37;0.45;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.37;0.371;0.47;0.55;1"/></path>
+    <path d="M935 190 V258" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="68 68" stroke-dashoffset="68" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="68;68;0;0" keyTimes="0;0.48;0.54;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.48;0.481;0.56;0.64;1"/></path>
+    <path d="M470 410 H795 V300 H808" fill="none" style="stroke:var(--on-surface)" stroke-width="2" stroke-linecap="round" stroke-dasharray="448 448" stroke-dashoffset="448" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="448;448;0;0" keyTimes="0;0.39;0.54;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.39;0.391;0.56;0.64;1"/></path>
+    <path d="M875 190 V221" fill="none" style="stroke:var(--on-surface-subtle)" stroke-width="2" stroke-linecap="round" stroke-dasharray="31 31" stroke-dashoffset="31" opacity="0"><animate attributeName="stroke-dashoffset" dur="10s" repeatCount="indefinite" values="31;31;0;0" keyTimes="0;0.48;0.525;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.48;0.481;0.545;0.625;1"/></path>
+    <g opacity="0"><circle r="9" style="fill:var(--on-surface)" filter="url(#glow)" opacity="0.3"/><circle r="3.5" style="fill:var(--on-surface)"/><animateMotion dur="10s" repeatCount="indefinite" path="M240 410 H288" keyPoints="0;0;1;1" keyTimes="0;0.02;0.1;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.02;0.028;0.1;0.135;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--on-surface-subtle)" filter="url(#glow)" opacity="0.25"/><circle r="3.5" style="fill:var(--on-surface-subtle)"/><animateMotion dur="10s" repeatCount="indefinite" path="M240 140 H265 V204 H288" keyPoints="0;0;1;1" keyTimes="0;0.12;0.22;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.12;0.128;0.22;0.255;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--primary)" filter="url(#glow)" opacity="0.7"/><circle r="3.5" style="fill:var(--primary)"/><animateMotion dur="10s" repeatCount="indefinite" path="M240 220 H288" keyPoints="0;0;1;1" keyTimes="0;0.12;0.22;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.12;0.128;0.22;0.255;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--on-surface-variant)" filter="url(#glow)" opacity="0.25"/><circle r="3.5" style="fill:var(--on-surface-variant)"/><animateMotion dur="10s" repeatCount="indefinite" path="M240 300 H265 V236 H288" keyPoints="0;0;1;1" keyTimes="0;0.12;0.22;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.12;0.128;0.22;0.255;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--on-surface-subtle)" filter="url(#glow)" opacity="0.25"/><circle r="3.5" style="fill:var(--on-surface-subtle)"/><animateMotion dur="10s" repeatCount="indefinite" path="M470 206 H492 V152 H518" keyPoints="0;0;1;1" keyTimes="0;0.25;0.34;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.25;0.258;0.34;0.375;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--primary)" filter="url(#glow)" opacity="0.7"/><circle r="3.5" style="fill:var(--primary)"/><animateMotion dur="10s" repeatCount="indefinite" path="M470 220 H502 V172 H518" keyPoints="0;0;1;1" keyTimes="0;0.25;0.34;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.25;0.258;0.34;0.375;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--primary)" filter="url(#glow)" opacity="0.7"/><circle r="3.5" style="fill:var(--primary)"/><animateMotion dur="10s" repeatCount="indefinite" path="M470 234 H502 V260 H518" keyPoints="0;0;1;1" keyTimes="0;0.25;0.34;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.25;0.258;0.34;0.375;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--on-surface-subtle)" filter="url(#glow)" opacity="0.25"/><circle r="3.5" style="fill:var(--on-surface-subtle)"/><animateMotion dur="10s" repeatCount="indefinite" path="M760 150 H808" keyPoints="0;0;1;1" keyTimes="0;0.37;0.45;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.37;0.378;0.45;0.485;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--primary)" filter="url(#glow)" opacity="0.7"/><circle r="3.5" style="fill:var(--primary)"/><animateMotion dur="10s" repeatCount="indefinite" path="M760 170 H808" keyPoints="0;0;1;1" keyTimes="0;0.37;0.45;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.37;0.378;0.45;0.485;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--primary)" filter="url(#glow)" opacity="0.7"/><circle r="3.5" style="fill:var(--primary)"/><animateMotion dur="10s" repeatCount="indefinite" path="M760 260 H785 V182 H808" keyPoints="0;0;1;1" keyTimes="0;0.37;0.45;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.37;0.378;0.45;0.485;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--primary)" filter="url(#glow)" opacity="0.7"/><circle r="3.5" style="fill:var(--primary)"/><animateMotion dur="10s" repeatCount="indefinite" path="M935 190 V258" keyPoints="0;0;1;1" keyTimes="0;0.48;0.54;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.48;0.488;0.54;0.575;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--on-surface)" filter="url(#glow)" opacity="0.3"/><circle r="3.5" style="fill:var(--on-surface)"/><animateMotion dur="10s" repeatCount="indefinite" path="M470 410 H795 V300 H808" keyPoints="0;0;1;1" keyTimes="0;0.39;0.54;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.39;0.398;0.54;0.575;1"/></g>
+    <g opacity="0"><circle r="9" style="fill:var(--on-surface-subtle)" filter="url(#glow)" opacity="0.25"/><circle r="3.5" style="fill:var(--on-surface-subtle)"/><animateMotion dur="10s" repeatCount="indefinite" path="M875 190 V221" keyPoints="0;0;1;1" keyTimes="0;0.48;0.525;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.48;0.488;0.525;0.55;1"/></g>
+    <path d="M862 222 H888" fill="none" style="stroke:var(--error)" stroke-width="2.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.525;0.535;0.645;1"/></path>
+    <circle cx="875" cy="222" r="3" fill="none" style="stroke:var(--error)" stroke-width="1.5" opacity="0"><animate attributeName="r" dur="10s" repeatCount="indefinite" values="3;3;16;16" keyTimes="0;0.525;0.595;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0.8;0;0" keyTimes="0;0.525;0.53;0.595;1"/></circle>
+    <g opacity="0"><rect x="38" y="108" width="204" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="40" y="110" width="200" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.11;0.125;0.2;1"/></g>
+    <g opacity="0"><rect x="38" y="188" width="204" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="40" y="190" width="200" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.11;0.125;0.2;1"/></g>
+    <g opacity="0"><rect x="38" y="268" width="204" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="40" y="270" width="200" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.11;0.125;0.2;1"/></g>
+    <g opacity="0"><rect x="38" y="378" width="204" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="40" y="380" width="200" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.01;0.025;0.1;1"/></g>
+    <g opacity="0"><rect x="288" y="188" width="184" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="290" y="190" width="180" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.22;0.235;0.31;1"/></g>
+    <g opacity="0"><rect x="288" y="378" width="184" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="290" y="380" width="180" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.1;0.115;0.19;1"/></g>
+    <g opacity="0"><rect x="518" y="128" width="244" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="520" y="130" width="240" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.34;0.355;0.43;1"/></g>
+    <g opacity="0"><rect x="518" y="228" width="244" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="520" y="230" width="240" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.34;0.355;0.43;1"/></g>
+    <g opacity="0"><rect x="808" y="108" width="194" height="84" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="810" y="110" width="190" height="80" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.45;0.465;0.54;1"/></g>
+    <g opacity="0"><rect x="808" y="258" width="194" height="64" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="6" filter="url(#glow)" opacity="0.9"/><rect x="810" y="260" width="190" height="60" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.54;0.555;0.7;1"/></g>
+    <g opacity="0"><rect x="62" y="642" width="452" height="84" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="64" y="644" width="448" height="80" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.6;0.615;0.69;1"/></g>
+    <g opacity="0"><rect x="526" y="642" width="452" height="84" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="528" y="644" width="448" height="80" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.635;0.65;0.725;1"/></g>
+    <g opacity="0"><rect x="62" y="738" width="452" height="84" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="64" y="740" width="448" height="80" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.67;0.685;0.76;1"/></g>
+    <g opacity="0"><rect x="526" y="738" width="452" height="84" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="528" y="740" width="448" height="80" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.705;0.72;0.795;1"/></g>
+  </g>
+
+  <!-- Legend -->
+  <rect x="40" y="869" width="14" height="14" rx="4" style="fill:var(--surface-container)"/><text class="note" x="62" y="880">palette</text>
+  <rect x="130" y="869" width="14" height="14" rx="4" style="fill:var(--primary-container)"/><text class="note" x="152" y="880">roles</text>
+  <rect x="210" y="869" width="14" height="14" rx="4" style="fill:var(--inverse-surface)"/><text class="note" x="232" y="880">components</text>
+  <path d="M345 868 V884 M338 884 H352" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2.5" stroke-linecap="round"/><text class="note" x="364" y="880">palette stops: no class, lint fails</text>
+</svg>

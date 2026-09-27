@@ -1,99 +1,204 @@
-<!-- Hand-built: boxes and arrows at fixed positions, editable in place. -->
-<svg xmlns="http://www.w3.org/2000/svg" width="1580" height="1000" viewBox="0 0 1580 1000" font-family="Helvetica, Arial, sans-serif">
-<defs><marker id="head" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#1f2a44"/></marker></defs>
-<rect width="1580" height="1000" fill="#ffffff"/>
-<rect x="20" y="20" width="1540" height="690" rx="10" fill="none" stroke="#94a3b8" stroke-width="1.2"/>
-<text x="38" y="50" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#1f2a44">At question time</text>
-<rect x="40" y="130" width="200" height="90" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.5"/>
-<text x="140.0" y="173" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">Chat screen</text>
-<text x="140.0" y="192" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(recruiter)</text>
-<rect x="390" y="110" width="300" height="130" rx="8" fill="#ede9fe" stroke="#a78bfa" stroke-width="1.5"/>
-<text x="540.0" y="155" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">POST /api/ask</text>
-<text x="540.0" y="173" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(answer service)</text>
-<text x="540.0" y="192" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">answer loop + tool calling</text>
-<text x="540.0" y="210" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">+ build view + check sources</text>
-<rect x="890" y="60" width="270" height="380" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
-<text x="910" y="90" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">Tools (run on the server)</text>
-<rect x="910" y="105" width="230" height="60" rx="8" fill="#dcfce7" stroke="#4ade80" stroke-width="1.5"/>
-<text x="1025.0" y="133" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">find_candidates</text>
-<text x="1025.0" y="152" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(exact query)</text>
-<rect x="910" y="175" width="230" height="60" rx="8" fill="#dcfce7" stroke="#4ade80" stroke-width="1.5"/>
-<text x="1025.0" y="203" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">count_candidates</text>
-<text x="1025.0" y="222" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(exact query)</text>
-<rect x="910" y="245" width="230" height="60" rx="8" fill="#dcfce7" stroke="#4ade80" stroke-width="1.5"/>
-<text x="1025.0" y="273" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">get_candidates</text>
-<text x="1025.0" y="292" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(exact query)</text>
-<rect x="910" y="315" width="230" height="105" rx="8" fill="#dcfce7" stroke="#4ade80" stroke-width="1.5"/>
-<text x="1025.0" y="356" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">search_cv_text</text>
-<text x="1025.0" y="375" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(BM25 + Pinecone, RRF,</text>
-<text x="1025.0" y="394" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">free text only)</text>
-<rect x="1290" y="105" width="250" height="80" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
-<text x="1415.0" y="143" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">In-memory index</text>
-<text x="1415.0" y="162" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(profiles + page sources)</text>
-<rect x="1290" y="300" width="250" height="80" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
-<text x="1415.0" y="338" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">Pinecone</text>
-<text x="1415.0" y="357" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(vectors)</text>
-<rect x="420" y="400" width="270" height="90" rx="8" fill="#ede9fe" stroke="#a78bfa" stroke-width="1.5"/>
-<text x="555.0" y="443" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">Gemini API</text>
-<text x="555.0" y="462" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(LLM with tool calling)</text>
-<rect x="410" y="580" width="330" height="90" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.5"/>
-<text x="575.0" y="623" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">GET /api/cvs/{id}#page=N</text>
-<text x="575.0" y="642" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(open the CV PDF)</text>
-<path d="M 240 175 L 390 175" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="250" y="165.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">question + history</text>
-<path d="M 400 240 L 400 262 L 150 262 L 150 220" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="160" y="285.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">streamed progress,</text>
-<text x="160" y="301.5" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">answer, view + checked sources</text>
-<path d="M 520 240 L 520 400" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="505" y="300.0" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">prompt</text>
-<text x="505" y="316.5" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">(pool summary +</text>
-<text x="505" y="333.0" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">candidate directory +</text>
-<text x="505" y="349.5" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">tools)</text>
-<path d="M 600 400 L 600 240" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="612" y="300.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">tool calls</text>
-<text x="612" y="316.5" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">(filters, ids, query),</text>
-<text x="612" y="333.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">then the present call</text>
-<text x="612" y="349.5" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">(candidate ids + pages)</text>
-<path d="M 690 150 L 890 150" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="700" y="140.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">runs the tool</text>
-<path d="M 890 215 L 690 215" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="700" y="235.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">tool results</text>
-<path d="M 1160 145 L 1290 145" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="1225" y="118" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1f2a44">exact queries,</text>
-<text x="1225" y="134" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1f2a44">BM25</text>
-<path d="M 1160 340 L 1290 340" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="1225" y="330" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1f2a44">vector search</text>
-<path d="M 70 220 L 70 650 L 410 650" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="90" y="668.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">source link (id + page)</text>
-<path d="M 410 610 L 110 610 L 110 220" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="125" y="600.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">CV PDF at page N</text>
-<rect x="20" y="740" width="1540" height="240" rx="10" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="6 5"/>
-<text x="38" y="770" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#1f2a44">Before use: data preparation</text>
-<rect x="60" y="830" width="220" height="80" rx="8" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5"/>
-<text x="170.0" y="868" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">npm run generate</text>
-<text x="170.0" y="887" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(seeds, photos, then PDFs)</text>
-<rect x="370" y="830" width="200" height="80" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.5"/>
-<text x="470.0" y="868" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">CV PDFs</text>
-<text x="470.0" y="887" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(30 files)</text>
-<rect x="680" y="830" width="210" height="80" rx="8" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5"/>
-<text x="785.0" y="868" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">npm run index</text>
-<text x="785.0" y="887" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(profiles, chunks, vectors)</text>
-<rect x="1020" y="785" width="270" height="70" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
-<text x="1155.0" y="818" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">data/index</text>
-<text x="1155.0" y="837" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(profiles + page sources)</text>
-<rect x="1020" y="890" width="270" height="70" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
-<text x="1155.0" y="923" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2a44">Pinecone</text>
-<text x="1155.0" y="942" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b5563">(vectors)</text>
-<path d="M 280 870 L 370 870" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="325" y="860.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">writes</text>
-<path d="M 570 870 L 680 870" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="625" y="860.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">extracts + builds</text>
-<path d="M 890 855 L 950 855 L 950 820 L 1020 820" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="985" y="808.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">JSON files</text>
-<path d="M 890 885 L 950 885 L 950 925 L 1020 925" fill="none" stroke="#1f2a44" stroke-width="1.4" marker-end="url(#head)"/>
-<text x="985" y="945.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">vectors</text>
-<path d="M 1290 820 L 1400 820 L 1400 725 L 1555 725 L 1555 145 L 1540 145" fill="none" stroke="#1f2a44" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#head)"/>
-<text x="1410" y="812.0" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2a44">loaded at start</text>
-<path d="M 1290 925 L 1420 925 L 1420 380" fill="none" stroke="#1f2a44" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="1430" y="640" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#1f2a44">the same index</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 960" width="1020" height="960" role="img" aria-labelledby="title desc" aria-label="How an answer comes to be: CVs are generated and indexed before use; at question time Gemini loops over typed tools that read the index and Pinecone, ends with present, and the app checks every candidate and page before the answer streams to the chat.">
+  <title id="title">How an answer comes to be</title>
+  <desc id="desc">Before use, npm run generate has Gemini write 30 CV PDFs; npm run index has Gemini extract a profile from each, the field check locates every fact in the text so each has a page, and each chunk is embedded. The stores are data/index, JSON held in memory, and Pinecone, the chunk vectors. At question time the chat screen sends the question and history to POST /api/ask, whose prompt holds no CV text. Gemini runs a tool-calling loop: find_candidates, count_candidates and get_candidates query the index exactly; search_cv_text embeds the query and fuses BM25 with the vector search by reciprocal rank fusion. The loop ends with present. The answer check keeps only the candidates and pages the tools returned and has the app write the counts, then the answer streams to the chat, whose source links open GET /api/cvs/id, the PDF at the cited page.</desc>
+  <!--
+    Colours, type and radii are the design system's own (tokens/, read through tokens/design.resolver.json):
+    each variable below is the resolved value of the token named beside it, light first, dark under
+    prefers-color-scheme. Motion is native SMIL on one 12.5 s cycle, eased with motion.ease-standard; it is
+    hidden under prefers-reduced-motion, which leaves the still diagram.
+  -->
+  <style>
+    :root {
+      --surface: #fcfcfc; /* color.surface */
+      --surface-container-lowest: #ffffff; /* color.surface-container-lowest */
+      --surface-container: #ececec; /* color.surface-container */
+      --surface-panel: #f8f8f8; /* color.surface-panel */
+      --outline: #f5f5f5; /* color.outline */
+      --outline-variant: #b6b6b6; /* color.outline-variant */
+      --on-surface: #202020; /* color.on-surface */
+      --on-surface-variant: #606060; /* color.on-surface-variant */
+      --on-surface-subtle: #8f8f8f; /* color.on-surface-subtle */
+      --primary: #00f3bb; /* color.primary */
+      --primary-outline: #2dd6a8; /* color.primary-outline */
+      --primary-container: #aef7db; /* color.primary-container */
+      --on-primary-container: #004832; /* color.on-primary-container */
+      --inverse-surface: #202020; /* color.inverse-surface */
+      --inverse-on-surface: #fcfcfc; /* color.inverse-on-surface */
+      --shadow-raised: 0.1; /* shadow.raised opacity */
+      --lattice: 1px; /* DESIGN.md, Layout: the empty-state lattice hairline */
+      --font: "Google Sans", "Google Sans Text", "Product Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* font.google-sans */
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+      --surface: #111111; /* color.surface */
+      --surface-container-lowest: #191919; /* color.surface-container-lowest */
+      --surface-container: #222222; /* color.surface-container */
+      --surface-panel: #1b1b1b; /* color.surface-panel */
+      --outline: #222222; /* color.outline */
+      --outline-variant: #606060; /* color.outline-variant */
+      --on-surface: #eeeeee; /* color.on-surface */
+      --on-surface-variant: #b4b4b4; /* color.on-surface-variant */
+      --on-surface-subtle: #838383; /* color.on-surface-subtle */
+      --primary: #00ffc6; /* color.primary */
+      --primary-outline: #006f4f; /* color.primary-outline */
+      --primary-container: #003e29; /* color.primary-container */
+      --on-primary-container: #eeeeee; /* color.on-primary-container */
+      --inverse-surface: #eeeeee; /* color.inverse-surface */
+      --inverse-on-surface: #111111; /* color.inverse-on-surface */
+      --shadow-raised: 0.5; /* shadow.raised opacity */
+      --lattice: 0.5px; /* DESIGN.md, Layout: the empty-state lattice hairline */
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .motion { display: none; }
+    }
+    text { font-family: var(--font); text-anchor: middle; }
+    .title { font-size: 16px; font-weight: 500; }
+    .sub { font-size: 14px; font-weight: 400; }
+    .band { font-size: 18px; font-weight: 500; fill: var(--on-surface); text-anchor: start; }
+    .note { font-size: 14px; font-weight: 400; fill: var(--on-surface-variant); text-anchor: start; }
+    .lattice { fill: none; stroke: var(--outline); stroke-width: var(--lattice); }
+    .lattice-lit { fill: none; stroke: var(--primary); stroke-width: var(--lattice); }
+  </style>
+  <defs>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="raised" x="-20%" y="-30%" width="140%" height="190%"><feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#000" style="flood-opacity:var(--shadow-raised)"/></filter>
+    <marker id="m-prep" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="m-ask" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <clipPath id="canvas"><rect width="1020" height="960" rx="20"/></clipPath>
+    <pattern id="cells" width="36" height="36" patternUnits="userSpaceOnUse"><rect class="lattice" x="3" y="3" width="30" height="30" rx="8"/><animateTransform attributeName="patternTransform" type="translate" from="0 0" to="36 36" dur="90s" repeatCount="indefinite"/></pattern>
+    <pattern id="cells-lit" width="36" height="36" patternUnits="userSpaceOnUse"><rect class="lattice-lit" x="3" y="3" width="30" height="30" rx="8"/><animateTransform attributeName="patternTransform" type="translate" from="0 0" to="36 36" dur="90s" repeatCount="indefinite"/></pattern>
+    <radialGradient id="spot-fade"><stop offset="0" stop-color="#fff" stop-opacity="0.3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <mask id="spot" maskUnits="userSpaceOnUse" x="0" y="0" width="1020" height="960"><circle r="300" cx="220" cy="180" fill="url(#spot-fade)"><animate attributeName="cx" dur="48s" repeatCount="indefinite" values="220;820;560;220" keyTimes="0;0.35;0.7;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/><animate attributeName="cy" dur="48s" repeatCount="indefinite" values="180;420;760;180" keyTimes="0;0.35;0.7;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/></circle></mask>
+  </defs>
+
+  <rect width="1020" height="960" rx="20" style="fill:var(--surface)"/>
+
+  <!-- Ambient: the empty state's lattice, lit in primary hairlines where a slow spot passes. -->
+  <g class="motion" clip-path="url(#canvas)" opacity="0.8">
+    <rect width="1020" height="960" fill="url(#cells)"/>
+    <rect width="1020" height="960" fill="url(#cells-lit)" mask="url(#spot)"/>
+  </g>
+
+  <!-- Bands -->
+  <text class="band" x="60" y="57">Before use: npm run generate, npm run index</text>
+  <path d="M60 276 H960" fill="none" style="stroke:var(--outline-variant)" stroke-width="1" stroke-dasharray="4 5"/>
+  <text class="band" x="60" y="319.5">Stores</text><text class="note" x="60" y="346.5">read by the tools</text>
+  <path d="M60 378 H960" fill="none" style="stroke:var(--outline-variant)" stroke-width="1" stroke-dasharray="4 5"/>
+  <text class="band" x="60" y="417">At question time</text>
+  <rect x="735" y="399" width="225" height="192" rx="16" style="fill:var(--surface-panel);stroke:var(--outline-variant)" stroke-width="1"/>
+
+  <!-- Connectors: preparation grey, the question's path mint. -->
+    <path d="M270 118.5 H289.5" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-prep)"/>
+    <path d="M480 118.5 H507" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-prep)"/>
+    <path d="M712.5 118.5 H732" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-prep)"/>
+    <path d="M385.5 153 V211.5 H507" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-prep)"/>
+    <path d="M610.5 246 V291" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-prep)"/>
+    <path d="M847.5 153 V291" fill="none" style="stroke:var(--outline-variant)" stroke-width="1.25" marker-end="url(#m-prep)"/>
+    <path d="M610.5 477 V450" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M610.5 399 V366" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M847.5 399 V366" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M270 469.5 H289.5" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M385.5 504 V543" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M480 580.5 H495" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25"/>
+    <path d="M495 511.5 V610.5" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25"/>
+    <path d="M495 511.5 H507" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M495 610.5 H507" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M495 561 H732" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M610.5 645 V709.5 H483" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M292.5 709.5 H165 V507" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+    <path d="M90 504 V792" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.25" marker-end="url(#m-ask)"/>
+  <text class="note" x="225" y="699" style="text-anchor:middle">streams</text>
+
+  <!-- Motion under the nodes: a signal leaves one node and enters the next. -->
+  <g class="motion">
+    <path d="M165 118.5 H385.5" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2" stroke-linecap="round" stroke-dasharray="221 221" stroke-dashoffset="221" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="221;221;0;0" keyTimes="0;0.016;0.072;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.016;0.0168;0.088;0.144;1"/></path>
+    <path d="M385.5 118.5 H610.5" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2" stroke-linecap="round" stroke-dasharray="225 225" stroke-dashoffset="225" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="225;225;0;0" keyTimes="0;0.08;0.128;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.08;0.0808;0.144;0.2;1"/></path>
+    <path d="M385.5 118.5 V211.5 H610.5" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2" stroke-linecap="round" stroke-dasharray="318 318" stroke-dashoffset="318" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="318;318;0;0" keyTimes="0;0.08;0.144;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.08;0.0808;0.16;0.216;1"/></path>
+    <path d="M610.5 118.5 H847.5" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2" stroke-linecap="round" stroke-dasharray="237 237" stroke-dashoffset="237" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="237;237;0;0" keyTimes="0;0.136;0.184;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.136;0.1368;0.2;0.256;1"/></path>
+    <path d="M847.5 118.5 V328.5" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2" stroke-linecap="round" stroke-dasharray="210 210" stroke-dashoffset="210" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="210;210;0;0" keyTimes="0;0.192;0.24;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.192;0.1928;0.256;0.312;1"/></path>
+    <path d="M610.5 211.5 V328.5" fill="none" style="stroke:var(--on-surface-variant)" stroke-width="2" stroke-linecap="round" stroke-dasharray="117 117" stroke-dashoffset="117" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="117;117;0;0" keyTimes="0;0.192;0.24;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.192;0.1928;0.256;0.312;1"/></path>
+    <path d="M165 469.5 H385.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="221 221" stroke-dashoffset="221" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="221;221;0;0" keyTimes="0;0.288;0.336;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.288;0.2888;0.352;0.408;1"/></path>
+    <path d="M385.5 469.5 V580.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="111 111" stroke-dashoffset="111" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="111;111;0;0" keyTimes="0;0.344;0.384;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.344;0.3448;0.4;0.456;1"/></path>
+    <path d="M385.5 580.5 H495 V561 H847.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="482 482" stroke-dashoffset="482" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="482;482;0;0" keyTimes="0;0.4;0.448;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.4;0.4008;0.464;0.52;1"/></path>
+    <path d="M847.5 561 V328.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="233 233" stroke-dashoffset="233" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="233;233;0;0" keyTimes="0;0.456;0.488;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.456;0.4568;0.504;0.56;1"/></path>
+    <path d="M847.5 328.5 V561 H495 V580.5 H385.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="714 714" stroke-dashoffset="714" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="714;714;0;0" keyTimes="0;0.496;0.552;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.496;0.4968;0.568;0.624;1"/></path>
+    <path d="M385.5 580.5 H495 V511.5 H610.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="294 294" stroke-dashoffset="294" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="294;294;0;0" keyTimes="0;0.56;0.592;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.56;0.5608;0.608;0.664;1"/></path>
+    <path d="M610.5 511.5 V328.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="183 183" stroke-dashoffset="183" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="183;183;0;0" keyTimes="0;0.6;0.648;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.6;0.6008;0.664;0.72;1"/></path>
+    <path d="M610.5 328.5 V511.5 H495 V580.5 H385.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="477 477" stroke-dashoffset="477" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="477;477;0;0" keyTimes="0;0.656;0.704;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.656;0.6568;0.72;0.776;1"/></path>
+    <path d="M385.5 580.5 H495 V610.5 H610.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="255 255" stroke-dashoffset="255" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="255;255;0;0" keyTimes="0;0.72;0.752;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.72;0.7208;0.768;0.824;1"/></path>
+    <path d="M610.5 610.5 V709.5 H385.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="324 324" stroke-dashoffset="324" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="324;324;0;0" keyTimes="0;0.76;0.808;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.76;0.7608;0.824;0.88;1"/></path>
+    <path d="M385.5 709.5 H165 V469.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="461 461" stroke-dashoffset="461" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="461;461;0;0" keyTimes="0;0.824;0.88;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.824;0.8248;0.896;0.952;1"/></path>
+    <path d="M90 469.5 V829.5" fill="none" style="stroke:var(--primary)" stroke-width="2" stroke-linecap="round" stroke-dasharray="360 360" stroke-dashoffset="360" opacity="0"><animate attributeName="stroke-dashoffset" dur="12.5s" repeatCount="indefinite" values="360;360;0;0" keyTimes="0;0.896;0.944;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;0.9;0.9;0;0" keyTimes="0;0.896;0.8968;0.96;1.016;1"/></path>
+    <g opacity="0"><circle r="10" style="fill:var(--on-surface-variant)" filter="url(#glow)" opacity="0.3"/><circle r="4" style="fill:var(--on-surface-variant)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M165 118.5 H385.5" keyPoints="0;0;1;1" keyTimes="0;0.016;0.072;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.016;0.0224;0.072;0.096;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--on-surface-variant)" filter="url(#glow)" opacity="0.3"/><circle r="4" style="fill:var(--on-surface-variant)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M385.5 118.5 H610.5" keyPoints="0;0;1;1" keyTimes="0;0.08;0.128;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.08;0.0864;0.128;0.152;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--on-surface-variant)" filter="url(#glow)" opacity="0.3"/><circle r="4" style="fill:var(--on-surface-variant)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M385.5 118.5 V211.5 H610.5" keyPoints="0;0;1;1" keyTimes="0;0.08;0.144;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.08;0.0864;0.144;0.168;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--on-surface-variant)" filter="url(#glow)" opacity="0.3"/><circle r="4" style="fill:var(--on-surface-variant)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M610.5 118.5 H847.5" keyPoints="0;0;1;1" keyTimes="0;0.136;0.184;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.136;0.1424;0.184;0.208;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--on-surface-variant)" filter="url(#glow)" opacity="0.3"/><circle r="4" style="fill:var(--on-surface-variant)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M847.5 118.5 V328.5" keyPoints="0;0;1;1" keyTimes="0;0.192;0.24;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.192;0.1984;0.24;0.264;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--on-surface-variant)" filter="url(#glow)" opacity="0.3"/><circle r="4" style="fill:var(--on-surface-variant)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M610.5 211.5 V328.5" keyPoints="0;0;1;1" keyTimes="0;0.192;0.24;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.192;0.1984;0.24;0.264;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M165 469.5 H385.5" keyPoints="0;0;1;1" keyTimes="0;0.288;0.336;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.288;0.2944;0.336;0.36;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M385.5 469.5 V580.5" keyPoints="0;0;1;1" keyTimes="0;0.344;0.384;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.344;0.3504;0.384;0.408;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M385.5 580.5 H495 V561 H847.5" keyPoints="0;0;1;1" keyTimes="0;0.4;0.448;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.4;0.4064;0.448;0.472;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M847.5 561 V328.5" keyPoints="0;0;1;1" keyTimes="0;0.456;0.488;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.456;0.4624;0.488;0.512;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M847.5 328.5 V561 H495 V580.5 H385.5" keyPoints="0;0;1;1" keyTimes="0;0.496;0.552;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.496;0.5024;0.552;0.576;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M385.5 580.5 H495 V511.5 H610.5" keyPoints="0;0;1;1" keyTimes="0;0.56;0.592;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.56;0.5664;0.592;0.616;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M610.5 511.5 V328.5" keyPoints="0;0;1;1" keyTimes="0;0.6;0.648;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.6;0.6064;0.648;0.672;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M610.5 328.5 V511.5 H495 V580.5 H385.5" keyPoints="0;0;1;1" keyTimes="0;0.656;0.704;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.656;0.6624;0.704;0.728;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M385.5 580.5 H495 V610.5 H610.5" keyPoints="0;0;1;1" keyTimes="0;0.72;0.752;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.72;0.7264;0.752;0.776;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M610.5 610.5 V709.5 H385.5" keyPoints="0;0;1;1" keyTimes="0;0.76;0.808;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.76;0.7664;0.808;0.832;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M385.5 709.5 H165 V469.5" keyPoints="0;0;1;1" keyTimes="0;0.824;0.88;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.824;0.8304;0.88;0.904;1"/></g>
+    <g opacity="0"><circle r="10" style="fill:var(--primary)" filter="url(#glow)" opacity="0.75"/><circle r="4" style="fill:var(--primary)"/><animateMotion dur="12.5s" repeatCount="indefinite" path="M90 469.5 V829.5" keyPoints="0;0;1;1" keyTimes="0;0.896;0.944;1" calcMode="spline" keySplines="0 0 1 1;0.2 0 0 1;0 0 1 1"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.896;0.9024;0.944;0.968;1"/></g>
+  </g>
+
+  <!-- Nodes -->
+    <g><rect x="60" y="84" width="210" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="165" y="115.5" style="fill:var(--on-surface)">npm run generate</text><text class="sub" x="165" y="136.5" style="fill:var(--on-surface-variant)">Gemini writes CVs</text></g>
+    <g><rect x="292.5" y="84" width="187.5" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="386.25" y="115.5" style="fill:var(--on-surface)">CV PDFs</text><text class="sub" x="386.25" y="136.5" style="fill:var(--on-surface-variant)">30 files</text></g>
+    <g><rect x="510" y="84" width="202.5" height="69" rx="12" filter="url(#raised)" style="fill:var(--inverse-surface);stroke:var(--outline)"/><text class="title" x="611.25" y="115.5" style="fill:var(--inverse-on-surface)">Gemini</text><text class="sub" x="611.25" y="136.5" style="fill:var(--inverse-on-surface)">extracts profile</text></g>
+    <g><rect x="735" y="84" width="225" height="69" rx="12" filter="url(#raised)" style="fill:var(--primary-container);stroke:var(--outline)"/><text class="title" x="847.5" y="115.5" style="fill:var(--on-primary-container)">Field check</text><text class="sub" x="847.5" y="136.5" style="fill:var(--on-primary-container)">page per fact</text></g>
+    <g><rect x="510" y="177" width="202.5" height="69" rx="12" filter="url(#raised)" style="fill:var(--inverse-surface);stroke:var(--outline)"/><text class="title" x="611.25" y="208.5" style="fill:var(--inverse-on-surface)">Embedding</text><text class="sub" x="611.25" y="229.5" style="fill:var(--inverse-on-surface)">each chunk</text></g>
+    <g><rect x="510" y="294" width="202.5" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="611.25" y="325.5" style="fill:var(--on-surface)">Pinecone</text><text class="sub" x="611.25" y="346.5" style="fill:var(--on-surface-variant)">chunk vectors</text></g>
+    <g><rect x="735" y="294" width="225" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="847.5" y="325.5" style="fill:var(--on-surface)">data/index</text><text class="sub" x="847.5" y="346.5" style="fill:var(--on-surface-variant)">JSON, in memory</text></g>
+    <g><rect x="510" y="399" width="202.5" height="48" rx="12" filter="url(#raised)" style="fill:var(--inverse-surface);stroke:var(--outline)"/><text class="title" x="611.25" y="428.5" style="fill:var(--inverse-on-surface)">Embed query</text></g>
+    <g><rect x="60" y="435" width="210" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="165" y="466.5" style="fill:var(--on-surface)">Chat screen</text><text class="sub" x="165" y="487.5" style="fill:var(--on-surface-variant)">question + history</text></g>
+    <g><rect x="292.5" y="435" width="187.5" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="386.25" y="466.5" style="fill:var(--on-surface)">POST /api/ask</text><text class="sub" x="386.25" y="487.5" style="fill:var(--on-surface-variant)">prompt: no CV text</text></g>
+    <g><rect x="510" y="477" width="202.5" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="611.25" y="508.5" style="fill:var(--on-surface)">search_cv_text</text><text class="sub" x="611.25" y="529.5" style="fill:var(--on-surface-variant)">BM25 + vectors, RRF</text></g>
+    <g><rect x="747" y="414" width="201" height="45" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="847.5" y="442" style="fill:var(--on-surface)">find_candidates</text></g>
+    <g><rect x="747" y="474" width="201" height="45" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="847.5" y="502" style="fill:var(--on-surface)">count_candidates</text></g>
+    <g><rect x="747" y="534" width="201" height="45" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="847.5" y="562" style="fill:var(--on-surface)">get_candidates</text></g>
+    <g><rect x="292.5" y="546" width="187.5" height="69" rx="12" filter="url(#raised)" style="fill:var(--inverse-surface);stroke:var(--outline)"/><text class="title" x="386.25" y="577.5" style="fill:var(--inverse-on-surface)">Gemini</text><text class="sub" x="386.25" y="598.5" style="fill:var(--inverse-on-surface)">tool-calling loop</text></g>
+    <g><rect x="510" y="576" width="202.5" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="611.25" y="607.5" style="fill:var(--on-surface)">present</text><text class="sub" x="611.25" y="628.5" style="fill:var(--on-surface-variant)">ends the loop</text></g>
+    <g><rect x="292.5" y="660" width="187.5" height="99" rx="12" filter="url(#raised)" style="fill:var(--primary-container);stroke:var(--outline)"/><text class="title" x="386.25" y="697.5" style="fill:var(--on-primary-container)">Answer check</text><text class="sub" x="386.25" y="718.5" style="fill:var(--on-primary-container)">checks ids, pages</text><text class="sub" x="386.25" y="737.5" style="fill:var(--on-primary-container)">app writes counts</text></g>
+    <g><rect x="60" y="795" width="210" height="69" rx="12" filter="url(#raised)" style="fill:var(--surface-container-lowest);stroke:var(--outline)"/><text class="title" x="165" y="826.5" style="fill:var(--on-surface)">GET /api/cvs/id</text><text class="sub" x="165" y="847.5" style="fill:var(--on-surface-variant)">PDF at the cited page</text></g>
+
+  <!-- Each node lights as a signal reaches it; the chat glows longest, when the checked answer arrives. -->
+  <g class="motion">
+    <g opacity="0"><rect x="58" y="82" width="214" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="60" y="84" width="210" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.008;0.02;0.08;1"/></g>
+    <g opacity="0"><rect x="290.5" y="82" width="191.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="292.5" y="84" width="187.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.072;0.084;0.144;1"/></g>
+    <g opacity="0"><rect x="508" y="82" width="206.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="510" y="84" width="202.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.128;0.14;0.2;1"/></g>
+    <g opacity="0"><rect x="733" y="82" width="229" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="735" y="84" width="225" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.184;0.196;0.256;1"/></g>
+    <g opacity="0"><rect x="508" y="175" width="206.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="510" y="177" width="202.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.144;0.156;0.216;1"/></g>
+    <g opacity="0"><rect x="508" y="292" width="206.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="510" y="294" width="202.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.24;0.252;0.312;1"/></g>
+    <g opacity="0"><rect x="508" y="292" width="206.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="510" y="294" width="202.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.648;0.66;0.72;1"/></g>
+    <g opacity="0"><rect x="733" y="292" width="229" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="735" y="294" width="225" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.24;0.252;0.312;1"/></g>
+    <g opacity="0"><rect x="733" y="292" width="229" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="735" y="294" width="225" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.488;0.5;0.56;1"/></g>
+    <g opacity="0"><rect x="508" y="397" width="206.5" height="52" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="510" y="399" width="202.5" height="48" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.62;0.632;0.692;1"/></g>
+    <g opacity="0"><rect x="58" y="433" width="214" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="60" y="435" width="210" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.28;0.292;0.352;1"/></g>
+    <g opacity="0"><rect x="290.5" y="433" width="191.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="292.5" y="435" width="187.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.336;0.348;0.408;1"/></g>
+    <g opacity="0"><rect x="508" y="475" width="206.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="510" y="477" width="202.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.592;0.604;0.664;1"/></g>
+    <g opacity="0"><rect x="745" y="412" width="205" height="49" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="747" y="414" width="201" height="45" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.448;0.46;0.52;1"/></g>
+    <g opacity="0"><rect x="745" y="472" width="205" height="49" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="747" y="474" width="201" height="45" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.448;0.46;0.52;1"/></g>
+    <g opacity="0"><rect x="745" y="532" width="205" height="49" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="747" y="534" width="201" height="45" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.448;0.46;0.52;1"/></g>
+    <g opacity="0"><rect x="290.5" y="544" width="191.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="292.5" y="546" width="187.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.384;0.396;0.456;1"/></g>
+    <g opacity="0"><rect x="290.5" y="544" width="191.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="292.5" y="546" width="187.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.552;0.564;0.624;1"/></g>
+    <g opacity="0"><rect x="290.5" y="544" width="191.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="292.5" y="546" width="187.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.704;0.716;0.776;1"/></g>
+    <g opacity="0"><rect x="508" y="574" width="206.5" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="510" y="576" width="202.5" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.752;0.764;0.824;1"/></g>
+    <g opacity="0"><rect x="290.5" y="658" width="191.5" height="103" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="6" filter="url(#glow)" opacity="0.9"/><rect x="292.5" y="660" width="187.5" height="99" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.808;0.82;0.936;1"/></g>
+    <g opacity="0"><rect x="58" y="793" width="214" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="3" filter="url(#glow)" opacity="0.55"/><rect x="60" y="795" width="210" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.944;0.956;1.016;1"/></g>
+    <g opacity="0"><rect x="58" y="433" width="214" height="73" rx="14" fill="none" style="stroke:var(--primary)" stroke-width="6" filter="url(#glow)" opacity="0.9"/><rect x="60" y="435" width="210" height="69" rx="12" fill="none" style="stroke:var(--primary-outline)" stroke-width="1.5"/><animate attributeName="opacity" dur="12.5s" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.88;0.892;0.992;1"/></g>
+  </g>
+
+  <!-- Legend -->
+  <rect x="60" y="906" width="16" height="16" rx="4" style="fill:var(--inverse-surface)"/><text class="note" x="86" y="919">model call</text>
+  <rect x="225" y="906" width="16" height="16" rx="4" style="fill:var(--primary-container)"/><text class="note" x="251" y="919">app check</text>
+  <rect x="375" y="906" width="16" height="16" rx="4" style="fill:var(--surface-container-lowest);stroke:var(--outline-variant)"/><text class="note" x="401" y="919">code and data</text>
 </svg>
