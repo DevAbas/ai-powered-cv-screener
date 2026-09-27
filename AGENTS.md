@@ -198,7 +198,7 @@ nobody remembers it:
 - `.githooks/pre-commit` is the same commit gate for a person; `npm run
   prepare` (run by `npm ci`) points git at it. CI
   (`.github/workflows/design-system.yml`) runs it on every pull request
-  and push to `main`.
+  to `main` and every push to `main`.
 - `.claude/skills/building-ui-components` is the procedure for UI work; it
   loads itself for files under `src/components`, `src/hooks`, `src/app` and
   `.storybook`, and points at the owning documents instead of repeating
