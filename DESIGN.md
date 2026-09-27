@@ -135,6 +135,57 @@ components:
     backgroundColor: "{color.surface}"
     textColor: "{color.on-surface-shimmer}"
     typography: "{typography.label-lg}"
+  progress-line:
+    backgroundColor: "{color.surface}"
+    textColor: "{color.on-surface}"
+    typography: "{typography.label-lg}"
+  progress-line-step:
+    textColor: "{color.on-surface-variant}"
+    typography: "{typography.body-sm}"
+  progress-line-glyph-settled:
+    textColor: "{color.outline-variant}"
+  empty-state-headline:
+    textColor: "{color.on-surface}"
+    typography: "{typography.display-light}"
+  empty-state-highlight:
+    textColor: "{color.on-surface}"
+    typography: "{typography.display}"
+  empty-state-frame:
+    backgroundColor: "{color.primary}"
+  cursor-grid:
+    backgroundColor: "{color.primary}"
+  answer-text:
+    textColor: "{color.on-surface}"
+    typography: "{typography.body-md}"
+  answer-heading:
+    textColor: "{color.on-surface}"
+    typography: "{typography.headline-md}"
+  candidate-name:
+    textColor: "{color.on-surface}"
+    typography: "{typography.headline-md}"
+  candidate-row-name:
+    textColor: "{color.on-surface}"
+    typography: "{typography.name}"
+  candidate-row-detail:
+    textColor: "{color.on-surface-variant}"
+    typography: "{typography.body-sm}"
+  status-title:
+    textColor: "{color.on-surface}"
+    typography: "{typography.headline-lg}"
+  status-text:
+    textColor: "{color.on-surface-variant}"
+    typography: "{typography.body-md}"
+  pdf-pages:
+    backgroundColor: "{color.surface-container}"
+    textColor: "{color.on-surface-variant}"
+    typography: "{typography.body-sm}"
+  pdf-icon:
+    backgroundColor: "{color.primary}"
+    textColor: "{color.on-primary}"
+  resize-handle:
+    backgroundColor: "{color.outline}"
+  resize-handle-active:
+    backgroundColor: "{color.outline-variant}"
 ---
 
 # CV Screener — Design System
@@ -227,7 +278,7 @@ meanings are the ones given here.
   ascending fills for controls and their states.
 - **Surface panel** (`color.surface-panel`): a quiet region that groups
   related rows on the page, a shade lighter than `surface-container-low`.
-  Derived: low at 60% over `surface`.
+  Derived: low mixed over `surface`, by the share its token's rule gives.
 - **Outline** (`color.outline`): every edge, divider and scrollbar thumb.
   There is one edge colour, kept faint: an edge separates, it never frames.
 - **Outline variant** (`color.outline-variant`): the strongest neutral that
@@ -237,7 +288,8 @@ meanings are the ones given here.
 - **On surface variant** (`color.on-surface-variant`): secondary text:
   metadata, captions, icons at rest, disabled text.
 - **On surface subtle** (`color.on-surface-subtle`): a tertiary label that
-  should be read last. Derived: `on-surface-variant` at 70% over `surface`.
+  should be read last. Derived: `on-surface-variant` mixed over `surface`,
+  fainter than it, by the share its token's rule gives.
 - **On surface shimmer** (`color.on-surface-shimmer`): the faded ink at
   either end of the band that sweeps a working progress line. Derived:
   `on-surface` over `surface`, at the smallest share that still meets
@@ -247,9 +299,10 @@ meanings are the ones given here.
   primary action and the marks of the brand (see Do's and Don'ts). Never
   for text blocks, content backgrounds or decoration.
 - **Primary hover / pressed** (`color.primary-hover`,
-  `color.primary-pressed`): `primary` with its OKLCH lightness 7 and 14
-  points lower, same hue and chroma. Radix's step 10 is too close to step 9
-  for this bright accent to read as a hover.
+  `color.primary-pressed`): `primary` with its OKLCH lightness lowered, same
+  hue and chroma; pressed moves twice as far as hover. Each step is in its
+  token's rule. Radix's step 10 is too close to step 9 for this bright
+  accent to read as a hover.
 - **On primary** (`color.on-primary`): text and icons on `primary`: mint is
   too light for white text.
 - **Primary outline** (`color.primary-outline`): the focus ring.
@@ -306,16 +359,17 @@ is not what the rule gives from that theme's roles.
 
 ## Typography
 
-One family, Google Sans (SIL OFL), self-hosted. Two working weights, 400 and
-500; 600 only when a single element must dominate: the logo, the
-empty-state headline and a candidate's name in an answer row. One light
-weight, 300, for the headline's leading words alone, from Google Sans Flex,
-the family's variable cut (Google Sans itself is served from 400 up). No
+One family, Google Sans (SIL OFL), self-hosted. Two working weights,
+`font.weight.400` and `font.weight.500`; `font.weight.600` only when a
+single element must dominate: the logo, the empty-state headline and a
+candidate's name in an answer row. One light weight, `font.weight.300`, for
+the headline's leading words alone, from Google Sans Flex, the family's
+variable cut (Google Sans itself is served from `font.weight.400` up). No
 italics.
 
 - **display / display-light:** the empty-state headline only; the one large
   line a recruiter sees before the first question: the leading words in
-  `display-light` (300), the highlighted phrase in `display` (600), so the
+  `display-light`, the highlighted phrase in `display`, so the
   weight lands where the highlight is.
 - **headline-lg / headline-md:** page and section titles, one-line summaries.
 - **body-lg:** primary input text.
@@ -324,9 +378,10 @@ italics.
 - **label-lg / label-md / label-sm:** buttons, tooltips, section headers
   (label-sm uppercase, letter-spaced).
 - **name:** a candidate's name in an answer row: one step above label-lg
-  and 600, so the name leads the row.
-- **wordmark / mark:** the logo only: the product name uppercase, 600 and
-  widely letter-spaced; the "CV" letters of the mark, 600.
+  and at the dominant weight, so the name leads the row.
+- **wordmark / mark:** the logo only: the product name uppercase, at the
+  dominant weight and widely letter-spaced; the "CV" letters of the mark,
+  at the same weight.
 
 A text style is one unit: its size, line height, weight and letter spacing
 travel together. The one sanctioned mix is a line height or letter spacing
@@ -339,7 +394,8 @@ Lines are never justified. Prefer lists and tables over paragraphs.
 
 Single-column layout: the conversation, padded with `spacing.gutter`, with
 the message column capped at `containers.reading` and the composer centred
-on it at `containers.composer`, 1rem wider on each side; the header's logo
+on it at `containers.composer`, wider than the reading column by the same
+amount on each side; the header's logo
 and toggle sit on a wider column of their own, `containers.header`, so on a
 wide screen they frame the content without drifting to the edges or
 crowding it. All spacing is a multiple of half `spacing.base`; whole steps
@@ -375,8 +431,9 @@ example questions (Components: Composer). Under reduced motion everything
 appears at once, sharp and still.
 
 Behind the empty state, an invisible lattice of rounded cells lights up in
-`primary` hairlines (1px in light, 0.5px in dark, where mint on near-black
-reads stronger) around the pointer and fades out
+`primary` hairlines (thinner in dark, where mint on near-black reads
+stronger; `--cursor-grid-line-width` in `src/styles/theme.template.css`)
+around the pointer and fades out
 after it leaves; a click sends a ring of lit cells outward. Nothing is
 drawn until the pointer moves; no lit cell is drawn over the headline block
 or the composer (with a small margin around them), it never blocks the
@@ -392,7 +449,8 @@ floating input containers use `shadow.raised`, menus use
 loses while pressed, so the press reads as the card meeting the page. Each
 shadow is stronger in the dark theme, since the light opacities are
 invisible on dark surfaces. The sticky header casts no shadow and has no
-border: a 2rem gradient from `surface` to transparent below it fades the
+border: a short gradient from `surface` to transparent below it
+(`AppHeader.tsx`) fades the
 conversation out as it passes underneath.
 
 ## Shapes
@@ -406,13 +464,14 @@ inputs, containers and tooltips `rounded.md`; menu rows and small controls
 
 Each component token above names the roles a component reads; the code
 styles the component with those roles (a recipe cites its tokens, and the
-lint holds the classes to them). Sizes that belong to one component are
-stated here and live in its code. Which libraries components use and how
-states are selected is in `src/components/README.md`. Icons are 1rem in
-text and in `xs` buttons, 1.25rem in other buttons.
+lint holds the classes to them). The code owns component sizes; this
+document names the file, never the number. Which libraries components use
+and how states are selected is in `src/components/README.md`. Icons take
+one size in text and in `xs` buttons and one step larger in other buttons
+(`Button.recipe.ts`).
 
-- **Logo:** the mark is "CV" in `mark` on a `primary` square of 1.75rem,
-  `rounded.sm`: the letters are traced from the font as outlines and centred
+- **Logo:** the mark is "CV" in `mark` on a `primary` square
+  (`LogoMark.tsx`), `rounded.sm`: the letters are traced from the font as outlines and centred
   on their bounding box, so no font has to load and
   they sit the same in every browser; the wordmark "SCREENER" follows in
   `wordmark` (`logo-wordmark`). The same drawing, at the same colours, is
@@ -424,47 +483,53 @@ text and in `xs` buttons, 1.25rem in other buttons.
   past hover: `primary-pressed` for primary, `surface-container-highest` for
   secondary and the model chip. A ghost icon button shows a
   `surface-container-low` circle on hover and `surface-container-high` while
-  pressed. Sizes: `xs` 1.875rem, `sm` 2rem, `md` 2.25rem tall.
-- **Icons:** `on-surface-variant` at rest, `on-surface` on hover, `outline-variant` when disabled; 1.25rem beside a headline (a candidate's name).
+  pressed. Three heights, `xs` below `sm` below `md` (`Button.recipe.ts`).
+- **Icons:** `on-surface-variant` at rest, `on-surface` on hover,
+  `outline-variant` when disabled; beside a headline (a candidate's name),
+  the size of a button's icon (`CandidateName.tsx`).
 - **Colour mode toggle:** a `md` ghost icon button in the header, Moon in
-  light and Sun in dark, its icon 1.5rem: the one icon larger than the
-  1.25rem of other buttons, so the switch reads at a glance. On a switch
-  the icon turns: the leaving one rotates 45°, shrinks to half and fades
-  while the arriving one rotates in from the other side, grows and settles
-  a little past its mark (280ms, the overshoot easing); under reduced
-  motion the swap is immediate. A press plays a short light-switch click: synthesized,
-  under 60 ms, quiet, a snap of band-limited noise over a low thock; the
+  light and Sun in dark, its icon the one larger than other buttons' icons,
+  so the switch reads at a glance (`ColorModeButton.tsx`). On a switch the
+  icon turns: the leaving one rotates, shrinks and fades while the arriving
+  one rotates in from the other side, grows and settles a little past its
+  mark (`motion.duration-color-mode-turn`, `motion.ease-overshoot`); under
+  reduced motion the swap is immediate. A press plays a short light-switch
+  click: synthesized, a few tens of milliseconds, quiet, a snap of
+  band-limited noise over a low thock; the
   click for "on" (to light) sits above the one for "off" (to dark), so the
   direction is audible. It is the interface's only sound; nothing plays on
   load, on hover or on focus. The frequencies and durations live in the code
   beside this rule (`switchClick.ts`).
 - **Inputs:** no border at rest when placed on `surface`; the background
-  step separates them. Focus: 2px `primary-outline` ring.
+  step separates them. Focus: a `primary-outline` ring (`focusVisibleRing`
+  in `src/components/ui/recipe.ts`).
 - **Composer:** the largest floating container: `surface-container-lowest`
-  with an `outline` border, `rounded.xl`, raised shadow, padded 1rem; the
-  border is what separates it from `surface` at rest, three tones away. With one model offered (this
-  phase), one row: the text input, at least two lines tall (3.5rem), then
-  audio-lines and a circular primary send button that becomes Stop while a
-  request runs, aligned to the input's last line. With a choice of models, the input has its own row with a 0.625rem
-  bottom margin, then a 0.625rem gap to a bottom row: the model chip on
+  with an `outline` border, `rounded.xl`, raised shadow, padded
+  (`ChatComposer.tsx`); the border is what separates it from `surface` at
+  rest, three tones away. With one model offered (this phase), one row: the
+  text input, at least two lines tall, then audio-lines and a circular
+  primary send button that becomes Stop while a request runs, aligned to
+  the input's last line. With a choice of models, the input has its own
+  row, then a bottom row: the model chip on
   the left, the same actions on the right. Audio-lines is disabled, with
   the tooltip "Voice mode coming soon…" above it. The input grows with the
   question up to a maximum height, then scrolls. In the empty state the
   placeholder is typed: the example questions one after another, each
-  character 75ms apart, the full question held 1.5s, deleted at 30ms a
-  character, 0.5s empty before the next, in `input-placeholder` and
-  `body-lg` where typed text will sit, with a 1px bar cursor one line tall
-  blinking once a second; it goes as soon as the field is focused or holds
+  typed, held, deleted faster than it was typed, then a pause before the
+  next (`TYPING` in `typewriter.ts`), in `input-placeholder` and `body-lg`
+  where typed text will sit, with a hairline bar cursor one line tall
+  blinking every `motion.duration-blink` (`TypedPlaceholder.tsx`); it goes as soon as the field is focused or holds
   text, and returns when the field is empty and unfocused again, so the
   empty state's field does not take focus on load. In the conversation the
   placeholder is still ("Ask about the candidate pool"). Under reduced
   motion the first example question shows still, no cursor.
   Centred in the empty state; after the first question it sits at the bottom
-  of the conversation, 1rem wider on each side than the message column.
+  of the conversation, wider than the message column by the same amount
+  on each side (`containers.composer`, `containers.reading`).
 - **Question:** the recruiter's question sits right-aligned on
   `primary-container`, `rounded.xl` (half the one-line height, so a single
   line has fully round ends and a single character is a circle), at least
-  as wide as it is tall and at most 33.75rem (540px) wide.
+  as wide as it is tall and at most `containers.question` wide.
   Answer text stays unboxed; a candidate list sits on a panel (Answer views).
 - **Model menu:** the model chip (`surface-container`, `rounded.full`) shows
   the vendor logo, the model name and a chevron, with the tooltip "Change
@@ -476,7 +541,7 @@ text and in `xs` buttons, 1.25rem in other buttons.
   marked only by a `primary-text` check icon.
 - **Links:** `on-surface` with underline; hover `primary-text`.
 - **File card:** the one card in the interface, for a CV that opens: one
-  line with the 1.25rem PDF icon (its document in `on-surface`, its download
+  line with the PDF icon (its document in `on-surface`, its download
   badge in solid `primary` with an `on-primary` arrow, like the logo mark, a
   thing, not a text block), the candidate's name in `label-lg` and
   "Resume" in `body-sm` `on-surface-variant`; `surface-container-lowest`
@@ -485,20 +550,23 @@ text and in `xs` buttons, 1.25rem in other buttons.
   resume". Hover is `surface-container-low`; pressed goes one tone further,
   `surface-container`, without the shadow; both transition. Inside an
   answer view, where the name is already shown beside it, the card is
-  compact: the icon at 1rem and "Resume" only, with the padding of a text
+  compact: a smaller icon and "Resume" only (`CvSourceLink.tsx`), with the
+  padding of a text
   line, so it sits at the height of the row's text.
 - **CV preview:** a file card opens the CV in a panel docked to the right
   edge, full height, `surface-container-lowest` with an `outline` left edge
   and no shadow: the CV's pages drawn one under another on
   `surface-container`, each page on `surface-container-lowest` with the
-  raised shadow and a gutter of 1rem, under a 4rem header with the PDF
+  raised shadow and a gutter between them (`PdfPages.tsx`), under a header
+  (`CvPreview.tsx`) with the PDF
   icon, the file name in `label-lg`, and ghost icon buttons Download and
   Close; while the pages load, a spinner and "Loading the CV…" sit in the
-  middle. It opens 30rem wide, is dragged wider or narrower by
-  its left edge between 20rem and 70% of the viewport (the conversation
-  keeps the rest), and the handle is a `divider` line that fills to
-  `outline-variant` on hover and while dragging; it opens at 35% of the
-viewport, never under 30rem. Below `lg` it fills the
+  middle. It opens at a set share of the viewport, never narrower than
+  `containers.preview`, and is dragged wider or narrower by its left edge,
+  from `containers.preview-min` up to a set share of the viewport, never
+  more (the conversation keeps the rest); both shares are named in
+  `panelWidth.ts`. The handle is a `divider` line that fills to
+  `outline-variant` on hover and while dragging. Below `lg` it fills the
   screen instead, with the same header and no handle. Escape closes it.
 - **Answer text:** the answer as the model wrote it, appearing once it is
   written: paragraphs and bullet or numbered lists in `body-md`
@@ -517,7 +585,8 @@ viewport, never under 30rem. Below `lg` it fills the
     `on-surface` composed by the app from the search ("There are 7
     candidates with React experience. Here are their details."), then one
     compact row per candidate on four lines, the lower three indented to
-    the name: a 1rem person icon and the name in `name`; the title from
+    the name: a person icon (`AnswerCandidates.tsx`) and the name in
+    `name`; the title from
     the CV in `body-sm` `on-surface-variant`; the years of the skills
     asked about in `body-sm` with tabular figures; the compact file card,
     shifted left by its own padding and border so its icon sits on the
@@ -528,7 +597,8 @@ viewport, never under 30rem. Below `lg` it fills the
     under them inside the panel, in the compact file card's style (white
     on the grey, `label-md`), "Show all 7" with a chevron down, reveals
     the rest and becomes "Show fewer" with a chevron up. The rest unfold
-    over 200ms (decelerate) and fold over 150ms (accelerate), fading with
+    over `motion.duration-medium` (`motion.ease-decelerate`) and fold over
+    `motion.duration-short` (`motion.ease-accelerate`), fading with
     the height, and are clipped only until they have unfolded, so a file
     card's tooltip on the last row is not cut off; never under reduced
     motion. A ranked list leads each row with its number in `label-md`
@@ -554,20 +624,22 @@ viewport, never under 30rem. Below `lg` it fills the
 - **Tables:** header in `label-sm` `on-surface-variant`; cells `body-md`;
   horizontal rules only, no vertical rules, no zebra striping.
 - **Tooltips:** a short label on `inverse-surface` with `inverse-on-surface`
-  text, `label-md`, `rounded.md`. Fades in on hover after 150ms and at once on
+  text, `label-md`, `rounded.md`. Fades in on hover after a short delay
+  (`OPEN_DELAY_MS` in `Tooltip.tsx`) and at once on
   keyboard focus; Escape closes it, and so does pressing the control. A
   control whose own menu is open shows none.
 - **Empty state:** the headline "Find The Right Candidates" on one line,
   title case: "Find The Right" in `display-light`, "Candidates" in
   `display`, wrapping only when the column is narrower than the line. One
   word is in focus: "Candidates", unless the pointer is over another word,
-  then that word. A frame marks the focused word: four `primary` corners,
-  1rem squares with 3px strokes, set 0.5rem outside the word's box, no
-  glow; it slides and resizes to the focused word (500ms, standard
-  easing). The other words blur 5px (500ms); the focused one is sharp.
-  Under reduced motion nothing blurs or moves. 3rem below the headline the
-  composer, its placeholder typing the example questions in turn
-  (Composer); 1.5rem under the composer
+  then that word. A frame marks the focused word: four `primary` corner
+  squares with heavy strokes, set just outside the word's box, no glow
+  (`ChatEmptyState.tsx`); it slides and resizes to the focused word
+  (`motion.duration-focus-move`, `motion.ease-standard`). The other words
+  blur by `motion.blur-out-of-focus` over the same duration; the focused
+  one is sharp. Under reduced motion nothing blurs or moves. Below the
+  headline the composer, its placeholder typing the example questions in
+  turn (Composer); closer under the composer (`ChatScreen.tsx`)
   the CV count as a quiet label (`cv-count`): `label-md` in capitals,
   letter-spaced as `label-sm`, in `on-surface-subtle`, "30 CVs TO REVIEW" with the
   s of CVs small (1 CV in the singular). No suggested-question buttons.
@@ -603,4 +675,4 @@ viewport, never under 30rem. Below `lg` it fills the
   code never reads the palette, and never makes a colour by opacity: a new
   tint is a derived role in the tokens first.
 - Don't add a second accent for any purpose.
-- Don't use weights above 500 for running text.
+- Don't use weights above `font.weight.500` for running text.

@@ -36,7 +36,7 @@ export const cardClass = (active: boolean, compact: boolean) => cx(active ? ACTI
 function Label({ name, note = "Resume", compact }: { name: string; note?: string; compact: boolean }) {
   return (
     <>
-      {/* DESIGN.md, File card: the PDF icon; its band is primary, the document the text colour; 1rem in a row. */}
+      {/* DESIGN.md, File card: the PDF icon; its band is primary, the document the text colour; smaller in a compact card (1rem, else 1.25rem). */}
       <PdfIcon aria-hidden className={cx("shrink-0 text-on-surface", compact ? "size-4" : "size-5")} />
       {!compact && <span className="truncate text-label-lg text-on-surface">{name}</span>}
       <span className="text-body-sm text-on-surface-variant">{note}</span>

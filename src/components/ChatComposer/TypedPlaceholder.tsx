@@ -26,7 +26,7 @@ export function TypedPlaceholder({ texts }: TypedPlaceholderProps) {
     // `input-placeholder`: the field's placeholder colour and type; padded as the field is, so the text sits where typed text will.
     <span aria-hidden className="pointer-events-none absolute top-0 left-0 max-w-full overflow-hidden px-1 py-1 text-body-lg whitespace-nowrap text-outline-variant">
       {shownText(state, texts)}
-      {/* DESIGN.md, Composer: a 1px bar, one line tall, blinking once a second. */}
+      {/* DESIGN.md, Composer: a hairline bar (1px), one line tall, blinking every `motion.duration-blink`. */}
       <span className="ml-px inline-block h-[1em] w-px translate-y-[0.15em] bg-outline-variant motion-safe:animate-blink" />
     </span>
   );

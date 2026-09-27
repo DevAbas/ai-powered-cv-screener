@@ -27,7 +27,7 @@ export const buttonRecipe = defineRecipe({
         "enabled:active:bg-surface-container-high enabled:active:text-on-surface",
       ],
     },
-    // DESIGN.md, Components: icons 1rem in `xs` buttons, 1.25rem in the others.
+    // DESIGN.md, Components: icons one size in `xs` buttons, one step larger in the others (1rem, 1.25rem).
     // An icon with its own size-* class keeps it.
     size: {
       xs: "h-7.5 min-w-7.5 gap-1 [&_svg:not([class*='size-'])]:size-4",

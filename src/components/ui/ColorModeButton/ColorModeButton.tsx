@@ -32,9 +32,9 @@ function onToggle() {
 export type ColorModeButtonProps = Omit<IconButtonProps, "aria-label" | "children" | "onClick">;
 
 /**
- * DESIGN.md, Colour mode toggle: the leaving icon turns 45°, shrinks to half
- * and fades as the arriving one turns in from the other side and settles
- * with a slight overshoot. Both icons are always present, one on top of the
+ * DESIGN.md, Colour mode toggle: the leaving icon turns, shrinks and fades
+ * (here 45° and to half) as the arriving one turns in from the other side
+ * and settles with a slight overshoot. Both icons are always present, one on top of the
  * other, so the `dark:` variant does the swap and the server render matches.
  */
 const TURN = "col-start-1 row-start-1 size-6 motion-safe:transition-[rotate,scale,opacity] motion-safe:duration-(--motion-duration-color-mode-turn) motion-safe:ease-overshoot";
@@ -43,7 +43,7 @@ const TURN = "col-start-1 row-start-1 size-6 motion-safe:transition-[rotate,scal
 export function ColorModeButton({ variant = "ghost", ...rest }: ColorModeButtonProps) {
   return (
     <IconButton aria-label="Switch between light and dark theme" variant={variant} {...rest} onClick={onToggle}>
-      {/* DESIGN.md, Colour mode toggle: a 1.5rem icon, larger than the other buttons' 1.25rem. */}
+      {/* DESIGN.md, Colour mode toggle: the one icon larger than other buttons' icons (1.5rem against 1.25rem). */}
       <span aria-hidden className="grid">
         <Moon className={cx(TURN, "rotate-0 scale-100 opacity-100 dark:rotate-45 dark:scale-50 dark:opacity-0")} />
         <Sun className={cx(TURN, "rotate-45 scale-50 opacity-0 dark:rotate-0 dark:scale-100 dark:opacity-100")} />

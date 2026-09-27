@@ -100,7 +100,7 @@ export function ChatEmptyState({ ref }: ChatEmptyStateProps) {
   );
 }
 
-/** DESIGN.md, Empty state: four `primary` corners, 1rem squares with 3px strokes, set 0.5rem outside the focused word's box; no glow. */
+/** DESIGN.md, Empty state: four `primary` corners set just outside the focused word's box, no glow; here 1rem squares with 3px strokes, 0.5rem out. */
 const CORNERS = ["-top-2 -left-2 border-t-3 border-l-3", "-top-2 -right-2 border-t-3 border-r-3", "-bottom-2 -left-2 border-b-3 border-l-3", "-right-2 -bottom-2 border-r-3 border-b-3"];
 
 /** The frame on the focused word: moved and resized by transition, so it slides from word to word. */

@@ -21,5 +21,5 @@ export { cx } from "tailwind-variants/lite";
  */
 export const capHeightBox = "[text-box:trim-both_cap_alphabetic]";
 
-/** DESIGN.md, Inputs: 2px focus ring in the `focus-ring` token colour, on keyboard focus. */
+/** DESIGN.md, Inputs: a focus ring in the `focus-ring` token colour, on keyboard focus; its 2px width is this file's. */
 export const focusVisibleRing = "outline-none focus-visible:ring-2 focus-visible:ring-primary-outline";
