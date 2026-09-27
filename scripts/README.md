@@ -42,7 +42,7 @@ Each folder of `data/` has one owner:
 | `data/generation/seeds/<id>.json` | The ground truth each CV was rendered from | The scripts and the evaluation |
 | `data/generation/manifest.json` | The generator's state: whether each PDF carries a photo | The generator |
 | `data/generation/photos/<id>.jpg` | Generated photos | The generator |
-| `data/index/<id>.json` | One index entry per CV (`IndexEntrySchema`) | The app, once at startup |
+| `data/index/<id>.json` | One index entry per CV (`IndexEntrySchema`) | The app, once per process, on the first request that needs it |
 | `data/cvs/<id>.pdf` | The CVs | The CV route and the component previews |
 | `data/eval/` | Evaluation reports | Nobody at run time |
 
