@@ -46,10 +46,23 @@ function ruleCss(rule: DerivedRule, roleHex: (role: string) => string): string {
 
 /** The sRGB hex a rule gives, `roleHex` resolving the roles it reads in one theme. */
 export function derivedHex(rule: DerivedRule, roleHex: (role: string) => string): string {
-  // A target without relative colour or color-mix makes lightningcss resolve the value to a hex fallback.
+  // A target without relative colour or color-mix makes lightningcss resolve the value to an sRGB fallback.
   const { code } = transform({ filename: "derived.css", code: Buffer.from(`a{color:${ruleCss(rule, roleHex)}}`), targets: { chrome: 80 << 16 } });
-  const hex = /color:\s*(#[0-9a-f]{3,8})\b/i.exec(code.toString())?.[1];
-  if (!hex) throw new Error(`lightningcss did not resolve ${ruleCss(rule, roleHex)} to a hex colour`);
-  const digits = hex.slice(1).toLowerCase();
-  return `#${digits.length === 3 ? [...digits].map((d) => d + d).join("") : digits}`;
+  const resolved = /color:\s*([^;}]+?)\s*[;}]/.exec(code.toString())?.[1];
+  // The fallback is written in its shortest form, a hex or a named colour (#808080 is `gray`): its visitor reads either as channels.
+  let channels: { r: number; g: number; b: number } | undefined;
+  if (resolved) {
+    transform({
+      filename: "resolved.css",
+      code: Buffer.from(`a{color:${resolved}}`),
+      visitor: {
+        Color: (color) => {
+          if (typeof color === "object" && color.type === "rgb") channels = color;
+        },
+      },
+    });
+  }
+  if (!channels) throw new Error(`lightningcss did not resolve ${ruleCss(rule, roleHex)} to an sRGB colour`);
+  const { r, g, b } = channels;
+  return `#${[r, g, b].map((channel) => channel.toString(16).padStart(2, "0")).join("")}`;
 }

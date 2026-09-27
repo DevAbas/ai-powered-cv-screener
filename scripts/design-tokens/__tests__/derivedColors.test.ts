@@ -25,6 +25,12 @@ describe("derivedHex", () => {
     expect(derivedHex({ kind: "mix", from: "surface-container-low", weight: 0.6, over: "surface" }, (role) => light[role])).toBe("#f8f8f8");
   });
 
+  it("gives a hex where lightningcss writes a named colour", () => {
+    // #eeeeee half over #111111 is #808080, which lightningcss serialises as `gray`.
+    const dark: Record<string, string> = { "on-surface": "#eeeeee", surface: "#111111" };
+    expect(derivedHex({ kind: "mix", from: "on-surface", weight: 0.5, over: "surface" }, (role) => dark[role])).toBe("#808080");
+  });
+
   it("says the rule in words", () => {
     expect(describeRule({ kind: "mix", from: "on-surface-variant", weight: 0.7, over: "surface" })).toBe("on-surface-variant at 70% over surface");
   });

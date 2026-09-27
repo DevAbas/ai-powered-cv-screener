@@ -1,0 +1,541 @@
+{
+  "schemaVersion": "1",
+  "tool": {
+    "name": "design-system",
+    "version": "0.6.1"
+  },
+  "project": {
+    "name": "ai-powered-cv-screener",
+    "root": ".",
+    "commit": "c2a7d2a",
+    "dirty": true
+  },
+  "date": "2026-09-27",
+  "stack": {
+    "profile": "terrazzo-tailwind-v4",
+    "tokenFormat": "W3C Design Tokens (DTCG) 2025.10: 10 *.tokens.json files behind a resolver with sets foundation and semantic and one modifier, theme (light default, dark)",
+    "styling": [
+      "Tailwind CSS v4 (@tailwindcss/postcss)",
+      "Terrazzo (@terrazzo/plugin-css, @terrazzo/plugin-tailwind)"
+    ],
+    "rulesDocument": "DESIGN.md",
+    "tokenSettings": {
+      "resolver": "tokens/design.resolver.json",
+      "roles": "color",
+      "palette": "palette",
+      "font": "font",
+      "typography": "typography",
+      "rounded": "rounded (file tokens/semantic/radius.tokens.json)",
+      "spacing": "spacing",
+      "shadow": "shadow",
+      "otherGroups": [
+        "motion",
+        "breakpoints",
+        "containers"
+      ],
+      "derivedRuleKey": "$extensions.cv-screener.derived",
+      "template": "src/styles/theme.template.css",
+      "generated": [
+        "src/styles/tokens.generated.css",
+        "src/styles/theme.generated.css"
+      ],
+      "contractReferences": "{color.*}, {typography.*}, {rounded.*}",
+      "outOfScope": [
+        "scripts/generation: demo CVs stand in for documents received from outside; their colours are the document's own (AGENTS.md, Conventions: the design system governs the app's UI, src/ and .storybook/, only)"
+      ]
+    },
+    "versions": {
+      "tailwindcss": {
+        "installed": "4.3.3",
+        "latest": "4.3.3"
+      },
+      "@tailwindcss/postcss": {
+        "installed": "4.3.3",
+        "latest": "4.3.3"
+      },
+      "lightningcss": {
+        "installed": "1.32.0",
+        "latest": "1.33.0"
+      },
+      "@terrazzo/cli": {
+        "installed": "2.7.1",
+        "latest": "2.7.1"
+      },
+      "@terrazzo/parser": {
+        "installed": "2.7.1",
+        "latest": "2.7.1"
+      },
+      "@terrazzo/plugin-css": {
+        "installed": "2.7.1",
+        "latest": "2.7.1"
+      },
+      "@terrazzo/plugin-tailwind": {
+        "installed": "2.7.1",
+        "latest": "2.7.1"
+      },
+      "@google/design.md": {
+        "installed": "0.4.0",
+        "latest": "0.4.0"
+      },
+      "eslint": {
+        "installed": "9.39.5",
+        "latest": "10.11.0"
+      },
+      "storybook": {
+        "installed": "10.6.0",
+        "latest": "10.6.0"
+      },
+      "yaml": {
+        "installed": "2.9.1",
+        "latest": "2.9.1"
+      }
+    }
+  },
+  "parts": [
+    {
+      "id": "naming",
+      "status": "met",
+      "summary": "Roles are named by purpose in kebab-case in both themes, and one mapping from id to class and variable (DESIGN.md, Overview: Reading the tokens) is enforced by the contract check and the token-classes lint."
+    },
+    {
+      "id": "tiers",
+      "status": "partial",
+      "summary": "The token tiers hold and code states no colour outside them; the components contract still leaves out the empty-state headline and frame, the progress line's label at rest and the candidate name."
+    },
+    {
+      "id": "format",
+      "status": "met",
+      "summary": "The tokens parse as DTCG 2025.10 through Terrazzo, both themes define the same 24 roles, and both stylesheets are built by Terrazzo behind a --check staleness gate and an edit-denying hook."
+    },
+    {
+      "id": "docs",
+      "status": "partial",
+      "summary": "DESIGN.md explains every role and has a reading guide, but its prose restates token values (durations, container widths, blur) and component sizes that also live in code."
+    }
+  ],
+  "findings": [
+    {
+      "id": "tiers/components-read-roles@DESIGN.md#components",
+      "ruleId": "tiers/components-read-roles",
+      "part": "tiers",
+      "severity": "warning",
+      "title": "The components contract leaves out components the code has: the empty-state headline and frame, the progress line's label at rest and the candidate name",
+      "location": {
+        "file": "DESIGN.md",
+        "pointer": "components"
+      },
+      "evidence": [
+        {
+          "file": "DESIGN.md",
+          "line": 9,
+          "excerpt": "components:"
+        },
+        {
+          "file": "src/components/ChatEmptyState/ChatEmptyState.tsx",
+          "line": 71,
+          "excerpt": "gap-x-5 text-display text-on-surface\""
+        },
+        {
+          "file": "src/components/ChatEmptyState/ChatEmptyState.tsx",
+          "line": 119,
+          "excerpt": "className={cx(\"absolute size-4 border-primary\", corner)}"
+        },
+        {
+          "file": "src/components/Answer/CandidateName.tsx",
+          "line": 11,
+          "excerpt": "<span className=\"inline-flex items-center gap-1.5 text-headline-md text-on-surface\">"
+        },
+        {
+          "file": "DESIGN.md",
+          "line": 134,
+          "excerpt": "progress-line-shimmer:"
+        },
+        {
+          "file": "src/components/ui/ThoughtLine/ThoughtLine.recipe.ts",
+          "line": 8,
+          "excerpt": "root: \"inline-flex max-w-full flex-col items-start text-label-lg text-on-surface\","
+        }
+      ],
+      "why": "The contract is the component tier: a component missing from it has roles that no check ties to it (principles 2). Lowered from error to warning because every entry in the contract names a role, and the prose (Components: Empty state, Progress line, Answer views) names these components' roles. The shimmer band's faded ends now have an entry (progress-line-shimmer); the label at rest does not.",
+      "fix": "Add contract entries (for example empty-state-headline, empty-state-frame, progress-line, candidate-name) that name the roles and text styles the prose already gives them."
+    },
+    {
+      "id": "docs/rules-hold-no-values@DESIGN.md#",
+      "ruleId": "docs/rules-hold-no-values",
+      "part": "docs",
+      "severity": "warning",
+      "title": "DESIGN.md prose restates token values and component sizes that the tokens or the code also hold",
+      "location": {
+        "file": "DESIGN.md",
+        "pointer": ""
+      },
+      "evidence": [
+        {
+          "file": "DESIGN.md",
+          "line": 422,
+          "excerpt": "a little past its mark (280ms, the overshoot easing); under reduced"
+        },
+        {
+          "file": "src/components/ui/ColorModeButton/ColorModeButton.tsx",
+          "line": 40,
+          "excerpt": "motion-safe:duration-(--motion-duration-color-mode-turn) motion-safe:ease-overshoot"
+        },
+        {
+          "file": "DESIGN.md",
+          "line": 455,
+          "excerpt": "as wide as it is tall and at most 33.75rem (540px) wide."
+        },
+        {
+          "file": "DESIGN.md",
+          "line": 485,
+          "excerpt": "middle. It opens 30rem wide, is dragged wider or narrower by"
+        },
+        {
+          "file": "DESIGN.md",
+          "line": 519,
+          "excerpt": "over 200ms (decelerate) and fold over 150ms (accelerate), fading with"
+        },
+        {
+          "file": "DESIGN.md",
+          "line": 555,
+          "excerpt": "easing). The other words blur 5px (500ms); the focused one is sharp."
+        },
+        {
+          "file": "src/components/ChatEmptyState/ChatEmptyState.tsx",
+          "line": 90,
+          "excerpt": "\"motion-safe:blur-(--motion-blur-out-of-focus)\""
+        },
+        {
+          "file": "DESIGN.md",
+          "line": 366,
+          "excerpt": "`primary` hairlines (1px in light, 0.5px in dark, where mint on near-black"
+        },
+        {
+          "file": "src/styles/theme.template.css",
+          "line": 34,
+          "excerpt": "--cursor-grid-line-width: 1px;"
+        },
+        {
+          "file": "DESIGN.md",
+          "line": 415,
+          "excerpt": "Sizes: `xs` 1.875rem, `sm` 2rem, `md` 2.25rem tall."
+        },
+        {
+          "file": "src/components/ui/Button/Button.recipe.ts",
+          "line": 33,
+          "excerpt": "xs: \"h-7.5 min-w-7.5 gap-1 [&_svg:not([class*='size-'])]:size-4\","
+        },
+        {
+          "file": "DESIGN.md",
+          "line": 442,
+          "excerpt": "character 75ms apart, the full question held 1.5s, deleted at 30ms a"
+        },
+        {
+          "file": "src/components/ChatComposer/typewriter.ts",
+          "line": 9,
+          "excerpt": "typeMs: 75,"
+        }
+      ],
+      "why": "A value written in the rules document and again in tokens or code is two sources that drift (principles 1). The prose states the values of motion.duration-color-mode-turn, containers.question, containers.preview, motion.duration-medium/short, motion.blur-out-of-focus and motion.duration-focus-move instead of citing their ids, and repeats sizes that DESIGN.md itself says live in code (line 397). The contract check covers only the front matter, so this is a review item.",
+      "fix": "Cite the token ids where a token exists (for example `motion.duration-color-mode-turn`, `containers.question`), and name the code constant instead of its number for component-owned sizes and timings (Button.recipe.ts, typewriter.ts, theme.template.css)."
+    },
+    {
+      "id": "docs/token-descriptions@tokens/themes/light.tokens.json#color",
+      "ruleId": "docs/token-descriptions",
+      "part": "docs",
+      "severity": "info",
+      "title": "20 of the 25 light colour roles have no $description",
+      "location": {
+        "file": "tokens/themes/light.tokens.json",
+        "pointer": "color"
+      },
+      "evidence": [
+        {
+          "file": "tokens/themes/light.tokens.json",
+          "line": 6,
+          "excerpt": "\"surface\": {"
+        },
+        {
+          "file": "tokens/themes/light.tokens.json",
+          "line": 7,
+          "excerpt": "\"$value\": \"{palette.gray-background}\""
+        }
+      ],
+      "why": "The description travels with the token into every tool (DTCG Format 5.2.1). Only the four derived roles carry one here, and those four state their rules.",
+      "source": "https://www.designtokens.org/tr/2025.10/format/",
+      "fix": "Give each role a one-line $description of its use, taken from DESIGN.md, Colors, and turn on Terrazzo core/descriptions for the role groups."
+    },
+    {
+      "id": "docs/token-descriptions@tokens/themes/dark.tokens.json#color",
+      "ruleId": "docs/token-descriptions",
+      "part": "docs",
+      "severity": "info",
+      "title": "20 of the 25 dark colour roles have no $description",
+      "location": {
+        "file": "tokens/themes/dark.tokens.json",
+        "pointer": "color"
+      },
+      "evidence": [
+        {
+          "file": "tokens/themes/dark.tokens.json",
+          "line": 6,
+          "excerpt": "\"surface\": {"
+        },
+        {
+          "file": "tokens/themes/dark.tokens.json",
+          "line": 7,
+          "excerpt": "\"$value\": \"{palette.gray-dark-background}\""
+        }
+      ],
+      "why": "The description travels with the token into every tool (DTCG Format 5.2.1).",
+      "source": "https://www.designtokens.org/tr/2025.10/format/",
+      "fix": "Add the same $description as the light role, since a role keeps its meaning in every theme."
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate/token-check",
+      "does": "Resolves both themes with @terrazzo/parser and fails when a palette entry is an alias, a role neither points to the palette nor carries a derived rule, a derived value differs from what its rule gives, the themes' roles or rules differ, or a text style's family or weight is a literal. It reads the rule from $extensions.cv-screener.derived, which is why the plugin's check-tokens.mjs flagged primary-hover, primary-pressed, surface-panel and on-surface-subtle as literals.",
+      "checks": [
+        "tiers/palette-literal",
+        "tiers/role-aliases-palette",
+        "tiers/derived-rule-recorded",
+        "tiers/styles-alias-foundation",
+        "format/themes-complete"
+      ],
+      "closes": [],
+      "tool": {
+        "name": "scripts/design-tokens/tokenSource.ts via npm run design:export and npm run design:lint",
+        "kind": "existing"
+      },
+      "runs": [
+        "agent-edit",
+        "agent-commit",
+        "commit"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "gate/dtcg-valid",
+      "does": "Terrazzo parses the resolver and every token file against DTCG 2025.10 and runs its recommended validation rules; a parse or validation error fails the build",
+      "checks": [
+        "format/dtcg-valid"
+      ],
+      "closes": [],
+      "tool": {
+        "name": "tz build (Terrazzo 2.7.1), inside npm run design:export",
+        "kind": "existing"
+      },
+      "runs": [
+        "agent-edit",
+        "agent-commit",
+        "commit"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "gate/naming-lint",
+      "does": "Fails a token or group name that is not kebab-case",
+      "checks": [
+        "naming/consistent-case"
+      ],
+      "closes": [],
+      "tool": {
+        "name": "Terrazzo core/consistent-naming: set lint.rules to { ...RECOMMENDED_CONFIG, \"core/consistent-naming\": [\"error\", { format: \"kebab-case\" }] } in terrazzo.config.ts",
+        "kind": "existing"
+      },
+      "runs": [
+        "agent-edit",
+        "agent-commit",
+        "commit"
+      ],
+      "status": "partial"
+    },
+    {
+      "id": "gate/descriptions-lint",
+      "does": "Reports a colour role or derived token without $description",
+      "checks": [
+        "docs/token-descriptions"
+      ],
+      "closes": [
+        "docs/token-descriptions@tokens/themes/light.tokens.json#color",
+        "docs/token-descriptions@tokens/themes/dark.tokens.json#color"
+      ],
+      "tool": {
+        "name": "Terrazzo core/descriptions with ignore for palette.*, font.*, motion.*, breakpoints.*, containers.*",
+        "kind": "existing"
+      },
+      "runs": [
+        "agent-edit",
+        "agent-commit",
+        "commit"
+      ],
+      "status": "missing"
+    },
+    {
+      "id": "gate/rules-contract",
+      "does": "Fails front matter keys other than version, name, description, imports and components; an imports path other than the resolver; and a contract entry that states a value, reads the palette or names an unknown token. The @google/design.md linter then checks references and contrast in both themes. It does not yet check backticked ids in the prose, or that every component in src/components has a contract entry.",
+      "checks": [
+        "tiers/components-read-roles",
+        "format/machine-readable-contract",
+        "docs/rules-hold-no-values",
+        "docs/rules-reference-existing-tokens",
+        "naming/one-name-everywhere"
+      ],
+      "closes": [
+        "tiers/components-read-roles@DESIGN.md#components"
+      ],
+      "tool": {
+        "name": "scripts/design-tokens/designDocument.ts (contractProblems) and @google/design.md lint, via npm run design:export and npm run design:lint; extend with prose-id resolution and component coverage",
+        "kind": "existing"
+      },
+      "runs": [
+        "agent-edit",
+        "agent-commit",
+        "commit"
+      ],
+      "status": "partial"
+    },
+    {
+      "id": "gate/code-lint",
+      "does": "Fails a class that names no token, an arbitrary value, a modifier on a token utility, a palette variable, and a hex or literal colour function in src/**/*.{ts,tsx} and .storybook/**/*.tsx (scripts/generation is outside the design system, AGENTS.md). It does not read CSS, so a colour function over a role in src/styles/theme.template.css passes unchecked.",
+      "checks": [
+        "tiers/no-primitive-in-code",
+        "tiers/no-literal-in-code",
+        "naming/one-name-everywhere"
+      ],
+      "closes": [],
+      "tool": {
+        "name": "ESLint design/token-classes and design/no-raw-color (scripts/design-lint/rules), strict in lint:strict; add a CSS check for colour functions over roles in src/styles/*.css",
+        "kind": "existing",
+        "basis": "assets/harness/terrazzo-tailwind-v4/eslint-token-rules.mjs"
+      },
+      "runs": [
+        "agent-edit",
+        "agent-commit",
+        "commit"
+      ],
+      "status": "partial"
+    },
+    {
+      "id": "gate/generated-outputs",
+      "does": "Builds into a temporary folder and fails when tokens.generated.css or theme.generated.css differs from the committed file; the agent's PreToolUse hook denies an edit to either",
+      "checks": [
+        "format/single-source-build"
+      ],
+      "closes": [],
+      "tool": {
+        "name": "npm run design:export -- --check (scripts/design-tokens/cli.mts), .claude/hooks/protectGenerated.mjs, .githooks/pre-commit",
+        "kind": "existing"
+      },
+      "runs": [
+        "agent-edit",
+        "agent-commit",
+        "commit"
+      ],
+      "status": "present"
+    },
+    {
+      "id": "gate/ci",
+      "does": "Runs lint:strict, design:export -- --check and design:lint on every push, so a commit made with --no-verify or without the hooks installed still fails",
+      "checks": [
+        "tiers/palette-literal",
+        "tiers/role-aliases-palette",
+        "tiers/derived-rule-recorded",
+        "tiers/styles-alias-foundation",
+        "format/themes-complete",
+        "format/dtcg-valid",
+        "format/single-source-build",
+        "tiers/no-primitive-in-code",
+        "tiers/no-literal-in-code",
+        "tiers/components-read-roles",
+        "format/machine-readable-contract",
+        "docs/rules-hold-no-values",
+        "docs/rules-reference-existing-tokens",
+        "naming/consistent-case",
+        "naming/one-name-everywhere",
+        "docs/token-descriptions"
+      ],
+      "closes": [],
+      "tool": {
+        "name": "CI workflow running the existing npm scripts (CI=true makes the design lint strict, scripts/design-lint/plugin.mjs)",
+        "kind": "existing"
+      },
+      "runs": [
+        "ci"
+      ],
+      "status": "missing"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Design Tokens Format Module 2025.10",
+      "url": "https://www.designtokens.org/tr/2025.10/format/",
+      "version": "2025.10"
+    },
+    {
+      "title": "Design Tokens Community Group (latest published version)",
+      "url": "https://www.designtokens.org/",
+      "version": "2025.10"
+    },
+    {
+      "title": "Terrazzo linting",
+      "url": "https://terrazzo.app/docs/linting/",
+      "version": "2.7.1"
+    },
+    {
+      "title": "Terrazzo JS plugin",
+      "url": "https://terrazzo.app/docs/integrations/js",
+      "version": "2.7.1"
+    },
+    {
+      "title": "@terrazzo/parser RECOMMENDED_CONFIG (installed)",
+      "url": "node_modules/@terrazzo/parser/dist/lint/plugin-core/index.js",
+      "version": "2.7.1"
+    },
+    {
+      "title": "npm registry: tailwindcss",
+      "url": "https://registry.npmjs.org/tailwindcss/latest"
+    },
+    {
+      "title": "npm registry: @tailwindcss/postcss",
+      "url": "https://registry.npmjs.org/@tailwindcss/postcss/latest"
+    },
+    {
+      "title": "npm registry: lightningcss",
+      "url": "https://registry.npmjs.org/lightningcss/latest"
+    },
+    {
+      "title": "npm registry: @terrazzo/cli",
+      "url": "https://registry.npmjs.org/@terrazzo/cli/latest"
+    },
+    {
+      "title": "npm registry: @terrazzo/parser",
+      "url": "https://registry.npmjs.org/@terrazzo/parser/latest"
+    },
+    {
+      "title": "npm registry: @terrazzo/plugin-css",
+      "url": "https://registry.npmjs.org/@terrazzo/plugin-css/latest"
+    },
+    {
+      "title": "npm registry: @terrazzo/plugin-tailwind",
+      "url": "https://registry.npmjs.org/@terrazzo/plugin-tailwind/latest"
+    },
+    {
+      "title": "npm registry: @google/design.md",
+      "url": "https://registry.npmjs.org/@google/design.md/latest"
+    },
+    {
+      "title": "npm registry: eslint",
+      "url": "https://registry.npmjs.org/eslint/latest"
+    },
+    {
+      "title": "npm registry: storybook",
+      "url": "https://registry.npmjs.org/storybook/latest"
+    },
+    {
+      "title": "npm registry: yaml",
+      "url": "https://registry.npmjs.org/yaml/latest"
+    }
+  ]
+}

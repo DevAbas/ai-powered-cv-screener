@@ -32,6 +32,8 @@
   --color-on-primary: var(--palette-mint-contrast);
   --color-on-primary-container: var(--palette-mint-12);
   --color-on-surface: var(--palette-gray-12);
+  /* Derived: on-surface at 62% over surface, the smallest share that meets WCAG 2.1 SC 1.4.3 (4.5:1) on surface in both themes. */
+  --color-on-surface-shimmer: rgb(45.49% 45.49% 45.49%);
   /* Derived: on-surface-variant at 70% over surface. */
   --color-on-surface-subtle: rgb(56.08% 56.08% 56.08%);
   --color-on-surface-variant: var(--palette-gray-11);
@@ -154,6 +156,8 @@
   --color-on-primary: var(--palette-mint-dark-contrast);
   --color-on-primary-container: var(--palette-gray-dark-12);
   --color-on-surface: var(--palette-gray-dark-12);
+  /* Derived: on-surface at 62% over surface, the smallest share that meets WCAG 2.1 SC 1.4.3 (4.5:1) on surface in both themes. */
+  --color-on-surface-shimmer: rgb(60.39% 60.39% 60.39%);
   /* Derived: on-surface-variant at 70% over surface. */
   --color-on-surface-subtle: rgb(51.37% 51.37% 51.37%);
   --color-on-surface-variant: var(--palette-gray-dark-11);
@@ -342,15 +346,16 @@
 
 /*
  * The sweeping band of ink behind `--animate-shimmer`: the text shows the
- * gradient. The ink is named, not `currentColor`: the text colour itself has
- * to be transparent for the gradient to show through.
+ * gradient, `on-surface` between its faded ends in `on-surface-shimmer`
+ * (DESIGN.md, Colors). The ink is named, not `currentColor`: the text colour
+ * itself has to be transparent for the gradient to show through.
  */
 @utility shimmer-text {
   background: linear-gradient(
     100deg,
-    color-mix(in srgb, var(--color-on-surface) 50%, transparent) 30%,
+    var(--color-on-surface-shimmer) 30%,
     var(--color-on-surface) 50%,
-    color-mix(in srgb, var(--color-on-surface) 50%, transparent) 70%
+    var(--color-on-surface-shimmer) 70%
   );
   background-size: 250% 100%;
   background-position: 125% 0;

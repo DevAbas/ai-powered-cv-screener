@@ -101,15 +101,16 @@
 
 /*
  * The sweeping band of ink behind `--animate-shimmer`: the text shows the
- * gradient. The ink is named, not `currentColor`: the text colour itself has
- * to be transparent for the gradient to show through.
+ * gradient, `on-surface` between its faded ends in `on-surface-shimmer`
+ * (DESIGN.md, Colors). The ink is named, not `currentColor`: the text colour
+ * itself has to be transparent for the gradient to show through.
  */
 @utility shimmer-text {
   background: linear-gradient(
     100deg,
-    color-mix(in srgb, var(--color-on-surface) 50%, transparent) 30%,
+    var(--color-on-surface-shimmer) 30%,
     var(--color-on-surface) 50%,
-    color-mix(in srgb, var(--color-on-surface) 50%, transparent) 70%
+    var(--color-on-surface-shimmer) 70%
   );
   background-size: 250% 100%;
   background-position: 125% 0;

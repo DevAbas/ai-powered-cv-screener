@@ -148,6 +148,28 @@
           }
         }
       }
+    },
+    "on-surface-shimmer": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4549,
+          0.4549,
+          0.4549
+        ],
+        "hex": "#747474"
+      },
+      "$description": "Derived: on-surface at 62% over surface, the smallest share that meets WCAG 2.1 SC 1.4.3 (4.5:1) on surface in both themes.",
+      "$extensions": {
+        "cv-screener": {
+          "derived": {
+            "kind": "mix",
+            "from": "on-surface",
+            "weight": 0.62,
+            "over": "surface"
+          }
+        }
+      }
     }
   },
   "shadow": {

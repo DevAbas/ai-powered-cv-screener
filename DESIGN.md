@@ -131,6 +131,10 @@ components:
   cv-count:
     textColor: "{color.on-surface-subtle}"
     typography: "{typography.label-md}"
+  progress-line-shimmer:
+    backgroundColor: "{color.surface}"
+    textColor: "{color.on-surface-shimmer}"
+    typography: "{typography.label-lg}"
 ---
 
 # CV Screener — Design System
@@ -234,6 +238,11 @@ meanings are the ones given here.
   metadata, captions, icons at rest, disabled text.
 - **On surface subtle** (`color.on-surface-subtle`): a tertiary label that
   should be read last. Derived: `on-surface-variant` at 70% over `surface`.
+- **On surface shimmer** (`color.on-surface-shimmer`): the faded ink at
+  either end of the band that sweeps a working progress line. Derived:
+  `on-surface` over `surface`, at the smallest share that still meets
+  WCAG 2.1 SC 1.4.3 (4.5:1) on `surface` in both themes, so the label stays
+  readable wherever the band is.
 - **Primary** (`color.primary`): mint, the only chromatic colour: the
   primary action and the marks of the brand (see Do's and Don'ts). Never
   for text blocks, content backgrounds or decoration.
@@ -262,6 +271,8 @@ for no other:
   `surface-container-*` and `surface-panel`.
 - `on-surface-subtle`: on `surface`, for a label read last; never for
   anything a recruiter must read to act.
+- `on-surface-shimmer`: on `surface`, for the shimmer band's faded ends
+  only; never for text at rest.
 - `on-primary`: on `primary`, `primary-hover` and `primary-pressed`, and
   nothing else sits on those three.
 - `on-primary-container`: on `primary-container` only.
@@ -345,7 +356,8 @@ for leaving ones; and one spring, `motion.ease-overshoot`, for the colour
 mode toggle's icon alone (`motion.duration-color-mode-turn`).
 Loading motion is the one exception: the progress line breathes (an
 opacity cycle of `motion.duration-breath` on its glyph) and one band of ink
-sweeps its label every `motion.duration-shimmer`, both off under reduced
+sweeps its label every `motion.duration-shimmer`, from `on-surface-shimmer`
+to `on-surface` and back, both off under reduced
 motion. Following a response scrolls smoothly, never under reduced motion.
 
 The empty state is the one place motion is decorative. It enters once per
