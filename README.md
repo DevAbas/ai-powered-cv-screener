@@ -113,7 +113,8 @@ Tailwind theme reads. What the design lint checks is in
   answers as rules over the seed data, so they still work after the pool
   is regenerated.
 - **The design system is enforced, not described.** Each fact has one
-  owner: every value is a token, every rule is in `DESIGN.md`. DTCG is the
+  owner: every value and each token's definition is a token, every rule
+  for using them is in `DESIGN.md`. DTCG is the
   interchange standard every token tool reads, and the design.md format
   imports tokens rather than duplicating them
   (google-labs-code/design.md#13). A rule nobody checks drifts, so a lint
@@ -186,7 +187,7 @@ does, and cannot drift from the design system unnoticed.
 
 ```
 docs/PRD.md            what we build and why
-DESIGN.md              the design system's rules: what each token means and which roles each component reads
+DESIGN.md              the design system's rules: when each token is used and which roles each component reads
 design-system/tokens/  the design tokens: every value, as W3C Design Tokens with a light and a dark theme
 AGENTS.md              engineering conventions and the full command list
 src/app/               routes: the screen, the ask API, the CV file API

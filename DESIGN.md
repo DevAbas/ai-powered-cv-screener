@@ -201,10 +201,11 @@ with one exception: the empty state (Layout), whose entrance and pointer
 grid greet the recruiter before the first question and are gone once it is
 asked.
 
-This document is the source of truth for the design system's rules: what
-each token means, when it is used, which roles each component reads, how
-things behave, and why. It holds no values. Every value is a design token in
-`design-system/tokens/` (W3C Design Tokens, the source of truth for what exists), and this
+This document is the source of truth for the design system's rules: when
+each token is used, which roles each component reads, how things behave,
+and why. It holds no values and no definitions. Every value is a design
+token in `design-system/tokens/` (W3C Design Tokens, the source of truth
+for what exists), each defined by its `$description`, and this
 document names tokens by their ids there (`color.primary`, `shadow.raised`,
 `motion.ease-standard`). The front matter holds two things: `imports:`,
 which names the design tokens, and `components:`, the contract of which
@@ -260,62 +261,28 @@ step a role takes: 1–2 backgrounds, 3–5 component fills, 6–8 borders,
 gives is a new role first; a value no step gives is a new seed or a
 derived role, never a hand-picked colour.
 
-Roles are named by what they do. `surface` is the page and `on-surface`
-what sits on it; a `-container` is a fill that separates a region from what
-is under it; `outline` draws edges; `primary` is the one accent; `inverse`
-reverses light and dark. The names echo a common convention, but the
-meanings are the ones given here.
+What each role is, is its token's `$description` (in
+`design-system/tokens/themes/*.tokens.json`), and a derived role's
+description also states its rule; this section holds the rules for using
+them. Roles are named by what they do: `surface` is the page and
+`on-surface` what sits on it; a `-container` is a fill that separates a
+region from what is under it; `outline` draws edges; `primary` is the one
+accent; `inverse` reverses light and dark. The names echo a common
+convention, but the meanings are the tokens' own.
 
-- **Surface** (`color.surface`): the page background. Near-white, never
-  pure white.
-- **Surface container lowest** (`color.surface-container-lowest`): the fill
-  of a thing that floats on the page: inputs, menus, the composer, file
-  cards, the CV preview and its pages. Pure white in light. In dark it is
-  one step *lighter* than `surface`, not darker: containers rise above the
-  page in both themes.
-- **Surface container low / container / high / highest**
-  (`color.surface-container-low` … `color.surface-container-highest`): four
-  ascending fills for controls and their states.
-- **Surface panel** (`color.surface-panel`): a quiet region that groups
-  related rows on the page, a shade lighter than `surface-container-low`.
-  Derived: low mixed over `surface`, by the share its token's rule gives.
-- **Outline** (`color.outline`): every edge, divider and scrollbar thumb.
-  There is one edge colour, kept faint: an edge separates, it never frames.
-- **Outline variant** (`color.outline-variant`): the strongest neutral that
-  is not text: a disabled icon, a placeholder, a handle being dragged. Marks
-  what is inactive or in transit.
-- **On surface** (`color.on-surface`): body text. Not pure black.
-- **On surface variant** (`color.on-surface-variant`): secondary text:
-  metadata, captions, icons at rest, disabled text.
-- **On surface subtle** (`color.on-surface-subtle`): a tertiary label that
-  should be read last. Derived: `on-surface-variant` mixed over `surface`,
-  fainter than it, by the share its token's rule gives.
-- **On surface shimmer** (`color.on-surface-shimmer`): the faded ink at
-  either end of the band that sweeps a working progress line. Derived:
-  `on-surface` over `surface`, at the smallest share that still meets
-  WCAG 2.1 SC 1.4.3 (4.5:1) on `surface` in both themes, so the label stays
-  readable wherever the band is.
-- **Primary** (`color.primary`): mint, the only chromatic colour: the
-  primary action and the marks of the brand (see Do's and Don'ts). Never
-  for text blocks, content backgrounds or decoration.
-- **Primary hover / pressed** (`color.primary-hover`,
-  `color.primary-pressed`): `primary` with its OKLCH lightness lowered, same
-  hue and chroma; pressed moves twice as far as hover. Each step is in its
-  token's rule. Radix's step 10 is too close to step 9 for this bright
-  accent to read as a hover.
-- **On primary** (`color.on-primary`): text and icons on `primary`: mint is
-  too light for white text.
-- **Primary outline** (`color.primary-outline`): the focus ring.
-- **Primary text** (`color.primary-text`): the accent as text or an icon on
-  a surface; mint itself is too light to read on the page.
-- **Primary container / on primary container** (`color.primary-container`,
-  `color.on-primary-container`): a light mint tint and the text on it: the
-  recruiter's question.
-- **Inverse surface / inverse on surface** (`color.inverse-surface`,
-  `color.inverse-on-surface`): a surface in the opposite theme and its
-  text: tooltips.
-- **Warning / error** (`color.warning`, `color.error`): state icons only.
-  Never a background, never running text.
+- `surface` is never pure white, and `on-surface` never pure black.
+- `surface-container-lowest` is pure white in light; in dark it is one step
+  *lighter* than `surface`, not darker: containers rise above the page in
+  both themes.
+- `outline` is kept faint: an edge separates, it never frames.
+  `outline-variant` marks what is inactive or in transit.
+- `primary` is never for text blocks, content backgrounds or decoration
+  (Do's and Don'ts). Mint is too light for white text, hence `on-primary`,
+  and too light to read on the page, hence `primary-text`.
+- `primary-hover` and `primary-pressed` are derived from `primary`, not
+  taken from the palette: Radix's step 10 is too close to step 9 for this
+  bright accent to read as a hover.
+- `warning` and `error` are never a background, never running text.
 
 A text or icon role is made for the surfaces it is paired with here, and
 for no other:

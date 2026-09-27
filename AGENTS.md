@@ -15,16 +15,18 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `docs/PRD.md` — what we build and why.
 - `README.md` — how it is built: the architecture and the decisions
   behind it.
-- `design-system/tokens/` — the design tokens: every value the interface uses, as W3C
-  Design Tokens (DTCG 2025.10) behind `design-system/tokens/design.resolver.json`.
-- `DESIGN.md` — the design system's rules: what each token means, when it
-  is used, which roles each component reads, and why. It holds no values.
+- `design-system/tokens/` — the design tokens: every value the interface
+  uses and each token's definition (its `$description`), as W3C Design
+  Tokens (DTCG 2025.10) behind `design-system/tokens/design.resolver.json`.
+- `DESIGN.md` — the design system's rules for using the tokens: when each
+  is used, its pairings and contrast, which roles each component reads,
+  and why. It holds no values and no definitions.
 
 Each fact lives in exactly one document; others reference it by file and
 heading, never repeat it. PRD owns what and why, the README owns how it is
-built and why that way, `design-system/tokens/` owns the design values, DESIGN.md owns
-the visual rules, code owns every other exact value, beside the rule that
-reads it. Before adding
+built and why that way, `design-system/tokens/` owns the design values and
+each token's definition, DESIGN.md owns the rules for using them, code
+owns every other exact value, beside the rule that reads it. Before adding
 content to a document, check whether another one already owns it.
 
 If a request conflicts with the PRD, update the PRD first, then the code.

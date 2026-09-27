@@ -7,8 +7,9 @@ paths: src/components/**,src/hooks/**,src/app/**,.storybook/**
 # Building UI in this codebase
 
 The design system has two sources: the design tokens in `design-system/tokens/` (every
-value) and `DESIGN.md` (the rules: what each token means, which roles each
-component reads, and why). The code must trace to both: every colour, size
+value, and each token's definition in its `$description`) and `DESIGN.md`
+(the rules: when each token is used, which roles each component reads, and
+why). The code must trace to both: every colour, size
 and radius on screen is a token, every component follows one shape. Lint rules and hooks catch a class outside the tokens
 after the fact; this procedure keeps the work inside them from the start,
 so the lint has nothing to say. Each fact below lives in one owning file;

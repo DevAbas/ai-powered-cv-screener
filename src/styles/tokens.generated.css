@@ -7,35 +7,55 @@
   --breakpoints-md: 48rem;
   --breakpoints-sm: 40rem;
   --breakpoints-xl: 80rem;
+  /* An error state icon. */
   --color-error: var(--palette-red);
+  /* Text on inverse-surface. */
   --color-inverse-on-surface: var(--palette-gray-background);
+  /* A surface in the opposite theme: the fill of a tooltip. */
   --color-inverse-surface: var(--palette-gray-12);
+  /* Text and icons on primary. */
   --color-on-primary: var(--palette-mint-contrast);
+  /* Text on primary-container. */
   --color-on-primary-container: var(--palette-mint-12);
+  /* Body text. */
   --color-on-surface: var(--palette-gray-12);
-  /* Derived: on-surface at 62% over surface, the smallest share that meets WCAG 2.1 SC 1.4.3 (4.5:1) on surface in both themes. */
+  /* The faded ink at either end of the band that sweeps a working progress line. Derived: on-surface at 62% over surface, the smallest share that meets WCAG 2.1 SC 1.4.3 (4.5:1) on surface in both themes. */
   --color-on-surface-shimmer: rgb(45.49% 45.49% 45.49%);
-  /* Derived: on-surface-variant at 70% over surface. */
+  /* A tertiary label, read last. Derived: on-surface-variant at 70% over surface. */
   --color-on-surface-subtle: rgb(56.08% 56.08% 56.08%);
+  /* Secondary text: metadata, captions, icons at rest, disabled text. */
   --color-on-surface-variant: var(--palette-gray-11);
+  /* The one edge colour: every edge, divider and scrollbar thumb. */
   --color-outline: var(--palette-gray-2);
+  /* The strongest neutral that is not text: a disabled icon, a placeholder, a handle being dragged. */
   --color-outline-variant: var(--palette-gray-8);
+  /* Mint, the only chromatic colour: the primary action and the marks of the brand. */
   --color-primary: var(--palette-mint-9);
+  /* A light mint tint: the fill of the recruiter's question. */
   --color-primary-container: var(--palette-mint-4);
-  /* Derived: primary with its OKLCH lightness -0.07, hue and chroma kept. */
+  /* The primary action on hover. Derived: primary with its OKLCH lightness -0.07, hue and chroma kept. */
   --color-primary-hover: rgb(0% 85.49% 65.1%);
+  /* The focus ring. */
   --color-primary-outline: var(--palette-mint-7);
-  /* Derived: primary with its OKLCH lightness -0.14, hue and chroma kept. */
+  /* The primary action while pressed. Derived: primary with its OKLCH lightness -0.14, hue and chroma kept. */
   --color-primary-pressed: rgb(0% 75.69% 57.25%);
+  /* The accent as text or an icon on a surface. */
   --color-primary-text: var(--palette-mint-11);
+  /* The page background. */
   --color-surface: var(--palette-gray-background);
+  /* The second of four ascending fills for controls and their states. */
   --color-surface-container: var(--palette-gray-3);
+  /* The third of four ascending fills for controls and their states. */
   --color-surface-container-high: var(--palette-gray-4);
+  /* The fourth of four ascending fills for controls and their states. */
   --color-surface-container-highest: var(--palette-gray-5);
+  /* The first of four ascending fills for controls and their states. */
   --color-surface-container-low: var(--palette-gray-2);
+  /* The fill of a thing that floats on the page: inputs, menus, the composer, file cards, the CV preview and its pages. */
   --color-surface-container-lowest: var(--palette-white);
-  /* Derived: surface-container-low at 60% over surface. */
+  /* A quiet region that groups related rows on the page. Derived: surface-container-low at 60% over surface. */
   --color-surface-panel: rgb(97.25% 97.25% 97.25%);
+  /* A warning state icon. */
   --color-warning: var(--palette-gold);
   --containers-composer: 52rem;
   --containers-header: 104rem;

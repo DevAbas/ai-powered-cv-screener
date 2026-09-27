@@ -7,7 +7,7 @@
   "project": {
     "name": "ai-powered-cv-screener",
     "root": ".",
-    "commit": "d4f0c63",
+    "commit": "03b7f3e",
     "dirty": true
   },
   "date": "2026-09-27",
@@ -20,7 +20,7 @@
     ],
     "rulesDocument": "DESIGN.md",
     "tokenSettings": {
-      "resolver": "tokens/design.resolver.json",
+      "resolver": "design-system/tokens/design.resolver.json (the default, since 03b7f3e)",
       "roles": "color",
       "palette": "palette",
       "font": "font",
@@ -110,63 +110,10 @@
     {
       "id": "docs",
       "status": "met",
-      "summary": "DESIGN.md cites token ids and names the code file for component sizes, holding no values; only the role descriptions in the token files remain (info)."
+      "summary": "Every colour role carries its definition as $description in both themes, and DESIGN.md holds only the rules for using the tokens, citing ids, with no values and no definitions."
     }
   ],
-  "findings": [
-    {
-      "id": "docs/token-descriptions@tokens/themes/light.tokens.json#color",
-      "ruleId": "docs/token-descriptions",
-      "part": "docs",
-      "severity": "info",
-      "title": "20 of the 25 light colour roles have no $description",
-      "location": {
-        "file": "tokens/themes/light.tokens.json",
-        "pointer": "color"
-      },
-      "evidence": [
-        {
-          "file": "tokens/themes/light.tokens.json",
-          "line": 6,
-          "excerpt": "\"surface\": {"
-        },
-        {
-          "file": "tokens/themes/light.tokens.json",
-          "line": 7,
-          "excerpt": "\"$value\": \"{palette.gray-background}\""
-        }
-      ],
-      "why": "The description travels with the token into every tool (DTCG Format 5.2.1). Only the four derived roles carry one here, and those four state their rules.",
-      "source": "https://www.designtokens.org/tr/2025.10/format/",
-      "fix": "Give each role a one-line $description of its use, taken from DESIGN.md, Colors, and turn on Terrazzo core/descriptions for the role groups."
-    },
-    {
-      "id": "docs/token-descriptions@tokens/themes/dark.tokens.json#color",
-      "ruleId": "docs/token-descriptions",
-      "part": "docs",
-      "severity": "info",
-      "title": "20 of the 25 dark colour roles have no $description",
-      "location": {
-        "file": "tokens/themes/dark.tokens.json",
-        "pointer": "color"
-      },
-      "evidence": [
-        {
-          "file": "tokens/themes/dark.tokens.json",
-          "line": 6,
-          "excerpt": "\"surface\": {"
-        },
-        {
-          "file": "tokens/themes/dark.tokens.json",
-          "line": 7,
-          "excerpt": "\"$value\": \"{palette.gray-dark-background}\""
-        }
-      ],
-      "why": "The description travels with the token into every tool (DTCG Format 5.2.1).",
-      "source": "https://www.designtokens.org/tr/2025.10/format/",
-      "fix": "Add the same $description as the light role, since a role keeps its meaning in every theme."
-    }
-  ],
+  "findings": [],
   "gates": [
     {
       "id": "gate/token-check",
@@ -232,10 +179,7 @@
       "checks": [
         "docs/token-descriptions"
       ],
-      "closes": [
-        "docs/token-descriptions@tokens/themes/light.tokens.json#color",
-        "docs/token-descriptions@tokens/themes/dark.tokens.json#color"
-      ],
+      "closes": [],
       "tool": {
         "name": "Terrazzo core/descriptions with ignore for palette.*, font.*, motion.*, breakpoints.*, containers.*",
         "kind": "existing"

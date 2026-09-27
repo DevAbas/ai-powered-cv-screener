@@ -4,64 +4,84 @@
   "color": {
     "$type": "color",
     "surface": {
-      "$value": "{palette.gray-dark-background}"
+      "$value": "{palette.gray-dark-background}",
+      "$description": "The page background."
     },
     "surface-container-lowest": {
-      "$value": "{palette.gray-dark-2}"
+      "$value": "{palette.gray-dark-2}",
+      "$description": "The fill of a thing that floats on the page: inputs, menus, the composer, file cards, the CV preview and its pages."
     },
     "surface-container-low": {
-      "$value": "{palette.gray-dark-3}"
+      "$value": "{palette.gray-dark-3}",
+      "$description": "The first of four ascending fills for controls and their states."
     },
     "surface-container": {
-      "$value": "{palette.gray-dark-3}"
+      "$value": "{palette.gray-dark-3}",
+      "$description": "The second of four ascending fills for controls and their states."
     },
     "surface-container-high": {
-      "$value": "{palette.gray-dark-4}"
+      "$value": "{palette.gray-dark-4}",
+      "$description": "The third of four ascending fills for controls and their states."
     },
     "surface-container-highest": {
-      "$value": "{palette.gray-dark-5}"
+      "$value": "{palette.gray-dark-5}",
+      "$description": "The fourth of four ascending fills for controls and their states."
     },
     "outline": {
-      "$value": "{palette.gray-dark-3}"
+      "$value": "{palette.gray-dark-3}",
+      "$description": "The one edge colour: every edge, divider and scrollbar thumb."
     },
     "outline-variant": {
-      "$value": "{palette.gray-dark-8}"
+      "$value": "{palette.gray-dark-8}",
+      "$description": "The strongest neutral that is not text: a disabled icon, a placeholder, a handle being dragged."
     },
     "on-surface-variant": {
-      "$value": "{palette.gray-dark-11}"
+      "$value": "{palette.gray-dark-11}",
+      "$description": "Secondary text: metadata, captions, icons at rest, disabled text."
     },
     "on-surface": {
-      "$value": "{palette.gray-dark-12}"
+      "$value": "{palette.gray-dark-12}",
+      "$description": "Body text."
     },
     "primary": {
-      "$value": "{palette.mint-dark-9}"
+      "$value": "{palette.mint-dark-9}",
+      "$description": "Mint, the only chromatic colour: the primary action and the marks of the brand."
     },
     "on-primary": {
-      "$value": "{palette.mint-dark-contrast}"
+      "$value": "{palette.mint-dark-contrast}",
+      "$description": "Text and icons on primary."
     },
     "primary-outline": {
-      "$value": "{palette.mint-dark-7}"
+      "$value": "{palette.mint-dark-7}",
+      "$description": "The focus ring."
     },
     "primary-text": {
-      "$value": "{palette.mint-dark-11}"
+      "$value": "{palette.mint-dark-11}",
+      "$description": "The accent as text or an icon on a surface."
     },
     "primary-container": {
-      "$value": "{palette.mint-dark-4}"
+      "$value": "{palette.mint-dark-4}",
+      "$description": "A light mint tint: the fill of the recruiter's question."
     },
     "on-primary-container": {
-      "$value": "{palette.gray-dark-12}"
+      "$value": "{palette.gray-dark-12}",
+      "$description": "Text on primary-container."
     },
     "inverse-surface": {
-      "$value": "{palette.gray-dark-12}"
+      "$value": "{palette.gray-dark-12}",
+      "$description": "A surface in the opposite theme: the fill of a tooltip."
     },
     "inverse-on-surface": {
-      "$value": "{palette.gray-dark-background}"
+      "$value": "{palette.gray-dark-background}",
+      "$description": "Text on inverse-surface."
     },
     "warning": {
-      "$value": "{palette.gold-dark}"
+      "$value": "{palette.gold-dark}",
+      "$description": "A warning state icon."
     },
     "error": {
-      "$value": "{palette.red-dark}"
+      "$value": "{palette.red-dark}",
+      "$description": "An error state icon."
     },
     "primary-hover": {
       "$value": {
@@ -73,7 +93,7 @@
         ],
         "hex": "#00e5b1"
       },
-      "$description": "Derived: primary with its OKLCH lightness -0.07, hue and chroma kept.",
+      "$description": "The primary action on hover. Derived: primary with its OKLCH lightness -0.07, hue and chroma kept.",
       "$extensions": {
         "cv-screener": {
           "derived": {
@@ -94,7 +114,7 @@
         ],
         "hex": "#00cc9c"
       },
-      "$description": "Derived: primary with its OKLCH lightness -0.14, hue and chroma kept.",
+      "$description": "The primary action while pressed. Derived: primary with its OKLCH lightness -0.14, hue and chroma kept.",
       "$extensions": {
         "cv-screener": {
           "derived": {
@@ -115,7 +135,7 @@
         ],
         "hex": "#1b1b1b"
       },
-      "$description": "Derived: surface-container-low at 60% over surface.",
+      "$description": "A quiet region that groups related rows on the page. Derived: surface-container-low at 60% over surface.",
       "$extensions": {
         "cv-screener": {
           "derived": {
@@ -137,7 +157,7 @@
         ],
         "hex": "#838383"
       },
-      "$description": "Derived: on-surface-variant at 70% over surface.",
+      "$description": "A tertiary label, read last. Derived: on-surface-variant at 70% over surface.",
       "$extensions": {
         "cv-screener": {
           "derived": {
@@ -159,7 +179,7 @@
         ],
         "hex": "#9a9a9a"
       },
-      "$description": "Derived: on-surface at 62% over surface, the smallest share that meets WCAG 2.1 SC 1.4.3 (4.5:1) on surface in both themes.",
+      "$description": "The faded ink at either end of the band that sweeps a working progress line. Derived: on-surface at 62% over surface, the smallest share that meets WCAG 2.1 SC 1.4.3 (4.5:1) on surface in both themes.",
       "$extensions": {
         "cv-screener": {
           "derived": {
