@@ -2,8 +2,8 @@
 
 | Field   | Value        |
 |---------|--------------|
-| Version | 1.23         |
-| Date    | 2026-09-26   |
+| Version | 1.24         |
+| Date    | 2026-09-27   |
 | Status  | Approved     |
 | Owner   | Product      |
 
@@ -54,7 +54,7 @@ faster and better-supported.
   backend, data, DevOps, QA, product).
 - The recruiter queries the pool against whichever vacancy they are working
   on. There is no "vacancy object" in v1; the vacancy lives in the question.
-- Runs locally on the recruiter's machine.
+- Runs on Vercel behind Vercel Authentication, or locally (§12).
 - Goal of the pilot: validate that question-driven screening with visible
   evidence is faster and more trusted than manual reading.
 
@@ -280,3 +280,4 @@ None open. Resolved:
 | 1.21    | 2026-09-26 | §8 step 1: the headline names the vacancies the pool could fill, one after another. |
 | 1.22    | 2026-09-26 | §8 step 1: the cycling vacancies of 1.21 are dropped; the headline stays "Find The Right Candidates". |
 | 1.23    | 2026-09-26 | §8 step 1, §10.5: the input's placeholder types the example questions one after another. |
+| 1.24    | 2026-09-27 | §4: the pilot runs on Vercel behind Vercel Authentication, or locally, as §12 states. |

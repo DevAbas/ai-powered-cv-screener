@@ -3,16 +3,16 @@
 A recruiter has about thirty CVs and one open job. This tool lets them ask
 questions about the CVs in plain language. For example: "who has five years
 of React and speaks German?" The answer lists the candidates that match.
-Every fact links to the page of the CV where it was found. The recruiter
-checks the evidence, not the model.
+Each candidate links to the page of their CV that states the fact. The
+recruiter checks the evidence, not the model.
 
 The tool does not decide who to hire. It makes that decision faster and
 easier to support.
 
-This is a pilot. One team, one pool of CVs, running on the recruiter's own
-computer.
+This is a pilot. One team, one pool of CVs, deployed on Vercel behind
+Vercel Authentication.
 
-## Applied solution for the core requirements
+## How it works
 
 ### CV generation
 
@@ -35,10 +35,9 @@ steps.
 
 - **Text.** Each page's text is split into sections at the CV's own
   headings. Each section on each page is one chunk.
-- **Profile.** Gemini writes a structured profile from the chunks. The app
-  then locates every field in the CV text, so each fact has a source page
-  and a fact not found in the text is dropped. The result is one JSON file
-  per CV.
+- **Profile.** Gemini writes a structured profile from the chunks, and the
+  app locates every field in the CV text. The result is one JSON file per
+  CV.
 - **Vectors.** Each chunk is embedded and stored in Pinecone.
 
 At question time the model does not read the CVs. It calls tools: exact
@@ -61,22 +60,17 @@ to the CV page that states them.
 
 Screenshot from the component previews.
 
-The view follows the question: a list for a filter or a search, two
-candidates side by side for a comparison, a profile for one person, a
-short sentence for a count, a no match or a question the CVs cannot
-answer. Every candidate links to its CV, opened in a panel beside the chat
-at the page where the fact was found. A follow-up sees the previous
-answer, so "which of them speak German?" narrows the last list. One model
-answers; the recruiter does not choose it.
+The model asks for a view in its `present` call, and the app builds it
+from what the tools returned. Which view each kind of question gets, and
+how a follow-up narrows the last answer, are in the
+[PRD](docs/PRD.md) (§5, §10).
 
 ## Architecture
 
 ### How an answer comes to be
 
 This is the agentic form of RAG: retrieval is a set of tools the model
-calls, not text pasted before the question. The CVs are indexed once,
-before use. At question time the model reads only what the tools return,
-and the app checks every candidate and page it names.
+calls, not text pasted before the question.
 
 ![Before use, npm run generate writes 30 CV PDFs, and npm run index has Gemini extract a profile from each, locates every field in the CV text so each fact has a page, and embeds each chunk into Pinecone. At question time the chat screen sends the question and the history to POST /api/ask, whose prompt holds no CV text. Gemini calls tools in a loop: three exact queries over the index in memory, and a text search that embeds the query and fuses BM25 with Pinecone. The loop ends with present. The app checks every candidate and page against what the tools returned, writes the counts itself and streams the answer to the chat. A source link opens the CV PDF at the cited page.](docs/images/architecture.svg)
 
@@ -99,6 +93,19 @@ without React:
 Dependencies flow one way, from the app and the scripts to these modules,
 and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 
+### The design system
+
+The values are design tokens in [tokens/](tokens), in the W3C Design
+Tokens format (DTCG 2025.10), read through a resolver with a light and a
+dark theme. The rules are [DESIGN.md](DESIGN.md), which holds no values
+and names tokens by their ids; its Overview explains the three tiers.
+`npm run design:export` checks the components' contract in `DESIGN.md`
+against the tokens, then Terrazzo writes the two generated stylesheets the
+Tailwind theme reads. What the design lint checks is in
+[src/components/README.md](src/components/README.md).
+
+![Four columns. Authored: the palette, the roles and the resolver in tokens/, and the components contract and the rules in DESIGN.md. Build: design:export checks the components contract, then Terrazzo resolves light and dark. Generated, never edited: tokens.generated.css holds every token as a variable, theme.generated.css the roles as the Tailwind theme with a dark variant. Consumed: Tailwind 4, with its own palette reset, feeds the components, which use role classes only; the palette stops before them. Below, four checks run on every edit and commit, as errors for an agent and warnings for a human: the ESLint design rules, design:lint, design:export --check and the agent hooks.](docs/images/design-system.svg)
+
 ## Decisions and why
 
 - **Typed tools over the index, not a plain RAG prompt.** Most recruiter
@@ -113,9 +120,10 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 - **Every cited page is checked.** The model names candidates and pages. A
   candidate no tool returned fails the answer. A page no tool cited is
   replaced with one that was.
-- **Sources are found in the CV text during indexing.** Each profile field
-  is located on a page, so the link the recruiter clicks opens where the
-  fact is written. A fact the text does not state is dropped.
+- **Sources are found in the CV text during indexing, not at question
+  time.** Each profile field is located on a page, so the link the
+  recruiter clicks opens where the fact is written, and a fact the text
+  does not state is dropped before any question is asked.
 - **One fixed model, named in the environment.** One behaviour to tune the
   prompt for, and no choice for the recruiter. The name lives in
   `.env.local`, so a swap is a configuration change, and the evaluation
@@ -123,23 +131,16 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 - **Evaluation lives in the code.** The test questions carry their expected
   answers as rules over the seed data, so they still work after the pool
   is regenerated.
-- **The design system is enforced, not described.** It has two sources of
-  truth. The values are design tokens in `tokens/`, in the W3C Design
-  Tokens format (DTCG 2025.10), in three tiers (a palette only roles read;
-  roles, with a value per theme where they change; the components'
-  contract), orchestrated by a resolver with a light and a dark theme.
-  The rules are `DESIGN.md`, which holds no values and names tokens by
-  their ids: DTCG is the interchange standard every token tool reads, and
-  the design.md format imports tokens rather than duplicating them
-  (google-labs-code/design.md#13). Terrazzo builds the Tailwind theme from
-  the tokens; the palette reset removes Tailwind's own; a lint fails on any
-  class outside the tokens, any colour made by opacity and any read of the
-  palette, and checks each recipe against the roles its component token
-  names, as warnings for a person and errors for an agent and CI. Hover,
-  pressed and the other derived roles are a plain colour per theme, their
-  rule kept on the token, as in every major design system.
-
-  ![Four columns. Authored: the palette, the roles and the resolver in tokens/, and the components contract and the rules in DESIGN.md. Build: design:export checks the components contract, then Terrazzo resolves light and dark. Generated, never edited: tokens.generated.css holds every token as a variable, theme.generated.css the roles as the Tailwind theme with a dark variant. Consumed: Tailwind 4, with its own palette reset, feeds the components, which use role classes only; the palette stops before them. Below, four checks run on every edit and commit, as errors for an agent and warnings for a human: the ESLint design rules, design:lint, design:export --check and the agent hooks.](docs/images/design-system.svg)
+- **The design system is enforced, not described.** Each fact has one
+  owner: every value is a token, every rule is in `DESIGN.md`. DTCG is the
+  interchange standard every token tool reads, and the design.md format
+  imports tokens rather than duplicating them
+  (google-labs-code/design.md#13). A rule nobody checks drifts, so a lint
+  fails on any class outside the tokens, any colour made by opacity and
+  any read of the palette, as warnings for a person and errors for an
+  agent and CI. Hover, pressed and the other derived roles are a plain
+  colour per theme, their rule kept on the token, as in every major design
+  system.
 
 ## Stack
 
@@ -156,11 +157,18 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 
 ## Testing
 
-Unit tests sit next to the code they test, with fakes for the model and
-the stores. An accuracy check compares every indexed profile with its
-seed, field by field. The evaluation asks the real pipeline the golden
-questions and scores the model against fixed thresholds, showing the cost
-before any model call.
+Unit tests live in a `__tests__` folder beside the code they test, with
+fakes for the model and the stores. An accuracy check compares every
+indexed profile with its seed, field by field. The evaluation asks the
+real pipeline the golden questions and scores the model against fixed
+thresholds, showing the cost before any model call.
+
+```bash
+npm test
+```
+
+The accuracy check and the evaluation call models; their commands are in
+[AGENTS.md](AGENTS.md), Commands.
 
 ## Component previews
 
@@ -187,10 +195,8 @@ does, and cannot drift from the design system unnoticed.
   checks. It loads itself when a file under `src/components`, `src/hooks`,
   `src/app` or `.storybook` is touched.
 - The hooks in [.claude/settings.json](.claude/settings.json) enforce what
-  the skill describes: every edited file is linted with the design rules as
-  errors, the generated stylesheets cannot be edited, and a commit runs the
-  strict lint, the typecheck and the design checks first. `.githooks/pre-commit`
-  is the same gate for a person. The list is in `AGENTS.md`, Harness.
+  the skill describes, and `.githooks/pre-commit` is the same commit gate
+  for a person. What each one runs is in `AGENTS.md`, Harness.
 - The design rules themselves are in `scripts/design-lint`, described in
   [src/components/README.md](src/components/README.md); the tokens' pipeline
   is in `scripts/design-tokens`.
@@ -225,12 +231,14 @@ npm run dev
 
 Two services are needed. The Gemini API answers the questions and makes
 the embeddings. Pinecone holds the vectors. `.env.local` takes the Gemini
-key, the Pinecone key and index name, and the names of the three models the
-app calls; [.env.example](.env.example) sets the ones the pilot ran on. Without them no
-question is answered. The index and the CVs are in the repository. The
-vectors are not: `npm run index -- --step vectors` writes them, and creates
-the Pinecone index when it does not exist yet. Only the photo step of the
-generator needs the Cloudflare account id and token as well.
+key, the Pinecone key and index name, and the model names;
+[.env.example](.env.example) sets the ones the pilot ran on. Without them
+no question is answered. The app calls two of the models, the answer model
+and the embedding model. The image model and the Cloudflare account id and
+token are needed only by the photo step of the generator. The index and
+the CVs are in the repository. The vectors are not:
+`npm run index -- --step vectors` writes them, and creates the Pinecone
+index when it does not exist yet.
 
 ### Deploying
 
@@ -251,12 +259,14 @@ runs for at most its `maxDuration`, set beside it.
 ## Contributing
 
 [AGENTS.md](AGENTS.md) is the contributing guide: the conventions, the
-commands and the boundaries every change follows. Before a pull request,
-run `npm run lint`, `npm run typecheck`, `npm test` and `npm run build`.
+commands, the boundaries and the checks every commit runs. The commit gate
+does not run the tests or the build, so run `npm test` and `npm run build`
+before a pull request.
 
 ## Where to read next
 
-[docs/PRD.md](docs/PRD.md) for the product and its open questions.
+[docs/PRD.md](docs/PRD.md) for what the product does and why.
+[AGENTS.md](AGENTS.md) for the conventions and every command,
 [scripts/README.md](scripts/README.md) for the pipelines,
 [src/components/README.md](src/components/README.md) for how the UI is
 built, [DESIGN.md](DESIGN.md) for the design system.
