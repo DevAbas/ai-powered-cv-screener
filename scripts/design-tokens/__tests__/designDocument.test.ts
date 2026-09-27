@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { parse } from "yaml";
 import { beforeAll, describe, expect, it } from "vitest";
-import { componentsContract, contractProblems, lintDocument } from "../designDocument";
+import { componentsContract, contractProblems, lintDocument, proseProblems } from "../designDocument";
 import type { TokenSource } from "../tokenSource";
 import { readTokenSource, RESOLVER_PATH } from "../tokenSource";
 
@@ -35,6 +35,22 @@ describe("contractProblems", () => {
     expect(problems).toContain("components.page.backgroundColor reads the palette entry mint-9: components read roles");
     expect(problems).toContain("components.page.textColor names {color.ink}, which the tokens do not define");
     expect(problems).toContain("components.page.rounded is #FFFFFF: a component names a token (`{color.…}`), it does not state a value");
+  });
+});
+
+describe("proseProblems", () => {
+  it("passes the repository's DESIGN.md: every token id its prose names exists", () => {
+    expect(proseProblems(designMd, source)).toEqual([]);
+  });
+
+  it("refuses a prose id in a token group that the tokens do not define, and leaves other code spans alone", () => {
+    const broken = designMd.replace("default or `dark`. So `color.surface` is found in", "default or `dark`. So `color.ink` is found in `{rounded.huge}`, `typewriter.ts`,");
+    const line = broken.split("\n").findIndex((l) => l.includes("`color.ink`")) + 1;
+    expect(proseProblems(broken, source)).toEqual([
+      `DESIGN.md line ${line} names \`color.ink\`, which the tokens do not define`,
+      `DESIGN.md line ${line} names \`{rounded.huge}\`, which the tokens do not define`,
+    ]);
+    expect(contractProblems(broken, source, RESOLVER_PATH)).toHaveLength(2);
   });
 });
 

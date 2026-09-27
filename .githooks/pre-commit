@@ -1,15 +1,9 @@
 #!/bin/sh
 # The commit gate for a person in the terminal: the strict lint, the
-# typecheck and the design system's checks (AGENTS.md, Always). Installed by `npm run prepare`, which sets
-# core.hooksPath to this folder; the agent's gate is .claude/hooks/guardCommit.mjs.
+# typecheck and the design system's checks (AGENTS.md, Always), as the
+# `beforeCommit` commands of design-system/gates.json. Installed by `npm run
+# prepare`, which sets core.hooksPath to this folder; an agent's commit runs
+# the same stage through .claude/hooks/design-system/guard-commit.mjs.
+# with-node.sh loads nvm and the project's .nvmrc when `node` is not on PATH.
 set -e
-cd "$(git rev-parse --show-toplevel)"
-if ! command -v node >/dev/null 2>&1; then
-  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
-  # shellcheck disable=SC1091
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" >/dev/null 2>&1 && nvm use --silent >/dev/null 2>&1
-fi
-npm run -s lint:strict
-npm run -s typecheck
-npm run -s design:export -- --check
-npm run -s design:lint
+"$(git rev-parse --show-toplevel)"/design-system/harness/with-node.sh design-system/harness/run-gates.mjs before-commit

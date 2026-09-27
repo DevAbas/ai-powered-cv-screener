@@ -68,6 +68,8 @@ export interface TokenSource {
   dimensions: Readonly<Record<"rounded" | "spacing" | "breakpoints" | "containers", ReadonlyMap<string, Dimension>>>;
   /** Motion token → its `$type` and value. */
   motion: ReadonlyMap<string, { type: "cubicBezier" | "duration" | "dimension"; value: number[] | Dimension }>;
+  /** Every token id in either theme (`color.primary`, `font.weight.500`), for checking the ids DESIGN.md names. */
+  ids: ReadonlySet<string>;
 }
 
 export class TokenSourceError extends Error {
@@ -208,5 +210,6 @@ export async function readTokenSource(cwd = process.cwd()): Promise<TokenSource>
     typography,
     dimensions: { rounded: dimensionGroup("rounded"), spacing: dimensionGroup("spacing"), breakpoints: dimensionGroup("breakpoints"), containers: dimensionGroup("containers") },
     motion,
+    ids: new Set(THEMES.flatMap((theme) => Object.keys(themed[theme]))),
   };
 }

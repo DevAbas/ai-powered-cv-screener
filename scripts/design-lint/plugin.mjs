@@ -11,8 +11,10 @@ import { tokenClasses } from "./rules/tokenClasses.mjs";
 import { focusVisibleOnly } from "./rules/focusVisibleOnly.mjs";
 import { noHoverOnDisabled } from "./rules/noHoverOnDisabled.mjs";
 import { recipeCitesTokens } from "./rules/recipeCitesTokens.mjs";
+import { stylesheetColor } from "./rules/stylesheetColor.mjs";
 
-const rules = {
+/** The rules for component source (TypeScript and TSX). */
+const codeRules = {
   "no-raw-color": noRawColor,
   "token-classes": tokenClasses,
   "focus-visible-only": focusVisibleOnly,
@@ -20,18 +22,25 @@ const rules = {
   "recipe-cites-tokens": recipeCitesTokens,
 };
 
-/** Every rule at one severity, under the `design/` prefix. */
-const at = (severity) => Object.fromEntries(Object.keys(rules).map((name) => [`design/${name}`, severity]));
+/** The rules for stylesheets, which @eslint/css parses (`language: "css/css"`). */
+const stylesheetRules = {
+  "stylesheet-color": stylesheetColor,
+};
 
-/** @type {import("eslint").ESLint.Plugin & { configs: { recommended: import("eslint").Linter.Config, strict: import("eslint").Linter.Config } }} */
+/** Every rule of a set at one severity, under the `design/` prefix. */
+const at = (rules, severity) => Object.fromEntries(Object.keys(rules).map((name) => [`design/${name}`, severity]));
+
+/** @type {import("eslint").ESLint.Plugin & { configs: Record<"recommended" | "strict" | "stylesheetRecommended" | "stylesheetStrict", import("eslint").Linter.Config> }} */
 export const designPlugin = {
   meta: { name: "design", version: "1.0.0" },
-  rules,
+  rules: { ...codeRules, ...stylesheetRules },
   configs: {},
 };
 
-designPlugin.configs.recommended = { plugins: { design: designPlugin }, rules: at("warn") };
-designPlugin.configs.strict = { plugins: { design: designPlugin }, rules: at("error") };
+designPlugin.configs.recommended = { plugins: { design: designPlugin }, rules: at(codeRules, "warn") };
+designPlugin.configs.strict = { plugins: { design: designPlugin }, rules: at(codeRules, "error") };
+designPlugin.configs.stylesheetRecommended = { plugins: { design: designPlugin }, rules: at(stylesheetRules, "warn") };
+designPlugin.configs.stylesheetStrict = { plugins: { design: designPlugin }, rules: at(stylesheetRules, "error") };
 
 /** True when the lint runs for an agent or CI: the design rules are errors. */
 export const isStrictLint = (env = process.env) => env.DESIGN_LINT_STRICT === "1" || env.CI === "true";

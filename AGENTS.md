@@ -174,16 +174,31 @@ before.
 What the tooling enforces without being asked, so a rule above holds when
 nobody remembers it:
 
-- `.claude/settings.json` runs the hooks in `.claude/hooks`. After every
-  `Edit` or `Write`, the edited file is linted with the design rules as
-  errors, and a failure comes back as the next message; an edit to
-  `design-system/tokens/`, `DESIGN.md`, the Tailwind template or `terrazzo.config.ts`
-  checks that the stylesheets are current and runs `design:lint`; an edit
-  to a generated stylesheet is denied; a `git commit` runs `lint:strict`,
-  `typecheck`, `design:export -- --check` and `design:lint` first and is
-  refused when any fails.
+- `design-system/gates.json` is the one config every gate reads: the
+  generated files, the design sources, the lint an edited file gets, and
+  the commands a commit runs. `node design-system/harness/run-gates.mjs
+  before-commit` runs them all.
+- `.claude/settings.json` runs the hooks in `.claude/hooks/design-system`,
+  which only translate Claude Code's input for the core in
+  `design-system/harness` (`gates.mjs`), the one the git hook and CI run.
+  Before an `Edit` or `Write` to a generated stylesheet, the edit is
+  denied. After every `Edit` or `Write`, and after a shell command that
+  changed files (when Claude Code lists them), a file under `src` (and
+  `.storybook` TSX) is linted with the design rules as errors, CSS
+  included, and a failure comes back as the next message; a change to
+  `design-system/tokens/`, `DESIGN.md`, the Tailwind template, `terrazzo.config.ts`
+  or a generated stylesheet checks that the stylesheets are current and
+  runs `design:lint`. These report after the write; the commit gate is
+  what enforces. A `git commit` runs `lint:strict`, `typecheck`,
+  `design:export -- --check` and `design:lint` first and is refused when
+  any fails.
+- The Terrazzo build lints the tokens (`terrazzo.config.ts`): a name that
+  is not kebab-case, or a colour role without `$description`, fails
+  `design:export`.
 - `.githooks/pre-commit` is the same commit gate for a person; `npm run
-  prepare` (run by `npm ci`) points git at it.
+  prepare` (run by `npm ci`) points git at it. CI
+  (`.github/workflows/design-system.yml`) runs it on every pull request
+  and push to `main`.
 - `.claude/skills/building-ui-components` is the procedure for UI work; it
   loads itself for files under `src/components`, `src/hooks`, `src/app` and
   `.storybook`, and points at the owning documents instead of repeating

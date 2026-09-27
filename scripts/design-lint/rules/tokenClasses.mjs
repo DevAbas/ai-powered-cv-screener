@@ -128,7 +128,8 @@ function isTokenVariable(name, tokens) {
   return NAMESPACES.some((namespace) => property.startsWith(`${namespace}-`) && tokens.theme.get(namespace).has(property.slice(namespace.length + 1)));
 }
 
-const PALETTE_VARIABLE = /--palette-/;
+/** A CSS variable of the palette, which only roles read. design/stylesheet-color holds stylesheets to the same line. */
+export const PALETTE_VARIABLE = /--palette-/;
 
 /**
  * Why a class is not a token, or undefined when it is one. `leaveRawColor` is

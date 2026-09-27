@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/withNode.sh protectGenerated.mjs",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/design-system/harness/with-node.sh .claude/hooks/design-system/protect-generated.mjs",
             "timeout": 15
           }
         ]
@@ -16,9 +16,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/withNode.sh guardCommit.mjs",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/design-system/harness/with-node.sh .claude/hooks/design-system/guard-commit.mjs",
             "timeout": 300,
-            "statusMessage": "Lint and typecheck before the commit…"
+            "statusMessage": "Design-system gates before the commit…"
           }
         ]
       }
@@ -29,9 +29,20 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/withNode.sh lintEditedFile.mjs",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/design-system/harness/with-node.sh .claude/hooks/design-system/check-on-edit.mjs",
             "timeout": 120,
-            "statusMessage": "Design lint on the edited file…"
+            "statusMessage": "Design-system checks on the edited file…"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/design-system/harness/with-node.sh .claude/hooks/design-system/check-after-bash.mjs",
+            "timeout": 120,
+            "statusMessage": "Design-system checks on the files the command changed…"
           }
         ]
       }

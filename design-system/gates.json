@@ -1,0 +1,28 @@
+{
+  "generated": ["src/styles/tokens.generated.css", "src/styles/theme.generated.css"],
+  "sources": ["design-system/tokens/**/*.json", "DESIGN.md", "src/styles/theme.template.css", "terrazzo.config.ts"],
+  "onSourceEdit": ["npm run -s design:export -- --check", "npm run -s design:lint"],
+  "lint": {
+    "files": ["src/**/*.{ts,tsx,css}", ".storybook/**/*.tsx"],
+    "command": "eslint --no-warn-ignored --cache --cache-location node_modules/.cache/eslint",
+    "strictEnv": { "DESIGN_LINT_STRICT": "1" }
+  },
+  "beforeCommit": [
+    "npm run -s lint:strict",
+    "npm run -s typecheck",
+    "npm run -s design:export -- --check",
+    "npm run -s design:lint"
+  ],
+  "tokens": {
+    "resolver": "design-system/tokens/design.resolver.json",
+    "modifier": "theme",
+    "palette": "palette",
+    "roles": "color",
+    "typography": "typography",
+    "fonts": "font",
+    "extensionKey": "cv-screener",
+    "outDir": "src/styles/",
+    "rulesDocument": "DESIGN.md",
+    "readable": ["color", "typography", "rounded"]
+  }
+}

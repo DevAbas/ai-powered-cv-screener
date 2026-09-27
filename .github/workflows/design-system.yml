@@ -1,0 +1,40 @@
+# The design-system gates in CI: the same `beforeCommit` commands a person's
+# and an agent's commit run (design-system/gates.json).
+#
+# CI sets CI=true, which makes the design lint rules errors
+# (scripts/design-lint/plugin.mjs), as DESIGN_LINT_STRICT does for the hooks.
+name: design-system
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Least privilege: the gates only read the repository (GitHub, "Secure use
+# reference": the GITHUB_TOKEN at read access for repository contents).
+permissions:
+  contents: read
+
+# A new push to the same branch or pull request cancels the run it replaces.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gates:
+    name: Design-system gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Each action is pinned to the full commit SHA of its release, the
+      # version in the comment: a tag can move, a commit cannot (GitHub,
+      # "Secure use reference"). Dependabot keeps them current.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Design-system gates
+        run: node design-system/harness/run-gates.mjs before-commit

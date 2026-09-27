@@ -38,7 +38,7 @@ export function componentsContract(designMd: string): Record<string, Record<stri
 /**
  * Where the contract breaks the rules: DESIGN.md states a value instead of
  * naming a token, a component reads the palette, or names a token the tokens
- * do not define.
+ * do not define; and where its prose names one (`proseProblems`).
  */
 export function contractProblems(designMd: string, source: TokenSource, resolverPath: string): string[] {
   const front = parse(split(designMd).yaml) as Record<string, unknown>;
@@ -64,6 +64,30 @@ export function contractProblems(designMd: string, source: TokenSource, resolver
       else if (!(READABLE as readonly string[]).includes(group) || !known[group as (typeof READABLE)[number]].has(name)) problems.push(`components.${component}.${property} names ${value}, which the tokens do not define`);
     }
   }
+  return [...problems, ...proseProblems(designMd, source)];
+}
+
+const INLINE_CODE = /`([^`\n]+)`/g;
+const PROSE_ID = /^\{?([a-z][a-z0-9-]*)\.([a-z0-9][a-z0-9.-]*)\}?$/;
+
+/**
+ * Where DESIGN.md's prose names a token that does not exist: every inline
+ * code span shaped as a token id (`color.surface`, `motion.ease-standard`)
+ * whose group is one of the tokens' groups must be an id in the tokens. A
+ * span in another group (`typewriter.ts`) is not a token id and is left
+ * alone, so a misspelt group name is not caught.
+ */
+export function proseProblems(designMd: string, source: TokenSource): string[] {
+  const { body } = split(designMd);
+  const bodyStart = designMd.split("\n").length - body.split("\n").length;
+  const groups = new Set([...source.ids].map((id) => id.split(".")[0]));
+  const problems: string[] = [];
+  body.split("\n").forEach((line, index) => {
+    for (const [, code] of line.matchAll(INLINE_CODE)) {
+      const id = PROSE_ID.exec(code);
+      if (id && groups.has(id[1]) && !source.ids.has(`${id[1]}.${id[2]}`)) problems.push(`DESIGN.md line ${bodyStart + index + 1} names \`${code}\`, which the tokens do not define`);
+    }
+  });
   return problems;
 }
 
