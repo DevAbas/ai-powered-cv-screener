@@ -19,6 +19,7 @@ const designMd = readFileSync("DESIGN.md", "utf8");
 const issues: (Issue & { theme: string })[] = [];
 const report = (theme: string, findings: readonly LintFinding[], palette: ReadonlySet<string>) => {
   for (const f of findings) {
+    // isExpected already passes info findings; the severity test is here for TypeScript, which narrows it to an Issue's.
     if (!isExpected(f, palette) && f.severity !== "info") issues.push({ theme, severity: f.severity, message: `${f.path ? `${f.path}: ` : ""}${f.message}` });
   }
 };

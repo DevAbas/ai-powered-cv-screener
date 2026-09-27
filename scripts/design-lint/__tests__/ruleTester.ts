@@ -3,8 +3,8 @@ import tseslint from "typescript-eslint";
 import { describe, it } from "vitest";
 
 // ESLint's RuleTester on Vitest: the cases are the real repository's tokens
-// (`loadDesignTokens` reads DESIGN.md from the working directory), so a valid
-// class here is one DESIGN.md exports today.
+// (`loadDesignTokens` reads the generated theme and DESIGN.md's contract from
+// the working directory), so a valid class here is one the tokens define today.
 
 RuleTester.describe = describe;
 RuleTester.it = it;

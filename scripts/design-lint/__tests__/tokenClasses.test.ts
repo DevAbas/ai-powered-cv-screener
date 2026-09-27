@@ -6,7 +6,7 @@ import { COMPONENT, RECIPE, ruleTester } from "./ruleTester";
 const tokens = loadDesignTokens(process.cwd());
 
 describe("judgeClass", () => {
-  it("accepts DESIGN.md tokens, Tailwind's static keywords and token references", () => {
+  it("accepts tokens, Tailwind's static keywords and token references", () => {
     const fine = [
       "bg-surface-container",
       "text-on-surface",
@@ -51,6 +51,12 @@ describe("judgeClass", () => {
       "min-h-[calc(100dvh_-_var(--spacing-base)*30_-_var(--composer-height))]",
       "duration-(--motion-duration-short)",
       "ml-[calc(--spacing(2)+1px)]",
+      // One variable in brackets is the long spelling of `bg-(--name)`, held to the same token.
+      "bg-[var(--color-surface)]",
+      "text-[color:var(--color-on-surface)]",
+      // A raw colour is design/no-raw-color's to report, so it is reported once.
+      "bg-[#fff]",
+      "fill-[rgb(0_0_0)]",
     ];
     for (const cls of fine) expect(judgeClass(cls, tokens), cls).toBeUndefined();
   });
@@ -70,8 +76,11 @@ describe("judgeClass", () => {
     expect(judgeClass("ease-(--button-width)", tokens)?.messageId).toBe("unknownToken");
     expect(judgeClass("rounded", tokens)?.messageId).toBe("bareUtility");
     expect(judgeClass("shadow", tokens)?.messageId).toBe("bareUtility");
-    expect(judgeClass("bg-[#fff]", tokens)?.messageId).toBe("arbitraryValue");
     expect(judgeClass("text-[13px]", tokens)?.messageId).toBe("arbitraryValue");
+    expect(judgeClass("bg-[red]", tokens)?.messageId).toBe("arbitraryValue");
+    expect(judgeClass("bg-[var(--not-a-token)]", tokens)?.messageId).toBe("unknownToken");
+    // Where design/no-raw-color does not check (a test file), a raw colour is this rule's to report.
+    expect(judgeClass("bg-[#fff]", tokens, undefined, false)?.messageId).toBe("arbitraryValue");
     expect(judgeClass("rounded-[6px]", tokens)?.messageId).toBe("arbitraryValue");
   });
 
@@ -106,6 +115,8 @@ ruleTester.run("design/token-classes", tokenClasses, {
     { filename: COMPONENT, code: '<div className="bg-red-500" />', errors: [{ messageId: "unknownToken", data: { class: "bg-red-500", kind: "colour", example: "bg-surface", note: ", and the palette reset drops an unknown colour silently" } }] },
     { filename: COMPONENT, code: '<div className="bg-surface-container-low/60 text-(--palette-gray-11)" />', errors: [{ messageId: "modifier" }, { messageId: "paletteReference" }] },
     { filename: COMPONENT, code: '<div className="text-[13px] rounded-[6px]" />', errors: [{ messageId: "arbitraryValue" }, { messageId: "arbitraryValue" }] },
+    // A test file: design/no-raw-color skips it, so the raw colour is reported here instead of by nobody.
+    { filename: "src/components/ui/__tests__/Probe.test.tsx", code: '<div className="bg-[#fff]" />', errors: [{ messageId: "arbitraryValue" }] },
     { filename: COMPONENT, code: '<div className={cond ? "shadow-lg" : "shadow-soft"} />', errors: [{ messageId: "unknownToken" }] },
     { filename: COMPONENT, code: "<div className={`p-2 ${cond && \"font-bold\"}`} />", errors: [{ messageId: "unknownToken" }] },
     // The constant is reported once, at its declaration.

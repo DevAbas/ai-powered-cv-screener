@@ -1,14 +1,16 @@
 // The design system's names, read from the files that define them, so a lint
-// rule accepts exactly what DESIGN.md exports and nothing else. The roles come
-// from the Tailwind theme `npm run design:export` builds
+// rule accepts exactly what the tokens define and nothing else. The roles come
+// from the Tailwind theme `npm run design:export` builds from tokens/
 // (`src/styles/theme.generated.css`, its `@theme` blocks), the variables code
 // may read by name from the `:root` of `src/styles/tokens.generated.css`, and
-// the component tokens from DESIGN.md's front matter. The palette is read only
+// the component tokens from the `components:` contract in DESIGN.md's front
+// matter, which holds no values. The palette is read only
 // to be refused: code never names a primitive (DESIGN.md, Overview). Plain
 // JavaScript: ESLint loads its config without a TypeScript loader.
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { parse } from "yaml";
 
 /** The files, relative to the repository root. */
 export const TOKEN_FILES = {
@@ -75,61 +77,29 @@ export function parseThemeTokens(css) {
 }
 
 /**
- * The names DESIGN.md's front matter defines, per section: the
- * two-space-indented keys under `colors:`, `typography:`, `rounded:`,
- * `spacing:` and `components:`.
- * @param {string} designMd
- * @returns {Map<string, Set<string>>}
- */
-export function parseDesignFrontMatter(designMd) {
-  const sections = new Map();
-  let inFrontMatter = false;
-  let section = "";
-  designMd.split("\n").forEach((line, i) => {
-    if (line === "---") {
-      inFrontMatter = i === 0;
-      section = "";
-      return;
-    }
-    if (!inFrontMatter) return;
-    if (/^\S/.test(line)) {
-      section = line.replace(/:.*$/, "");
-      return;
-    }
-    const key = /^ {2}([a-z0-9-]+):/.exec(line);
-    if (!key || !section) return;
-    if (!sections.has(section)) sections.set(section, new Set());
-    sections.get(section).add(key[1]);
-  });
-  return sections;
-}
-
-/**
  * Each component token's properties, as the group and name its references
- * point to (`{colors.primary}` → `colors.primary`): the four-space-indented
- * lines under a two-space-indented key of `components:`.
+ * point to (`{color.primary}` → `color.primary`), from the `components:`
+ * contract in DESIGN.md's front matter. It is read as YAML with the same
+ * parser the export's contract check uses (scripts/design-tokens/designDocument.ts),
+ * so the lint and the export always see the same contract, whatever YAML style
+ * it is written in. A property that states a value instead of a reference is
+ * left out: the contract check reports it.
  * @param {string} designMd
  * @returns {Map<string, Map<string, string>>}
  */
 export function parseComponents(designMd) {
+  const lines = designMd.split("\n");
+  const end = lines.indexOf("---", 1);
+  if (lines[0] !== "---" || end === -1) return new Map();
+  const front = parse(lines.slice(1, end).join("\n")) ?? {};
   const components = new Map();
-  let inComponents = false;
-  let current;
-  for (const line of designMd.split("\n").slice(1)) {
-    if (line === "---") break;
-    if (/^\S/.test(line)) {
-      inComponents = line.startsWith("components:");
-      continue;
+  for (const [component, properties] of Object.entries(front.components ?? {})) {
+    const references = new Map();
+    for (const [property, value] of Object.entries(properties ?? {})) {
+      const reference = /^\{([a-z]+\.[a-z0-9-]+)\}$/.exec(String(value));
+      if (reference) references.set(property, reference[1]);
     }
-    if (!inComponents) continue;
-    const component = /^ {2}([a-z0-9-]+):\s*$/.exec(line);
-    if (component) {
-      current = new Map();
-      components.set(component[1], current);
-      continue;
-    }
-    const property = /^ {4}([a-zA-Z]+):\s*"?\{([a-z]+\.[a-z0-9-]+)\}"?\s*$/.exec(line);
-    if (property && current) current.set(property[1], property[2]);
+    components.set(component, references);
   }
   return components;
 }
@@ -168,16 +138,17 @@ export function loadDesignTokens(root) {
   const css = `${read(TOKEN_FILES.generated)}\n${read(TOKEN_FILES.theme)}`;
   const theme = parseThemeTokens(css);
   const roots = parseRootVariables(css);
-  const sections = parseDesignFrontMatter(read(TOKEN_FILES.design));
+  // DESIGN.md holds no values, only the components' contract, so that is all it is read for.
+  const components = parseComponents(read(TOKEN_FILES.design));
   const tokens = {
     theme,
     colors: theme.get("color") ?? new Set(),
     palette: new Set([...(roots.get("palette") ?? [])].map((name) => name.slice("palette-".length))),
-    components: parseComponents(read(TOKEN_FILES.design)),
+    components,
     variables: new Set(VARIABLE_PREFIXES.flatMap((prefix) => [...(roots.get(prefix) ?? [])])),
     // What a recipe may cite: the components DESIGN.md names, and the roles, text styles and radii of the tokens.
     names: new Set([
-      ...(sections.get("components") ?? []),
+      ...components.keys(),
       ...(theme.get("color") ?? []),
       ...[...(theme.get("text") ?? [])].filter((name) => !name.includes("--")),
       ...(theme.get("radius") ?? []),

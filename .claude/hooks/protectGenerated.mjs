@@ -1,8 +1,9 @@
 // PreToolUse, Edit|Write: the stylesheets Terrazzo builds from the design
 // tokens are never edited by hand (AGENTS.md, Never). The edit is denied with
 // the reason, through the JSON decision the hooks reference documents for
-// PreToolUse. DESIGN.md's token groups are generated too, but they share the
-// file with the hand-written rules; lintEditedFile.mjs catches an edit there.
+// PreToolUse. DESIGN.md is not generated: it holds the rules and no values,
+// and a value written into it fails the export's contract check, which
+// lintEditedFile.mjs runs after the edit.
 
 import { editedFile, hookInput } from "./hookInput.mjs";
 

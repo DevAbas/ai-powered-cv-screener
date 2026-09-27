@@ -6,7 +6,8 @@
  * how a reviewer checks the recipe against the design without reading every
  * class. A name that is not in DESIGN.md makes the comment a lie, and a recipe
  * without the comment cannot be checked at all. This rule reads the
- * `components:` keys and the colour roles from DESIGN.md's front matter and
+ * `components:` keys from DESIGN.md's front matter, and the colour roles, text
+ * styles and radii from the Tailwind theme the export builds from tokens/, and
  * holds the comment to them.
  *
  * Bad
@@ -20,9 +21,9 @@
  *
  * Scope: `*.recipe.ts` files; the comments before the first statement that is
  * not an import. The comment must mention `DESIGN.md` and cite at least one
- * token in backticks; every backticked lowercase name must be one DESIGN.md's
- * front matter defines (a component token, a colour role, a text style, a
- * radius), so prose stays free and names stay real.
+ * token in backticks; every backticked lowercase name must be a component in
+ * DESIGN.md's contract or a colour role, text style or radius of the tokens,
+ * so prose stays free and names stay real.
  *
  * A cited component token is also held to its values: DESIGN.md names the
  * roles the component reads (`button-primary`: background `primary`, text
@@ -55,8 +56,8 @@ export const recipeCitesTokens = {
     docs: { description: "A recipe opens with a comment naming the DESIGN.md tokens it implements, and the names exist" },
     messages: {
       noComment: "A recipe opens with a comment naming the DESIGN.md tokens it implements (src/components/README.md, Styles are recipes).",
-      noTokens: "The opening comment cites no DESIGN.md token. Name the tokens this recipe implements in backticks, as DESIGN.md's front matter spells them (`button-primary`).",
-      unknownToken: "`{{name}}` is not a token in DESIGN.md's front matter. Use the name DESIGN.md spells, or add the token there first.",
+      noTokens: "The opening comment cites no token. Name the tokens this recipe implements in backticks, as DESIGN.md's contract or the tokens spell them (`button-primary`).",
+      unknownToken: "`{{name}}` is not a component in DESIGN.md's contract, nor a role, text style or radius of the tokens. Use the name they spell, or add it first: a component to DESIGN.md's `components:`, a role or style to tokens/.",
       drift: "DESIGN.md's `{{component}}` sets {{property}} to `{{value}}`, but no class in this recipe is `{{expected}}`. Style the component with the token's role, or change the token in DESIGN.md first.",
     },
     schema: [],

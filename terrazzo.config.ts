@@ -1,5 +1,5 @@
-// Terrazzo builds the CSS from the W3C Design Tokens that `npm run
-// design:export` writes from DESIGN.md (terrazzo.app/docs/integrations/tailwind):
+// Terrazzo builds the CSS from the W3C Design Tokens in tokens/, read through
+// tokens/design.resolver.json (terrazzo.app/docs/integrations/tailwind):
 //
 // - plugin-css: every token of the light theme as a `:root` variable, which is
 //   how the palette reaches the page without making a utility;

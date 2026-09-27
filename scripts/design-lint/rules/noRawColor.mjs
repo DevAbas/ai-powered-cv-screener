@@ -2,12 +2,15 @@
  * design/no-raw-color
  *
  * A raw colour in component source (a hex value, `rgb()`, `hsl()`, `oklch()`,
- * `color-mix()` with literal channels, …) is a colour DESIGN.md does not know
- * and the dark theme cannot reach: it is the same colour in both themes and
- * nobody sees it in the design system. DESIGN.md says every colour on screen
- * traces to a token (Do's and Don'ts), and theme.css gives each role its dark
- * value, so the only place for a new colour is DESIGN.md, then theme.css, then
- * `npm run design:export`.
+ * `color-mix()` with literal channels, …) is a colour no token holds and the
+ * dark theme cannot reach: it is the same colour in both themes and nobody sees
+ * it in the design system. DESIGN.md says every colour on screen traces to a
+ * token (Do's and Don'ts), and each role's value per theme lives in tokens/, so
+ * a new colour goes into tokens/ (the palette, then a role in each theme), its
+ * rule into DESIGN.md, and `npm run design:export` builds the CSS.
+ *
+ * This rule also owns a raw colour inside a class (`bg-[#fff]`):
+ * design/token-classes leaves it here, so it is reported once.
  *
  * Bad
  *   const TINT = "#6b7280";
@@ -32,6 +35,9 @@
 const HEX = /(?<![\w#])#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})(?![\w#])/;
 const COLOR_FUNCTION = /(?<![\w-])(rgba?|hsla?|hwb|lab|lch|oklab|oklch|color|color-mix)\(/gi;
 const TEST_FILE = /(^|[\\/])__tests__[\\/]|\.test\.[cm]?tsx?$/;
+
+/** True when this rule checks `filename`: every file but a test. design/token-classes asks, so a raw colour is never left unchecked. */
+export const checksFile = (filename) => !TEST_FILE.test(filename);
 
 /** The index of the `)` closing the call whose arguments start at `from`, or -1. */
 function endOfCall(text, from) {
@@ -63,15 +69,15 @@ const HOLE = "\u0000";
 export const noRawColor = {
   meta: {
     type: "problem",
-    docs: { description: "Disallow raw colour values in component source: every colour traces to a DESIGN.md token" },
+    docs: { description: "Disallow raw colour values in component source: every colour traces to a token" },
     messages: {
       rawColor:
-        "Raw colour in component source: DESIGN.md does not know it and the dark theme cannot change it. Use a colour role (`bg-surface-container`, `text-on-surface`, `var(--color-primary)`); a new colour goes into DESIGN.md and theme.css first, then `npm run design:export`.",
+        "Raw colour in component source: no token holds it and the dark theme cannot change it. Use a colour role (`bg-surface-container`, `text-on-surface`, `var(--color-primary)`); a new colour goes into tokens/ (the palette, then a role in each theme) with its rule in DESIGN.md, then `npm run design:export`.",
     },
     schema: [],
   },
   create(context) {
-    if (TEST_FILE.test(context.filename)) return {};
+    if (!checksFile(context.filename)) return {};
     return {
       Literal(node) {
         if (typeof node.value === "string" && hasRawColor(node.value)) context.report({ node, messageId: "rawColor" });

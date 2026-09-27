@@ -1,9 +1,11 @@
 /*
  * The Tailwind theme's template. `npm run design:export` fills each `@tz`
- * with the tokens of one theme (from tokens/design.resolver.json, which the
- * export writes from DESIGN.md) and writes the result to theme.generated.css.
- * Everything else here is wiring Tailwind needs and states no value of its
- * own: every value is a token.
+ * with the tokens of one theme (tokens/, read through
+ * tokens/design.resolver.json) and writes the result to theme.generated.css.
+ * Everything else here is wiring Tailwind needs. The few exact values it holds
+ * (the grid's hairline widths, the keyframes' opacities and positions, the
+ * blink's steps) sit beside the rule that reads them, as AGENTS.md allows; a
+ * value the design system names is a token.
  */
 
 /* Dark follows the system unless <html data-theme> overrides it for the session. */

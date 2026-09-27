@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseComponents, parseDesignFrontMatter, parseThemeTokens } from "../designTokens.mjs";
+import { parseComponents, parseThemeTokens } from "../designTokens.mjs";
 
 describe("parseThemeTokens", () => {
   it("reads every namespace from every @theme block and skips the palette reset", () => {
@@ -25,22 +25,17 @@ describe("parseThemeTokens", () => {
   });
 });
 
-describe("parseDesignFrontMatter", () => {
-  it("collects the keys of each section, and nothing after the front matter", () => {
-    const md = ["---", "name: X", "colors:", "  surface: \"#FCFCFC\"", "  primary: \"#00F8C0\"", "typography:", "  body-md:", "    fontSize: 1rem", "components:", "  button-primary:", "    backgroundColor: \"{colors.primary}\"", "---", "", "## Colors", "", "  not-a-key: 1"].join("\n");
-    const sections = parseDesignFrontMatter(md);
-    expect([...sections.get("colors")!]).toEqual(["surface", "primary"]);
-    expect([...sections.get("typography")!]).toEqual(["body-md"]);
-    expect([...sections.get("components")!]).toEqual(["button-primary"]);
-    expect(sections.has("name")).toBe(false);
-  });
-});
-
 describe("parseComponents", () => {
   it("reads each component token's references, and nothing after the front matter", () => {
-    const md = ["---", "# A note", "components:", "  button-primary:", '    backgroundColor: "{colors.primary}"', '    typography: "{typography.label-md}"', "  divider:", '    backgroundColor: "{colors.outline}"', "---", "  ghost:", '    textColor: "{colors.x}"'].join("\n");
+    const md = ["---", "# A note", "components:", "  button-primary:", '    backgroundColor: "{color.primary}"', '    typography: "{typography.label-md}"', "  divider:", '    backgroundColor: "{color.outline}"', "---", "  ghost:", '    textColor: "{color.x}"'].join("\n");
     const components = parseComponents(md);
     expect([...components.keys()]).toEqual(["button-primary", "divider"]);
-    expect(Object.fromEntries(components.get("button-primary")!)).toEqual({ backgroundColor: "colors.primary", typography: "typography.label-md" });
+    expect(Object.fromEntries(components.get("button-primary")!)).toEqual({ backgroundColor: "color.primary", typography: "typography.label-md" });
+  });
+
+  it("reads any YAML style the export's contract check accepts, and leaves stated values to it", () => {
+    const md = ["---", 'components: { button-primary: { backgroundColor: "{color.primary}", textColor: "#ffffff" } } # flow style', "---"].join("\n");
+    const components = parseComponents(md);
+    expect(Object.fromEntries(components.get("button-primary")!)).toEqual({ backgroundColor: "color.primary" });
   });
 });

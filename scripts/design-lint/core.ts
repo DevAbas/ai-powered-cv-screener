@@ -16,7 +16,10 @@ export interface LintFinding {
 
 /**
  * True for a finding the design system means: a palette entry no component
- * reads directly (roles read the palette; components read roles). Info
+ * reads directly (roles read the palette; components read roles). The composed
+ * document lists the palette under `colors:` so the roles can alias it, and the
+ * upstream `orphaned-tokens` rule assumes one flat colour list, so it calls
+ * every palette entry orphaned; an orphaned role is still reported. Info
  * findings are summaries, not problems.
  */
 export function isExpected(finding: LintFinding, palette: ReadonlySet<string>): boolean {

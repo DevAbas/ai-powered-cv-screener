@@ -21,7 +21,7 @@ if (LINTED.test(file)) {
 
 if (DESIGN_SOURCES.test(file)) {
   const current = run("npm", ["run", "-s", "design:export", "--", "--check"]);
-  if (current.status !== 0) block(`The design outputs no longer match their sources after editing ${file}:\n${current.output}\nValues live in tokens/; run \`npm run design:export\` (never edit DESIGN.md's token groups or the generated CSS by hand).`);
+  if (current.status !== 0) block(`The design outputs no longer match their sources after editing ${file}:\n${current.output}\nValues live in tokens/; run \`npm run design:export\` (never write a value into DESIGN.md, or edit the generated CSS by hand).`);
   const lint = run("npm", ["run", "-s", "design:lint"]);
   if (lint.status !== 0) block(`design:lint failed after editing ${file}:\n${lint.output}`);
 }

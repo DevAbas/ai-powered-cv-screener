@@ -78,8 +78,9 @@ export class TokenSourceError extends Error {
 
 /**
  * Each token's position in the files the resolver lists, in the order they are
- * written: resolved tokens come back in no particular order, and what is
- * written from them (DESIGN.md) keeps the authors' order.
+ * written: resolved tokens come back in no particular order, and what is built
+ * from them (the composed document the design lint reads, the problems it
+ * reports) keeps the authors' order.
  */
 function authoredOrder(root: URL, resolverDocument: unknown): Map<string, number> {
   const order = new Map<string, number>();

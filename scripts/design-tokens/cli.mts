@@ -1,4 +1,4 @@
-// Builds the design system's outputs from its two sources of truth.
+// Builds the design system's outputs, with one owner per fact.
 //
 //   npm run design:export              check the sources, then build the CSS
 //   npm run design:export -- --check   exit 1 when the CSS differs from what the tokens give

@@ -1,16 +1,16 @@
 /**
  * design/token-classes
  *
- * Every class in a class list must be a DESIGN.md token where the utility is
- * one DESIGN.md owns: colour, text style, line height, letter spacing, font,
- * radius, shadow, easing, animation. The rule reads the token names from the
- * files that define them (`designTokens.mjs`: the generated Tailwind theme and
- * DESIGN.md's front matter), so the one way to make a class legal is to add
- * the token to DESIGN.md and run `npm run design:export`.
+ * Every class in a class list must name a token where the utility is one the
+ * tokens own: colour, text style, line height, letter spacing, font, radius,
+ * shadow, easing, animation. The rule reads the token names from the Tailwind
+ * theme `npm run design:export` builds from tokens/ (`designTokens.mjs`), so
+ * the one way to make a class legal is to add the token to tokens/, its rule to
+ * DESIGN.md, and run the export.
  *
  * Two ways around a token are refused as well. An opacity modifier on a token
- * utility (`bg-primary/10`) makes a colour DESIGN.md does not know: a new tint
- * is a derived role (DESIGN.md, Colors). And the palette is never read by code
+ * utility (`bg-primary/10`) makes a colour no token holds: a new tint is a
+ * derived role in tokens/ (DESIGN.md, Colors). And the palette is never read by code
  * (DESIGN.md, Overview), so `bg-(--palette-mint-9)` or `[var(--palette-…)]`
  * fails; a role points to the palette, code points to the role.
  *
@@ -29,6 +29,11 @@
  *   className="text-label-md leading-(--text-label-lg--line-height)"  // a documented override reads the other style's part
  *   className="min-h-[calc(100dvh-var(--composer-height))] -ml-[calc(--spacing(2)+1px)]"  // references tokens
  *
+ * A raw colour in brackets (`bg-[#fff]`, `fill-[rgb(0_0_0)]`) is left to
+ * design/no-raw-color in the files it checks, so a class is reported once;
+ * both rules use its `hasRawColor`. In a test file, which that rule skips, it
+ * is reported here as an arbitrary value, so no file leaves it unchecked.
+ *
  * Scope: JSX `className`, the arguments of `cx`, the class values of
  * `defineRecipe` / `defineSlotRecipe`, and constants those resolve to in the
  * same file (`classLists.mjs`). Variants are stripped first, so
@@ -45,6 +50,7 @@
  */
 
 import { loadDesignTokens, NAMESPACES } from "../designTokens.mjs";
+import { checksFile, hasRawColor } from "./noRawColor.mjs";
 import { classGroupCollector, classesOf, piecesOf } from "../classLists.mjs";
 
 /** Static keywords Tailwind gives every colour utility. */
@@ -125,10 +131,11 @@ function isTokenVariable(name, tokens) {
 const PALETTE_VARIABLE = /--palette-/;
 
 /**
- * Why a class is not a token, or undefined when it is one.
+ * Why a class is not a token, or undefined when it is one. `leaveRawColor` is
+ * true where design/no-raw-color reports a raw colour itself.
  * @returns {{ messageId: string, kind: string, example: string } | undefined}
  */
-export function judgeClass(base, tokens, modifier) {
+export function judgeClass(base, tokens, modifier, leaveRawColor = true) {
   const utility = UTILITIES.find((candidate) => base === candidate.prefix || base.startsWith(`${candidate.prefix}-`));
   if (!utility) return undefined;
   /** One real token per namespace the utility reads: `text-on-surface` or `text-body-md`, never a colour offered for a size. */
@@ -153,7 +160,12 @@ export function judgeClass(base, tokens, modifier) {
     return isTokenVariable(variable, tokens) ? undefined : { messageId: "unknownToken", kind: utility.kind, example: example() };
   }
   if (suffix.startsWith("[") && suffix.endsWith("]")) {
-    const content = suffix.slice(1, -1);
+    const content = suffix.slice(1, -1).replace(/^[a-z-]+:/, "");
+    // design/no-raw-color reports a raw colour; reporting it here too would say the same thing twice.
+    if (leaveRawColor && hasRawColor(content)) return undefined;
+    // A bracket holding one variable is the long spelling of `bg-(--name)`, and is held to the same token.
+    const single = /^var\((--[\w-]+)\)$/.exec(content);
+    if (single) return isTokenVariable(single[1], tokens) ? undefined : { messageId: "unknownToken", kind: utility.kind, example: example() };
     return /var\(--|--[a-z]+\(/.test(content) ? undefined : { messageId: "arbitraryValue", kind: utility.kind, example: example() };
   }
   if (utility.keywords.includes(suffix)) return undefined;
@@ -168,18 +180,19 @@ export function judgeClass(base, tokens, modifier) {
 export const tokenClasses = {
   meta: {
     type: "problem",
-    docs: { description: "Every colour, text, radius, shadow and motion class is a DESIGN.md token" },
+    docs: { description: "Every colour, text, radius, shadow and motion class names a token" },
     messages: {
-      unknownToken: "`{{class}}` is not a DESIGN.md {{kind}} token{{note}}. Use an exported token (`{{example}}`), or add it to DESIGN.md and run `npm run design:export`.",
-      arbitraryValue: "`{{class}}` sets a literal {{kind}} that is in no document. DESIGN.md owns every {{kind}}: use a token (`{{example}}`) or reference one (`var(--…)`).",
-      bareUtility: "`{{class}}` is Tailwind's default {{kind}}, not one of DESIGN.md's. Name the token (`{{example}}`).",
-      modifier: "`{{class}}` changes a token with a modifier, which makes a {{kind}} DESIGN.md does not know. Use a token as it is (`{{example}}`); a new tint is a derived role in DESIGN.md first (Colors).",
+      unknownToken: "`{{class}}` is not a {{kind}} token{{note}}. Use one (`{{example}}`), or add the token to tokens/ and its rule to DESIGN.md, then run `npm run design:export`.",
+      arbitraryValue: "`{{class}}` sets a literal {{kind}} that no token holds. Use a token (`{{example}}`) or reference one (`var(--…)`).",
+      bareUtility: "`{{class}}` is Tailwind's default {{kind}}, not a token. Name the token (`{{example}}`).",
+      modifier: "`{{class}}` changes a token with a modifier, which makes a {{kind}} no token holds. Use the token as it is (`{{example}}`); a new tint is a derived role in tokens/, with its rule in DESIGN.md (Colors).",
       paletteReference: "`{{class}}` reads the palette. Code reads roles, never primitives (DESIGN.md, Overview): use the role that points to it (`{{example}}`).",
     },
     schema: [],
   },
   create(context) {
     const tokens = loadDesignTokens(context.cwd);
+    const leaveRawColor = checksFile(context.filename);
     const collector = classGroupCollector(context);
     return {
       ...collector.visitors(),
@@ -188,7 +201,7 @@ export const tokenClasses = {
           for (const node of group.nodes) {
             for (const piece of piecesOf(node, context.sourceCode)) {
               for (const { parsed } of classesOf(piece.text)) {
-                const verdict = judgeClass(parsed.base, tokens, parsed.modifier);
+                const verdict = judgeClass(parsed.base, tokens, parsed.modifier, leaveRawColor);
                 if (!verdict) continue;
                 const note = verdict.kind === "colour" ? ", and the palette reset drops an unknown colour silently" : "";
                 context.report({ node, messageId: verdict.messageId, data: { class: parsed.raw, kind: verdict.kind, example: verdict.example, note } });

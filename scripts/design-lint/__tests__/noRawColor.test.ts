@@ -27,5 +27,7 @@ ruleTester.run("design/no-raw-color", noRawColor, {
     { filename: COMPONENT, code: "const shadow = `0 1px 2px rgba(0, 0, 0, 0.12)`;", errors: [{ messageId: "rawColor" }] },
     { filename: COMPONENT, code: 'const mix = "color-mix(in srgb, #202020 50%, transparent)";', errors: [{ messageId: "rawColor" }] },
     { filename: COMPONENT, code: 'const el = <div style={{ color: "hsl(160 100% 40%)" }} />;', errors: [{ messageId: "rawColor" }] },
+    // A raw colour in a class: this rule reports it, and design/token-classes leaves it here.
+    { filename: COMPONENT, code: '<div className="bg-[#fff]" />', errors: [{ messageId: "rawColor" }] },
   ],
 });
