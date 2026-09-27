@@ -48,10 +48,10 @@ Each folder of `data/` has one owner:
 
 ## design-tokens/
 
-`npm run design:export`. The design tokens in `tokens/` (W3C Design Tokens,
+`npm run design:export`. The design tokens in `design-system/tokens/` (W3C Design Tokens,
 DTCG 2025.10) are the source of every value; `DESIGN.md` is the source of
 the rules and holds none. `tokenSource.ts` reads the tokens through
-`tokens/design.resolver.json` with `@terrazzo/parser` (which checks the
+`design-system/tokens/design.resolver.json` with `@terrazzo/parser` (which checks the
 format and resolves each theme) and checks the tiers DTCG leaves to a team:
 the palette holds values only, a colour role points to the palette or is
 derived by the rule on its token, both themes define the same roles.

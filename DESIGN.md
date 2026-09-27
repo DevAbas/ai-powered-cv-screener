@@ -5,7 +5,7 @@
 version: alpha
 name: CV Screener
 description: A quiet monochrome recruiting tool with a single mint accent. The rules and their reasons; the values are the design tokens it imports.
-imports: ./tokens/design.resolver.json
+imports: ./design-system/tokens/design.resolver.json
 components:
   page:
     backgroundColor: "{color.surface}"
@@ -204,7 +204,7 @@ asked.
 This document is the source of truth for the design system's rules: what
 each token means, when it is used, which roles each component reads, how
 things behave, and why. It holds no values. Every value is a design token in
-`tokens/` (W3C Design Tokens, the source of truth for what exists), and this
+`design-system/tokens/` (W3C Design Tokens, the source of truth for what exists), and this
 document names tokens by their ids there (`color.primary`, `shadow.raised`,
 `motion.ease-standard`). The front matter holds two things: `imports:`,
 which names the design tokens, and `components:`, the contract of which
@@ -227,9 +227,9 @@ names. The resolver there lists the token files and how the themes apply:
 `foundation` (the palette and raw values) and `semantic` (roles that are
 the same in every theme) always, then the `theme` modifier, `light` by
 default or `dark`. So `color.surface` is found in
-`tokens/themes/light.tokens.json` and `tokens/themes/dark.tokens.json`,
+`design-system/tokens/themes/light.tokens.json` and `design-system/tokens/themes/dark.tokens.json`,
 each time as an alias into the palette (`{palette.gray-background}`, in
-`tokens/foundation/colors.tokens.json`) or, for a derived role, as the
+`design-system/tokens/foundation/colors.tokens.json`) or, for a derived role, as the
 value its rule gives, the rule itself in the token's `$extensions`. The
 colour roles and shadows are the only tokens that change with the theme.
 
@@ -250,7 +250,7 @@ Code never reads the palette: a colour on screen is always a role, and a
 role points to one palette entry in each theme, or is derived (below). The
 palette (`palette.*`) was generated with the Radix Colors custom palette
 generator from three seeds per theme; the seeds and the generator's version
-are recorded with the palette in `tokens/foundation/colors.tokens.json`, so
+are recorded with the palette in `design-system/tokens/foundation/colors.tokens.json`, so
 it can be generated again. `palette.gray-*` and `palette.mint-*` are its
 twelve steps, `gray-background` its page colour and `mint-contrast` its
 text colour on step 9; the `-dark` scales are the dark theme's. `white`,
@@ -671,7 +671,7 @@ one size in text and in `xs` buttons and one step larger in other buttons
   illustration.
 - Don't wrap content in cards; whitespace is the container. The file card
   is the exception: it is the file, not a container for content.
-- Every colour, size and radius on screen traces to a token in `tokens/`;
+- Every colour, size and radius on screen traces to a token in `design-system/tokens/`;
   code never reads the palette, and never makes a colour by opacity: a new
   tint is a derived role in the tokens first.
 - Don't add a second accent for any purpose.

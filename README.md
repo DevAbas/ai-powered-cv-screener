@@ -76,7 +76,7 @@ and from them to the contracts. The rules are in [AGENTS.md](AGENTS.md).
 
 ### The design system
 
-The values are design tokens in [tokens/](tokens), in the W3C Design
+The values are design tokens in [design-system/tokens/](design-system/tokens), in the W3C Design
 Tokens format (DTCG 2025.10), read through a resolver with a light and a
 dark theme. The rules are [DESIGN.md](DESIGN.md), which holds no values
 and names tokens by their ids; its Overview explains the three tiers.
@@ -85,7 +85,7 @@ against the tokens, then Terrazzo writes the two generated stylesheets the
 Tailwind theme reads. What the design lint checks is in
 [src/components/README.md](src/components/README.md).
 
-![Four columns. Authored: the palette, the roles and the resolver in tokens/, and the components contract and the rules in DESIGN.md. Build: design:export checks the components contract, then Terrazzo resolves light and dark. Generated, never edited: tokens.generated.css holds every token as a variable, theme.generated.css the roles as the Tailwind theme with a dark variant. Consumed: Tailwind 4, with its own palette reset, feeds the components, which use role classes only; the palette stops before them. Below, four checks run on every edit and commit, as errors for an agent and warnings for a human: the ESLint design rules, design:lint, design:export --check and the agent hooks.](docs/images/design-system.svg)
+![Four columns. Authored: the palette, the roles and the resolver in design-system/tokens/, and the components contract and the rules in DESIGN.md. Build: design:export checks the components contract, then Terrazzo resolves light and dark. Generated, never edited: tokens.generated.css holds every token as a variable, theme.generated.css the roles as the Tailwind theme with a dark variant. Consumed: Tailwind 4, with its own palette reset, feeds the components, which use role classes only; the palette stops before them. Below, four checks run on every edit and commit, as errors for an agent and warnings for a human: the ESLint design rules, design:lint, design:export --check and the agent hooks.](docs/images/design-system.svg)
 
 ## Decisions and why
 
@@ -132,7 +132,7 @@ Tailwind theme reads. What the design lint checks is in
 | Schemas | Zod 4, one contract per area in [src/contracts](src/contracts) |
 | Search | MiniSearch for BM25, Pinecone for vectors, reciprocal rank fusion |
 | PDF | pdf.js for text and the in-app preview; react-pdf to render the sample pool |
-| Styling | Tailwind 4 with a theme Terrazzo builds from the design tokens in [tokens/](tokens), tailwind-variants, Headless UI |
+| Styling | Tailwind 4 with a theme Terrazzo builds from the design tokens in [design-system/tokens/](design-system/tokens), tailwind-variants, Headless UI |
 | Tooling | Vitest, Storybook 10, ESLint, tsx for the scripts |
 | Runtime | Node 22, from `.nvmrc` |
 
@@ -185,20 +185,20 @@ does, and cannot drift from the design system unnoticed.
 ## Repository
 
 ```
-docs/PRD.md          what we build and why
-DESIGN.md            the design system's rules: what each token means and which roles each component reads
-tokens/              the design tokens: every value, as W3C Design Tokens with a light and a dark theme
-AGENTS.md            engineering conventions and the full command list
-src/app/             routes: the screen, the ask API, the CV file API
-src/components/      UI, with its own README on how components are built
-src/hooks/           React glue, each hook with its own logic beside it
-src/contracts/       the Zod schemas shared by the client, the server and the scripts
-src/lib/             the domain: screening, candidates, conversation, models, search
-src/mocks/           test doubles and the sample index
-scripts/             the pipelines, with their own README: generation, ingestion, evaluation, design tokens, design lint
-data/                the pool: generation seeds and photos, the index, the CVs, and the evaluation reports once npm run eval has run
-.claude/             the agent's skill for UI work and the hooks that run the lint on every edit and before a commit
-.githooks/           the same commit gate for a person, installed by npm run prepare
+docs/PRD.md            what we build and why
+DESIGN.md              the design system's rules: what each token means and which roles each component reads
+design-system/tokens/  the design tokens: every value, as W3C Design Tokens with a light and a dark theme
+AGENTS.md              engineering conventions and the full command list
+src/app/               routes: the screen, the ask API, the CV file API
+src/components/        UI, with its own README on how components are built
+src/hooks/             React glue, each hook with its own logic beside it
+src/contracts/         the Zod schemas shared by the client, the server and the scripts
+src/lib/               the domain: screening, candidates, conversation, models, search
+src/mocks/             test doubles and the sample index
+scripts/               the pipelines, with their own README: generation, ingestion, evaluation, design tokens, design lint
+data/                  the pool: generation seeds and photos, the index, the CVs, and the evaluation reports once npm run eval has run
+.claude/               the agent's skill for UI work and the hooks that run the lint on every edit and before a commit
+.githooks/             the same commit gate for a person, installed by npm run prepare
 ```
 
 ## Running it

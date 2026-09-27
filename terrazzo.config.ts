@@ -1,5 +1,5 @@
-// Terrazzo builds the CSS from the W3C Design Tokens in tokens/, read through
-// tokens/design.resolver.json (terrazzo.app/docs/integrations/tailwind):
+// Terrazzo builds the CSS from the W3C Design Tokens in design-system/tokens/, read through
+// design-system/tokens/design.resolver.json (terrazzo.app/docs/integrations/tailwind):
 //
 // - plugin-css: every token of the light theme as a `:root` variable, which is
 //   how the palette reaches the page without making a utility;
@@ -16,7 +16,7 @@ import css from "@terrazzo/plugin-css";
 import tailwind from "@terrazzo/plugin-tailwind";
 
 export default defineConfig({
-  tokens: ["./tokens/design.resolver.json"],
+  tokens: ["./design-system/tokens/design.resolver.json"],
   outDir: process.env.DESIGN_TOKENS_OUT_DIR ?? "./src/styles/",
   plugins: [
     css({

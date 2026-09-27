@@ -1,6 +1,6 @@
 // The colour roles derived from other roles (DESIGN.md, Colors: derived
 // roles). The rule is part of the token itself, in its `$extensions` under
-// `cv-screener.derived` (tokens/themes/*.tokens.json), and the token's value is
+// `cv-screener.derived` (design-system/tokens/themes/*.tokens.json), and the token's value is
 // what the rule gives in that theme: hover and pressed are static per theme in
 // every major design system (Radix steps, Spectrum and Primer tokens,
 // Material's state layers), and DTCG has no colour functions. This module

@@ -5,8 +5,8 @@
  * `color-mix()` with literal channels, …) is a colour no token holds and the
  * dark theme cannot reach: it is the same colour in both themes and nobody sees
  * it in the design system. DESIGN.md says every colour on screen traces to a
- * token (Do's and Don'ts), and each role's value per theme lives in tokens/, so
- * a new colour goes into tokens/ (the palette, then a role in each theme), its
+ * token (Do's and Don'ts), and each role's value per theme lives in design-system/tokens/, so
+ * a new colour goes into design-system/tokens/ (the palette, then a role in each theme), its
  * rule into DESIGN.md, and `npm run design:export` builds the CSS.
  *
  * This rule also owns a raw colour inside a class (`bg-[#fff]`):
@@ -72,7 +72,7 @@ export const noRawColor = {
     docs: { description: "Disallow raw colour values in component source: every colour traces to a token" },
     messages: {
       rawColor:
-        "Raw colour in component source: no token holds it and the dark theme cannot change it. Use a colour role (`bg-surface-container`, `text-on-surface`, `var(--color-primary)`); a new colour goes into tokens/ (the palette, then a role in each theme) with its rule in DESIGN.md, then `npm run design:export`.",
+        "Raw colour in component source: no token holds it and the dark theme cannot change it. Use a colour role (`bg-surface-container`, `text-on-surface`, `var(--color-primary)`); a new colour goes into design-system/tokens/ (the palette, then a role in each theme) with its rule in DESIGN.md, then `npm run design:export`.",
     },
     schema: [],
   },

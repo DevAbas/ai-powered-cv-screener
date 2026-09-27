@@ -19,10 +19,10 @@ describe("contractProblems", () => {
   });
 
   it("refuses values in DESIGN.md, and an import of anything but the tokens", () => {
-    const broken = designMd.replace("imports: ./tokens/design.resolver.json", 'imports: ./tokens.json\ncolors:\n  primary: "#00F3BB"');
+    const broken = designMd.replace("imports: ./design-system/tokens/design.resolver.json", 'imports: ./tokens.json\ncolors:\n  primary: "#00F3BB"');
     expect(contractProblems(broken, source, RESOLVER_PATH)).toEqual([
       "DESIGN.md's front matter holds `colors:`: values live in the design tokens it imports, DESIGN.md holds rules",
-      "DESIGN.md imports ./tokens.json: it imports the design tokens at ./tokens/design.resolver.json",
+      "DESIGN.md imports ./tokens.json: it imports the design tokens at ./design-system/tokens/design.resolver.json",
     ]);
   });
 

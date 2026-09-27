@@ -1,5 +1,5 @@
 // The design tokens as their source of truth writes them: W3C Design Tokens
-// (DTCG 2025.10) under tokens/, orchestrated by tokens/design.resolver.json.
+// (DTCG 2025.10) under design-system/tokens/, orchestrated by design-system/tokens/design.resolver.json.
 // @terrazzo/parser reads the files, checks them against the format and
 // resolves each theme; this module reads the result in the design system's
 // three tiers and checks the rules between them that DTCG leaves to a team
@@ -17,7 +17,7 @@ import { defineConfig, parse } from "@terrazzo/parser";
 import type { DerivedRule } from "./derivedColors";
 import { derivedHex, derivedRuleOf } from "./derivedColors";
 
-export const RESOLVER_PATH = "tokens/design.resolver.json";
+export const RESOLVER_PATH = "design-system/tokens/design.resolver.json";
 export const THEMES = ["light", "dark"] as const;
 export type Theme = (typeof THEMES)[number];
 
@@ -118,7 +118,7 @@ function inGroup(tokens: Record<string, ResolvedToken>, group: string, order: Re
 
 const hexOf = (value: unknown) => ((value as { hex?: string }).hex ?? "").toLowerCase();
 
-/** Reads tokens/ through the resolver at `cwd` and checks the tier rules; throws a `TokenSourceError` listing every broken one. */
+/** Reads design-system/tokens/ through the resolver at `cwd` and checks the tier rules; throws a `TokenSourceError` listing every broken one. */
 export async function readTokenSource(cwd = process.cwd()): Promise<TokenSource> {
   const root = pathToFileURL(`${cwd}/`);
   const filename = new URL(RESOLVER_PATH, root);
@@ -185,7 +185,7 @@ export async function readTokenSource(cwd = process.cwd()): Promise<TokenSource>
 
   // Text styles take their family and weight from the foundation.
   const typography = new Map<string, TextStyle>();
-  const styleSources = JSON.parse(readFileSync(new URL("tokens/semantic/typography.tokens.json", root), "utf8")) as { typography: Record<string, { $value?: { fontFamily?: unknown; fontWeight?: unknown } }> };
+  const styleSources = JSON.parse(readFileSync(new URL("design-system/tokens/semantic/typography.tokens.json", root), "utf8")) as { typography: Record<string, { $value?: { fontFamily?: unknown; fontWeight?: unknown } }> };
   for (const [name, token] of inGroup(themed.light, "typography", order)) {
     const value = token.$value as { fontFamily: string[]; fontSize: Dimension; fontWeight: number; lineHeight: number; letterSpacing: Dimension };
     const authored = styleSources.typography[name]?.$value;

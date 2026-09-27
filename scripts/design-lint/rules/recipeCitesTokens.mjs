@@ -7,7 +7,7 @@
  * class. A name that is not in DESIGN.md makes the comment a lie, and a recipe
  * without the comment cannot be checked at all. This rule reads the
  * `components:` keys from DESIGN.md's front matter, and the colour roles, text
- * styles and radii from the Tailwind theme the export builds from tokens/, and
+ * styles and radii from the Tailwind theme the export builds from design-system/tokens/, and
  * holds the comment to them.
  *
  * Bad
@@ -57,7 +57,7 @@ export const recipeCitesTokens = {
     messages: {
       noComment: "A recipe opens with a comment naming the DESIGN.md tokens it implements (src/components/README.md, Styles are recipes).",
       noTokens: "The opening comment cites no token. Name the tokens this recipe implements in backticks, as DESIGN.md's contract or the tokens spell them (`button-primary`).",
-      unknownToken: "`{{name}}` is not a component in DESIGN.md's contract, nor a role, text style or radius of the tokens. Use the name they spell, or add it first: a component to DESIGN.md's `components:`, a role or style to tokens/.",
+      unknownToken: "`{{name}}` is not a component in DESIGN.md's contract, nor a role, text style or radius of the tokens. Use the name they spell, or add it first: a component to DESIGN.md's `components:`, a role or style to design-system/tokens/.",
       drift: "DESIGN.md's `{{component}}` sets {{property}} to `{{value}}`, but no class in this recipe is `{{expected}}`. Style the component with the token's role, or change the token in DESIGN.md first.",
     },
     schema: [],

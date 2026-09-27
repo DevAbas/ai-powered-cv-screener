@@ -1,6 +1,6 @@
 // The design system's names, read from the files that define them, so a lint
 // rule accepts exactly what the tokens define and nothing else. The roles come
-// from the Tailwind theme `npm run design:export` builds from tokens/
+// from the Tailwind theme `npm run design:export` builds from design-system/tokens/
 // (`src/styles/theme.generated.css`, its `@theme` blocks), the variables code
 // may read by name from the `:root` of `src/styles/tokens.generated.css`, and
 // the component tokens from the `components:` contract in DESIGN.md's front

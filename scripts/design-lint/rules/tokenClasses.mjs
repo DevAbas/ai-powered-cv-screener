@@ -4,13 +4,13 @@
  * Every class in a class list must name a token where the utility is one the
  * tokens own: colour, text style, line height, letter spacing, font, radius,
  * shadow, easing, animation. The rule reads the token names from the Tailwind
- * theme `npm run design:export` builds from tokens/ (`designTokens.mjs`), so
- * the one way to make a class legal is to add the token to tokens/, its rule to
+ * theme `npm run design:export` builds from design-system/tokens/ (`designTokens.mjs`), so
+ * the one way to make a class legal is to add the token to design-system/tokens/, its rule to
  * DESIGN.md, and run the export.
  *
  * Two ways around a token are refused as well. An opacity modifier on a token
  * utility (`bg-primary/10`) makes a colour no token holds: a new tint is a
- * derived role in tokens/ (DESIGN.md, Colors). And the palette is never read by code
+ * derived role in design-system/tokens/ (DESIGN.md, Colors). And the palette is never read by code
  * (DESIGN.md, Overview), so `bg-(--palette-mint-9)` or `[var(--palette-…)]`
  * fails; a role points to the palette, code points to the role.
  *
@@ -182,10 +182,10 @@ export const tokenClasses = {
     type: "problem",
     docs: { description: "Every colour, text, radius, shadow and motion class names a token" },
     messages: {
-      unknownToken: "`{{class}}` is not a {{kind}} token{{note}}. Use one (`{{example}}`), or add the token to tokens/ and its rule to DESIGN.md, then run `npm run design:export`.",
+      unknownToken: "`{{class}}` is not a {{kind}} token{{note}}. Use one (`{{example}}`), or add the token to design-system/tokens/ and its rule to DESIGN.md, then run `npm run design:export`.",
       arbitraryValue: "`{{class}}` sets a literal {{kind}} that no token holds. Use a token (`{{example}}`) or reference one (`var(--…)`).",
       bareUtility: "`{{class}}` is Tailwind's default {{kind}}, not a token. Name the token (`{{example}}`).",
-      modifier: "`{{class}}` changes a token with a modifier, which makes a {{kind}} no token holds. Use the token as it is (`{{example}}`); a new tint is a derived role in tokens/, with its rule in DESIGN.md (Colors).",
+      modifier: "`{{class}}` changes a token with a modifier, which makes a {{kind}} no token holds. Use the token as it is (`{{example}}`); a new tint is a derived role in design-system/tokens/, with its rule in DESIGN.md (Colors).",
       paletteReference: "`{{class}}` reads the palette. Code reads roles, never primitives (DESIGN.md, Overview): use the role that points to it (`{{example}}`).",
     },
     schema: [],

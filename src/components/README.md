@@ -62,12 +62,12 @@ export const buttonRecipe = defineRecipe({
 The classes in a recipe are token utilities: `bg-surface`,
 `text-on-surface-variant`, `rounded-full`, `text-label-md`. They exist
 because `npm run design:export` builds them from the design tokens in
-`tokens/` into `src/styles/theme.generated.css`, and
+`design-system/tokens/` into `src/styles/theme.generated.css`, and
 `src/styles/palette-reset.css` removes Tailwind's own palette so nothing
 else is available. A text style is one class: `text-label-md` sets the
 size, line height, weight and letter spacing together. If a class you want
 does not exist, the token does not exist, and the conversation belongs in
-`tokens/` and `DESIGN.md` first.
+`design-system/tokens/` and `DESIGN.md` first.
 
 Every recipe opens with a comment naming, in backticks, the `DESIGN.md`
 component tokens it implements, for example `button-primary`,
@@ -140,7 +140,7 @@ class.
 keyframes and animations, the font wiring. Terrazzo fills its `@tz` rules
 with each theme's tokens and writes `theme.generated.css`; it also writes
 every token as a `:root` variable into `tokens.generated.css`. Neither
-generated file is edited by hand; change `tokens/` (a value) or the
+generated file is edited by hand; change `design-system/tokens/` (a value) or the
 template (wiring) and run `npm run design:export`.
 
 ## What the lint enforces
@@ -155,7 +155,7 @@ pass a lint with a violation in it (`AGENTS.md`, Harness).
   class is a design token. The rule reads the token names from
   `theme.generated.css`, so `bg-red-500`, `text-[13px]`,
   `rounded-[6px]`, `font-bold` and `shadow-lg` fail, and the one way to make
-  a class legal is a token in `tokens/`. A modifier on a token class
+  a class legal is a token in `design-system/tokens/`. A modifier on a token class
   (`bg-primary/10`) and a read of the palette (`bg-(--palette-mint-9)`) fail
   too: a new tint is a derived role in the tokens, and code reads roles.
 - `design/no-raw-color`: no hex or colour function with literal channels in

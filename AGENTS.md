@@ -15,14 +15,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `docs/PRD.md` — what we build and why.
 - `README.md` — how it is built: the architecture and the decisions
   behind it.
-- `tokens/` — the design tokens: every value the interface uses, as W3C
-  Design Tokens (DTCG 2025.10) behind `tokens/design.resolver.json`.
+- `design-system/tokens/` — the design tokens: every value the interface uses, as W3C
+  Design Tokens (DTCG 2025.10) behind `design-system/tokens/design.resolver.json`.
 - `DESIGN.md` — the design system's rules: what each token means, when it
   is used, which roles each component reads, and why. It holds no values.
 
 Each fact lives in exactly one document; others reference it by file and
 heading, never repeat it. PRD owns what and why, the README owns how it is
-built and why that way, `tokens/` owns the design values, DESIGN.md owns
+built and why that way, `design-system/tokens/` owns the design values, DESIGN.md owns
 the visual rules, code owns every other exact value, beside the rule that
 reads it. Before adding
 content to a document, check whether another one already owns it.
@@ -60,7 +60,7 @@ Run `nvm use` first, in every shell: the Node version comes from `.nvmrc`
 | `npm run index` | Index `data/cvs/*.pdf` into `data/index/<id>.json` (text per section and page, one extracted profile with the page and section of every field) and one vector per section chunk into Pinecone: `--step profiles,sources,vectors` (default profiles and vectors; `sources` rebuilds chunks and sources without a model; vectors need `PINECONE_API_KEY`), `--only <id,…>`, `--force`, `--dry-run`, `--check` (extraction accuracy against the seeds); skips files that exist (makes API calls) |
 | `npm run eval` | Run the golden questions through the answer pipeline per model and score them against the thresholds in `scripts/evaluation/score.ts` into `data/eval/`: `--model <name,…>` (default the model `ANSWER_MODEL` names), `--only <q01,…>`, `--repeat <n>`, `--dry-run` (the estimate, its cost and the remaining credits: one price lookup, no model call). Every run is estimated and approved first (makes API calls) |
 | `npm run design:lint` | Check the tokens' tiers and `DESIGN.md`'s components contract, then lint `DESIGN.md` with the tokens' light and dark values (contrast) |
-| `npm run design:export` | Check the tokens and `DESIGN.md`'s contract, then build `src/styles/tokens.generated.css` and `theme.generated.css` from `tokens/` with Terrazzo: `-- --check` (exit 1 when a stylesheet is stale) |
+| `npm run design:export` | Check the tokens and `DESIGN.md`'s contract, then build `src/styles/tokens.generated.css` and `theme.generated.css` from `design-system/tokens/` with Terrazzo: `-- --check` (exit 1 when a stylesheet is stale) |
 | `npm run storybook` | Component previews on port 6006 |
 | `npm run build-storybook` | Static build of the component previews |
 
@@ -135,13 +135,13 @@ before.
 **Always**
 - Run `npm run lint:strict`, `npm run typecheck`, `npm run design:lint` and
   `npm run design:export -- --check` before committing.
-- Read `DESIGN.md` before touching UI; its token ids are paths in `tokens/`
+- Read `DESIGN.md` before touching UI; its token ids are paths in `design-system/tokens/`
   (DESIGN.md, Overview: Reading the tokens).
 
 **Ask first**
 - Adding a dependency.
 - Changing a contract.
-- Changing `docs/PRD.md`, `DESIGN.md`, a value in `tokens/`, or the
+- Changing `docs/PRD.md`, `DESIGN.md`, a value in `design-system/tokens/`, or the
   README's Architecture and Decisions sections.
 - Implementing an API that the docs for the installed version do not
   confirm.
@@ -155,7 +155,7 @@ before.
 **Never**
 - Commit `.env` files or API keys.
 - Edit `src/styles/tokens.generated.css` or `theme.generated.css`: change
-  `tokens/` (values) or `src/styles/theme.template.css` (wiring) and run
+  `design-system/tokens/` (values) or `src/styles/theme.template.css` (wiring) and run
   `npm run design:export`.
 - Write a value into `DESIGN.md`: it names tokens, it never holds them.
 - Import `data/generation` from app code (a lint rule enforces it).
@@ -175,7 +175,7 @@ nobody remembers it:
 - `.claude/settings.json` runs the hooks in `.claude/hooks`. After every
   `Edit` or `Write`, the edited file is linted with the design rules as
   errors, and a failure comes back as the next message; an edit to
-  `tokens/`, `DESIGN.md`, the Tailwind template or `terrazzo.config.ts`
+  `design-system/tokens/`, `DESIGN.md`, the Tailwind template or `terrazzo.config.ts`
   checks that the stylesheets are current and runs `design:lint`; an edit
   to a generated stylesheet is denied; a `git commit` runs `lint:strict`,
   `typecheck`, `design:export -- --check` and `design:lint` first and is

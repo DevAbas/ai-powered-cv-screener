@@ -16,7 +16,7 @@ if (file !== undefined && GENERATED.has(file)) {
       hookSpecificOutput: {
         hookEventName: "PreToolUse",
         permissionDecision: "deny",
-        permissionDecisionReason: `${file} is built from the design tokens. Change the values in tokens/ (or the wiring in src/styles/theme.template.css), then run \`npm run design:export\` (AGENTS.md, Never).`,
+        permissionDecisionReason: `${file} is built from the design tokens. Change the values in design-system/tokens/ (or the wiring in src/styles/theme.template.css), then run \`npm run design:export\` (AGENTS.md, Never).`,
       },
     }),
   );

@@ -3,7 +3,7 @@
 //   npm run design:export              check the sources, then build the CSS
 //   npm run design:export -- --check   exit 1 when the CSS differs from what the tokens give
 //
-// tokens/ (W3C Design Tokens, read through tokens/design.resolver.json) is the
+// design-system/tokens/ (W3C Design Tokens, read through design-system/tokens/design.resolver.json) is the
 // source of truth for every value; DESIGN.md is the source of truth for the
 // rules, including which roles each component reads, and holds no values.
 // This checks the tokens' tiers and DESIGN.md's components contract against
@@ -65,8 +65,8 @@ if (!check) {
   }
   rmSync(outDir, { recursive: true, force: true });
   if (stale.length > 0) {
-    console.error(`Out of date: ${stale.join(", ")}. The values live in tokens/: edit them there and run \`npm run design:export\` (never edit the outputs by hand).`);
+    console.error(`Out of date: ${stale.join(", ")}. The values live in design-system/tokens/: edit them there and run \`npm run design:export\` (never edit the outputs by hand).`);
     process.exit(1);
   }
-  console.log(`design:export --check: the tokens and DESIGN.md's contract hold; ${CSS_OUTPUTS.length} stylesheets match tokens/`);
+  console.log(`design:export --check: the tokens and DESIGN.md's contract hold; ${CSS_OUTPUTS.length} stylesheets match design-system/tokens/`);
 }

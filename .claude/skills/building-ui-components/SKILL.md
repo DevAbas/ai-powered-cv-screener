@@ -6,7 +6,7 @@ paths: src/components/**,src/hooks/**,src/app/**,.storybook/**
 
 # Building UI in this codebase
 
-The design system has two sources: the design tokens in `tokens/` (every
+The design system has two sources: the design tokens in `design-system/tokens/` (every
 value) and `DESIGN.md` (the rules: what each token means, which roles each
 component reads, and why). The code must trace to both: every colour, size
 and radius on screen is a token, every component follows one shape. Lint rules and hooks catch a class outside the tokens
@@ -69,7 +69,7 @@ text style is one class; a documented override reads the other style's part
 Layout numbers (`p-4`, `gap-2`, `w-full`, `grid-rows-[1fr]`) are the code's.
 Tailwind's own palette and scale (`bg-red-500`, `text-xl`, `font-bold`,
 `shadow-lg`, `rounded-2xl`) do not exist here; a missing token is a
-`tokens/` and `DESIGN.md` conversation, not an arbitrary value.
+`design-system/tokens/` and `DESIGN.md` conversation, not an arbitrary value.
 
 ## Close the loop
 
@@ -88,7 +88,7 @@ npm run storybook
 ```
 
 Open the new story in light and in dark and read the accessibility panel: it
-fails the story on a violation. For a change to `tokens/`, `DESIGN.md` or
+fails the story on a violation. For a change to `design-system/tokens/`, `DESIGN.md` or
 `src/styles/theme.template.css`, also `npm run design:export` and
 `npm run design:lint`; never edit a generated stylesheet. The hooks in `.claude/settings.json` run the strict
 lint on every edited file and before a commit, so an error here is one you

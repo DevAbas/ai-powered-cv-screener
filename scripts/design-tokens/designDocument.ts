@@ -11,7 +11,7 @@
 import { parse } from "yaml";
 import type { Theme, TokenSource } from "./tokenSource";
 
-/** The token groups a component may read, by their id prefix in tokens/. */
+/** The token groups a component may read, by their id prefix in design-system/tokens/. */
 const READABLE = ["color", "typography", "rounded"] as const;
 const REFERENCE = /^\{([a-z]+)\.([a-z0-9-]+)\}$/;
 

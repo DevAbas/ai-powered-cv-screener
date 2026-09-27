@@ -2,16 +2,16 @@ import { ColorItem, ColorPalette, Typeset } from "@storybook/addon-docs/blocks";
 import type { Decorator, Meta } from "@storybook/nextjs-vite";
 import type { ReactNode } from "react";
 import { convert, ThemeProvider, themes } from "storybook/theming";
-import palette from "../../tokens/foundation/colors.tokens.json";
-import motion from "../../tokens/foundation/motion.tokens.json";
-import typography from "../../tokens/semantic/typography.tokens.json";
-import radius from "../../tokens/semantic/radius.tokens.json";
-import spacing from "../../tokens/semantic/spacing.tokens.json";
-import light from "../../tokens/themes/light.tokens.json";
-import dark from "../../tokens/themes/dark.tokens.json";
+import palette from "../../design-system/tokens/foundation/colors.tokens.json";
+import motion from "../../design-system/tokens/foundation/motion.tokens.json";
+import typography from "../../design-system/tokens/semantic/typography.tokens.json";
+import radius from "../../design-system/tokens/semantic/radius.tokens.json";
+import spacing from "../../design-system/tokens/semantic/spacing.tokens.json";
+import light from "../../design-system/tokens/themes/light.tokens.json";
+import dark from "../../design-system/tokens/themes/dark.tokens.json";
 import { PlaygroundTable } from "../../.storybook/playground-table";
 
-// The design tokens as the team sees them: read from tokens/ (W3C Design
+// The design tokens as the team sees them: read from design-system/tokens/ (W3C Design
 // Tokens, the source of truth for every value), so this page cannot disagree
 // with the page it documents. Role swatches show the live `--color-*`
 // variable, so the theme toolbar switches them between light and dark.

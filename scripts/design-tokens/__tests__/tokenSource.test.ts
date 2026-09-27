@@ -8,12 +8,12 @@ import { readTokenSource, TokenSourceError } from "../tokenSource";
 
 const copies: string[] = [];
 
-/** A copy of tokens/ with `edit` applied to one file's JSON. */
+/** A copy of design-system/tokens/ with `edit` applied to one file's JSON. */
 function brokenCopy(file: string, edit: (json: Record<string, Record<string, Record<string, unknown>>>) => void): string {
   const dir = mkdtempSync(join(tmpdir(), "tokens-"));
   copies.push(dir);
-  cpSync("tokens", join(dir, "tokens"), { recursive: true });
-  const path = join(dir, "tokens", file);
+  cpSync("design-system/tokens", join(dir, "design-system", "tokens"), { recursive: true });
+  const path = join(dir, "design-system", "tokens", file);
   const json = JSON.parse(readFileSync(path, "utf8"));
   edit(json);
   writeFileSync(path, JSON.stringify(json));

@@ -2,7 +2,7 @@
   <title id="title">How an answer comes to be</title>
   <desc id="desc">Before use, npm run generate has Gemini write 30 CV PDFs; npm run index has Gemini extract a profile from each, the field check locates every fact in the text so each has a page, and each chunk is embedded. The stores are data/index, JSON held in memory, and Pinecone, the chunk vectors. At question time the chat screen sends the question and history to POST /api/ask, whose prompt holds no CV text. Gemini runs a tool-calling loop: find_candidates, count_candidates and get_candidates query the index exactly; search_cv_text embeds the query and fuses BM25 with the vector search by reciprocal rank fusion. The loop ends with present. The answer check keeps only the candidates and pages the tools returned and has the app write the counts, then the answer streams to the chat, whose source links open GET /api/cvs/id, the PDF at the cited page.</desc>
   <!--
-    Colours, type and radii are the design system's own (tokens/, read through tokens/design.resolver.json):
+    Colours, type and radii are the design system's own (design-system/tokens/, read through design-system/tokens/design.resolver.json):
     each variable below is the resolved value of the token named beside it, light first, dark under
     prefers-color-scheme. Motion is native SMIL on one 12.5 s cycle, eased with motion.ease-standard; it is
     hidden under prefers-reduced-motion, which leaves the still diagram.
