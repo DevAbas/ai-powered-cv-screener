@@ -31,7 +31,7 @@
 }
 
 /*
- * DESIGN.md `page`: `colors.surface`, `colors.on-surface`, `typography.body-md`.
+ * DESIGN.md `page`: `color.surface`, `color.on-surface`, `typography.body-md`.
  * Plain CSS reads the exported token variables directly; utility classes are
  * for markup. The family is Google Sans via next/font (src/app/fonts.ts).
  */

@@ -7,12 +7,12 @@ import type { TemplateProps } from "./shared";
 // the top, the headline in the accent, a contact line, then sections with
 // uppercase letter-spaced headings over a hairline. Skills carry their years,
 // every job its industry and a leader a Leadership section, so the index can
-// read all three from the PDF. The accent is the design
-// system's `primary-text` (DESIGN.md, Colors): the accent as text on a light
-// surface. Variants differ in font and date style only, so the pool's CVs
-// are not byte-for-byte alike.
+// read all three from the PDF. The colours are the demo document's own: a
+// CV stands in for a document a real deployment receives from outside, so
+// it is outside the design system (AGENTS.md, Conventions). Variants differ
+// in font and date style only, so the pool's CVs are not byte-for-byte alike.
 
-/** DESIGN.md `primary-text`: the one colour in the document. */
+/** The one accent colour in the document. */
 const ACCENT = "#007C5A";
 const INK = "#1F1F1F";
 const MUTED = "#666666";

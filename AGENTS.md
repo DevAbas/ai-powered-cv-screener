@@ -107,6 +107,10 @@ before.
   `DESIGN.md`'s, its values the design tokens'. Neither is repeated here.
   The design rules in `scripts/design-lint/rules` fail the lint on a class
   outside the tokens; what each checks is in `src/components/README.md`.
+  The design system governs the app's UI (`src/`, `.storybook/`) only.
+  `scripts/generation` builds demo CVs, which stand in for the documents a
+  real deployment receives from outside; their look is the document's own,
+  not the product's, so they are outside the design system.
 - Routes live in a route group per feature (`src/app/(screener)/`);
   application code stays outside `app`.
 - `src/hooks`: one concern each, `src/hooks/use<Name>/` with `use<Name>.ts`
