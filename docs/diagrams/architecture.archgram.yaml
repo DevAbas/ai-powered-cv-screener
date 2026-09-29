@@ -1,0 +1,56 @@
+archgram: 1
+title: How an answer comes to be
+description: >-
+  Before use, npm run index reads each CV PDF, splits its text into section
+  chunks and has Gemini extract one profile; the field check keeps only the
+  fields found in the CV's text, each with its page, and writes the profile
+  and chunks to data/index. Each chunk is then embedded and stored in
+  Pinecone. At question time the chat screen posts the question to
+  /api/ask. The answer model reads no CV text: it calls the exact tools
+  (find, count and get candidates) over the in-memory index, or
+  search_cv_text, which embeds the query and fuses Pinecone's vector
+  matches with BM25 over the same chunks. The model ends with a present
+  call; the answer check refuses any candidate no tool returned, corrects
+  any page no tool cited, and builds the view and its opening sentence from
+  the tool results before the answer streams back to the chat screen.
+direction: down
+nodes:
+  # Before use: npm run index (scripts/ingestion/cli.ts)
+  - { id: cvs, kind: file, label: data/cvs, note: one PDF per CV, frame: prep }
+  - { id: extract, kind: model, label: Gemini, note: extracts one profile, tech: googlegemini, variant: external, frame: prep }
+  - { id: fieldcheck, kind: check, label: Field check, note: each field found on its page, frame: prep }
+  - { id: embed, kind: model, label: Gemini embedding, note: chunks and queries, tech: googlegemini, variant: external }
+  # The stores between the two phases
+  - { id: index, kind: storage, label: data/index, note: "profiles and chunks, in memory" }
+  - { id: vectors, kind: vector-store, label: Pinecone, note: one vector per chunk, variant: external }
+  # At question time: the Next.js app
+  - { id: chat, kind: browser, label: Chat screen, frame: ask }
+  - { id: route, kind: service, label: POST /api/ask, note: questionAnswer.ts, tech: nextdotjs, frame: ask }
+  - { id: llm, kind: model, label: Gemini, note: "tool loop, reads no CV text", tech: googlegemini, variant: external, frame: ask }
+  - { id: exact, kind: tool, label: Exact tools, note: "find, count, get candidates", frame: ask }
+  - { id: search, kind: tool, label: search_cv_text, note: "vectors + BM25, fused", frame: ask }
+  - { id: answercheck, kind: check, label: Answer check, note: ids and pages vs tool results, frame: ask }
+frames:
+  - { id: prep, label: Before use · npm run index }
+  - { id: ask, label: At question time · the app }
+edges:
+  - { from: cvs, to: extract, label: section chunks }
+  - { from: extract, to: fieldcheck }
+  - { from: fieldcheck, to: index }
+  - { from: index, to: embed, label: each chunk }
+  - { from: embed, to: vectors }
+  - { from: chat, to: route }
+  - { from: route, to: llm }
+  - { from: llm, to: exact }
+  - { from: llm, to: search }
+  - { from: exact, to: index }
+  - { from: search, to: index, label: BM25 }
+  - { from: search, to: embed, label: query }
+  - { from: search, to: vectors }
+  - { from: llm, to: answercheck, label: present }
+  - { from: answercheck, to: chat, label: streams }
+flows:
+  - { name: indexing a CV, steps: [cvs, extract, fieldcheck, index, embed, vectors] }
+  - { name: a question, steps: [chat, route, llm, [exact, search], index] }
+  - { name: a presentation naming a candidate no tool returned, steps: [llm, answercheck], stop: answercheck }
+  - { name: the checked answer, steps: [llm, answercheck, chat] }

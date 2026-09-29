@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "resolver": "design-system/tokens/design.resolver.json",
+  "roles": {
+    "canvas": "color.surface",
+    "card": "color.surface-container-lowest",
+    "badge": "color.surface-container-low",
+    "card-edge": "color.outline",
+    "connector": "color.on-surface-subtle",
+    "frame": "color.on-surface-subtle",
+    "text": "color.on-surface",
+    "text-muted": "color.on-surface-variant",
+    "signal-core": "color.surface-container-lowest",
+    "icon-core": "color.on-surface",
+    "icon-ai": "color.on-surface",
+    "icon-build": "color.on-surface",
+    "icon-client": "color.on-surface",
+    "signal-pass": "color.primary-text",
+    "signal-refusal": "color.error"
+  },
+  "themes": {
+    "light": { "inputs": { "theme": "light" } },
+    "dark": { "inputs": { "theme": "dark" } }
+  }
+}
