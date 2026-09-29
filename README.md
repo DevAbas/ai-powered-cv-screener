@@ -53,13 +53,9 @@ gets, and how a follow-up narrows the last answer, are in the
 This is the agentic form of RAG: retrieval is a set of tools the model
 calls, not text pasted before the question.
 
-![Before use, npm run generate writes 30 CV PDFs, and npm run index has Gemini extract a profile from each, locates every field in the CV text so each fact has a page, and embeds each chunk into Pinecone. The animation plays generating and indexing the CVs, then embedding them.](docs/images/architecture-before.svg)
+![Before use, npm run index has Gemini extract a profile from each CV, keeps only the fields found on a page of its text, and embeds each chunk into Pinecone; at question time the chat posts to /api/ask, Gemini reads no CV text but calls exact tools over the index or a hybrid search over Pinecone and BM25, and the answer check refuses any candidate no tool returned and corrects any page no tool cited before the answer streams back](docs/diagrams/architecture.svg)
 
-[Open at full size](docs/images/architecture-before.svg)
-
-![At question time the chat screen sends the question and the history to POST /api/ask, whose prompt holds no CV text. Gemini calls tools in a loop: three exact queries over the index in memory, and a text search that embeds the query and fuses BM25 with Pinecone. The loop ends with present. The app checks every candidate and page against what the tools returned, writes the counts itself and streams the answer to the chat. A source link opens the CV PDF at the cited page. The animation plays a question through the three exact tools, then its answer.](docs/images/architecture-question.svg)
-
-[Open at full size](docs/images/architecture-question.svg)
+[Open at full size](docs/diagrams/architecture.svg)
 
 ### Layers
 
